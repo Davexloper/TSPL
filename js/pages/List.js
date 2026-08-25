@@ -1,183 +1,1054 @@
-import { store } from "../main.js";
-import { embed } from "../util.js";
-import { score } from "../score.js";
-import { fetchEditors, fetchList } from "../content.js";
+:root {
+    --color-background: white;
+    --color-on-background: black;
 
-import Spinner from "../components/Spinner.js";
-import LevelAuthors from "../components/List/LevelAuthors.js";
+    --color-background-hover: #f5f5f5;
+    --color-on-background-hover: black;
 
-const roleIconMap = {
-    owner: "crown",
-    admin: "user-gear",
-    helper: "user-shield",
-    dev: "code",
-    trial: "user-lock",
-};
+    --color-primary: #ff6a00;
+    --color-primary-hover: #ff7a1a;
+    --color-primary-light: rgba(255, 106, 0, 0.10);
+    --color-on-primary: #17181c;
 
-export default {
-    components: { Spinner, LevelAuthors },
-    template: `
-        <main v-if="loading">
-            <Spinner></Spinner>
-        </main>
-        <main v-else class="page-list">
-            <div class="list-container">
-                <table class="list" v-if="list">
-                    <tr v-for="([level, err], i) in list">
-                        <td class="rank">
-                            <p v-if="i + 1 <= 150" class="type-label-lg">#{{ i + 1 }}</p>
-                            <p v-else class="type-label-lg">Legacy</p>
-                        </td>
-                        <td class="level" :class="{ 'active': selected == i, 'error': !level }">
-                            <button @click="selected = i">
-                                <span class="type-label-lg">{{ level?.name || \`Error (\${err}.json)\` }}</span>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="level-container">
-                <div class="level" v-if="level">
-                    <h1>{{ level.name }}</h1>
-                    <LevelAuthors :author="level.author" :creators="level.creators" :verifier="level.verifier"></LevelAuthors>
-                    <iframe class="video" id="videoframe" :src="video" frameborder="0"></iframe>
-                    <ul class="stats">
-                        <li>
-                            <div class="type-title-sm">Points when completed</div>
-                            <p>{{ score(selected + 1, 100, level.percentToQualify) }}</p>
-                        </li>
-                        <li>
-                            <div class="type-title-sm">ID</div>
-                            <p>{{ level.id }}</p>
-                        </li>
-                        <li>
-                            <div class="type-title-sm">Password</div>
-                            <p>{{ level.password || 'Free to Copy' }}</p>
-                        </li>
-                    </ul>
-                    <h2>Records</h2>
-                    <p v-if="selected + 1 <= 75"><strong>{{ level.percentToQualify }}%</strong> or better to qualify</p>
-                    <p v-else-if="selected +1 <= 150"><strong>100%</strong> or better to qualify</p>
-                    <p v-else>This level does not accept new records.</p>
-                    <table class="records">
-                        <tr v-for="record in level.records" class="record">
-                            <td class="percent">
-                                <p>{{ record.percent }}%</p>
-                            </td>
-                            <td class="user">
-                                <a :href="record.link" target="_blank" class="type-label-lg">{{ record.user }}</a>
-                            </td>
-                            <td class="mobile">
-                                <img v-if="record.mobile" :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`" alt="Mobile">
-                            </td>
-                            <td class="hz">
-                                <p>{{ record.hz }}Hz</p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div v-else class="level" style="height: 100%; justify-content: center; align-items: center;">
-                    <p>(ノಠ益ಠ)ノ彡┻━┻</p>
-                </div>
-            </div>
-            <div class="meta-container">
-                <div class="meta">
-                    <div class="errors" v-show="errors.length > 0">
-                        <p class="error" v-for="error of errors">{{ error }}</p>
-                    </div>
-                    <div class="og">
-                        
-                    </div>
-                    <template v-if="editors">
-                        <h3>Editors</h3>
-                        <ol class="editors">
-                            <li v-for="editor in editors">
-                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
-                                <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
-                                <p v-else>{{ editor.name }}</p>
-                            </li>
-                        </ol>
-                    </template>
-                    <div class="requirements-box">
-                        <h3>Richtlinien</h3>
-                        <p>
-                            Den Rekord geschafft haben ohne cheats. (FPS/HZ Bypass ist erlaubt zu 240 [CBF auch])
-                        </p>
-                        <p>
-                            Den Rekord geschafft haben auf dem originallen Level. (Bitte überprüfe die ID)
-                        </p>
-                        <p>
-                            Entweder Clicks oder Taps in der Aufnahme haben sowie Cheat Indicator.
-                        </p>
-                        <p>
-                            Raw Footage nötig (Oder letzen 7 Minuten vor Completion)
-                        </p>
-                        <p>
-                            Die Raw Footage muss den End-Screen zeigen.
-                        </p>
-                        <p>
-                            Keine Secret-Ways oder Bug-Routen.
-                        </p>
-                        <p>
-                            Wenn das Level in Legacy ist, hat man noch 24 Stunden zeit das Level zu submitten.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </main>
-    `,
-    data: () => ({
-        list: [],
-        editors: [],
-        loading: true,
-        selected: 0,
-        errors: [],
-        roleIconMap,
-        store
-    }),
-    computed: {
-        level() {
-            return this.list[this.selected][0];
-        },
-        video() {
-            if (!this.level.showcase) {
-                return embed(this.level.verification);
-            }
+    --color-error: #de0000;
+    --color-on-error: white;
 
-            return embed(
-                this.toggledShowcase
-                    ? this.level.showcase
-                    : this.level.verification
-            );
-        },
-    },
-    async mounted() {
-        // Hide loading spinner
-        this.list = await fetchList();
-        this.editors = await fetchEditors();
+    --color-border: #e5e7eb;
+    --color-border-hover: #d5d8dd;
 
-        // Error handling
-        if (!this.list) {
-            this.errors = [
-                "Failed to load list. Retry in a few minutes or notify list staff.",
-            ];
-        } else {
-            this.errors.push(
-                ...this.list
-                    .filter(([_, err]) => err)
-                    .map(([_, err]) => {
-                        return `Failed to load level. (${err}.json)`;
-                    })
-            );
-            if (!this.editors) {
-                this.errors.push("Failed to load list editors.");
-            }
-        }
+    --color-surface: #ffffff;
+    --color-surface-hover: #fafafa;
 
-        this.loading = false;
-    },
-    methods: {
-        embed,
-        score,
-    },
-};
+    --color-discord: #5865f2;
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    background: #ffffff;
+    color: #17181c;
+
+    font-family:
+        "Lexend Deca",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header,
+main {
+    background-color: #ffffff;
+    color: #17181c;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(16rem, 1fr)
+        minmax(16rem, 2fr)
+        minmax(16rem, 1fr);
+
+    column-gap: 2rem;
+}
+
+header {
+    display: flex;
+
+    padding-inline: calc(25vw - 10rem);
+
+    height: 4rem;
+
+    background: #ffffff !important;
+
+    color: #17181c !important;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.06);
+
+    position: relative;
+
+    z-index: 10;
+}
+
+@media screen and (min-width: 1366px) {
+    header {
+        display: grid;
+
+        padding-inline: 0;
+    }
+}
+
+header .logo {
+    justify-self: end;
+
+    align-self: center;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.75rem;
+}
+
+header .nav {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   HEADER LINKS
+   ========================================================= */
+
+header a {
+    color: #33363c !important;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    opacity: 0.9;
+
+    transition:
+        color 0.15s ease,
+        opacity 0.15s ease;
+}
+
+header a:hover {
+    color: #ff6a00 !important;
+
+    opacity: 1;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+main {
+    height: 0;
+
+    flex: 1;
+
+    display: grid;
+
+    grid-template-rows:
+        minmax(0, 1fr);
+
+    column-gap: 2rem;
+
+    background: #ffffff !important;
+}
+
+main > div {
+    overflow-y: auto;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SPINNER
+   ========================================================= */
+
+.spinner {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    grid-column: span 3;
+}
+
+
+/* =========================================================
+   CHECKBOX
+   ========================================================= */
+
+input[type="checkbox"] {
+    height: 1.25rem;
+
+    width: 1.25rem;
+
+    cursor: pointer;
+
+    margin: 0;
+
+    accent-color: #ff6a00;
+}
+
+
+/* =========================================================
+   GENERAL CARDS
+   ========================================================= */
+
+.card,
+.panel,
+.section,
+.rules,
+.guidelines,
+.requirements {
+    background: #ffffff;
+
+    color: #17181c;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.045);
+
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        border-color 0.16s ease;
+}
+
+.card:hover,
+.panel:hover,
+.section:hover,
+.rules:hover,
+.guidelines:hover,
+.requirements:hover {
+    border-color:
+        #d9dce1;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================================
+   GUIDELINES / REQUIREMENTS BOX
+   ========================================================= */
+
+.page-list .requirements-box {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 1.5rem;
+
+    padding: 1.25rem;
+
+    background: #f3f4f6;
+
+    color: #24262b;
+
+    border:
+        1px solid #dfe1e5;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.055);
+
+    transition:
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
+}
+
+.page-list .requirements-box:hover {
+    border-color:
+        #d3d6db;
+
+    box-shadow:
+        0 9px 24px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================================
+   GUIDELINES TITLE
+   ========================================================= */
+
+.page-list .requirements-box h3 {
+    margin:
+        0 0 1rem 0;
+
+    padding-bottom:
+        0.85rem;
+
+    color:
+        #17181c !important;
+
+    font-size:
+        1.05rem;
+
+    font-weight:
+        750;
+
+    letter-spacing:
+        -0.02em;
+
+    border-bottom:
+        1px solid #dfe1e5;
+}
+
+
+/* =========================================================
+   INDIVIDUAL GUIDELINES
+   ========================================================= */
+
+.page-list .requirements-box p {
+    position: relative;
+
+    margin:
+        0 0 0.6rem 0;
+
+    padding:
+        0.75rem 0.85rem 0.75rem 2.4rem;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #5f636b !important;
+
+    border:
+        1px solid #e2e4e8;
+
+    border-radius:
+        9px;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.025);
+
+    font-size:
+        0.75rem;
+
+    line-height:
+        1.55;
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.page-list .requirements-box p:last-child {
+    margin-bottom:
+        0;
+}
+
+
+/* =========================================================
+   GUIDELINE CHECK ICON
+   ========================================================= */
+
+.page-list .requirements-box p::before {
+    content:
+        "✓";
+
+    position:
+        absolute;
+
+    left:
+        0.8rem;
+
+    top:
+        50%;
+
+    transform:
+        translateY(-50%);
+
+    width:
+        20px;
+
+    height:
+        20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        6px;
+
+    background:
+        #fff0e3;
+
+    color:
+        #ff6a00;
+
+    font-size:
+        0.65rem;
+
+    font-weight:
+        800;
+}
+
+
+/* =========================================================
+   GUIDELINE HOVER
+   ========================================================= */
+
+.page-list .requirements-box p:hover {
+    background:
+        #fffaf6 !important;
+
+    border-color:
+        rgba(255, 106, 0, 0.28);
+
+    transform:
+        translateX(2px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.045);
+}
+
+
+/* =========================================================
+   DISCORD
+   ========================================================= */
+
+.discord,
+.discord-link,
+.discord-button,
+.discord-icon,
+.fa-discord,
+[class*="discord"] {
+    color:
+        #5865f2 !important;
+}
+
+
+/* Discord button */
+
+.discord-button {
+    background:
+        rgba(88, 101, 242, 0.10) !important;
+
+    border:
+        1px solid rgba(88, 101, 242, 0.22) !important;
+
+    border-radius:
+        9px;
+
+    color:
+        #5865f2 !important;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.discord-button:hover {
+    background:
+        rgba(88, 101, 242, 0.17) !important;
+
+    border-color:
+        rgba(88, 101, 242, 0.40) !important;
+
+    color:
+        #5865f2 !important;
+}
+
+
+/* =========================================================
+   EDITOR
+   ========================================================= */
+
+.editor,
+.editor-container,
+.guidelines-editor,
+.rules-editor {
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        14px;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.045);
+
+    margin-bottom:
+        1rem;
+}
+
+.editor-header,
+.editor-title,
+.guidelines-header,
+.rules-header {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    min-height:
+        58px;
+
+    padding:
+        0 1.25rem;
+
+    background:
+        #fafafa !important;
+
+    color:
+        #17181c !important;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+.editor-body,
+.editor-content,
+.guidelines-content,
+.rules-content {
+    padding:
+        1.25rem;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.toolbar,
+.editor-toolbar {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        0.35rem;
+
+    padding:
+        0.55rem 0.7rem;
+
+    margin-bottom:
+        0.85rem;
+
+    background:
+        #f7f7f8 !important;
+
+    border:
+        1px solid #e3e5e8;
+
+    border-radius:
+        8px;
+}
+
+.toolbar button,
+.editor-toolbar button {
+    width:
+        32px;
+
+    height:
+        32px;
+
+    padding:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        transparent !important;
+
+    color:
+        #666b74 !important;
+
+    border:
+        0;
+
+    border-radius:
+        7px;
+
+    box-shadow:
+        none;
+}
+
+.toolbar button:hover,
+.editor-toolbar button:hover {
+    background:
+        #fff0e3 !important;
+
+    color:
+        #ff6a00 !important;
+
+    transform:
+        none;
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   TEXT EDITOR
+   ========================================================= */
+
+[contenteditable="true"] {
+    min-height:
+        160px;
+
+    padding:
+        1rem;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #dfe2e6;
+
+    border-radius:
+        8px;
+
+    outline:
+        none;
+
+    line-height:
+        1.6;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+[contenteditable="true"]:focus {
+    border-color:
+        #ff6a00;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+    box-sizing:
+        border-box;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #dfe2e6;
+
+    border-radius:
+        8px;
+
+    padding:
+        0.65rem 0.75rem;
+
+    font-family:
+        inherit;
+
+    outline:
+        none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+    border-color:
+        #cfd3d8;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        #ff6a00;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button {
+    border:
+        0;
+
+    border-radius:
+        8px;
+
+    padding:
+        0.6rem 1rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7415,
+            #ff5d00
+        ) !important;
+
+    color:
+        #ffffff !important;
+
+    font-family:
+        inherit;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 3px 9px
+        rgba(255, 106, 0, 0.16);
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #ff7a1a,
+            #e95700
+        ) !important;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(255, 106, 0, 0.18);
+}
+
+button:active {
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+button.secondary,
+.secondary-button {
+    background:
+        #ffffff !important;
+
+    color:
+        #44474e !important;
+
+    border:
+        1px solid #dfe2e6;
+
+    box-shadow:
+        none;
+}
+
+button.secondary:hover,
+.secondary-button:hover {
+    background:
+        #fff8f2 !important;
+
+    color:
+        #ff6a00 !important;
+
+    border-color:
+        #ff6a00;
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+    color:
+        #ff6500;
+
+    text-decoration:
+        none;
+
+    font-weight:
+        600;
+
+    transition:
+        color 0.15s ease;
+}
+
+a:hover {
+    color:
+        #e95700;
+
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color:
+        #17181c !important;
+
+    letter-spacing:
+        -0.02em;
+}
+
+p {
+    color:
+        #666b74 !important;
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.info-box {
+    padding:
+        1rem 1.1rem;
+
+    margin-bottom:
+        1rem;
+
+    background:
+        rgba(255, 106, 0, 0.07);
+
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.20);
+
+    border-radius:
+        12px;
+
+    color:
+        #b94f00;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    padding:
+        0.3rem 0.65rem;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255, 106, 0, 0.08);
+
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.18);
+
+    color:
+        #ff6500;
+
+    font-size:
+        0.7rem;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
+
+hr {
+    border:
+        0;
+
+    border-top:
+        1px solid #e5e7eb;
+
+    margin:
+        1.25rem 0;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width:
+        8px;
+
+    height:
+        8px;
+}
+
+::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        #d5d8dd;
+
+    border-radius:
+        999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:
+        #bfc3c9;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media screen and (max-width: 900px) {
+    header,
+    main {
+        grid-template-columns:
+            1fr;
+    }
+
+    main {
+        height:
+            auto;
+
+        padding:
+            1rem;
+    }
+
+    main > div {
+        overflow:
+            visible;
+    }
+
+    header {
+        min-height:
+            4rem;
+
+        padding:
+            0 1rem;
+    }
+
+    .requirements-box {
+        margin-top:
+            1rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .requirements-box {
+        padding:
+            0.85rem;
+    }
+
+    .requirements-box h3 {
+        font-size:
+            1rem;
+    }
+
+    .requirements-box p {
+        padding:
+            0.7rem 0.7rem 0.7rem 2.25rem;
+    }
+}
