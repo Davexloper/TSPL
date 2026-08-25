@@ -296,7 +296,7 @@ export default {
 
                         <p>
                             Den Rekord geschafft haben ohne cheats.
-                            (FPS/HZ Bypass ist erlaubt zu 240 [CBF auch])
+                            (FPS Bypass ist erlaubt zu 480 [CBF auch] und Herz zu 240)
                         </p>
 
                         <p>
