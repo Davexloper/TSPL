@@ -24,6 +24,10 @@ export default {
 
         <main v-else class="page-list">
 
+            <!-- =========================================
+                 LEVEL LIST
+                 ========================================= -->
+
             <div class="list-container">
                 <table class="list" v-if="list">
                     <tr v-for="([level, err], i) in list">
@@ -57,13 +61,15 @@ export default {
             </div>
 
 
+            <!-- =========================================
+                 LEVEL INFORMATION
+                 ========================================= -->
+
             <div class="level-container">
 
                 <div class="level" v-if="level">
 
-                    <h1>
-                        {{ level.name }}
-                    </h1>
+                    <h1>{{ level.name }}</h1>
 
                     <LevelAuthors
                         :author="level.author"
@@ -78,6 +84,9 @@ export default {
                         frameborder="0"
                     ></iframe>
 
+
+                    <!-- STATS -->
+
                     <ul class="stats">
 
                         <li>
@@ -86,7 +95,11 @@ export default {
                             </div>
 
                             <p>
-                                {{ score(selected + 1, 100, level.percentToQualify) }}
+                                {{ score(
+                                    selected + 1,
+                                    100,
+                                    level.percentToQualify
+                                ) }}
                             </p>
                         </li>
 
@@ -112,9 +125,10 @@ export default {
 
                     </ul>
 
-                    <h2>
-                        Records
-                    </h2>
+
+                    <!-- RECORDS -->
+
+                    <h2>Records</h2>
 
                     <p v-if="selected + 1 <= 75">
                         <strong>
@@ -124,15 +138,14 @@ export default {
                     </p>
 
                     <p v-else-if="selected + 1 <= 150">
-                        <strong>
-                            100%
-                        </strong>
+                        <strong>100%</strong>
                         or better to qualify
                     </p>
 
                     <p v-else>
                         This level does not accept new records.
                     </p>
+
 
                     <table class="records">
 
@@ -177,10 +190,17 @@ export default {
 
                 </div>
 
+
+                <!-- NO LEVEL -->
+
                 <div
                     v-else
                     class="level"
-                    style="height: 100%; justify-content: center; align-items: center;"
+                    style="
+                        height: 100%;
+                        justify-content: center;
+                        align-items: center;
+                    "
                 >
                     <p>
                         (ノಠ益ಠ)ノ彡┻━┻
@@ -190,9 +210,16 @@ export default {
             </div>
 
 
+            <!-- =========================================
+                 META
+                 ========================================= -->
+
             <div class="meta-container">
 
                 <div class="meta">
+
+
+                    <!-- ERRORS -->
 
                     <div
                         class="errors"
@@ -207,6 +234,8 @@ export default {
                     </div>
 
 
+                    <!-- ORIGINAL CONTENT -->
+
                     <div class="og">
                     </div>
 
@@ -216,17 +245,19 @@ export default {
                          ========================================= -->
 
                     <div
-                        class="editors-box"
                         v-if="editors"
+                        class="editors-box"
                     >
 
-                        <h3>
-                            Editors
-                        </h3>
+                        <div class="editors-box__header">
+                            <h3>Editors</h3>
+                        </div>
 
                         <ol class="editors">
 
-                            <li v-for="editor in editors">
+                            <li
+                                v-for="editor in editors"
+                            >
 
                                 <img
                                     :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`"
@@ -254,7 +285,7 @@ export default {
 
 
                     <!-- =========================================
-                         GUIDELINES
+                         GUIDELINES BOX
                          ========================================= -->
 
                     <div class="requirements-box">
@@ -274,7 +305,8 @@ export default {
                         </p>
 
                         <p>
-                            Entweder Clicks oder Taps in der Aufnahme haben sowie Cheat Indicator.
+                            Entweder Clicks oder Taps in der Aufnahme haben
+                            sowie Cheat Indicator.
                         </p>
 
                         <p>
@@ -337,10 +369,14 @@ export default {
 
     async mounted() {
 
+        // Load list
         this.list = await fetchList();
 
+        // Load editors
         this.editors = await fetchEditors();
 
+
+        // Error handling
         if (!this.list) {
 
             this.errors = [
