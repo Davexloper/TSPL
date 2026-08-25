@@ -8,7 +8,7 @@
     --color-primary: #ff6a00;
     --color-primary-hover: #ff7a1a;
     --color-primary-light: rgba(255, 106, 0, 0.10);
-    --color-on-primary: white;
+    --color-on-primary: #17181c;
 
     --color-error: #de0000;
     --color-on-error: white;
@@ -21,6 +21,11 @@
 
     --color-discord: #5865f2;
 }
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
 
 html,
 body {
@@ -45,13 +50,13 @@ body {
 
 
 /* =========================================================
-   HEADER
+   HEADER / TOP BAR
    ========================================================= */
 
 header,
 main {
-    background-color: var(--color-background);
-    color: var(--color-on-background);
+    background-color: #ffffff;
+    color: #17181c;
 
     display: grid;
 
@@ -63,6 +68,9 @@ main {
     column-gap: 2rem;
 }
 
+
+/* White top bar */
+
 header {
     display: flex;
 
@@ -70,34 +78,32 @@ header {
 
     height: 4rem;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff6a00,
-            #f05b00
-        );
+    background: #ffffff !important;
 
-    color: white;
+    color: #17181c !important;
 
     border-bottom:
-        1px solid rgba(0, 0, 0, 0.08);
+        1px solid #e5e7eb;
 
     box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.08);
+        0 2px 10px rgba(0, 0, 0, 0.06);
 
     position: relative;
+
     z-index: 10;
 }
 
 @media screen and (min-width: 1366px) {
     header {
         display: grid;
+
         padding-inline: 0;
     }
 }
 
 header .logo {
     justify-self: end;
+
     align-self: center;
 
     display: flex;
@@ -111,36 +117,33 @@ header .nav {
     flex: 1;
 
     display: flex;
+
     align-items: center;
 }
 
 
-/* =========================================================
-   HEADER LINKS
-   ========================================================= */
+/* Header links */
 
 header a {
-    color: #ffffff !important;
+    color: #33363c !important;
 
     text-decoration: none;
 
     font-weight: 600;
 
-    opacity: 0.92;
+    opacity: 0.9;
 
     transition:
-        opacity 0.15s ease,
-        transform 0.15s ease;
+        color 0.15s ease,
+        opacity 0.15s ease;
 }
 
 header a:hover {
-    color: #ffffff !important;
+    color: #ff6a00 !important;
 
     opacity: 1;
 
     text-decoration: none;
-
-    transform: translateY(-1px);
 }
 
 
@@ -160,8 +163,7 @@ main {
 
     column-gap: 2rem;
 
-    background:
-        #ffffff;
+    background: #ffffff !important;
 }
 
 main > div {
@@ -179,6 +181,7 @@ main > div {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     grid-column: span 3;
@@ -191,6 +194,7 @@ main > div {
 
 input[type="checkbox"] {
     height: 1.25rem;
+
     width: 1.25rem;
 
     cursor: pointer;
@@ -245,8 +249,12 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   GUIDELINES CARD
+   GUIDELINES MAIN BOX
    ========================================================= */
+
+/*
+   This is the box around the COMPLETE guidelines area.
+*/
 
 .guidelines-card {
     position: relative;
@@ -262,7 +270,7 @@ input[type="checkbox"] {
     color: #17181c !important;
 
     border:
-        1px solid #e5e7eb;
+        1px solid #dfe2e6;
 
     border-radius:
         16px;
@@ -283,7 +291,7 @@ input[type="checkbox"] {
         translateY(-2px);
 
     border-color:
-        #d9dce1;
+        #d2d5da;
 
     box-shadow:
         0 12px 30px rgba(0, 0, 0, 0.08);
@@ -323,7 +331,9 @@ input[type="checkbox"] {
     position: absolute;
 
     left: 0;
+
     top: 0;
+
     bottom: 0;
 
     width: 4px;
@@ -343,6 +353,7 @@ input[type="checkbox"] {
 
 .guidelines-card__icon {
     width: 38px;
+
     height: 38px;
 
     flex-shrink: 0;
@@ -350,6 +361,7 @@ input[type="checkbox"] {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     border-radius:
@@ -617,13 +629,22 @@ input[type="checkbox"] {
    DISCORD
    ========================================================= */
 
+/*
+   Discord is ALWAYS blue.
+*/
+
 .discord,
 .discord-link,
 .discord-button,
-.discord-icon {
+.discord-icon,
+.fa-discord,
+[class*="discord"] {
     color:
         #5865f2 !important;
 }
+
+
+/* Discord button */
 
 .discord-button {
     background:
@@ -634,6 +655,9 @@ input[type="checkbox"] {
 
     border-radius:
         9px;
+
+    color:
+        #5865f2 !important;
 
     transition:
         background 0.15s ease,
