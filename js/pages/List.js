@@ -71,14 +71,12 @@ export default {
                         :verifier="level.verifier"
                     ></LevelAuthors>
 
-
                     <iframe
                         class="video"
                         id="videoframe"
                         :src="video"
                         frameborder="0"
                     ></iframe>
-
 
                     <ul class="stats">
 
@@ -114,11 +112,9 @@ export default {
 
                     </ul>
 
-
                     <h2>
                         Records
                     </h2>
-
 
                     <p v-if="selected + 1 <= 75">
                         <strong>
@@ -137,7 +133,6 @@ export default {
                     <p v-else>
                         This level does not accept new records.
                     </p>
-
 
                     <table class="records">
 
@@ -182,7 +177,6 @@ export default {
 
                 </div>
 
-
                 <div
                     v-else
                     class="level"
@@ -217,7 +211,14 @@ export default {
                     </div>
 
 
-                    <template v-if="editors">
+                    <!-- =========================================
+                         EDITORS BOX
+                         ========================================= -->
+
+                    <div
+                        class="editors-box"
+                        v-if="editors"
+                    >
 
                         <h3>
                             Editors
@@ -249,11 +250,11 @@ export default {
 
                         </ol>
 
-                    </template>
+                    </div>
 
 
                     <!-- =========================================
-                         RICHTLINIEN
+                         GUIDELINES
                          ========================================= -->
 
                     <div class="requirements-box">
@@ -336,14 +337,10 @@ export default {
 
     async mounted() {
 
-        // Load list
         this.list = await fetchList();
 
-        // Load editors
         this.editors = await fetchEditors();
 
-
-        // Error handling
         if (!this.list) {
 
             this.errors = [
@@ -371,12 +368,8 @@ export default {
         this.loading = false;
     },
 
-
     methods: {
-
         embed,
-
         score,
-
     },
 };
