@@ -19,7 +19,7 @@
     --color-surface: #ffffff;
     --color-surface-hover: #fafafa;
 
-    --color-discord: #5865F2;
+    --color-discord: #5865f2;
 }
 
 
@@ -93,15 +93,18 @@ header {
 @media screen and (min-width: 1366px) {
     header {
         display: grid;
+
         padding-inline: 0;
     }
 }
 
 header .logo {
     justify-self: end;
+
     align-self: center;
 
     display: flex;
+
     align-items: center;
 
     gap: 0.75rem;
@@ -111,6 +114,7 @@ header .nav {
     flex: 1;
 
     display: flex;
+
     align-items: center;
 }
 
@@ -163,6 +167,7 @@ main {
 
 main > div {
     overflow-y: auto;
+
     min-width: 0;
 }
 
@@ -175,6 +180,7 @@ main > div {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     grid-column: span 3;
@@ -187,6 +193,7 @@ main > div {
 
 input[type="checkbox"] {
     height: 1.25rem;
+
     width: 1.25rem;
 
     cursor: pointer;
@@ -249,9 +256,7 @@ input[type="checkbox"] {
 
     box-sizing: border-box;
 
-    margin-top: 0.35rem;
-
-    padding: 1.25rem;
+    margin-top: 0.5rem;
 
     background: #f3f4f6;
 
@@ -265,6 +270,9 @@ input[type="checkbox"] {
 
     box-shadow:
         0 5px 18px rgba(0, 0, 0, 0.055);
+
+    overflow:
+        hidden;
 
     transition:
         border-color 0.16s ease,
@@ -281,23 +289,30 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   EDITORS TITLE
+   EDITORS HEADER
    ========================================================= */
 
 .page-list .editors-box__header {
-    margin:
-        0 0 1rem 0;
+    box-sizing: border-box;
 
-    padding-bottom:
-        0.85rem;
+    width: 100%;
+
+    padding:
+        1.25rem 1.25rem 0.85rem;
+
+    background:
+        #f3f4f6;
 
     border-bottom:
         1px solid #dfe1e5;
 }
 
 .page-list .editors-box__header h3 {
-    margin: 0;
-    padding: 0;
+    margin:
+        0;
+
+    padding:
+        0;
 
     color:
         #17181c !important;
@@ -320,10 +335,28 @@ input[type="checkbox"] {
 .page-list .editors-box .editors {
     box-sizing: border-box;
 
-    margin: 0;
-    padding: 0;
+    width: 100%;
 
-    list-style: none;
+    margin:
+        0;
+
+    padding:
+        0.9rem 1.25rem 1.1rem;
+
+    background:
+        #f3f4f6;
+
+    border:
+        0;
+
+    border-radius:
+        0;
+
+    box-shadow:
+        none;
+
+    list-style:
+        none;
 }
 
 
@@ -366,7 +399,8 @@ input[type="checkbox"] {
 }
 
 .page-list .editors-box .editors li:last-child {
-    margin-bottom: 0;
+    margin-bottom:
+        0;
 }
 
 .page-list .editors-box .editors li:hover {
@@ -389,10 +423,14 @@ input[type="checkbox"] {
    ========================================================= */
 
 .page-list .editors-box .editors li img {
-    width: 22px;
-    height: 22px;
+    width:
+        22px;
 
-    flex-shrink: 0;
+    height:
+        22px;
+
+    flex-shrink:
+        0;
 }
 
 
@@ -402,16 +440,19 @@ input[type="checkbox"] {
 
 .page-list .editors-box .editors li a,
 .page-list .editors-box .editors li p {
-    margin: 0;
+    margin:
+        0;
 
-    font-size: 0.75rem;
+    font-size:
+        0.75rem;
 
-    line-height: 1.4;
+    line-height:
+        1.4;
 }
 
 
 /* =========================================================
-   GUIDELINES BOX
+   GUIDELINES / REQUIREMENTS BOX
    ========================================================= */
 
 .page-list .requirements-box {
@@ -419,7 +460,7 @@ input[type="checkbox"] {
 
     box-sizing: border-box;
 
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 
     padding: 1.25rem;
 
@@ -479,7 +520,7 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   GUIDELINES
+   INDIVIDUAL GUIDELINES
    ========================================================= */
 
 .page-list .requirements-box p {
@@ -520,43 +561,66 @@ input[type="checkbox"] {
 }
 
 .page-list .requirements-box p:last-child {
-    margin-bottom: 0;
+    margin-bottom:
+        0;
 }
 
 
 /* =========================================================
-   GUIDELINE CHECK
+   GUIDELINE CHECK ICON
    ========================================================= */
 
 .page-list .requirements-box p::before {
-    content: "✓";
+    content:
+        "✓";
 
-    position: absolute;
+    position:
+        absolute;
 
-    left: 0.8rem;
-    top: 50%;
+    left:
+        0.8rem;
+
+    top:
+        50%;
 
     transform:
         translateY(-50%);
 
-    width: 20px;
-    height: 20px;
+    width:
+        20px;
 
-    display: flex;
+    height:
+        20px;
 
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
 
-    border-radius: 6px;
+    align-items:
+        center;
 
-    background: #fff0e3;
+    justify-content:
+        center;
 
-    color: #ff6a00;
+    border-radius:
+        6px;
 
-    font-size: 0.65rem;
+    background:
+        #fff0e3;
 
-    font-weight: 800;
+    color:
+        #ff6a00;
+
+    font-size:
+        0.65rem;
+
+    font-weight:
+        800;
 }
+
+
+/* =========================================================
+   GUIDELINE HOVER
+   ========================================================= */
 
 .page-list .requirements-box p:hover {
     background:
@@ -579,78 +643,94 @@ input[type="checkbox"] {
 
 .discord,
 .discord-link,
-.discord-button,
 .discord-icon,
 .fa-discord,
 [class*="discord"] {
     color:
-        #5865F2 !important;
-}
-
-
-/* Discord SVG */
-
-header .discord svg,
-header .discord-link svg,
-header .discord-button svg,
-header .discord-icon svg,
-header [class*="discord"] svg {
-    fill:
-        #5865F2 !important;
-
-    color:
-        #5865F2 !important;
-
-    stroke:
-        #5865F2 !important;
+        #5865f2 !important;
 }
 
 
 /* =========================================================
-   ULTRA NICE SUBMIT RECORD BUTTON
+   DISCORD BUTTON
    ========================================================= */
 
-/*
-   Falls dein Button eine andere Klasse besitzt,
-   siehe weiter unten die zusätzlichen Selektoren.
-*/
+.discord-button {
+    background:
+        rgba(88, 101, 242, 0.10) !important;
+
+    border:
+        1px solid rgba(88, 101, 242, 0.22) !important;
+
+    border-radius:
+        9px;
+
+    color:
+        #5865f2 !important;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.discord-button:hover {
+    background:
+        rgba(88, 101, 242, 0.17) !important;
+
+    border-color:
+        rgba(88, 101, 242, 0.40) !important;
+
+    color:
+        #5865f2 !important;
+}
+
+
+/* =========================================================
+   SUBMIT RECORD BUTTON
+   ========================================================= */
 
 .submit-record,
 .submit-record-button,
-.submit-button,
-a[href*="submit"] {
-    position: relative;
+button.submit-record {
+    position:
+        relative;
 
-    display: inline-flex;
+    display:
+        inline-flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:
+        center;
 
-    gap: 0.55rem;
+    justify-content:
+        center;
 
-    min-height: 44px;
+    gap:
+        0.55rem;
+
+    min-height:
+        44px;
 
     padding:
-        0.72rem 1.15rem;
-
-    box-sizing: border-box;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.22);
-
-    border-radius:
-        11px;
+        0.7rem 1.3rem;
 
     background:
         linear-gradient(
             135deg,
-            #ff8a2a 0%,
-            #ff6a00 45%,
-            #f45100 100%
+            #ff7f24 0%,
+            #ff6a00 50%,
+            #f45a00 100%
         ) !important;
 
     color:
         #ffffff !important;
+
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.45);
+
+    border-radius:
+        10px;
 
     font-family:
         inherit;
@@ -664,136 +744,387 @@ a[href*="submit"] {
     letter-spacing:
         -0.01em;
 
-    text-decoration:
-        none !important;
-
     cursor:
         pointer;
 
     box-shadow:
-        0 5px 14px
-        rgba(255, 106, 0, 0.22),
+        0 4px 12px
+        rgba(255, 106, 0, 0.18),
 
         inset 0 1px 0
-        rgba(255, 255, 255, 0.25);
+        rgba(255, 255, 255, 0.22);
 
     overflow:
         hidden;
 
-    transform:
-        translateY(0);
-
     transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        filter 0.18s ease;
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        background 0.16s ease,
+        border-color 0.16s ease;
 }
 
 
-/* Light shine */
+/* Submit button shine */
 
 .submit-record::before,
 .submit-record-button::before,
-.submit-button::before,
-a[href*="submit"]::before {
-    content: "";
+button.submit-record::before {
+    content:
+        "";
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: 0;
-    left: -120%;
+    top:
+        0;
 
-    width: 70%;
-    height: 100%;
+    left:
+        -120%;
+
+    width:
+        70%;
+
+    height:
+        100%;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(255, 255, 255, 0.24),
+            rgba(255, 255, 255, 0.20),
             transparent
         );
 
     transform:
-        skewX(-18deg);
+        skewX(-20deg);
 
     transition:
-        left 0.55s ease;
+        left 0.45s ease;
 
     pointer-events:
         none;
 }
 
 
-/* Hover */
+/* Submit button hover */
 
 .submit-record:hover,
 .submit-record-button:hover,
-.submit-button:hover,
-a[href*="submit"]:hover {
-    color:
-        #ffffff !important;
-
+button.submit-record:hover {
     background:
         linear-gradient(
             135deg,
-            #ff9b48 0%,
-            #ff7415 45%,
-            #ff5d00 100%
+            #ff913d 0%,
+            #ff7415 50%,
+            #ff6200 100%
         ) !important;
+
+    color:
+        #ffffff !important;
+
+    border-color:
+        rgba(255, 106, 0, 0.65);
 
     transform:
         translateY(-2px);
 
     box-shadow:
-        0 9px 24px
-        rgba(255, 106, 0, 0.30),
-
-        0 2px 5px
-        rgba(255, 106, 0, 0.12),
+        0 10px 25px
+        rgba(255, 106, 0, 0.24),
 
         inset 0 1px 0
-        rgba(255, 255, 255, 0.30);
-
-    filter:
-        saturate(1.08);
+        rgba(255, 255, 255, 0.25);
 }
 
 .submit-record:hover::before,
 .submit-record-button:hover::before,
-.submit-button:hover::before,
-a[href*="submit"]:hover::before {
+button.submit-record:hover::before {
     left:
         140%;
 }
 
 
-/* Click */
+/* Submit button click */
 
 .submit-record:active,
 .submit-record-button:active,
-.submit-button:active,
-a[href*="submit"]:active {
+button.submit-record:active {
     transform:
-        translateY(1px) scale(0.985);
+        translateY(0);
 
     box-shadow:
-        0 3px 8px
-        rgba(255, 106, 0, 0.20),
-
-        inset 0 2px 5px
-        rgba(0, 0, 0, 0.08);
+        0 3px 9px
+        rgba(255, 106, 0, 0.18);
 }
 
 
 /* =========================================================
-   GENERIC BUTTONS
+   EDITOR
+   ========================================================= */
+
+.editor,
+.editor-container,
+.guidelines-editor,
+.rules-editor {
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius:
+        14px;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.045);
+
+    margin-bottom:
+        1rem;
+}
+
+.editor-header,
+.editor-title,
+.guidelines-header,
+.rules-header {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    min-height:
+        58px;
+
+    padding:
+        0 1.25rem;
+
+    background:
+        #fafafa !important;
+
+    color:
+        #17181c !important;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+.editor-body,
+.editor-content,
+.guidelines-content,
+.rules-content {
+    padding:
+        1.25rem;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.toolbar,
+.editor-toolbar {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        0.35rem;
+
+    padding:
+        0.55rem 0.7rem;
+
+    margin-bottom:
+        0.85rem;
+
+    background:
+        #f7f7f8 !important;
+
+    border:
+        1px solid #e3e5e8;
+
+    border-radius:
+        8px;
+}
+
+.toolbar button,
+.editor-toolbar button {
+    width:
+        32px;
+
+    height:
+        32px;
+
+    padding:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        transparent !important;
+
+    color:
+        #666b74 !important;
+
+    border:
+        0;
+
+    border-radius:
+        7px;
+
+    box-shadow:
+        none;
+}
+
+.toolbar button:hover,
+.editor-toolbar button:hover {
+    background:
+        #fff0e3 !important;
+
+    color:
+        #ff6a00 !important;
+
+    transform:
+        none;
+
+    box-shadow:
+        none;
+}
+
+
+/* =========================================================
+   TEXT EDITOR
+   ========================================================= */
+
+[contenteditable="true"] {
+    min-height:
+        160px;
+
+    padding:
+        1rem;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #dfe2e6;
+
+    border-radius:
+        8px;
+
+    outline:
+        none;
+
+    line-height:
+        1.6;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+[contenteditable="true"]:focus {
+    border-color:
+        #ff6a00;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+    box-sizing:
+        border-box;
+
+    background:
+        #ffffff !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #dfe2e6;
+
+    border-radius:
+        8px;
+
+    padding:
+        0.65rem 0.75rem;
+
+    font-family:
+        inherit;
+
+    outline:
+        none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+    border-color:
+        #cfd3d8;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        #ff6a00;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
+}
+
+
+/* =========================================================
+   BUTTONS
    ========================================================= */
 
 button {
-    border: 0;
+    border:
+        0;
 
-    border-radius: 8px;
+    border-radius:
+        8px;
 
     padding:
         0.6rem 1rem;
@@ -1083,9 +1414,11 @@ hr {
             1rem;
     }
 
-    .editors-box {
-        margin-top:
-            0.35rem;
+    .submit-record,
+    .submit-record-button,
+    button.submit-record {
+        width:
+            100%;
     }
 }
 
@@ -1107,24 +1440,23 @@ hr {
             0.7rem 0.7rem 0.7rem 2.25rem;
     }
 
-    .page-list .editors-box {
+    .page-list .editors-box__header {
         padding:
-            0.85rem;
+            0.9rem 1rem 0.75rem;
     }
 
-    .page-list .editors-box__header h3 {
-        font-size:
-            1rem;
+    .page-list .editors-box .editors {
+        padding:
+            0.75rem 1rem 1rem;
     }
 
     .submit-record,
     .submit-record-button,
-    .submit-button,
-    a[href*="submit"] {
-        width:
-            100%;
-
+    button.submit-record {
         min-height:
-            46px;
+            42px;
+
+        font-size:
+            0.75rem;
     }
 }
