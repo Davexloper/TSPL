@@ -98,30 +98,27 @@ export default {
                             </li>
                         </ol>
                     </template>
-                    <h3>Submission Requirements</h3>
+                    <h3>Richtlinien</h3>
                     <p>
-                        Achieved the record without using hacks (however, FPS bypass is allowed, up to 360fps)
+                        Den Rekord geschafft haben ohne cheats. (FPS/HZ Bypass ist erlaubt zu 240 [CBF auch])
                     </p>
                     <p>
-                        Achieved the record on the level that is listed on the site - please check the level ID before you submit a record
+                        Den Rekord geschafft haben auf dem originallen Level. (Bitte überprüfe die ID)
                     </p>
                     <p>
-                        Have either source audio or clicks/taps in the video. Edited audio only does not count
+                        Entweder Clicks oder Taps in der Aufnahme haben sowie Cheat Indicator.
                     </p>
                     <p>
-                        The recording must have a previous attempt and entire death animation shown before the completion, unless the completion is on the first attempt. Everyplay records are exempt from this
+                        Raw Footage nötig (Oder letzen 7 Minuten vor Completion)
                     </p>
                     <p>
-                        The recording must also show the player hit the endwall, or the completion will be invalidated.
+                        Die Raw Footage muss den End-Screen zeigen.
                     </p>
                     <p>
-                        Do not use secret routes or bug routes
+                        Keine Secret-Ways oder Bug-Routen.
                     </p>
                     <p>
-                        Do not use easy modes, only a record of the unmodified level qualifies
-                    </p>
-                    <p>
-                        Once a level falls onto the Legacy List, we accept records for it for 24 hours after it falls off, then afterwards we never accept records for said level
+                        Wenn das Level in Legacy ist, hat man noch 24 Stunden zeit das Level zu submitten.
                     </p>
                 </div>
             </div>
