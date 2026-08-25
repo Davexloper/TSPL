@@ -98,28 +98,30 @@ export default {
                             </li>
                         </ol>
                     </template>
-                    <h3>Richtlinien</h3>
-                    <p>
-                        Den Rekord geschafft haben ohne cheats. (FPS/HZ Bypass ist erlaubt zu 240 [CBF auch])
-                    </p>
-                    <p>
-                        Den Rekord geschafft haben auf dem originallen Level. (Bitte überprüfe die ID)
-                    </p>
-                    <p>
-                        Entweder Clicks oder Taps in der Aufnahme haben sowie Cheat Indicator.
-                    </p>
-                    <p>
-                        Raw Footage nötig (Oder letzen 7 Minuten vor Completion)
-                    </p>
-                    <p>
-                        Die Raw Footage muss den End-Screen zeigen.
-                    </p>
-                    <p>
-                        Keine Secret-Ways oder Bug-Routen.
-                    </p>
-                    <p>
-                        Wenn das Level in Legacy ist, hat man noch 24 Stunden zeit das Level zu submitten.
-                    </p>
+                    <div class="requirements-box">
+                        <h3>Richtlinien</h3>
+                        <p>
+                            Den Rekord geschafft haben ohne cheats. (FPS/HZ Bypass ist erlaubt zu 240 [CBF auch])
+                        </p>
+                        <p>
+                            Den Rekord geschafft haben auf dem originallen Level. (Bitte überprüfe die ID)
+                        </p>
+                        <p>
+                            Entweder Clicks oder Taps in der Aufnahme haben sowie Cheat Indicator.
+                        </p>
+                        <p>
+                            Raw Footage nötig (Oder letzen 7 Minuten vor Completion)
+                        </p>
+                        <p>
+                            Die Raw Footage muss den End-Screen zeigen.
+                        </p>
+                        <p>
+                            Keine Secret-Ways oder Bug-Routen.
+                        </p>
+                        <p>
+                            Wenn das Level in Legacy ist, hat man noch 24 Stunden zeit das Level zu submitten.
+                        </p>
+                    </div>
                 </div>
             </div>
         </main>
