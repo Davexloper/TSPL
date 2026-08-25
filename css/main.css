@@ -251,14 +251,14 @@ input[type="checkbox"] {
    EDITORS BOX
    ========================================================= */
 
-.page-list .editors-box {
+.page-list .meta .editors-box {
     width: 100%;
 
     box-sizing: border-box;
 
-    margin-top: 1.5rem;
+    margin: 0 0 1.5rem 0;
 
-    padding: 1.25rem;
+    padding: 0;
 
     background: #f3f4f6;
 
@@ -273,12 +273,14 @@ input[type="checkbox"] {
     box-shadow:
         0 5px 18px rgba(0, 0, 0, 0.055);
 
+    overflow: hidden;
+
     transition:
         border-color 0.16s ease,
         box-shadow 0.16s ease;
 }
 
-.page-list .editors-box:hover {
+.page-list .meta .editors-box:hover {
     border-color:
         #d3d6db;
 
@@ -288,19 +290,27 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   EDITORS TITLE
+   EDITORS HEADER
    ========================================================= */
 
-.page-list .editors-box__header {
-    margin: 0 0 1rem 0;
+.page-list .meta .editors-box__header {
+    box-sizing: border-box;
 
-    padding-bottom: 0.85rem;
+    width: 100%;
+
+    padding:
+        1.25rem;
+
+    margin: 0;
+
+    background:
+        #f3f4f6;
 
     border-bottom:
         1px solid #dfe1e5;
 }
 
-.page-list .editors-box__header h3 {
+.page-list .meta .editors-box__header h3 {
     margin: 0;
 
     padding: 0;
@@ -314,6 +324,9 @@ input[type="checkbox"] {
     font-weight:
         750;
 
+    line-height:
+        1.3;
+
     letter-spacing:
         -0.02em;
 }
@@ -323,12 +336,20 @@ input[type="checkbox"] {
    EDITOR LIST
    ========================================================= */
 
-.page-list .editors-box .editors {
+.page-list .meta .editors-box .editors {
     box-sizing: border-box;
+
+    width: 100%;
 
     margin: 0;
 
-    padding: 0;
+    padding:
+        1rem 1.25rem 1.25rem;
+
+    background:
+        #f3f4f6;
+
+    border: 0;
 
     list-style: none;
 }
@@ -338,20 +359,23 @@ input[type="checkbox"] {
    EDITOR ITEMS
    ========================================================= */
 
-.page-list .editors-box .editors li {
+.page-list .meta .editors-box .editors li {
     box-sizing: border-box;
 
     display: flex;
 
     align-items: center;
 
-    gap: 0.65rem;
+    gap:
+        0.65rem;
+
+    width: 100%;
 
     padding:
         0.65rem 0.75rem;
 
     margin:
-        0 0 0.6rem 0;
+        0 0 0.5rem 0;
 
     background:
         #ffffff;
@@ -372,8 +396,9 @@ input[type="checkbox"] {
         box-shadow 0.15s ease;
 }
 
-.page-list .editors-box .editors li:last-child {
-    margin-bottom: 0;
+.page-list .meta .editors-box .editors li:last-child {
+    margin-bottom:
+        0;
 }
 
 
@@ -381,7 +406,7 @@ input[type="checkbox"] {
    EDITOR HOVER
    ========================================================= */
 
-.page-list .editors-box .editors li:hover {
+.page-list .meta .editors-box .editors li:hover {
     background:
         #fffaf6;
 
@@ -400,7 +425,7 @@ input[type="checkbox"] {
    EDITOR ICON
    ========================================================= */
 
-.page-list .editors-box .editors li img {
+.page-list .meta .editors-box .editors li img {
     width:
         22px;
 
@@ -416,9 +441,12 @@ input[type="checkbox"] {
    EDITOR NAME
    ========================================================= */
 
-.page-list .editors-box .editors li a,
-.page-list .editors-box .editors li p {
+.page-list .meta .editors-box .editors li a,
+.page-list .meta .editors-box .editors li p {
     margin:
+        0;
+
+    padding:
         0;
 
     font-size:
@@ -438,7 +466,7 @@ input[type="checkbox"] {
 
     box-sizing: border-box;
 
-    margin-top: 1.5rem;
+    margin-top: 0;
 
     padding: 1.25rem;
 
@@ -628,9 +656,6 @@ input[type="checkbox"] {
     color:
         #5865f2 !important;
 }
-
-
-/* Discord button */
 
 .discord-button {
     background:
@@ -1213,8 +1238,7 @@ hr {
             0 1rem;
     }
 
-    .requirements-box,
-    .editors-box {
+    .requirements-box {
         margin-top:
             1rem;
     }
@@ -1223,14 +1247,27 @@ hr {
 
 @media screen and (max-width: 600px) {
 
-    .requirements-box,
-    .editors-box {
+    .page-list .meta .editors-box__header {
+        padding:
+            1rem;
+    }
+
+    .page-list .meta .editors-box__header h3 {
+        font-size:
+            1rem;
+    }
+
+    .page-list .meta .editors-box .editors {
+        padding:
+            0.85rem 1rem 1rem;
+    }
+
+    .requirements-box {
         padding:
             0.85rem;
     }
 
-    .requirements-box h3,
-    .editors-box__header h3 {
+    .requirements-box h3 {
         font-size:
             1rem;
     }
