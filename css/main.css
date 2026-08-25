@@ -251,47 +251,84 @@ input[type="checkbox"] {
    EDITORS BOX
    ========================================================= */
 
-.page-list .meta > h3 {
+.page-list .editors-box {
+    width: 100%;
+
     box-sizing: border-box;
 
-    margin: 1.5rem 0 0 0;
+    margin-top: 1.5rem;
 
-    padding: 1rem 1.25rem 0.85rem;
+    padding: 1.25rem;
 
     background: #f3f4f6;
 
-    color: #17181c !important;
+    color: #24262b;
 
-    border: 1px solid #dfe1e5;
+    border:
+        1px solid #dfe1e5;
 
-    border-bottom: 0;
+    border-radius:
+        14px;
 
-    border-radius: 14px 14px 0 0;
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.055);
 
-    font-size: 1.05rem;
-
-    font-weight: 750;
-
-    letter-spacing: -0.02em;
+    transition:
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
 }
 
-.page-list .meta .editors {
+.page-list .editors-box:hover {
+    border-color:
+        #d3d6db;
+
+    box-shadow:
+        0 9px 24px rgba(0, 0, 0, 0.07);
+}
+
+
+/* =========================================================
+   EDITORS TITLE
+   ========================================================= */
+
+.page-list .editors-box__header {
+    margin: 0 0 1rem 0;
+
+    padding-bottom: 0.85rem;
+
+    border-bottom:
+        1px solid #dfe1e5;
+}
+
+.page-list .editors-box__header h3 {
+    margin: 0;
+
+    padding: 0;
+
+    color:
+        #17181c !important;
+
+    font-size:
+        1.05rem;
+
+    font-weight:
+        750;
+
+    letter-spacing:
+        -0.02em;
+}
+
+
+/* =========================================================
+   EDITOR LIST
+   ========================================================= */
+
+.page-list .editors-box .editors {
     box-sizing: border-box;
 
     margin: 0;
 
-    padding: 0 1.25rem 1.1rem;
-
-    background: #f3f4f6;
-
-    border: 1px solid #dfe1e5;
-
-    border-top: 0;
-
-    border-radius: 0 0 14px 14px;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.055);
+    padding: 0;
 
     list-style: none;
 }
@@ -301,7 +338,7 @@ input[type="checkbox"] {
    EDITOR ITEMS
    ========================================================= */
 
-.page-list .meta .editors li {
+.page-list .editors-box .editors li {
     box-sizing: border-box;
 
     display: flex;
@@ -310,15 +347,20 @@ input[type="checkbox"] {
 
     gap: 0.65rem;
 
-    padding: 0.65rem 0.75rem;
+    padding:
+        0.65rem 0.75rem;
 
-    margin: 0 0 0.5rem 0;
+    margin:
+        0 0 0.6rem 0;
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    border: 1px solid #e2e4e8;
+    border:
+        1px solid #e2e4e8;
 
-    border-radius: 9px;
+    border-radius:
+        9px;
 
     box-shadow:
         0 1px 4px rgba(0, 0, 0, 0.025);
@@ -330,11 +372,7 @@ input[type="checkbox"] {
         box-shadow 0.15s ease;
 }
 
-.page-list .meta .editors li:first-child {
-    margin-top: 0.5rem;
-}
-
-.page-list .meta .editors li:last-child {
+.page-list .editors-box .editors li:last-child {
     margin-bottom: 0;
 }
 
@@ -343,8 +381,9 @@ input[type="checkbox"] {
    EDITOR HOVER
    ========================================================= */
 
-.page-list .meta .editors li:hover {
-    background: #fffaf6;
+.page-list .editors-box .editors li:hover {
+    background:
+        #fffaf6;
 
     border-color:
         rgba(255, 106, 0, 0.28);
@@ -361,12 +400,15 @@ input[type="checkbox"] {
    EDITOR ICON
    ========================================================= */
 
-.page-list .meta .editors li img {
-    width: 22px;
+.page-list .editors-box .editors li img {
+    width:
+        22px;
 
-    height: 22px;
+    height:
+        22px;
 
-    flex-shrink: 0;
+    flex-shrink:
+        0;
 }
 
 
@@ -374,35 +416,16 @@ input[type="checkbox"] {
    EDITOR NAME
    ========================================================= */
 
-.page-list .meta .editors li a,
-.page-list .meta .editors li p {
-    margin: 0;
+.page-list .editors-box .editors li a,
+.page-list .editors-box .editors li p {
+    margin:
+        0;
 
-    font-size: 0.75rem;
+    font-size:
+        0.75rem;
 
-    line-height: 1.4;
-}
-
-
-/* =========================================================
-   MOBILE EDITORS
-   ========================================================= */
-
-@media screen and (max-width: 600px) {
-
-    .page-list .meta > h3 {
-        padding:
-            0.9rem 1rem 0.75rem;
-
-        font-size:
-            1rem;
-    }
-
-    .page-list .meta .editors {
-        padding:
-            0 1rem 1rem;
-    }
-
+    line-height:
+        1.4;
 }
 
 
@@ -1162,6 +1185,7 @@ hr {
    ========================================================= */
 
 @media screen and (max-width: 900px) {
+
     header,
     main {
         grid-template-columns:
@@ -1189,19 +1213,24 @@ hr {
             0 1rem;
     }
 
-    .requirements-box {
+    .requirements-box,
+    .editors-box {
         margin-top:
             1rem;
     }
 }
 
+
 @media screen and (max-width: 600px) {
-    .requirements-box {
+
+    .requirements-box,
+    .editors-box {
         padding:
             0.85rem;
     }
 
-    .requirements-box h3 {
+    .requirements-box h3,
+    .editors-box__header h3 {
         font-size:
             1rem;
     }
@@ -1210,4 +1239,5 @@ hr {
         padding:
             0.7rem 0.7rem 0.7rem 2.25rem;
     }
+
 }
