@@ -1,1240 +1,1352 @@
-:root { 
-    --color-background: #0f1014; 
-    --color-on-background: #f2f3f5; 
- 
-    --color-background-hover: #191b21; 
-    --color-on-background-hover: #ffffff; 
- 
-    --color-primary: #ff6a00; 
-    --color-primary-hover: #ff7a1a; 
-    --color-primary-light: rgba(255, 106, 0, 0.12); 
-    --color-on-primary: #ffffff; 
- 
-    --color-surface: #17191f; 
-    --color-surface-hover: #1d2027; 
-    --color-surface-secondary: #13151a; 
- 
-    --color-border: #292c34; 
-    --color-border-hover: #383c46; 
- 
-    --color-text-secondary: #9da1aa; 
-    --color-text-muted: #70747e; 
- 
-    --color-discord: #5865f2; 
- 
-    --color-error: #ed4245; 
-    --color-on-error: #ffffff; 
- 
-    --shadow-xs: 
-        0 1px 3px rgba(0, 0, 0, 0.25); 
- 
-    --shadow-sm: 
-        0 5px 18px rgba(0, 0, 0, 0.28); 
- 
-    --shadow-md: 
-        0 12px 35px rgba(0, 0, 0, 0.38); 
- 
-    --shadow-orange: 
-        0 8px 25px rgba(255, 106, 0, 0.18); 
- 
-    --radius-small: 8px; 
-    --radius: 12px; 
-    --radius-large: 16px; 
-} 
+:root {
+    --color-background: #0f1014;
+    --color-on-background: #f2f3f5;
+
+    --color-background-hover: #191b21;
+    --color-on-background-hover: #ffffff;
+
+    --color-primary: #ff6a00;
+    --color-primary-hover: #ff7a1a;
+    --color-primary-light: rgba(255, 106, 0, 0.12);
+    --color-on-primary: #ffffff;
+
+    --color-surface: #17191f;
+    --color-surface-hover: #1d2027;
+    --color-surface-secondary: #13151a;
+
+    --color-border: #292c34;
+    --color-border-hover: #383c46;
+
+    --color-text-secondary: #9da1aa;
+    --color-text-muted: #70747e;
+
+    --color-discord: #5865f2;
+
+    --color-error: #ed4245;
+    --color-on-error: #ffffff;
+
+    --shadow-xs:
+        0 1px 3px rgba(0, 0, 0, 0.25);
+
+    --shadow-sm:
+        0 5px 18px rgba(0, 0, 0, 0.28);
+
+    --shadow-md:
+        0 12px 35px rgba(0, 0, 0, 0.38);
+
+    --shadow-orange:
+        0 8px 25px rgba(255, 106, 0, 0.18);
+
+    --radius-small: 8px;
+    --radius: 12px;
+    --radius-large: 16px;
+}
 
 
 /* =========================================================
    FORCE DARK MODE
    ========================================================= */
 
-html { 
-    color-scheme: dark !important; 
-    background: #0f1014 !important; 
-} 
+html {
+    color-scheme: dark !important;
 
-body { 
-    background: 
-        radial-gradient( 
-            circle at top, 
-            #1b1d24 0, 
-            #0f1014 480px 
-        ) !important; 
+    background: #0f1014 !important;
+}
 
-    color: #f2f3f5 !important; 
+body {
+    background:
+        radial-gradient(
+            circle at top,
+            #1b1d24 0,
+            #0f1014 480px
+        ) !important;
 
-    font-family: 
-        "Lexend Deca", 
-        -apple-system, 
-        BlinkMacSystemFont, 
-        "Segoe UI", 
-        sans-serif; 
-} 
+    color: #f2f3f5 !important;
+
+    font-family:
+        "Lexend Deca",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
 
 
 /* =========================================================
    REMOVE LIGHT MODE
    ========================================================= */
 
-main, 
-header, 
-main.dark, 
-header.dark { 
-    background-color: #0f1014 !important; 
-    color: #f2f3f5 !important; 
-} 
+main,
+header,
+main.dark,
+header.dark {
+    background-color: #0f1014 !important;
+
+    color: #f2f3f5 !important;
+}
 
 
 /* =========================================================
    HEADER
    ========================================================= */
 
-header { 
-    height: 4rem; 
+header {
+    height: 4rem;
 
-    padding-inline: calc(25vw - 10rem); 
+    padding-inline: calc(25vw - 10rem);
 
-    display: flex; 
+    display: flex;
 
-    background: 
-        linear-gradient( 
-            135deg, 
-            #ff6a00, 
-            #e95700 
-        ) !important; 
+    background:
+        linear-gradient(
+            135deg,
+            #ff6a00,
+            #e95700
+        ) !important;
 
-    color: #ffffff !important; 
+    color: #ffffff !important;
 
-    border-bottom: 
-        1px solid rgba(255, 255, 255, 0.08); 
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
 
-    box-shadow: 
-        0 4px 18px rgba(0, 0, 0, 0.25); 
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.25);
 
-    position: relative; 
+    position: relative;
 
-    z-index: 10; 
-} 
+    z-index: 10;
+}
 
-@media screen and (min-width: 1366px) { 
-    header { 
-        display: grid; 
-        padding-inline: 0; 
-    } 
-} 
+@media screen and (min-width: 1366px) {
+    header {
+        display: grid;
 
-header .logo { 
-    justify-self: end; 
-    align-self: center; 
+        padding-inline: 0;
+    }
+}
 
-    display: flex; 
+header .logo {
+    justify-self: end;
 
-    align-items: center; 
+    align-self: center;
 
-    gap: 0.75rem; 
-} 
+    display: flex;
 
-header .nav { 
-    flex: 1; 
+    align-items: center;
 
-    display: flex; 
+    gap: 0.75rem;
+}
 
-    align-items: center; 
-} 
+header .nav {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+}
 
 
 /* =========================================================
    NAVIGATION
    ========================================================= */
 
-header a { 
-    color: #ffffff !important; 
+header a {
+    color: #ffffff !important;
 
-    text-decoration: none; 
+    text-decoration: none;
 
-    font-weight: 600; 
+    font-weight: 600;
 
-    opacity: 0.9; 
+    opacity: 0.9;
 
-    transition: 
-        opacity 0.15s ease, 
-        background 0.15s ease; 
-} 
+    transition:
+        opacity 0.15s ease,
+        background 0.15s ease;
+}
 
-header a:hover { 
-    color: #ffffff !important; 
+header a:hover {
+    color: #ffffff !important;
 
-    opacity: 1; 
+    opacity: 1;
 
-    text-decoration: none; 
-} 
+    text-decoration: none;
+}
 
 
 /* =========================================================
    MAIN
    ========================================================= */
 
-header, 
-main { 
-    display: grid; 
+header,
+main {
+    display: grid;
 
-    grid-template-columns: 
-        minmax(16rem, 1fr) 
-        minmax(16rem, 2fr) 
-        minmax(16rem, 1fr); 
+    grid-template-columns:
+        minmax(16rem, 1fr)
+        minmax(16rem, 2fr)
+        minmax(16rem, 1fr);
 
-    column-gap: 2rem; 
-} 
+    column-gap: 2rem;
+}
 
-main { 
-    height: 0; 
+main {
+    height: 0;
 
-    flex: 1; 
+    flex: 1;
 
-    grid-template-rows: 
-        minmax(0, 1fr); 
+    grid-template-rows:
+        minmax(0, 1fr);
 
-    padding-top: 1.5rem; 
+    padding-top: 1.5rem;
 
-    padding-bottom: 1.5rem; 
+    padding-bottom: 1.5rem;
 
-    background: 
-        radial-gradient( 
-            circle at top, 
-            #191b22, 
-            #0f1014 550px 
-        ) !important; 
-} 
+    background:
+        radial-gradient(
+            circle at top,
+            #191b22,
+            #0f1014 550px
+        ) !important;
+}
 
-main > div { 
-    overflow-y: auto; 
+main > div {
+    overflow-y: auto;
 
-    min-width: 0; 
-} 
+    min-width: 0;
+}
 
 
 /* =========================================================
    GENERIC CARDS
    ========================================================= */
 
-.card, 
-.panel, 
-.section, 
-.rules, 
-.guidelines, 
-.requirements { 
-    background: #17191f !important; 
+.card,
+.panel,
+.section,
+.rules,
+.guidelines,
+.requirements {
+    background:
+        #17191f !important;
 
-    color: #f2f3f5 !important; 
+    color:
+        #f2f3f5 !important;
 
-    border: 
-        1px solid #292c34; 
+    border:
+        1px solid #292c34;
 
-    border-radius: 
-        var(--radius-large); 
+    border-radius:
+        var(--radius-large);
 
-    box-shadow: 
-        var(--shadow-sm); 
+    box-shadow:
+        var(--shadow-sm);
 
-    transition: 
-        transform 0.18s ease, 
-        box-shadow 0.18s ease, 
-        border-color 0.18s ease; 
-} 
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
 
-.card:hover, 
-.panel:hover, 
-.section:hover, 
-.rules:hover, 
-.guidelines:hover, 
-.requirements:hover { 
-    border-color: 
-        #383c46; 
+.card:hover,
+.panel:hover,
+.section:hover,
+.rules:hover,
+.guidelines:hover,
+.requirements:hover {
+    border-color:
+        #383c46;
 
-    box-shadow: 
-        var(--shadow-md); 
-} 
+    box-shadow:
+        var(--shadow-md);
+}
 
 
 /* =========================================================
-   GUIDELINES MAIN BOX
+   GUIDELINES CARD
    ========================================================= */
 
-.guidelines-card { 
-    position: relative; 
+.page-list .meta .guidelines-card {
+    position: relative;
 
-    width: 100%; 
+    background: #ffffff;
 
-    box-sizing: border-box; 
+    border:
+        1px solid #e5e7eb;
 
-    margin-bottom: 1.25rem; 
+    border-radius:
+        16px;
 
-    background: #17191f !important; 
+    overflow:
+        hidden;
 
-    color: #f2f3f5 !important; 
+    box-shadow:
+        0 6px 22px rgba(0, 0, 0, 0.06);
 
-    border: 
-        1px solid #292c34; 
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease,
+        border-color 160ms ease;
+}
 
-    border-radius: 
-        16px; 
+.page-list .meta .guidelines-card:hover {
+    transform:
+        translateY(-2px);
 
-    overflow: hidden; 
+    border-color:
+        #d9dce1;
 
-    box-shadow: 
-        0 5px 18px rgba(0, 0, 0, 0.28); 
-
-    transition: 
-        border-color 0.2s ease, 
-        box-shadow 0.2s ease; 
-} 
-
-.guidelines-card:hover { 
-    border-color: 
-        #383c46; 
-
-    box-shadow: 
-        0 10px 28px rgba(0, 0, 0, 0.36); 
-} 
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.09);
+}
 
 
 /* =========================================================
    GUIDELINES HEADER
    ========================================================= */
 
-.guidelines-card__header { 
-    position: relative; 
+.page-list .guidelines-card__header {
+    position: relative;
 
-    display: flex; 
+    display: flex;
 
-    align-items: center; 
+    align-items: center;
 
-    gap: 0.9rem; 
+    gap:
+        0.85rem;
 
-    padding: 
-        1.1rem 1.25rem; 
+    padding:
+        1.15rem 1.25rem;
 
-    background: 
-        #1b1e24; 
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #fff8f2 100%
+        );
 
-    border-bottom: 
-        1px solid #292c34; 
-} 
+    border-bottom:
+        1px solid #ececef;
+}
 
-.guidelines-card__header::before { 
-    content: ""; 
+.page-list .guidelines-card__header::before {
+    content: "";
 
-    position: absolute; 
+    position: absolute;
 
-    left: 0; 
+    left: 0;
 
-    top: 0; 
+    top: 0;
 
-    bottom: 0; 
+    bottom: 0;
 
-    width: 4px; 
+    width:
+        4px;
 
-    background: 
-        #ff6a00; 
-} 
+    background:
+        linear-gradient(
+            180deg,
+            #ff7a1a,
+            #ff5c00
+        );
+}
 
 
 /* =========================================================
    GUIDELINES ICON
    ========================================================= */
 
-.guidelines-card__icon { 
-    width: 40px; 
+.page-list .guidelines-card__icon {
+    width:
+        38px;
 
-    height: 40px; 
+    height:
+        38px;
 
-    flex-shrink: 0; 
+    flex-shrink:
+        0;
 
-    display: flex; 
+    display:
+        flex;
 
-    align-items: center; 
+    align-items:
+        center;
 
-    justify-content: center; 
+    justify-content:
+        center;
 
-    border-radius: 
-        10px; 
+    border-radius:
+        10px;
 
-    background: 
-        rgba(255, 106, 0, 0.12); 
+    background:
+        rgba(255, 106, 0, 0.10);
 
-    color: 
-        #ff7612; 
+    color:
+        #ff6a00;
 
-    font-size: 
-        1rem; 
+    border:
+        1px solid rgba(255, 106, 0, 0.15);
 
-    font-weight: 
-        800; 
+    font-size:
+        1rem;
 
-    border: 
-        1px solid rgba(255, 106, 0, 0.18); 
-} 
+    font-weight:
+        700;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
 
 
 /* =========================================================
-   GUIDELINES TITLE
+   GUIDELINES HEADING
    ========================================================= */
 
-.guidelines-card__heading { 
-    display: flex; 
+.page-list .guidelines-card__heading {
+    display:
+        flex;
 
-    flex-direction: column; 
+    flex-direction:
+        column;
 
-    gap: 0.15rem; 
-} 
+    gap:
+        0.15rem;
+}
 
-.guidelines-card__heading h3 { 
-    margin: 0; 
+.page-list .guidelines-card__heading h3 {
+    margin:
+        0;
 
-    color: #ffffff !important; 
+    font-size:
+        1.05rem;
 
-    font-size: 1.05rem; 
+    font-weight:
+        750;
 
-    font-weight: 800; 
+    color:
+        #17181c;
+}
 
-    letter-spacing: 
-        -0.025em; 
-} 
+.page-list .guidelines-card__heading span {
+    color:
+        #858991;
 
-.guidelines-card__heading span { 
-    color: 
-        #8f949e !important; 
+    font-size:
+        0.72rem;
 
-    font-size: 
-        0.72rem; 
-
-    line-height: 
-        1.4; 
-} 
+    line-height:
+        1.4;
+}
 
 
 /* =========================================================
    GUIDELINES BODY
    ========================================================= */
 
-.guidelines-card__body { 
-    display: flex; 
+.page-list .guidelines-card__body {
+    display:
+        flex;
 
-    flex-direction: column; 
+    flex-direction:
+        column;
 
-    gap: 0.65rem; 
+    gap:
+        0.65rem;
 
-    padding: 
-        1rem; 
-} 
-
-
-/* =========================================================
-   INDIVIDUAL RULE BOX
-   ========================================================= */
-
-.guidelines-card .guideline { 
-    display: flex; 
-
-    align-items: flex-start; 
-
-    gap: 0.85rem; 
-
-    padding: 
-        0.95rem; 
-
-    background: 
-        #1b1e24 !important; 
-
-    color: 
-        #f2f3f5 !important; 
-
-    border: 
-        1px solid #292c34; 
-
-    border-radius: 
-        11px; 
-
-    transition: 
-        background 0.15s ease, 
-        border-color 0.15s ease, 
-        transform 0.15s ease; 
-} 
-
-.guidelines-card .guideline:hover { 
-    background: 
-        #20232a !important; 
-
-    border-color: 
-        rgba(255, 106, 0, 0.45); 
-
-    transform: 
-        translateX(3px); 
-} 
+    padding:
+        1rem;
+}
 
 
 /* =========================================================
-   RULE NUMBER
+   INDIVIDUAL GUIDELINE
    ========================================================= */
 
-.guideline__number { 
-    width: 31px; 
+.page-list .guidelines-card .guideline {
+    position:
+        relative;
 
-    height: 31px; 
+    display:
+        flex;
 
-    flex-shrink: 0; 
+    align-items:
+        flex-start;
 
-    display: flex; 
+    gap:
+        0.75rem;
 
-    align-items: center; 
+    padding:
+        0.9rem;
 
-    justify-content: center; 
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fcfcfd
+        );
 
-    border-radius: 
-        9px; 
+    border:
+        1px solid #e7e9ed;
 
-    background: 
-        rgba(255, 106, 0, 0.12); 
+    border-radius:
+        11px;
 
-    color: 
-        #ff7612; 
+    box-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.025);
 
-    border: 
-        1px solid 
-        rgba(255, 106, 0, 0.18); 
+    transition:
+        border-color 140ms ease,
+        background 140ms ease,
+        transform 140ms ease,
+        box-shadow 140ms ease;
+}
 
-    font-size: 
-        0.63rem; 
+.page-list .guidelines-card .guideline:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fffaf6
+        );
 
-    font-weight: 
-        800; 
-} 
+    border-color:
+        rgba(255, 106, 0, 0.32);
+
+    transform:
+        translateX(3px);
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.055);
+}
 
 
 /* =========================================================
-   RULE TEXT
+   GUIDELINE NUMBER
    ========================================================= */
 
-.guideline__text { 
-    flex: 1; 
+.page-list .guideline__number {
+    width:
+        28px;
 
-    min-width: 0; 
-} 
+    height:
+        28px;
 
-.guideline__text strong { 
-    display: block; 
+    flex-shrink:
+        0;
 
-    margin-bottom: 
-        0.25rem; 
+    display:
+        flex;
 
-    color: 
-        #f5f6f7 !important; 
+    align-items:
+        center;
 
-    font-size: 
-        0.79rem; 
+    justify-content:
+        center;
 
-    font-weight: 
-        700; 
-} 
+    border-radius:
+        8px;
 
-.guideline__text p { 
-    margin: 0; 
+    background:
+        linear-gradient(
+            135deg,
+            #fff1e5,
+            #ffe8d5
+        );
 
-    color: 
-        #9499a3 !important; 
+    color:
+        #ff6500;
 
-    font-size: 
-        0.7rem; 
+    border:
+        1px solid rgba(255, 106, 0, 0.12);
 
-    line-height: 
-        1.55; 
-} 
+    font-size:
+        0.63rem;
+
+    font-weight:
+        700;
+
+    box-shadow:
+        0 2px 5px rgba(255, 106, 0, 0.08);
+}
+
+
+/* =========================================================
+   GUIDELINE TEXT
+   ========================================================= */
+
+.page-list .guideline__text {
+    min-width:
+        0;
+
+    flex:
+        1;
+}
+
+.page-list .guideline__text strong {
+    display:
+        block;
+
+    margin-bottom:
+        0.2rem;
+
+    color:
+        #24262b;
+
+    font-size:
+        0.78rem;
+
+    font-weight:
+        700;
+}
+
+.page-list .guideline__text p {
+    margin:
+        0;
+
+    color:
+        #777b83;
+
+    font-size:
+        0.7rem;
+
+    line-height:
+        1.5;
+}
 
 
 /* =========================================================
    GUIDELINES FOOTER
    ========================================================= */
 
-.guidelines-card__footer { 
-    display: flex; 
+.page-list .guidelines-card__footer {
+    display:
+        flex;
 
-    align-items: center; 
+    align-items:
+        center;
 
-    justify-content: space-between; 
+    justify-content:
+        space-between;
 
-    gap: 1rem; 
+    gap:
+        1rem;
 
-    padding: 
-        0.75rem 1rem; 
+    padding:
+        0.7rem 1rem;
 
-    background: 
-        #14161b; 
+    background:
+        #fafafa;
 
-    border-top: 
-        1px solid #292c34; 
+    border-top:
+        1px solid #ececef;
 
-    color: 
-        #70747e; 
+    color:
+        #9a9da3;
 
-    font-size: 
-        0.65rem; 
-} 
+    font-size:
+        0.65rem;
+}
 
-.guidelines-card__status { 
-    color: 
-        #35c98b; 
 
-    font-weight: 
-        700; 
-} 
+/* =========================================================
+   GUIDELINES STATUS
+   ========================================================= */
+
+.page-list .guidelines-card__status {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        0.35rem;
+
+    color:
+        #22a06b;
+
+    font-weight:
+        700;
+}
+
+.page-list .guidelines-card__status::before {
+    content:
+        "";
+
+    width:
+        6px;
+
+    height:
+        6px;
+
+    border-radius:
+        50%;
+
+    background:
+        #22a06b;
+
+    box-shadow:
+        0 0 0 3px rgba(34, 160, 107, 0.10);
+}
 
 
 /* =========================================================
    DISCORD
    ========================================================= */
 
-.discord, 
-.discord-link, 
-.discord-button, 
-.discord-icon { 
-    color: 
-        #5865f2 !important; 
-} 
+.discord,
+.discord-link,
+.discord-button,
+.discord-icon {
+    color:
+        #5865f2 !important;
+}
 
-.discord-button { 
-    background: 
-        rgba(88, 101, 242, 0.12) !important; 
+.discord-button {
+    background:
+        rgba(88, 101, 242, 0.12) !important;
 
-    border: 
-        1px solid 
-        rgba(88, 101, 242, 0.25) !important; 
+    border:
+        1px solid
+        rgba(88, 101, 242, 0.25) !important;
 
-    border-radius: 
-        9px; 
+    border-radius:
+        9px;
 
-    transition: 
-        background 0.15s ease, 
-        border-color 0.15s ease, 
-        transform 0.15s ease; 
-} 
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
 
-.discord-button:hover { 
-    background: 
-        rgba(88, 101, 242, 0.2) !important; 
+.discord-button:hover {
+    background:
+        rgba(88, 101, 242, 0.2) !important;
 
-    border-color: 
-        rgba(88, 101, 242, 0.45) !important; 
+    border-color:
+        rgba(88, 101, 242, 0.45) !important;
 
-    color: 
-        #7280ff !important; 
-} 
+    color:
+        #7280ff !important;
+}
 
 
 /* =========================================================
    EDITOR
    ========================================================= */
 
-.editor, 
-.editor-container, 
-.guidelines-editor, 
-.rules-editor { 
-    background: 
-        #17191f !important; 
+.editor,
+.editor-container,
+.guidelines-editor,
+.rules-editor {
+    background:
+        #17191f !important;
 
-    color: 
-        #f2f3f5 !important; 
+    color:
+        #f2f3f5 !important;
 
-    border: 
-        1px solid #292c34; 
+    border:
+        1px solid #292c34;
 
-    border-radius: 
-        var(--radius-large); 
+    border-radius:
+        var(--radius-large);
 
-    overflow: 
-        hidden; 
+    overflow:
+        hidden;
 
-    box-shadow: 
-        var(--shadow-sm); 
+    box-shadow:
+        var(--shadow-sm);
 
-    margin-bottom: 
-        1rem; 
-} 
+    margin-bottom:
+        1rem;
+}
 
-.editor-header, 
-.editor-title, 
-.guidelines-header, 
-.rules-header { 
-    display: flex; 
+.editor-header,
+.editor-title,
+.guidelines-header,
+.rules-header {
+    display:
+        flex;
 
-    align-items: center; 
+    align-items:
+        center;
 
-    justify-content: space-between; 
+    justify-content:
+        space-between;
 
-    min-height: 
-        58px; 
+    min-height:
+        58px;
 
-    padding: 
-        0 1.25rem; 
+    padding:
+        0 1.25rem;
 
-    background: 
-        #1b1d23 !important; 
+    background:
+        #1b1d23 !important;
 
-    color: 
-        #ffffff !important; 
+    color:
+        #ffffff !important;
 
-    border-bottom: 
-        1px solid #292c34; 
-} 
+    border-bottom:
+        1px solid #292c34;
+}
 
-.editor-body, 
-.editor-content, 
-.guidelines-content, 
-.rules-content { 
-    padding: 
-        1.25rem; 
+.editor-body,
+.editor-content,
+.guidelines-content,
+.rules-content {
+    padding:
+        1.25rem;
 
-    background: 
-        #17191f !important; 
+    background:
+        #17191f !important;
 
-    color: 
-        #f2f3f5 !important; 
-} 
+    color:
+        #f2f3f5 !important;
+}
 
 
 /* =========================================================
    TOOLBAR
    ========================================================= */
 
-.toolbar, 
-.editor-toolbar { 
-    display: flex; 
+.toolbar,
+.editor-toolbar {
+    display:
+        flex;
 
-    align-items: center; 
+    align-items:
+        center;
 
-    gap: 
-        0.35rem; 
+    gap:
+        0.35rem;
 
-    padding: 
-        0.55rem 0.7rem; 
+    padding:
+        0.55rem 0.7rem;
 
-    margin-bottom: 
-        0.85rem; 
+    margin-bottom:
+        0.85rem;
 
-    background: 
-        #121419 !important; 
+    background:
+        #121419 !important;
 
-    border: 
-        1px solid #292c34; 
+    border:
+        1px solid #292c34;
 
-    border-radius: 
-        var(--radius-small); 
-} 
+    border-radius:
+        var(--radius-small);
+}
 
-.toolbar button, 
-.editor-toolbar button { 
-    width: 
-        32px; 
+.toolbar button,
+.editor-toolbar button {
+    width:
+        32px;
 
-    height: 
-        32px; 
+    height:
+        32px;
 
-    padding: 
-        0; 
+    padding:
+        0;
 
-    display: flex; 
+    display:
+        flex;
 
-    align-items: center; 
+    align-items:
+        center;
 
-    justify-content: center; 
+    justify-content:
+        center;
 
-    background: 
-        transparent !important; 
+    background:
+        transparent !important;
 
-    color: 
-        #969ba5 !important; 
+    color:
+        #969ba5 !important;
 
-    border: 
-        0; 
+    border:
+        0;
 
-    border-radius: 
-        7px; 
+    border-radius:
+        7px;
 
-    box-shadow: 
-        none; 
-} 
+    box-shadow:
+        none;
+}
 
-.toolbar button:hover, 
-.editor-toolbar button:hover { 
-    background: 
-        rgba(255, 106, 0, 0.12) !important; 
+.toolbar button:hover,
+.editor-toolbar button:hover {
+    background:
+        rgba(255, 106, 0, 0.12) !important;
 
-    color: 
-        #ff7612 !important; 
+    color:
+        #ff7612 !important;
 
-    transform: 
-        none; 
+    transform:
+        none;
 
-    box-shadow: 
-        none; 
-} 
+    box-shadow:
+        none;
+}
 
 
 /* =========================================================
    TEXT EDITOR
    ========================================================= */
 
-[contenteditable="true"] { 
-    min-height: 
-        160px; 
+[contenteditable="true"] {
+    min-height:
+        160px;
 
-    padding: 
-        1rem; 
+    padding:
+        1rem;
 
-    background: 
-        #111318 !important; 
+    background:
+        #111318 !important;
 
-    color: 
-        #f2f3f5 !important; 
+    color:
+        #f2f3f5 !important;
 
-    border: 
-        1px solid #292c34; 
+    border:
+        1px solid #292c34;
 
-    border-radius: 
-        var(--radius-small); 
+    border-radius:
+        var(--radius-small);
 
-    outline: 
-        none; 
+    outline:
+        none;
 
-    line-height: 
-        1.6; 
+    line-height:
+        1.6;
 
-    transition: 
-        border-color 0.15s ease, 
-        box-shadow 0.15s ease; 
-} 
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
 
-[contenteditable="true"]:focus { 
-    border-color: 
-        #ff6a00; 
+[contenteditable="true"]:focus {
+    border-color:
+        #ff6a00;
 
-    box-shadow: 
-        0 0 0 3px 
-        rgba(255, 106, 0, 0.10); 
-} 
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
+}
 
 
 /* =========================================================
    INPUTS
    ========================================================= */
 
-input, 
-textarea, 
-select { 
-    box-sizing: 
-        border-box; 
+input,
+textarea,
+select {
+    box-sizing:
+        border-box;
 
-    background: 
-        #111318 !important; 
+    background:
+        #111318 !important;
 
-    color: 
-        #f2f3f5 !important; 
+    color:
+        #f2f3f5 !important;
 
-    border: 
-        1px solid #292c34; 
+    border:
+        1px solid #292c34;
 
-    border-radius: 
-        var(--radius-small); 
+    border-radius:
+        var(--radius-small);
 
-    padding: 
-        0.65rem 0.75rem; 
+    padding:
+        0.65rem 0.75rem;
 
-    font-family: 
-        inherit; 
+    font-family:
+        inherit;
 
-    outline: 
-        none; 
+    outline:
+        none;
 
-    transition: 
-        border-color 0.15s ease, 
-        box-shadow 0.15s ease; 
-} 
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
 
-input:hover, 
-textarea:hover, 
-select:hover { 
-    border-color: 
-        #383c46; 
-} 
+input:hover,
+textarea:hover,
+select:hover {
+    border-color:
+        #383c46;
+}
 
-input:focus, 
-textarea:focus, 
-select:focus { 
-    border-color: 
-        #ff6a00; 
+input:focus,
+textarea:focus,
+select:focus {
+    border-color:
+        #ff6a00;
 
-    box-shadow: 
-        0 0 0 3px 
-        rgba(255, 106, 0, 0.10); 
-} 
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
+}
 
 
 /* =========================================================
    CHECKBOX
    ========================================================= */
 
-input[type="checkbox"] { 
-    width: 
-        1.2rem; 
+input[type="checkbox"] {
+    width:
+        1.2rem;
 
-    height: 
-        1.2rem; 
+    height:
+        1.2rem;
 
-    margin: 
-        0; 
+    margin:
+        0;
 
-    cursor: 
-        pointer; 
+    cursor:
+        pointer;
 
-    accent-color: 
-        #ff6a00; 
-} 
+    accent-color:
+        #ff6a00;
+}
 
 
 /* =========================================================
    BUTTONS
    ========================================================= */
 
-button { 
-    border: 
-        0; 
+button {
+    border:
+        0;
 
-    border-radius: 
-        var(--radius-small); 
+    border-radius:
+        var(--radius-small);
 
-    padding: 
-        0.6rem 1rem; 
+    padding:
+        0.6rem 1rem;
 
-    background: 
-        linear-gradient( 
-            135deg, 
-            #ff7415, 
-            #ff5d00 
-        ) !important; 
+    background:
+        linear-gradient(
+            135deg,
+            #ff7415,
+            #ff5d00
+        ) !important;
 
-    color: 
-        #ffffff !important; 
+    color:
+        #ffffff !important;
 
-    font-family: 
-        inherit; 
+    font-family:
+        inherit;
 
-    font-weight: 
-        700; 
+    font-weight:
+        700;
 
-    cursor: 
-        pointer; 
+    cursor:
+        pointer;
 
-    box-shadow: 
-        0 3px 9px 
-        rgba(255, 106, 0, 0.16); 
+    box-shadow:
+        0 3px 9px
+        rgba(255, 106, 0, 0.16);
 
-    transition: 
-        background 0.15s ease, 
-        transform 0.15s ease, 
-        box-shadow 0.15s ease; 
-} 
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
 
-button:hover { 
-    background: 
-        linear-gradient( 
-            135deg, 
-            #ff7a1a, 
-            #e95700 
-        ) !important; 
+button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #ff7a1a,
+            #e95700
+        ) !important;
 
-    transform: 
-        translateY(-1px); 
+    transform:
+        translateY(-1px);
 
-    box-shadow: 
-        var(--shadow-orange); 
-} 
+    box-shadow:
+        var(--shadow-orange);
+}
 
-button:active { 
-    transform: 
-        translateY(0); 
-} 
+button:active {
+    transform:
+        translateY(0);
+}
 
 
 /* =========================================================
    SECONDARY BUTTON
    ========================================================= */
 
-button.secondary, 
-.secondary-button { 
-    background: 
-        #1b1e24 !important; 
+button.secondary,
+.secondary-button {
+    background:
+        #1b1e24 !important;
 
-    color: 
-        #dfe1e5 !important; 
+    color:
+        #dfe1e5 !important;
 
-    border: 
-        1px solid #30343c; 
+    border:
+        1px solid #30343c;
 
-    box-shadow: 
-        none; 
-} 
+    box-shadow:
+        none;
+}
 
-button.secondary:hover, 
-.secondary-button:hover { 
-    background: 
-        #22252c !important; 
+button.secondary:hover,
+.secondary-button:hover {
+    background:
+        #22252c !important;
 
-    color: 
-        #ff7612 !important; 
+    color:
+        #ff7612 !important;
 
-    border-color: 
-        #ff6a00; 
+    border-color:
+        #ff6a00;
 
-    box-shadow: 
-        none; 
-} 
+    box-shadow:
+        none;
+}
 
 
 /* =========================================================
    LINKS
    ========================================================= */
 
-a { 
-    color: 
-        #ff7612; 
+a {
+    color:
+        #ff7612;
 
-    text-decoration: 
-        none; 
+    text-decoration:
+        none;
 
-    font-weight: 
-        600; 
+    font-weight:
+        600;
 
-    transition: 
-        color 0.15s ease; 
-} 
+    transition:
+        color 0.15s ease;
+}
 
-a:hover { 
-    color: 
-        #ff913d; 
+a:hover {
+    color:
+        #ff913d;
 
-    text-decoration: 
-        underline; 
-} 
+    text-decoration:
+        underline;
+}
 
 
 /* =========================================================
    TYPOGRAPHY
    ========================================================= */
 
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
-h6 { 
-    color: 
-        #f5f6f7 !important; 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color:
+        #f5f6f7 !important;
 
-    letter-spacing: 
-        -0.02em; 
-} 
+    letter-spacing:
+        -0.02em;
+}
 
-p { 
-    color: 
-        #969ba5 !important; 
+p {
+    color:
+        #969ba5 !important;
 
-    line-height: 
-        1.6; 
-} 
+    line-height:
+        1.6;
+}
 
 
 /* =========================================================
    INFO BOX
    ========================================================= */
 
-.info-box { 
-    padding: 
-        1rem 1.1rem; 
+.info-box {
+    padding:
+        1rem 1.1rem;
 
-    margin-bottom: 
-        1rem; 
+    margin-bottom:
+        1rem;
 
-    background: 
-        rgba(255, 106, 0, 0.08); 
+    background:
+        rgba(255, 106, 0, 0.08);
 
-    border: 
-        1px solid 
-        rgba(255, 106, 0, 0.2); 
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.2);
 
-    border-radius: 
-        var(--radius); 
+    border-radius:
+        var(--radius);
 
-    color: 
-        #ffb27a; 
-} 
+    color:
+        #ffb27a;
+}
 
 
 /* =========================================================
    BADGES
    ========================================================= */
 
-.badge { 
-    display: 
-        inline-flex; 
+.badge {
+    display:
+        inline-flex;
 
-    align-items: 
-        center; 
+    align-items:
+        center;
 
-    padding: 
-        0.3rem 0.65rem; 
+    padding:
+        0.3rem 0.65rem;
 
-    border-radius: 
-        999px; 
+    border-radius:
+        999px;
 
-    background: 
-        rgba(255, 106, 0, 0.1); 
+    background:
+        rgba(255, 106, 0, 0.1);
 
-    border: 
-        1px solid 
-        rgba(255, 106, 0, 0.18); 
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.18);
 
-    color: 
-        #ff7612; 
+    color:
+        #ff7612;
 
-    font-size: 
-        0.7rem; 
+    font-size:
+        0.7rem;
 
-    font-weight: 
-        700; 
-} 
+    font-weight:
+        700;
+}
 
 
 /* =========================================================
    DIVIDERS
    ========================================================= */
 
-hr { 
-    border: 
-        0; 
+hr {
+    border:
+        0;
 
-    border-top: 
-        1px solid #292c34; 
+    border-top:
+        1px solid #292c34;
 
-    margin: 
-        1.25rem 0; 
-} 
+    margin:
+        1.25rem 0;
+}
 
 
 /* =========================================================
    SPINNER
    ========================================================= */
 
-.spinner { 
-    display: 
-        flex; 
+.spinner {
+    display:
+        flex;
 
-    align-items: 
-        center; 
+    align-items:
+        center;
 
-    justify-content: 
-        center; 
+    justify-content:
+        center;
 
-    grid-column: 
-        span 3; 
-} 
+    grid-column:
+        span 3;
+}
 
 
 /* =========================================================
    SCROLLBAR
    ========================================================= */
 
-::-webkit-scrollbar { 
-    width: 
-        8px; 
+::-webkit-scrollbar {
+    width:
+        8px;
 
-    height: 
-        8px; 
-} 
+    height:
+        8px;
+}
 
-::-webkit-scrollbar-track { 
-    background: 
-        transparent; 
-} 
+::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
 
-::-webkit-scrollbar-thumb { 
-    background: 
-        #30343c; 
+::-webkit-scrollbar-thumb {
+    background:
+        #30343c;
 
-    border-radius: 
-        999px; 
-} 
+    border-radius:
+        999px;
+}
 
-::-webkit-scrollbar-thumb:hover { 
-    background: 
-        #464b55; 
-} 
+::-webkit-scrollbar-thumb:hover {
+    background:
+        #464b55;
+}
 
 
 /* =========================================================
    MOBILE
    ========================================================= */
 
-@media screen and (max-width: 900px) { 
-    header, 
-    main { 
-        grid-template-columns: 
-            1fr; 
-    } 
+@media screen and (max-width: 900px) {
 
-    main { 
-        height: 
-            auto; 
+    header,
+    main {
+        grid-template-columns:
+            1fr;
+    }
 
-        padding: 
-            1rem; 
-    } 
+    main {
+        height:
+            auto;
 
-    main > div { 
-        overflow: 
-            visible; 
-    } 
+        padding:
+            1rem;
+    }
 
-    header { 
-        min-height: 
-            4rem; 
+    main > div {
+        overflow:
+            visible;
+    }
 
-        padding: 
-            0 1rem; 
-    } 
+    header {
+        min-height:
+            4rem;
 
-    .guidelines-card__header { 
-        padding: 
-            1rem; 
-    } 
+        padding:
+            0 1rem;
+    }
 
-    .guidelines-card__body { 
-        padding: 
-            0.75rem; 
-    } 
-} 
+    .page-list .guidelines-card__header {
+        padding:
+            1rem;
+    }
 
-@media screen and (max-width: 600px) { 
-    .guidelines-card__heading span { 
-        display: 
-            none; 
-    } 
+    .page-list .guidelines-card__body {
+        padding:
+            0.75rem;
+    }
+}
 
-    .guidelines-card__footer { 
-        align-items: 
-            flex-start; 
 
-        flex-direction: 
-            column; 
+@media screen and (max-width: 600px) {
 
-        gap: 
-            0.25rem; 
-    } 
+    .page-list .guidelines-card__heading span {
+        display:
+            none;
+    }
+
+    .page-list .guidelines-card__footer {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            0.35rem;
+    }
 }
