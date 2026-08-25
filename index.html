@@ -34,46 +34,51 @@
         <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
         <script type="module" src="/js/main.js"></script>
     </head>
+
     <body id="app">
         <header :class="{ dark: store.dark }">
             <div class="logo">
                 <h2>BRSPL</h2>
                 <p>v1.0.0</p>
             </div>
+
             <nav class="nav">
                 <router-link class="nav__tab" to="/">
                     <span class="type-label-lg">List</span>
                 </router-link>
+
                 <router-link class="nav__tab" to="/leaderboard">
                     <span class="type-label-lg">Leaderboard</span>
                 </router-link>
+
                 <router-link class="nav__tab" to="/roulette">
                     <span class="type-label-lg">Roulette</span>
                 </router-link>
+
                 <div class="nav__actions">
-                    <button
+                    <!-- Replace the '#' with your discord server's invite-->
+                    <a
                         class="nav__icon"
-                        @click.prevent="store.toggleDark()"
+                        href="https://discord.com/invite/WDtXcSzy24"
                     >
                         <img
-                            :src="store.dark ? '/assets/light.svg' : '/assets/dark.svg'"
-                            alt=""
+                            src="/assets/discord.png"
+                            alt="Discord Logo"
                         />
-                    </button>
-                    <!-- Replace the '#' with your discord server's invite-->
-                    <a class="nav__icon" href="https://discord.com/invite/WDtXcSzy24">
-                        <img src="/assets/discord.png" alt="Discord Logo" />
                     </a>
-                    <!-- List record submission form, add a link to replace the '#' when putting a link to your list submission form-->
+
+                    <!-- List record submission form -->
                     <a
                         class="nav__cta type-label-lg"
                         href="#"
                         target="_blank"
-                        >Submit Record</a
                     >
+                        Submit Record
+                    </a>
                 </div>
             </nav>
         </header>
+
         <router-view :class="{ dark: store.dark }"></router-view>
     </body>
 </html>
