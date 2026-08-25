@@ -1,18 +1,11 @@
 {
-    "id": 57436521,
-    "name": "NeededLevel",
-    "author": "NeededUser",
-    "creators": ["NeededCreator"],
-    "verifier": "NeededVerifier",
-    "verification": "https://www.youtube.com/watch?v=uPF6kd94HXU",
+    "id": 140970713,
+    "name": "Sonic Spider",
+    "author": "derkomische257er",
+    "creators": ["derkomische257er"],
+    "verifier": "derkomische257er",
+    "verification": "https://youtu.be/dB6mFTWx83Y",
     "percentToQualify": 100,
-    "password": "Not Copyable",
-    "records": [
-        {
-            "user": "NeededVictor",
-            "link": "https://www.youtube.com/watch?v=MgJeijBGKHU",
-            "percent": 100,
-            "hz": 240
-        }
-    ]
+    "password": "Kein Passwort",
+    "records": []
 }
