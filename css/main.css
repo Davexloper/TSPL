@@ -385,7 +385,7 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   MOBILE
+   MOBILE EDITORS
    ========================================================= */
 
 @media screen and (max-width: 600px) {
@@ -404,6 +404,7 @@ input[type="checkbox"] {
     }
 
 }
+
 
 /* =========================================================
    GUIDELINES / REQUIREMENTS BOX
