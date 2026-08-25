@@ -50,7 +50,7 @@ body {
 
 
 /* =========================================================
-   HEADER / TOP BAR
+   HEADER
    ========================================================= */
 
 header,
@@ -67,9 +67,6 @@ main {
 
     column-gap: 2rem;
 }
-
-
-/* White top bar */
 
 header {
     display: flex;
@@ -122,7 +119,9 @@ header .nav {
 }
 
 
-/* Header links */
+/* =========================================================
+   HEADER LINKS
+   ========================================================= */
 
 header a {
     color: #33363c !important;
@@ -249,155 +248,55 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   GUIDELINES MAIN BOX
+   GUIDELINES / REQUIREMENTS BOX
    ========================================================= */
 
-/*
-   This is the box around the COMPLETE guidelines area.
-*/
-
-.guidelines-card {
-    position: relative;
-
+.page-list .requirements-box {
     width: 100%;
 
     box-sizing: border-box;
 
-    margin-bottom: 1.25rem;
+    margin-top: 1.5rem;
 
-    background: #ffffff !important;
+    padding: 1.25rem;
 
-    color: #17181c !important;
+    background: #f3f4f6;
+
+    color: #24262b;
 
     border:
-        1px solid #dfe2e6;
+        1px solid #dfe1e5;
 
     border-radius:
-        16px;
-
-    overflow: hidden;
+        14px;
 
     box-shadow:
-        0 6px 22px rgba(0, 0, 0, 0.06);
+        0 5px 18px rgba(0, 0, 0, 0.055);
 
     transition:
-        transform 160ms ease,
-        box-shadow 160ms ease,
-        border-color 160ms ease;
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
 }
 
-.guidelines-card:hover {
-    transform:
-        translateY(-2px);
-
+.page-list .requirements-box:hover {
     border-color:
-        #d2d5da;
+        #d3d6db;
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.08);
+        0 9px 24px rgba(0, 0, 0, 0.07);
 }
 
 
 /* =========================================================
-   GUIDELINES HEADER
+   GUIDELINES TITLE
    ========================================================= */
 
-.guidelines-card__header {
-    position: relative;
+.page-list .requirements-box h3 {
+    margin:
+        0 0 1rem 0;
 
-    display: flex;
-
-    align-items: center;
-
-    gap: 0.85rem;
-
-    padding:
-        1.15rem 1.25rem;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #fff8f2 100%
-        ) !important;
-
-    border-bottom:
-        1px solid #ececef;
-}
-
-.guidelines-card__header::before {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    top: 0;
-
-    bottom: 0;
-
-    width: 4px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ff7a1a,
-            #ff5c00
-        );
-}
-
-
-/* =========================================================
-   GUIDELINES ICON
-   ========================================================= */
-
-.guidelines-card__icon {
-    width: 38px;
-
-    height: 38px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius:
-        10px;
-
-    background:
-        #fff0e3;
-
-    color:
-        #ff6a00 !important;
-
-    border:
-        1px solid rgba(255, 106, 0, 0.12);
-
-    font-size:
-        1rem;
-
-    font-weight:
-        700;
-}
-
-
-/* =========================================================
-   GUIDELINES HEADING
-   ========================================================= */
-
-.guidelines-card__heading {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 0.15rem;
-}
-
-.guidelines-card__heading h3 {
-    margin: 0;
+    padding-bottom:
+        0.85rem;
 
     color:
         #17181c !important;
@@ -406,82 +305,120 @@ input[type="checkbox"] {
         1.05rem;
 
     font-weight:
-        700;
+        750;
 
     letter-spacing:
-        -0.025em;
-}
+        -0.02em;
 
-.guidelines-card__heading span {
-    color:
-        #858991 !important;
-
-    font-size:
-        0.72rem;
-
-    line-height:
-        1.4;
+    border-bottom:
+        1px solid #dfe1e5;
 }
 
 
 /* =========================================================
-   GUIDELINES BODY
+   INDIVIDUAL GUIDELINES
    ========================================================= */
 
-.guidelines-card__body {
-    display: flex;
+.page-list .requirements-box p {
+    position: relative;
 
-    flex-direction: column;
-
-    gap:
-        0.55rem;
+    margin:
+        0 0 0.6rem 0;
 
     padding:
-        1rem;
-
-    background:
-        #ffffff !important;
-}
-
-
-/* =========================================================
-   INDIVIDUAL GUIDELINE BOX
-   ========================================================= */
-
-.guidelines-card .guideline {
-    display: flex;
-
-    align-items: flex-start;
-
-    gap:
-        0.75rem;
-
-    padding:
-        0.85rem;
+        0.75rem 0.85rem 0.75rem 2.4rem;
 
     background:
         #ffffff !important;
 
     color:
-        #24262b !important;
+        #5f636b !important;
 
     border:
-        1px solid #eceef1;
+        1px solid #e2e4e8;
 
     border-radius:
-        10px;
+        9px;
 
     box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.025);
+        0 1px 4px rgba(0, 0, 0, 0.025);
+
+    font-size:
+        0.75rem;
+
+    line-height:
+        1.55;
 
     transition:
-        border-color 140ms ease,
-        background 140ms ease,
-        transform 140ms ease,
-        box-shadow 140ms ease;
+        border-color 0.15s ease,
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-.guidelines-card .guideline:hover {
+.page-list .requirements-box p:last-child {
+    margin-bottom:
+        0;
+}
+
+
+/* =========================================================
+   GUIDELINE CHECK ICON
+   ========================================================= */
+
+.page-list .requirements-box p::before {
+    content:
+        "✓";
+
+    position:
+        absolute;
+
+    left:
+        0.8rem;
+
+    top:
+        50%;
+
+    transform:
+        translateY(-50%);
+
+    width:
+        20px;
+
+    height:
+        20px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        6px;
+
+    background:
+        #fff0e3;
+
+    color:
+        #ff6a00;
+
+    font-size:
+        0.65rem;
+
+    font-weight:
+        800;
+}
+
+
+/* =========================================================
+   GUIDELINE HOVER
+   ========================================================= */
+
+.page-list .requirements-box p:hover {
     background:
         #fffaf6 !important;
 
@@ -492,146 +429,13 @@ input[type="checkbox"] {
         translateX(2px);
 
     box-shadow:
-        0 5px 14px rgba(0, 0, 0, 0.05);
-}
-
-
-/* =========================================================
-   GUIDELINE NUMBER
-   ========================================================= */
-
-.guideline__number {
-    width:
-        28px;
-
-    height:
-        28px;
-
-    flex-shrink:
-        0;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border-radius:
-        8px;
-
-    background:
-        #fff1e5;
-
-    color:
-        #ff6500 !important;
-
-    border:
-        1px solid rgba(255, 106, 0, 0.12);
-
-    font-size:
-        0.63rem;
-
-    font-weight:
-        700;
-}
-
-
-/* =========================================================
-   GUIDELINE TEXT
-   ========================================================= */
-
-.guideline__text {
-    min-width:
-        0;
-
-    flex:
-        1;
-}
-
-.guideline__text strong {
-    display:
-        block;
-
-    margin-bottom:
-        0.2rem;
-
-    color:
-        #24262b !important;
-
-    font-size:
-        0.78rem;
-
-    font-weight:
-        700;
-}
-
-.guideline__text p {
-    margin:
-        0;
-
-    color:
-        #777b83 !important;
-
-    font-size:
-        0.7rem;
-
-    line-height:
-        1.5;
-}
-
-
-/* =========================================================
-   GUIDELINES FOOTER
-   ========================================================= */
-
-.guidelines-card__footer {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        1rem;
-
-    padding:
-        0.7rem 1rem;
-
-    background:
-        #fafafa !important;
-
-    border-top:
-        1px solid #ececef;
-
-    color:
-        #9a9da3 !important;
-
-    font-size:
-        0.65rem;
-}
-
-.guidelines-card__status {
-    color:
-        #22a06b !important;
-
-    font-weight:
-        700;
+        0 4px 12px rgba(0, 0, 0, 0.045);
 }
 
 
 /* =========================================================
    DISCORD
    ========================================================= */
-
-/*
-   Discord is ALWAYS blue.
-*/
 
 .discord,
 .discord-link,
@@ -1226,31 +1030,25 @@ hr {
             0 1rem;
     }
 
-    .guidelines-card__header {
-        padding:
+    .requirements-box {
+        margin-top:
             1rem;
-    }
-
-    .guidelines-card__body {
-        padding:
-            0.75rem;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .guidelines-card__heading span {
-        display:
-            none;
+    .requirements-box {
+        padding:
+            0.85rem;
     }
 
-    .guidelines-card__footer {
-        align-items:
-            flex-start;
+    .requirements-box h3 {
+        font-size:
+            1rem;
+    }
 
-        flex-direction:
-            column;
-
-        gap:
-            0.25rem;
+    .requirements-box p {
+        padding:
+            0.7rem 0.7rem 0.7rem 2.25rem;
     }
 }
