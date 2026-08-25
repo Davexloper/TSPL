@@ -1,30 +1,42 @@
 :root {
     --color-background: #f5f6f8;
-    --color-surface: #ffffff;
-    --color-surface-secondary: #fafafa;
+    --color-on-background: #17181c;
 
-    --color-text: #17181c;
-    --color-text-secondary: #737780;
-    --color-text-muted: #9a9ea6;
-
-    --color-border: #e7e8eb;
-    --color-border-hover: #d8dade;
+    --color-background-hover: #f0f1f3;
+    --color-on-background-hover: #17181c;
 
     --color-primary: #ff6a00;
     --color-primary-hover: #e85f00;
-    --color-primary-light: #fff3e8;
+    --color-primary-light: #fff1e6;
+    --color-on-primary: #ffffff;
 
-    --color-success: #22a06b;
-    --color-error: #d93025;
+    --color-surface: #ffffff;
+    --color-surface-secondary: #fafafa;
 
-    --shadow-card:
-        0 4px 18px rgba(0, 0, 0, 0.055);
+    --color-border: #e5e7eb;
+    --color-border-hover: #d6d9de;
 
-    --shadow-hover:
-        0 10px 30px rgba(0, 0, 0, 0.08);
+    --color-text-secondary: #777b83;
+    --color-text-muted: #999da5;
 
-    --radius: 14px;
-    --radius-small: 9px;
+    --color-error: #de0000;
+    --color-on-error: #ffffff;
+
+    --shadow-xs:
+        0 1px 3px rgba(0, 0, 0, 0.04);
+
+    --shadow-sm:
+        0 4px 14px rgba(0, 0, 0, 0.055);
+
+    --shadow-md:
+        0 10px 28px rgba(0, 0, 0, 0.075);
+
+    --shadow-orange:
+        0 8px 24px rgba(255, 106, 0, 0.16);
+
+    --radius-small: 8px;
+    --radius: 12px;
+    --radius-large: 16px;
 }
 
 html,
@@ -33,19 +45,20 @@ body {
 }
 
 body {
-    margin: 0;
-
     display: flex;
     flex-direction: column;
+
+    margin: 0;
 
     background:
         linear-gradient(
             180deg,
             #ffffff 0,
-            #f5f6f8 220px
+            #f5f6f8 220px,
+            #f5f6f8 100%
         );
 
-    color: var(--color-text);
+    color: var(--color-on-background);
 
     font-family:
         "Lexend Deca",
@@ -56,20 +69,20 @@ body {
 }
 
 
-/* =========================================
+/* =========================================================
    HEADER
-   ========================================= */
+   ========================================================= */
 
 header {
+    display: flex;
+
     height: 4rem;
 
     padding-inline: calc(25vw - 10rem);
 
-    display: flex;
-
     background: #ffffff;
 
-    color: var(--color-text);
+    color: var(--color-on-background);
 
     border-bottom:
         1px solid var(--color-border);
@@ -77,12 +90,15 @@ header {
     box-shadow:
         0 2px 10px rgba(0, 0, 0, 0.035);
 
+    position: relative;
+
     z-index: 10;
 }
 
 @media screen and (min-width: 1366px) {
     header {
         display: grid;
+
         padding-inline: 0;
     }
 }
@@ -92,36 +108,70 @@ header .logo {
     align-self: center;
 
     display: flex;
+
     align-items: center;
 
-    gap: 0.8rem;
+    gap: 0.75rem;
 }
 
 header .logo::before {
     content: "";
 
-    width: 9px;
-    height: 28px;
+    width: 8px;
+    height: 26px;
 
     border-radius: 999px;
 
-    background: var(--color-primary);
+    background:
+        linear-gradient(
+            180deg,
+            #ff7a1a,
+            #ff5a00
+        );
 }
 
 header .nav {
     flex: 1;
 
     display: flex;
+
     align-items: center;
 }
 
 
-/* =========================================
-   MAIN
-   ========================================= */
+/* =========================================================
+   HEADER NAVIGATION
+   ========================================================= */
+
+header a {
+    color: var(--color-on-background);
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition:
+        color 0.15s ease,
+        background 0.15s ease;
+}
+
+header a:hover {
+    color: var(--color-primary);
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
 
 header,
 main {
+    background-color: var(--color-background);
+
+    color: var(--color-on-background);
+
     display: grid;
 
     grid-template-columns:
@@ -132,67 +182,455 @@ main {
     column-gap: 2rem;
 }
 
+header {
+    background: #ffffff;
+}
+
 main {
     height: 0;
 
     flex: 1;
 
+    display: grid;
+
     grid-template-rows:
         minmax(0, 1fr);
 
+    column-gap: 2rem;
+
     padding-top: 1.5rem;
+
     padding-bottom: 1.5rem;
 }
 
 main > div {
     overflow-y: auto;
+
+    min-width: 0;
 }
 
 
-/* =========================================
-   EDITOR CONTAINER
-   ========================================= */
+/* =========================================================
+   GENERIC CARDS
+   ========================================================= */
 
-/*
-    Das ist die große Box für den gesamten
-    Richtlinien-Editor.
-*/
-
-.editor,
-.editor-container,
-.guidelines-editor,
-.rules-editor {
+.card,
+.panel,
+.section,
+.rules,
+.guidelines,
+.requirements {
     background: var(--color-surface);
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-large);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.card:hover,
+.panel:hover,
+.section:hover,
+.rules:hover,
+.guidelines:hover,
+.requirements:hover {
+    border-color: var(--color-border-hover);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   GUIDELINES CARD
+   ========================================================= */
+
+.guidelines-card {
+    position: relative;
+
+    background: #ffffff;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    margin-bottom: 1.25rem;
+
+    box-shadow:
+        0 6px 22px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.guidelines-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #d9dce1;
+
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.085);
+}
+
+
+/* =========================================================
+   GUIDELINES HEADER
+   ========================================================= */
+
+.guidelines-card__header {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.85rem;
+
+    padding:
+        1.15rem 1.25rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #fff8f2 100%
+        );
+
+    border-bottom:
+        1px solid #ececef;
+}
+
+.guidelines-card__header::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    bottom: 0;
+
+    width: 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ff7a1a,
+            #ff5a00
+        );
+}
+
+
+/* =========================================================
+   GUIDELINES ICON
+   ========================================================= */
+
+.guidelines-card__icon {
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0e3,
+            #ffe7d3
+        );
+
+    color: #ff6500;
+
+    font-size: 1rem;
+
+    font-weight: 800;
+
+    box-shadow:
+        inset 0 0 0 1px
+        rgba(255, 106, 0, 0.06);
+}
+
+
+/* =========================================================
+   GUIDELINES HEADING
+   ========================================================= */
+
+.guidelines-card__heading {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.15rem;
+
+    min-width: 0;
+}
+
+.guidelines-card__heading h3 {
+    margin: 0;
+
+    color: #17181c;
+
+    font-size: 1.05rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.025em;
+}
+
+.guidelines-card__heading span {
+    color: #858991;
+
+    font-size: 0.72rem;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   GUIDELINES BODY
+   ========================================================= */
+
+.guidelines-card__body {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.55rem;
+
+    padding:
+        1rem;
+}
+
+
+/* =========================================================
+   INDIVIDUAL GUIDELINE
+   ========================================================= */
+
+.guidelines-card .guideline {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 0.75rem;
+
+    padding:
+        0.85rem;
+
+    background: #ffffff;
+
+    border:
+        1px solid #eceef1;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.02);
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.guidelines-card .guideline:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fffaf6
+        );
+
+    border-color:
+        rgba(255, 106, 0, 0.28);
+
+    transform:
+        translateX(2px);
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.045);
+}
+
+
+/* =========================================================
+   GUIDELINE NUMBER
+   ========================================================= */
+
+.guideline__number {
+    width: 28px;
+
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 1px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff1e5,
+            #ffe5d0
+        );
+
+    color: #ff6500;
+
+    font-size: 0.63rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   GUIDELINE TEXT
+   ========================================================= */
+
+.guideline__text {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.guideline__text strong {
+    display: block;
+
+    margin-bottom: 0.2rem;
+
+    color: #24262b;
+
+    font-size: 0.78rem;
+
+    font-weight: 700;
+}
+
+.guideline__text p {
+    margin: 0;
+
+    color: #777b83;
+
+    font-size: 0.7rem;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   GUIDELINES FOOTER
+   ========================================================= */
+
+.guidelines-card__footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    padding:
+        0.7rem 1rem;
+
+    background: #fafafa;
+
+    border-top:
+        1px solid #ececef;
+
+    color: #999da5;
+
+    font-size: 0.65rem;
+}
+
+.guidelines-card__status {
+    color: #22a06b;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RULE CARDS
+   ========================================================= */
+
+.rule,
+.requirement {
+    padding: 1.1rem;
+
+    margin-bottom: 0.75rem;
+
+    background: #ffffff;
 
     border:
         1px solid var(--color-border);
 
     border-radius: var(--radius);
 
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--shadow-xs);
+
+    transition:
+        transform 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.rule:hover,
+.requirement:hover {
+    transform: translateY(-1px);
+
+    border-color:
+        rgba(255, 106, 0, 0.25);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   EDITOR
+   ========================================================= */
+
+.editor,
+.editor-container,
+.guidelines-editor,
+.rules-editor {
+    background: #ffffff;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-large);
 
     overflow: hidden;
 
-    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
 
-    transition:
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
+    margin-bottom: 1rem;
 }
-
-.editor:hover,
-.editor-container:hover,
-.guidelines-editor:hover,
-.rules-editor:hover {
-    border-color: var(--color-border-hover);
-
-    box-shadow: var(--shadow-hover);
-}
-
-
-/* =========================================
-   EDITOR HEADER
-   ========================================= */
 
 .editor-header,
 .editor-title,
@@ -204,7 +642,7 @@ main > div {
 
     justify-content: space-between;
 
-    min-height: 60px;
+    min-height: 58px;
 
     padding:
         0 1.25rem;
@@ -214,57 +652,6 @@ main > div {
     border-bottom:
         1px solid var(--color-border);
 }
-
-.editor-header h1,
-.editor-header h2,
-.editor-title h1,
-.editor-title h2,
-.guidelines-header h1,
-.guidelines-header h2,
-.rules-header h1,
-.rules-header h2 {
-    margin: 0;
-
-    font-size: 1rem;
-
-    font-weight: 700;
-
-    letter-spacing: -0.02em;
-}
-
-
-/* =========================================
-   EDITOR ICON
-   ========================================= */
-
-.editor-header::before,
-.guidelines-header::before,
-.rules-header::before {
-    content: "✎";
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 34px;
-    height: 34px;
-
-    margin-right: 0.75rem;
-
-    border-radius: 9px;
-
-    background: var(--color-primary-light);
-
-    color: var(--color-primary);
-
-    font-size: 0.95rem;
-}
-
-
-/* =========================================
-   EDITOR BODY
-   ========================================= */
 
 .editor-body,
 .editor-content,
@@ -276,9 +663,9 @@ main > div {
 }
 
 
-/* =========================================
+/* =========================================================
    TOOLBAR
-   ========================================= */
+   ========================================================= */
 
 .toolbar,
 .editor-toolbar {
@@ -286,31 +673,33 @@ main > div {
 
     align-items: center;
 
-    gap: 0.4rem;
+    gap: 0.35rem;
 
     padding:
-        0.65rem 0.8rem;
+        0.55rem 0.7rem;
 
-    background: var(--color-surface-secondary);
+    margin-bottom: 0.85rem;
+
+    background: #fafafa;
 
     border:
         1px solid var(--color-border);
 
     border-radius: var(--radius-small);
-
-    margin-bottom: 1rem;
 }
 
 .toolbar button,
 .editor-toolbar button {
-    min-width: 34px;
-    height: 34px;
+    width: 32px;
+
+    height: 32px;
 
     padding: 0;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     background: transparent;
@@ -336,25 +725,18 @@ main > div {
 }
 
 
-/* =========================================
+/* =========================================================
    TEXT EDITOR
-   ========================================= */
+   ========================================================= */
 
-[contenteditable="true"],
-.editor textarea,
-.guidelines textarea,
-.rules textarea {
-    width: 100%;
-
-    min-height: 180px;
-
-    box-sizing: border-box;
+[contenteditable="true"] {
+    min-height: 160px;
 
     padding: 1rem;
 
     background: #ffffff;
 
-    color: var(--color-text);
+    color: var(--color-on-background);
 
     border:
         1px solid var(--color-border);
@@ -363,10 +745,6 @@ main > div {
 
     outline: none;
 
-    resize: vertical;
-
-    font-family: inherit;
-
     line-height: 1.6;
 
     transition:
@@ -374,10 +752,7 @@ main > div {
         box-shadow 0.15s ease;
 }
 
-[contenteditable="true"]:focus,
-.editor textarea:focus,
-.guidelines textarea:focus,
-.rules textarea:focus {
+[contenteditable="true"]:focus {
     border-color: var(--color-primary);
 
     box-shadow:
@@ -386,207 +761,9 @@ main > div {
 }
 
 
-/* =========================================
-   SAVE / ACTION BAR
-   ========================================= */
-
-.editor-actions,
-.editor-footer,
-.guidelines-actions,
-.rules-actions {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: flex-end;
-
-    gap: 0.6rem;
-
-    padding:
-        0.9rem 1.25rem;
-
-    background: #fafafa;
-
-    border-top:
-        1px solid var(--color-border);
-}
-
-
-/* =========================================
-   BUTTONS
-   ========================================= */
-
-button {
-    border: 0;
-
-    border-radius: var(--radius-small);
-
-    padding:
-        0.6rem 1rem;
-
-    background: var(--color-primary);
-
-    color: #ffffff;
-
-    font-family: inherit;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        transform 0.15s ease,
-        background 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-button:hover {
-    background: var(--color-primary-hover);
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 5px 14px
-        rgba(255, 106, 0, 0.20);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-
-/* Secondary button */
-
-button.secondary,
-.secondary-button {
-    background: #ffffff;
-
-    color: var(--color-text);
-
-    border:
-        1px solid var(--color-border);
-
-    box-shadow: none;
-}
-
-button.secondary:hover,
-.secondary-button:hover {
-    background: #f7f7f8;
-
-    color: var(--color-primary);
-
-    border-color:
-        var(--color-primary);
-}
-
-
-/* =========================================
-   GUIDELINE ITEMS
-   ========================================= */
-
-.guideline-item,
-.rule-item,
-.requirement-item {
-    display: flex;
-
-    align-items: flex-start;
-
-    gap: 0.9rem;
-
-    padding: 1rem;
-
-    margin-bottom: 0.7rem;
-
-    background: #ffffff;
-
-    border:
-        1px solid var(--color-border);
-
-    border-radius: var(--radius-small);
-
-    transition:
-        border-color 0.15s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.guideline-item:hover,
-.rule-item:hover,
-.requirement-item:hover {
-    border-color:
-        var(--color-primary);
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 5px 14px rgba(0, 0, 0, 0.045);
-}
-
-
-/* =========================================
-   NUMBER / ICON
-   ========================================= */
-
-.guideline-number,
-.rule-number,
-.requirement-number {
-    flex-shrink: 0;
-
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 8px;
-
-    background: var(--color-primary-light);
-
-    color: var(--color-primary);
-
-    font-size: 0.8rem;
-
-    font-weight: 800;
-}
-
-
-/* =========================================
-   NORMAL CARDS
-   ========================================= */
-
-.card,
-.panel,
-.rules,
-.guidelines,
-.requirements {
-    background: #ffffff;
-
-    border:
-        1px solid var(--color-border);
-
-    border-radius: var(--radius);
-
-    box-shadow: var(--shadow-card);
-
-    padding: 1.25rem;
-
-    margin-bottom: 1rem;
-}
-
-.card:hover,
-.panel:hover,
-.rules:hover,
-.guidelines:hover,
-.requirements:hover {
-    box-shadow: var(--shadow-hover);
-}
-
-
-/* =========================================
+/* =========================================================
    INPUTS
-   ========================================= */
+   ========================================================= */
 
 input,
 textarea,
@@ -595,7 +772,7 @@ select {
 
     background: #ffffff;
 
-    color: var(--color-text);
+    color: var(--color-on-background);
 
     border:
         1px solid var(--color-border);
@@ -614,10 +791,18 @@ select {
         box-shadow 0.15s ease;
 }
 
+input:hover,
+textarea:hover,
+select:hover {
+    border-color:
+        var(--color-border-hover);
+}
+
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: var(--color-primary);
+    border-color:
+        var(--color-primary);
 
     box-shadow:
         0 0 0 3px
@@ -625,61 +810,286 @@ select:focus {
 }
 
 
-/* =========================================
+/* =========================================================
    CHECKBOX
-   ========================================= */
+   ========================================================= */
 
 input[type="checkbox"] {
     width: 1.2rem;
+
     height: 1.2rem;
 
     margin: 0;
 
     cursor: pointer;
 
-    accent-color: var(--color-primary);
+    accent-color:
+        var(--color-primary);
 }
 
 
-/* =========================================
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button {
+    border: 0;
+
+    border-radius: var(--radius-small);
+
+    padding:
+        0.6rem 1rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7415,
+            #ff5d00
+        );
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 3px 8px
+        rgba(255, 106, 0, 0.16);
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+button:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #ff6a00,
+            #e95700
+        );
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        var(--shadow-orange);
+}
+
+button:active {
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+button.secondary,
+.secondary-button {
+    background: #ffffff;
+
+    color: #44474e;
+
+    border:
+        1px solid var(--color-border);
+
+    box-shadow: none;
+}
+
+button.secondary:hover,
+.secondary-button:hover {
+    background:
+        #fafafa;
+
+    color:
+        var(--color-primary);
+
+    border-color:
+        var(--color-primary);
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   EDITOR ACTIONS
+   ========================================================= */
+
+.editor-actions,
+.editor-footer,
+.guidelines-actions,
+.rules-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 0.6rem;
+
+    padding:
+        0.85rem 1.25rem;
+
+    background: #fafafa;
+
+    border-top:
+        1px solid var(--color-border);
+}
+
+
+/* =========================================================
    LINKS
-   ========================================= */
+   ========================================================= */
 
 a {
-    color: var(--color-primary);
+    color:
+        var(--color-primary);
+
+    text-decoration: none;
 
     font-weight: 600;
 
-    text-decoration: none;
+    transition:
+        color 0.15s ease;
 }
 
 a:hover {
-    color: var(--color-primary-hover);
+    color:
+        var(--color-primary-hover);
 
     text-decoration: underline;
 }
 
 
-/* =========================================
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color:
+        var(--color-on-background);
+
+    letter-spacing:
+        -0.02em;
+}
+
+p {
+    color:
+        var(--color-text-secondary);
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding:
+        0.3rem 0.65rem;
+
+    border-radius: 999px;
+
+    background:
+        var(--color-primary-light);
+
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.15);
+
+    color:
+        var(--color-primary);
+
+    font-size:
+        0.7rem;
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.info-box {
+    padding:
+        1rem 1.1rem;
+
+    margin-bottom:
+        1rem;
+
+    background:
+        var(--color-primary-light);
+
+    border:
+        1px solid
+        rgba(255, 106, 0, 0.18);
+
+    border-radius:
+        var(--radius);
+
+    color:
+        #70401e;
+}
+
+
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
+
+hr {
+    border: 0;
+
+    border-top:
+        1px solid var(--color-border);
+
+    margin:
+        1.25rem 0;
+}
+
+
+/* =========================================================
    SPINNER
-   ========================================= */
+   ========================================================= */
 
 .spinner {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    grid-column: span 3;
+    grid-column:
+        span 3;
 }
 
 
-/* =========================================
+/* =========================================================
    SCROLLBAR
-   ========================================= */
+   ========================================================= */
 
 ::-webkit-scrollbar {
     width: 8px;
+
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -687,19 +1097,22 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #d8dadd;
+    background:
+        #d5d8dd;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #b8bbc1;
+    background:
+        #b8bcc3;
 }
 
 
-/* =========================================
+/* =========================================================
    MOBILE
-   ========================================= */
+   ========================================================= */
 
 @media screen and (max-width: 900px) {
     header,
@@ -710,7 +1123,8 @@ a:hover {
     main {
         height: auto;
 
-        padding: 1rem;
+        padding:
+            1rem;
     }
 
     main > div {
@@ -722,5 +1136,29 @@ a:hover {
 
         padding:
             0 1rem;
+    }
+
+    .guidelines-card__header {
+        padding:
+            1rem;
+    }
+
+    .guidelines-card__body {
+        padding:
+            0.75rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .guidelines-card__heading span {
+        display: none;
+    }
+
+    .guidelines-card__footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 0.25rem;
     }
 }
