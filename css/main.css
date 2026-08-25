@@ -1,44 +1,31 @@
 :root {
-    --color-background: #f6f7f9;
+    --color-background: #f5f6f8;
     --color-surface: #ffffff;
-    --color-surface-hover: #fafafa;
+    --color-surface-secondary: #fafafa;
 
-    --color-on-background: #17181c;
-    --color-on-surface: #17181c;
-    --color-on-surface-muted: #6b7078;
+    --color-text: #17181c;
+    --color-text-secondary: #737780;
+    --color-text-muted: #9a9ea6;
 
-    --color-border: #e6e8ec;
-    --color-border-hover: #d7dbe1;
+    --color-border: #e7e8eb;
+    --color-border-hover: #d8dade;
 
     --color-primary: #ff6a00;
-    --color-primary-hover: #eb5f00;
+    --color-primary-hover: #e85f00;
     --color-primary-light: #fff3e8;
-    --color-primary-border: #ffd6b8;
 
+    --color-success: #22a06b;
     --color-error: #d93025;
-    --color-on-error: #ffffff;
 
-    --shadow-xs:
-        0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-card:
+        0 4px 18px rgba(0, 0, 0, 0.055);
 
-    --shadow-sm:
-        0 3px 10px rgba(0, 0, 0, 0.055);
+    --shadow-hover:
+        0 10px 30px rgba(0, 0, 0, 0.08);
 
-    --shadow-md:
-        0 8px 24px rgba(0, 0, 0, 0.075);
-
-    --shadow-orange:
-        0 8px 24px rgba(255, 106, 0, 0.16);
-
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
+    --radius: 14px;
+    --radius-small: 9px;
 }
-
-
-/* =========================================================
-   BASE
-   ========================================================= */
 
 html,
 body {
@@ -46,20 +33,19 @@ body {
 }
 
 body {
+    margin: 0;
+
     display: flex;
     flex-direction: column;
-
-    margin: 0;
 
     background:
         linear-gradient(
             180deg,
             #ffffff 0,
-            #f6f7f9 160px,
-            #f6f7f9 100%
+            #f5f6f8 220px
         );
 
-    color: var(--color-on-background);
+    color: var(--color-text);
 
     font-family:
         "Lexend Deca",
@@ -70,30 +56,26 @@ body {
 }
 
 
-/* =========================================================
+/* =========================================
    HEADER
-   ========================================================= */
+   ========================================= */
 
 header {
-    display: flex;
-
-    height: 4.25rem;
+    height: 4rem;
 
     padding-inline: calc(25vw - 10rem);
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff720f 0%,
-            #ff6200 100%
-        );
+    display: flex;
 
-    color: #ffffff;
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    border-bottom:
+        1px solid var(--color-border);
 
     box-shadow:
-        0 3px 14px rgba(255, 106, 0, 0.20);
-
-    position: relative;
+        0 2px 10px rgba(0, 0, 0, 0.035);
 
     z-index: 10;
 }
@@ -110,30 +92,33 @@ header .logo {
     align-self: center;
 
     display: flex;
-    align-items: flex-end;
+    align-items: center;
 
-    gap: 0.75rem;
+    gap: 0.8rem;
 }
 
-header .logo h2 {
-    margin: 0;
+header .logo::before {
+    content: "";
 
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    width: 9px;
+    height: 28px;
+
+    border-radius: 999px;
+
+    background: var(--color-primary);
 }
 
-header .logo p {
-    margin: 0 0 0.15rem;
+header .nav {
+    flex: 1;
 
-    opacity: 0.75;
-
-    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
 }
 
 
-/* =========================================================
-   MAIN LAYOUT
-   ========================================================= */
+/* =========================================
+   MAIN
+   ========================================= */
 
 header,
 main {
@@ -161,274 +146,297 @@ main {
 
 main > div {
     overflow-y: auto;
-
-    scrollbar-width: thin;
 }
 
 
-/* =========================================================
-   CONTENT COLUMNS
-   ========================================================= */
+/* =========================================
+   EDITOR CONTAINER
+   ========================================= */
 
-main > div {
-    min-width: 0;
-}
+/*
+    Das ist die große Box für den gesamten
+    Richtlinien-Editor.
+*/
 
-
-/* =========================================================
-   UNIVERSAL CARDS
-   ========================================================= */
-
-.card,
-.rules,
-.guidelines,
-.requirements,
-.rule,
-.guideline,
-.requirement,
-.panel,
-.section {
+.editor,
+.editor-container,
+.guidelines-editor,
+.rules-editor {
     background: var(--color-surface);
 
-    border: 1px solid var(--color-border);
+    border:
+        1px solid var(--color-border);
 
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius);
 
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-card);
+
+    overflow: hidden;
+
+    margin-bottom: 1.25rem;
 
     transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        border-color 0.18s ease;
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.card:hover,
-.rules:hover,
-.guidelines:hover,
-.requirements:hover,
-.rule:hover,
-.guideline:hover,
-.requirement:hover,
-.panel:hover,
-.section:hover {
+.editor:hover,
+.editor-container:hover,
+.guidelines-editor:hover,
+.rules-editor:hover {
     border-color: var(--color-border-hover);
 
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-hover);
 }
 
 
-/* =========================================================
-   RULES
-   ========================================================= */
+/* =========================================
+   EDITOR HEADER
+   ========================================= */
 
-.rules,
-.rule {
-    padding: 1.35rem;
+.editor-header,
+.editor-title,
+.guidelines-header,
+.rules-header {
+    display: flex;
 
-    margin-bottom: 1rem;
+    align-items: center;
 
-    position: relative;
+    justify-content: space-between;
 
-    overflow: hidden;
+    min-height: 60px;
+
+    padding:
+        0 1.25rem;
+
+    background: #ffffff;
+
+    border-bottom:
+        1px solid var(--color-border);
 }
 
-.rules::before,
-.rule::before {
-    content: "";
+.editor-header h1,
+.editor-header h2,
+.editor-title h1,
+.editor-title h2,
+.guidelines-header h1,
+.guidelines-header h2,
+.rules-header h1,
+.rules-header h2 {
+    margin: 0;
 
-    position: absolute;
+    font-size: 1rem;
 
-    left: 0;
-    top: 0;
-    bottom: 0;
+    font-weight: 700;
 
-    width: 4px;
-
-    background: var(--color-primary);
+    letter-spacing: -0.02em;
 }
 
 
-/* =========================================================
-   GUIDELINES BOX
-   ========================================================= */
+/* =========================================
+   EDITOR ICON
+   ========================================= */
 
-.guidelines,
-.guideline {
-    padding: 1.4rem;
+.editor-header::before,
+.guidelines-header::before,
+.rules-header::before {
+    content: "✎";
 
-    margin-bottom: 1rem;
+    display: flex;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #fffaf6 100%
-        );
+    align-items: center;
+    justify-content: center;
 
-    border-color: var(--color-primary-border);
+    width: 34px;
+    height: 34px;
 
-    position: relative;
+    margin-right: 0.75rem;
 
-    overflow: hidden;
-}
-
-.guidelines::before,
-.guideline::before {
-    content: "";
-
-    position: absolute;
-
-    width: 180px;
-    height: 180px;
-
-    right: -90px;
-    top: -90px;
+    border-radius: 9px;
 
     background: var(--color-primary-light);
 
-    border-radius: 50%;
+    color: var(--color-primary);
 
-    pointer-events: none;
+    font-size: 0.95rem;
 }
 
 
-/* =========================================================
-   REQUIREMENTS
-   ========================================================= */
+/* =========================================
+   EDITOR BODY
+   ========================================= */
 
-.requirements,
-.requirement {
-    padding: 1.35rem;
+.editor-body,
+.editor-content,
+.guidelines-content,
+.rules-content {
+    padding: 1.25rem;
+
+    background: #ffffff;
+}
+
+
+/* =========================================
+   TOOLBAR
+   ========================================= */
+
+.toolbar,
+.editor-toolbar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.4rem;
+
+    padding:
+        0.65rem 0.8rem;
+
+    background: var(--color-surface-secondary);
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-small);
 
     margin-bottom: 1rem;
 }
 
-.requirements::before,
-.requirement::before {
-    content: "";
+.toolbar button,
+.editor-toolbar button {
+    min-width: 34px;
+    height: 34px;
 
-    display: block;
+    padding: 0;
 
-    width: 34px;
-    height: 4px;
+    display: flex;
 
-    margin-bottom: 0.9rem;
+    align-items: center;
+    justify-content: center;
 
-    border-radius: 99px;
+    background: transparent;
 
-    background: var(--color-primary);
+    color: var(--color-text-secondary);
+
+    border: 0;
+
+    border-radius: 7px;
+
+    box-shadow: none;
 }
 
+.toolbar button:hover,
+.editor-toolbar button:hover {
+    background: var(--color-primary-light);
 
-/* =========================================================
-   HEADINGS
-   ========================================================= */
-
-.rules h1,
-.rules h2,
-.rules h3,
-
-.guidelines h1,
-.guidelines h2,
-.guidelines h3,
-
-.requirements h1,
-.requirements h2,
-.requirements h3,
-
-.rule h1,
-.rule h2,
-.rule h3,
-
-.guideline h1,
-.guideline h2,
-.guideline h3,
-
-.requirement h1,
-.requirement h2,
-.requirement h3 {
-    margin-top: 0;
-
-    color: var(--color-on-surface);
-
-    letter-spacing: -0.025em;
-}
-
-.rules h2,
-.guidelines h2,
-.requirements h2,
-.rule h2,
-.guideline h2,
-.requirement h2 {
-    margin-bottom: 0.6rem;
-}
-
-
-/* =========================================================
-   TEXT
-   ========================================================= */
-
-p {
-    color: var(--color-on-surface-muted);
-
-    line-height: 1.65;
-}
-
-strong {
-    color: var(--color-on-surface);
-}
-
-
-/* =========================================================
-   LINKS
-   ========================================================= */
-
-a {
     color: var(--color-primary);
 
-    text-decoration: none;
+    transform: none;
 
-    font-weight: 600;
+    box-shadow: none;
+}
+
+
+/* =========================================
+   TEXT EDITOR
+   ========================================= */
+
+[contenteditable="true"],
+.editor textarea,
+.guidelines textarea,
+.rules textarea {
+    width: 100%;
+
+    min-height: 180px;
+
+    box-sizing: border-box;
+
+    padding: 1rem;
+
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-small);
+
+    outline: none;
+
+    resize: vertical;
+
+    font-family: inherit;
+
+    line-height: 1.6;
 
     transition:
-        color 0.15s ease;
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
-a:hover {
-    color: var(--color-primary-hover);
+[contenteditable="true"]:focus,
+.editor textarea:focus,
+.guidelines textarea:focus,
+.rules textarea:focus {
+    border-color: var(--color-primary);
 
-    text-decoration: underline;
+    box-shadow:
+        0 0 0 3px
+        rgba(255, 106, 0, 0.10);
 }
 
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+/* =========================================
+   SAVE / ACTION BAR
+   ========================================= */
 
-button {
-    border: none;
+.editor-actions,
+.editor-footer,
+.guidelines-actions,
+.rules-actions {
+    display: flex;
 
-    border-radius: var(--radius-sm);
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 0.6rem;
 
     padding:
-        0.65rem
-        1rem;
+        0.9rem 1.25rem;
+
+    background: #fafafa;
+
+    border-top:
+        1px solid var(--color-border);
+}
+
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+button {
+    border: 0;
+
+    border-radius: var(--radius-small);
+
+    padding:
+        0.6rem 1rem;
 
     background: var(--color-primary);
 
     color: #ffffff;
 
     font-family: inherit;
+
     font-weight: 700;
 
     cursor: pointer;
 
-    box-shadow:
-        0 3px 8px rgba(255, 106, 0, 0.18);
-
     transition:
-        background 0.15s ease,
         transform 0.15s ease,
+        background 0.15s ease,
         box-shadow 0.15s ease;
 }
 
@@ -437,7 +445,9 @@ button:hover {
 
     transform: translateY(-1px);
 
-    box-shadow: var(--shadow-orange);
+    box-shadow:
+        0 5px 14px
+        rgba(255, 106, 0, 0.20);
 }
 
 button:active {
@@ -445,24 +455,155 @@ button:active {
 }
 
 
-/* =========================================================
+/* Secondary button */
+
+button.secondary,
+.secondary-button {
+    background: #ffffff;
+
+    color: var(--color-text);
+
+    border:
+        1px solid var(--color-border);
+
+    box-shadow: none;
+}
+
+button.secondary:hover,
+.secondary-button:hover {
+    background: #f7f7f8;
+
+    color: var(--color-primary);
+
+    border-color:
+        var(--color-primary);
+}
+
+
+/* =========================================
+   GUIDELINE ITEMS
+   ========================================= */
+
+.guideline-item,
+.rule-item,
+.requirement-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 0.9rem;
+
+    padding: 1rem;
+
+    margin-bottom: 0.7rem;
+
+    background: #ffffff;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-small);
+
+    transition:
+        border-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.guideline-item:hover,
+.rule-item:hover,
+.requirement-item:hover {
+    border-color:
+        var(--color-primary);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.045);
+}
+
+
+/* =========================================
+   NUMBER / ICON
+   ========================================= */
+
+.guideline-number,
+.rule-number,
+.requirement-number {
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: var(--color-primary-light);
+
+    color: var(--color-primary);
+
+    font-size: 0.8rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================
+   NORMAL CARDS
+   ========================================= */
+
+.card,
+.panel,
+.rules,
+.guidelines,
+.requirements {
+    background: #ffffff;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow-card);
+
+    padding: 1.25rem;
+
+    margin-bottom: 1rem;
+}
+
+.card:hover,
+.panel:hover,
+.rules:hover,
+.guidelines:hover,
+.requirements:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+
+/* =========================================
    INPUTS
-   ========================================================= */
+   ========================================= */
 
 input,
 textarea,
 select {
+    box-sizing: border-box;
+
     background: #ffffff;
 
-    color: var(--color-on-surface);
+    color: var(--color-text);
 
-    border: 1px solid var(--color-border);
+    border:
+        1px solid var(--color-border);
 
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-small);
 
     padding:
-        0.65rem
-        0.75rem;
+        0.65rem 0.75rem;
 
     font-family: inherit;
 
@@ -473,12 +614,6 @@ select {
         box-shadow 0.15s ease;
 }
 
-input:hover,
-textarea:hover,
-select:hover {
-    border-color: var(--color-border-hover);
-}
-
 input:focus,
 textarea:focus,
 select:focus {
@@ -486,17 +621,17 @@ select:focus {
 
     box-shadow:
         0 0 0 3px
-        rgba(255, 106, 0, 0.12);
+        rgba(255, 106, 0, 0.10);
 }
 
 
-/* =========================================================
+/* =========================================
    CHECKBOX
-   ========================================================= */
+   ========================================= */
 
 input[type="checkbox"] {
-    height: 1.2rem;
     width: 1.2rem;
+    height: 1.2rem;
 
     margin: 0;
 
@@ -506,9 +641,28 @@ input[type="checkbox"] {
 }
 
 
-/* =========================================================
+/* =========================================
+   LINKS
+   ========================================= */
+
+a {
+    color: var(--color-primary);
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-primary-hover);
+
+    text-decoration: underline;
+}
+
+
+/* =========================================
    SPINNER
-   ========================================================= */
+   ========================================= */
 
 .spinner {
     display: flex;
@@ -520,9 +674,9 @@ input[type="checkbox"] {
 }
 
 
-/* =========================================================
+/* =========================================
    SCROLLBAR
-   ========================================================= */
+   ========================================= */
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -533,84 +687,19 @@ input[type="checkbox"] {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #d7d9dd;
+    background: #d8dadd;
 
-    border-radius: 99px;
+    border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #b9bdc4;
+    background: #b8bbc1;
 }
 
 
-/* =========================================================
-   SPECIAL INFO BOX
-   ========================================================= */
-
-.info-box {
-    padding: 1rem 1.15rem;
-
-    margin-bottom: 1rem;
-
-    background: var(--color-primary-light);
-
-    border: 1px solid var(--color-primary-border);
-
-    border-radius: var(--radius-md);
-
-    color: #6f350d;
-}
-
-.info-box strong {
-    color: #4d250b;
-}
-
-
-/* =========================================================
-   BADGES
-   ========================================================= */
-
-.badge {
-    display: inline-flex;
-
-    align-items: center;
-
-    padding:
-        0.3rem
-        0.65rem;
-
-    border-radius: 999px;
-
-    background: var(--color-primary-light);
-
-    border: 1px solid var(--color-primary-border);
-
-    color: var(--color-primary);
-
-    font-size: 0.75rem;
-
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   SUBTLE DIVIDERS
-   ========================================================= */
-
-hr {
-    border: 0;
-
-    border-top:
-        1px solid var(--color-border);
-
-    margin:
-        1.25rem 0;
-}
-
-
-/* =========================================================
+/* =========================================
    MOBILE
-   ========================================================= */
+   ========================================= */
 
 @media screen and (max-width: 900px) {
     header,
@@ -621,10 +710,7 @@ hr {
     main {
         height: auto;
 
-        overflow-y: auto;
-
-        padding:
-            1rem;
+        padding: 1rem;
     }
 
     main > div {
@@ -632,8 +718,6 @@ hr {
     }
 
     header {
-        height: auto;
-
         min-height: 4rem;
 
         padding:
