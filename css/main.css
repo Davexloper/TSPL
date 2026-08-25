@@ -1,228 +1,1240 @@
-:root {
-    --color-background: white;
-    --color-on-background: black;
-    --color-background-hover: #eee;
-    --color-on-background-hover: black;
-    --color-primary: #0066ff;
-    --color-on-primary: white;
-    --color-error: #de0000;
-    --color-on-error: white;
-}
+:root { 
+    --color-background: #0f1014; 
+    --color-on-background: #f2f3f5; 
+ 
+    --color-background-hover: #191b21; 
+    --color-on-background-hover: #ffffff; 
+ 
+    --color-primary: #ff6a00; 
+    --color-primary-hover: #ff7a1a; 
+    --color-primary-light: rgba(255, 106, 0, 0.12); 
+    --color-on-primary: #ffffff; 
+ 
+    --color-surface: #17191f; 
+    --color-surface-hover: #1d2027; 
+    --color-surface-secondary: #13151a; 
+ 
+    --color-border: #292c34; 
+    --color-border-hover: #383c46; 
+ 
+    --color-text-secondary: #9da1aa; 
+    --color-text-muted: #70747e; 
+ 
+    --color-discord: #5865f2; 
+ 
+    --color-error: #ed4245; 
+    --color-on-error: #ffffff; 
+ 
+    --shadow-xs: 
+        0 1px 3px rgba(0, 0, 0, 0.25); 
+ 
+    --shadow-sm: 
+        0 5px 18px rgba(0, 0, 0, 0.28); 
+ 
+    --shadow-md: 
+        0 12px 35px rgba(0, 0, 0, 0.38); 
+ 
+    --shadow-orange: 
+        0 8px 25px rgba(255, 106, 0, 0.18); 
+ 
+    --radius-small: 8px; 
+    --radius: 12px; 
+    --radius-large: 16px; 
+} 
 
-main.dark,
-header.dark {
-    color-scheme: dark;
-    --color-background: #1c1b1f;
-    --color-on-background: white;
-    --color-background-hover: #27262c;
-    --color-on-background-hover: white;
-    --color-primary: #283593;
-    --color-primary-disabled: #1f213c;
-    --color-on-primary: white;
-    --color-error: #de0000;
-    --color-on-error: white;
-}
 
-html,
-body {
-    height: 100%;
-}
+/* =========================================================
+   FORCE DARK MODE
+   ========================================================= */
 
-body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-}
+html { 
+    color-scheme: dark !important; 
+    background: #0f1014 !important; 
+} 
 
-header,
-main {
-    background-color: var(--color-background);
-    color: var(--color-on-background);
-    display: grid;
-    grid-template-columns:
-        minmax(16rem, 1fr)
-        minmax(16rem, 2fr)
-        minmax(16em, 1fr);
-    column-gap: 2rem;
-}
+body { 
+    background: 
+        radial-gradient( 
+            circle at top, 
+            #1b1d24 0, 
+            #0f1014 480px 
+        ) !important; 
 
-header {
-    display: flex;
-    padding-inline: calc(25vw - 10rem);
-    height: 4rem;
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
-}
+    color: #f2f3f5 !important; 
 
-@media screen and (min-width: 1366px) {
-    header {
-        display: grid;
-        padding-inline: 0;
-    }
-}
+    font-family: 
+        "Lexend Deca", 
+        -apple-system, 
+        BlinkMacSystemFont, 
+        "Segoe UI", 
+        sans-serif; 
+} 
 
-header .logo {
-    justify-self: end;
-    align-self: center;
-    display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-}
 
-header .nav {
-    flex: 1;
-}
+/* =========================================================
+   REMOVE LIGHT MODE
+   ========================================================= */
 
-main {
-    height: 0;
-    flex: 1;
-    display: grid;
-    grid-template-rows: minmax(0, 1fr);
-    column-gap: 2rem;
-}
+main, 
+header, 
+main.dark, 
+header.dark { 
+    background-color: #0f1014 !important; 
+    color: #f2f3f5 !important; 
+} 
 
-main > div {
-    overflow-y: auto;
-}
 
-.spinner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    grid-column: span 3;
-}
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-input[type="checkbox"] {
-    height: 1.25rem;
-    width: 1.25rem;
-    cursor: pointer;
-    margin: 0;
-}
+header { 
+    height: 4rem; 
+
+    padding-inline: calc(25vw - 10rem); 
+
+    display: flex; 
+
+    background: 
+        linear-gradient( 
+            135deg, 
+            #ff6a00, 
+            #e95700 
+        ) !important; 
+
+    color: #ffffff !important; 
+
+    border-bottom: 
+        1px solid rgba(255, 255, 255, 0.08); 
+
+    box-shadow: 
+        0 4px 18px rgba(0, 0, 0, 0.25); 
+
+    position: relative; 
+
+    z-index: 10; 
+} 
+
+@media screen and (min-width: 1366px) { 
+    header { 
+        display: grid; 
+        padding-inline: 0; 
+    } 
+} 
+
+header .logo { 
+    justify-self: end; 
+    align-self: center; 
+
+    display: flex; 
+
+    align-items: center; 
+
+    gap: 0.75rem; 
+} 
+
+header .nav { 
+    flex: 1; 
+
+    display: flex; 
+
+    align-items: center; 
+} 
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+header a { 
+    color: #ffffff !important; 
+
+    text-decoration: none; 
+
+    font-weight: 600; 
+
+    opacity: 0.9; 
+
+    transition: 
+        opacity 0.15s ease, 
+        background 0.15s ease; 
+} 
+
+header a:hover { 
+    color: #ffffff !important; 
+
+    opacity: 1; 
+
+    text-decoration: none; 
+} 
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+header, 
+main { 
+    display: grid; 
+
+    grid-template-columns: 
+        minmax(16rem, 1fr) 
+        minmax(16rem, 2fr) 
+        minmax(16rem, 1fr); 
+
+    column-gap: 2rem; 
+} 
+
+main { 
+    height: 0; 
+
+    flex: 1; 
+
+    grid-template-rows: 
+        minmax(0, 1fr); 
+
+    padding-top: 1.5rem; 
+
+    padding-bottom: 1.5rem; 
+
+    background: 
+        radial-gradient( 
+            circle at top, 
+            #191b22, 
+            #0f1014 550px 
+        ) !important; 
+} 
+
+main > div { 
+    overflow-y: auto; 
+
+    min-width: 0; 
+} 
+
+
+/* =========================================================
+   GENERIC CARDS
+   ========================================================= */
+
+.card, 
+.panel, 
+.section, 
+.rules, 
+.guidelines, 
+.requirements { 
+    background: #17191f !important; 
+
+    color: #f2f3f5 !important; 
+
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        var(--radius-large); 
+
+    box-shadow: 
+        var(--shadow-sm); 
+
+    transition: 
+        transform 0.18s ease, 
+        box-shadow 0.18s ease, 
+        border-color 0.18s ease; 
+} 
+
+.card:hover, 
+.panel:hover, 
+.section:hover, 
+.rules:hover, 
+.guidelines:hover, 
+.requirements:hover { 
+    border-color: 
+        #383c46; 
+
+    box-shadow: 
+        var(--shadow-md); 
+} 
+
+
+/* =========================================================
+   GUIDELINES MAIN BOX
+   ========================================================= */
+
+.guidelines-card { 
+    position: relative; 
+
+    width: 100%; 
+
+    box-sizing: border-box; 
+
+    margin-bottom: 1.25rem; 
+
+    background: #17191f !important; 
+
+    color: #f2f3f5 !important; 
+
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        16px; 
+
+    overflow: hidden; 
+
+    box-shadow: 
+        0 5px 18px rgba(0, 0, 0, 0.28); 
+
+    transition: 
+        border-color 0.2s ease, 
+        box-shadow 0.2s ease; 
+} 
+
+.guidelines-card:hover { 
+    border-color: 
+        #383c46; 
+
+    box-shadow: 
+        0 10px 28px rgba(0, 0, 0, 0.36); 
+} 
+
+
+/* =========================================================
+   GUIDELINES HEADER
+   ========================================================= */
+
+.guidelines-card__header { 
+    position: relative; 
+
+    display: flex; 
+
+    align-items: center; 
+
+    gap: 0.9rem; 
+
+    padding: 
+        1.1rem 1.25rem; 
+
+    background: 
+        #1b1e24; 
+
+    border-bottom: 
+        1px solid #292c34; 
+} 
+
+.guidelines-card__header::before { 
+    content: ""; 
+
+    position: absolute; 
+
+    left: 0; 
+
+    top: 0; 
+
+    bottom: 0; 
+
+    width: 4px; 
+
+    background: 
+        #ff6a00; 
+} 
+
+
+/* =========================================================
+   GUIDELINES ICON
+   ========================================================= */
+
+.guidelines-card__icon { 
+    width: 40px; 
+
+    height: 40px; 
+
+    flex-shrink: 0; 
+
+    display: flex; 
+
+    align-items: center; 
+
+    justify-content: center; 
+
+    border-radius: 
+        10px; 
+
+    background: 
+        rgba(255, 106, 0, 0.12); 
+
+    color: 
+        #ff7612; 
+
+    font-size: 
+        1rem; 
+
+    font-weight: 
+        800; 
+
+    border: 
+        1px solid rgba(255, 106, 0, 0.18); 
+} 
+
+
+/* =========================================================
+   GUIDELINES TITLE
+   ========================================================= */
+
+.guidelines-card__heading { 
+    display: flex; 
+
+    flex-direction: column; 
+
+    gap: 0.15rem; 
+} 
+
+.guidelines-card__heading h3 { 
+    margin: 0; 
+
+    color: #ffffff !important; 
+
+    font-size: 1.05rem; 
+
+    font-weight: 800; 
+
+    letter-spacing: 
+        -0.025em; 
+} 
+
+.guidelines-card__heading span { 
+    color: 
+        #8f949e !important; 
+
+    font-size: 
+        0.72rem; 
+
+    line-height: 
+        1.4; 
+} 
+
+
+/* =========================================================
+   GUIDELINES BODY
+   ========================================================= */
+
+.guidelines-card__body { 
+    display: flex; 
+
+    flex-direction: column; 
+
+    gap: 0.65rem; 
+
+    padding: 
+        1rem; 
+} 
+
+
+/* =========================================================
+   INDIVIDUAL RULE BOX
+   ========================================================= */
+
+.guidelines-card .guideline { 
+    display: flex; 
+
+    align-items: flex-start; 
+
+    gap: 0.85rem; 
+
+    padding: 
+        0.95rem; 
+
+    background: 
+        #1b1e24 !important; 
+
+    color: 
+        #f2f3f5 !important; 
+
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        11px; 
+
+    transition: 
+        background 0.15s ease, 
+        border-color 0.15s ease, 
+        transform 0.15s ease; 
+} 
+
+.guidelines-card .guideline:hover { 
+    background: 
+        #20232a !important; 
+
+    border-color: 
+        rgba(255, 106, 0, 0.45); 
+
+    transform: 
+        translateX(3px); 
+} 
+
+
+/* =========================================================
+   RULE NUMBER
+   ========================================================= */
+
+.guideline__number { 
+    width: 31px; 
+
+    height: 31px; 
+
+    flex-shrink: 0; 
+
+    display: flex; 
+
+    align-items: center; 
+
+    justify-content: center; 
+
+    border-radius: 
+        9px; 
+
+    background: 
+        rgba(255, 106, 0, 0.12); 
+
+    color: 
+        #ff7612; 
+
+    border: 
+        1px solid 
+        rgba(255, 106, 0, 0.18); 
+
+    font-size: 
+        0.63rem; 
+
+    font-weight: 
+        800; 
+} 
+
+
+/* =========================================================
+   RULE TEXT
+   ========================================================= */
+
+.guideline__text { 
+    flex: 1; 
+
+    min-width: 0; 
+} 
+
+.guideline__text strong { 
+    display: block; 
+
+    margin-bottom: 
+        0.25rem; 
+
+    color: 
+        #f5f6f7 !important; 
+
+    font-size: 
+        0.79rem; 
+
+    font-weight: 
+        700; 
+} 
+
+.guideline__text p { 
+    margin: 0; 
+
+    color: 
+        #9499a3 !important; 
+
+    font-size: 
+        0.7rem; 
+
+    line-height: 
+        1.55; 
+} 
+
+
+/* =========================================================
+   GUIDELINES FOOTER
+   ========================================================= */
+
+.guidelines-card__footer { 
+    display: flex; 
+
+    align-items: center; 
+
+    justify-content: space-between; 
+
+    gap: 1rem; 
+
+    padding: 
+        0.75rem 1rem; 
+
+    background: 
+        #14161b; 
+
+    border-top: 
+        1px solid #292c34; 
+
+    color: 
+        #70747e; 
+
+    font-size: 
+        0.65rem; 
+} 
+
+.guidelines-card__status { 
+    color: 
+        #35c98b; 
+
+    font-weight: 
+        700; 
+} 
 
 
 /* =========================================================
    DISCORD
    ========================================================= */
 
-/* Discord-Icon blau */
-.discord {
-    color: #5865F2 !important;
-}
+.discord, 
+.discord-link, 
+.discord-button, 
+.discord-icon { 
+    color: 
+        #5865f2 !important; 
+} 
 
-.discord svg {
-    color: #5865F2 !important;
-    fill: #5865F2 !important;
-}
+.discord-button { 
+    background: 
+        rgba(88, 101, 242, 0.12) !important; 
 
-.discord:hover {
-    color: #7289DA !important;
-}
+    border: 
+        1px solid 
+        rgba(88, 101, 242, 0.25) !important; 
 
-.discord:hover svg {
-    color: #7289DA !important;
-    fill: #7289DA !important;
-}
+    border-radius: 
+        9px; 
 
+    transition: 
+        background 0.15s ease, 
+        border-color 0.15s ease, 
+        transform 0.15s ease; 
+} 
 
-/* =========================================================
-   GUIDELINES
-   ========================================================= */
+.discord-button:hover { 
+    background: 
+        rgba(88, 101, 242, 0.2) !important; 
 
-/*
- * Äußerer Rahmen für den kompletten
- * Richtlinien-Bereich
- */
+    border-color: 
+        rgba(88, 101, 242, 0.45) !important; 
 
-.guidelines {
-    background-color: var(--color-background);
-
-    border: 1px solid #dcdcdc;
-
-    border-radius: 14px;
-
-    padding: 1.25rem;
-
-    margin-top: 1rem;
-
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.06);
-
-    overflow: hidden;
-}
-
-
-/* Richtlinien Überschrift */
-
-.guidelines h3 {
-    margin-top: 0;
-
-    margin-bottom: 1rem;
-
-    font-size: 1.1rem;
-
-    font-weight: 700;
-}
-
-
-/* Einzelne Richtlinie */
-
-.guidelines p {
-    padding:
-        0.85rem 1rem;
-
-    margin:
-        0 0 0.65rem 0;
-
-    background:
-        var(--color-background-hover);
-
-    border:
-        1px solid #e5e5e5;
-
-    border-radius:
-        10px;
-
-    line-height:
-        1.5;
-}
-
-
-/* Letzte Regel */
-
-.guidelines p:last-child {
-    margin-bottom: 0;
-}
+    color: 
+        #7280ff !important; 
+} 
 
 
 /* =========================================================
-   DARK MODE - GUIDELINES
+   EDITOR
    ========================================================= */
 
-main.dark .guidelines {
-    border-color: #38363d;
+.editor, 
+.editor-container, 
+.guidelines-editor, 
+.rules-editor { 
+    background: 
+        #17191f !important; 
 
-    box-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.25);
-}
+    color: 
+        #f2f3f5 !important; 
 
-main.dark .guidelines p {
-    border-color: #3a3940;
-}
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        var(--radius-large); 
+
+    overflow: 
+        hidden; 
+
+    box-shadow: 
+        var(--shadow-sm); 
+
+    margin-bottom: 
+        1rem; 
+} 
+
+.editor-header, 
+.editor-title, 
+.guidelines-header, 
+.rules-header { 
+    display: flex; 
+
+    align-items: center; 
+
+    justify-content: space-between; 
+
+    min-height: 
+        58px; 
+
+    padding: 
+        0 1.25rem; 
+
+    background: 
+        #1b1d23 !important; 
+
+    color: 
+        #ffffff !important; 
+
+    border-bottom: 
+        1px solid #292c34; 
+} 
+
+.editor-body, 
+.editor-content, 
+.guidelines-content, 
+.rules-content { 
+    padding: 
+        1.25rem; 
+
+    background: 
+        #17191f !important; 
+
+    color: 
+        #f2f3f5 !important; 
+} 
 
 
 /* =========================================================
-   RESPONSIVE
+   TOOLBAR
    ========================================================= */
 
-@media screen and (max-width: 700px) {
-    .guidelines {
-        padding: 1rem;
+.toolbar, 
+.editor-toolbar { 
+    display: flex; 
 
-        border-radius: 12px;
-    }
+    align-items: center; 
 
-    .guidelines p {
-        padding:
-            0.75rem 0.85rem;
-    }
+    gap: 
+        0.35rem; 
+
+    padding: 
+        0.55rem 0.7rem; 
+
+    margin-bottom: 
+        0.85rem; 
+
+    background: 
+        #121419 !important; 
+
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        var(--radius-small); 
+} 
+
+.toolbar button, 
+.editor-toolbar button { 
+    width: 
+        32px; 
+
+    height: 
+        32px; 
+
+    padding: 
+        0; 
+
+    display: flex; 
+
+    align-items: center; 
+
+    justify-content: center; 
+
+    background: 
+        transparent !important; 
+
+    color: 
+        #969ba5 !important; 
+
+    border: 
+        0; 
+
+    border-radius: 
+        7px; 
+
+    box-shadow: 
+        none; 
+} 
+
+.toolbar button:hover, 
+.editor-toolbar button:hover { 
+    background: 
+        rgba(255, 106, 0, 0.12) !important; 
+
+    color: 
+        #ff7612 !important; 
+
+    transform: 
+        none; 
+
+    box-shadow: 
+        none; 
+} 
+
+
+/* =========================================================
+   TEXT EDITOR
+   ========================================================= */
+
+[contenteditable="true"] { 
+    min-height: 
+        160px; 
+
+    padding: 
+        1rem; 
+
+    background: 
+        #111318 !important; 
+
+    color: 
+        #f2f3f5 !important; 
+
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        var(--radius-small); 
+
+    outline: 
+        none; 
+
+    line-height: 
+        1.6; 
+
+    transition: 
+        border-color 0.15s ease, 
+        box-shadow 0.15s ease; 
+} 
+
+[contenteditable="true"]:focus { 
+    border-color: 
+        #ff6a00; 
+
+    box-shadow: 
+        0 0 0 3px 
+        rgba(255, 106, 0, 0.10); 
+} 
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input, 
+textarea, 
+select { 
+    box-sizing: 
+        border-box; 
+
+    background: 
+        #111318 !important; 
+
+    color: 
+        #f2f3f5 !important; 
+
+    border: 
+        1px solid #292c34; 
+
+    border-radius: 
+        var(--radius-small); 
+
+    padding: 
+        0.65rem 0.75rem; 
+
+    font-family: 
+        inherit; 
+
+    outline: 
+        none; 
+
+    transition: 
+        border-color 0.15s ease, 
+        box-shadow 0.15s ease; 
+} 
+
+input:hover, 
+textarea:hover, 
+select:hover { 
+    border-color: 
+        #383c46; 
+} 
+
+input:focus, 
+textarea:focus, 
+select:focus { 
+    border-color: 
+        #ff6a00; 
+
+    box-shadow: 
+        0 0 0 3px 
+        rgba(255, 106, 0, 0.10); 
+} 
+
+
+/* =========================================================
+   CHECKBOX
+   ========================================================= */
+
+input[type="checkbox"] { 
+    width: 
+        1.2rem; 
+
+    height: 
+        1.2rem; 
+
+    margin: 
+        0; 
+
+    cursor: 
+        pointer; 
+
+    accent-color: 
+        #ff6a00; 
+} 
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button { 
+    border: 
+        0; 
+
+    border-radius: 
+        var(--radius-small); 
+
+    padding: 
+        0.6rem 1rem; 
+
+    background: 
+        linear-gradient( 
+            135deg, 
+            #ff7415, 
+            #ff5d00 
+        ) !important; 
+
+    color: 
+        #ffffff !important; 
+
+    font-family: 
+        inherit; 
+
+    font-weight: 
+        700; 
+
+    cursor: 
+        pointer; 
+
+    box-shadow: 
+        0 3px 9px 
+        rgba(255, 106, 0, 0.16); 
+
+    transition: 
+        background 0.15s ease, 
+        transform 0.15s ease, 
+        box-shadow 0.15s ease; 
+} 
+
+button:hover { 
+    background: 
+        linear-gradient( 
+            135deg, 
+            #ff7a1a, 
+            #e95700 
+        ) !important; 
+
+    transform: 
+        translateY(-1px); 
+
+    box-shadow: 
+        var(--shadow-orange); 
+} 
+
+button:active { 
+    transform: 
+        translateY(0); 
+} 
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+button.secondary, 
+.secondary-button { 
+    background: 
+        #1b1e24 !important; 
+
+    color: 
+        #dfe1e5 !important; 
+
+    border: 
+        1px solid #30343c; 
+
+    box-shadow: 
+        none; 
+} 
+
+button.secondary:hover, 
+.secondary-button:hover { 
+    background: 
+        #22252c !important; 
+
+    color: 
+        #ff7612 !important; 
+
+    border-color: 
+        #ff6a00; 
+
+    box-shadow: 
+        none; 
+} 
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a { 
+    color: 
+        #ff7612; 
+
+    text-decoration: 
+        none; 
+
+    font-weight: 
+        600; 
+
+    transition: 
+        color 0.15s ease; 
+} 
+
+a:hover { 
+    color: 
+        #ff913d; 
+
+    text-decoration: 
+        underline; 
+} 
+
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 { 
+    color: 
+        #f5f6f7 !important; 
+
+    letter-spacing: 
+        -0.02em; 
+} 
+
+p { 
+    color: 
+        #969ba5 !important; 
+
+    line-height: 
+        1.6; 
+} 
+
+
+/* =========================================================
+   INFO BOX
+   ========================================================= */
+
+.info-box { 
+    padding: 
+        1rem 1.1rem; 
+
+    margin-bottom: 
+        1rem; 
+
+    background: 
+        rgba(255, 106, 0, 0.08); 
+
+    border: 
+        1px solid 
+        rgba(255, 106, 0, 0.2); 
+
+    border-radius: 
+        var(--radius); 
+
+    color: 
+        #ffb27a; 
+} 
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge { 
+    display: 
+        inline-flex; 
+
+    align-items: 
+        center; 
+
+    padding: 
+        0.3rem 0.65rem; 
+
+    border-radius: 
+        999px; 
+
+    background: 
+        rgba(255, 106, 0, 0.1); 
+
+    border: 
+        1px solid 
+        rgba(255, 106, 0, 0.18); 
+
+    color: 
+        #ff7612; 
+
+    font-size: 
+        0.7rem; 
+
+    font-weight: 
+        700; 
+} 
+
+
+/* =========================================================
+   DIVIDERS
+   ========================================================= */
+
+hr { 
+    border: 
+        0; 
+
+    border-top: 
+        1px solid #292c34; 
+
+    margin: 
+        1.25rem 0; 
+} 
+
+
+/* =========================================================
+   SPINNER
+   ========================================================= */
+
+.spinner { 
+    display: 
+        flex; 
+
+    align-items: 
+        center; 
+
+    justify-content: 
+        center; 
+
+    grid-column: 
+        span 3; 
+} 
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar { 
+    width: 
+        8px; 
+
+    height: 
+        8px; 
+} 
+
+::-webkit-scrollbar-track { 
+    background: 
+        transparent; 
+} 
+
+::-webkit-scrollbar-thumb { 
+    background: 
+        #30343c; 
+
+    border-radius: 
+        999px; 
+} 
+
+::-webkit-scrollbar-thumb:hover { 
+    background: 
+        #464b55; 
+} 
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media screen and (max-width: 900px) { 
+    header, 
+    main { 
+        grid-template-columns: 
+            1fr; 
+    } 
+
+    main { 
+        height: 
+            auto; 
+
+        padding: 
+            1rem; 
+    } 
+
+    main > div { 
+        overflow: 
+            visible; 
+    } 
+
+    header { 
+        min-height: 
+            4rem; 
+
+        padding: 
+            0 1rem; 
+    } 
+
+    .guidelines-card__header { 
+        padding: 
+            1rem; 
+    } 
+
+    .guidelines-card__body { 
+        padding: 
+            0.75rem; 
+    } 
+} 
+
+@media screen and (max-width: 600px) { 
+    .guidelines-card__heading span { 
+        display: 
+            none; 
+    } 
+
+    .guidelines-card__footer { 
+        align-items: 
+            flex-start; 
+
+        flex-direction: 
+            column; 
+
+        gap: 
+            0.25rem; 
+    } 
 }
