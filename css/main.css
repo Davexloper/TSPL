@@ -248,6 +248,173 @@ input[type="checkbox"] {
 
 
 /* =========================================================
+   EDITORS BOX
+   ========================================================= */
+
+.page-list .meta > h3 {
+    margin:
+        1.5rem 0 0 0;
+
+    padding:
+        1rem 1.25rem 0.85rem;
+
+    background:
+        #f3f4f6;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #dfe1e5;
+
+    border-bottom:
+        0;
+
+    border-radius:
+        14px 14px 0 0;
+
+    font-size:
+        1.05rem;
+
+    font-weight:
+        750;
+
+    letter-spacing:
+        -0.02em;
+}
+
+
+/* Editors list */
+
+.page-list .meta .editors {
+    margin:
+        0;
+
+    padding:
+        0.25rem 1.25rem 1.1rem 1.25rem;
+
+    background:
+        #f3f4f6;
+
+    border:
+        1px solid #dfe1e5;
+
+    border-top:
+        1px solid #e5e7eb;
+
+    border-radius:
+        0 0 14px 14px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.055);
+
+    list-style:
+        none;
+}
+
+
+/* Individual editor */
+
+.page-list .meta .editors li {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        0.65rem;
+
+    padding:
+        0.65rem 0.75rem;
+
+    margin-top:
+        0.5rem;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #e2e4e8;
+
+    border-radius:
+        9px;
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.025);
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+/* Editor hover */
+
+.page-list .meta .editors li:hover {
+    background:
+        #fffaf6;
+
+    border-color:
+        rgba(255, 106, 0, 0.28);
+
+    transform:
+        translateX(2px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.045);
+}
+
+
+/* Editor role icon */
+
+.page-list .meta .editors li img {
+    width:
+        22px;
+
+    height:
+        22px;
+
+    flex-shrink:
+        0;
+}
+
+
+/* Editor name */
+
+.page-list .meta .editors li a,
+.page-list .meta .editors li p {
+    margin:
+        0;
+
+    font-size:
+        0.75rem;
+
+    line-height:
+        1.4;
+}
+
+
+/* Mobile */
+
+@media screen and (max-width: 600px) {
+    .page-list .meta > h3 {
+        padding:
+            0.9rem 1rem 0.75rem;
+
+        font-size:
+            1rem;
+    }
+
+    .page-list .meta .editors {
+        padding:
+            0.25rem 1rem 1rem;
+    }
+}
+
+/* =========================================================
    GUIDELINES / REQUIREMENTS BOX
    ========================================================= */
 
