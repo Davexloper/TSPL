@@ -93,18 +93,15 @@ header {
 @media screen and (min-width: 1366px) {
     header {
         display: grid;
-
         padding-inline: 0;
     }
 }
 
 header .logo {
     justify-self: end;
-
     align-self: center;
 
     display: flex;
-
     align-items: center;
 
     gap: 0.75rem;
@@ -114,8 +111,112 @@ header .nav {
     flex: 1;
 
     display: flex;
-
     align-items: center;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.nav {
+    display: flex;
+    column-gap: 2rem;
+}
+
+.nav .nav__tab {
+    padding-top: 4px;
+
+    border-bottom:
+        4px solid transparent;
+
+    display: flex;
+    align-items: center;
+
+    padding-inline: 0.5rem;
+
+    transition:
+        border-color 100ms ease;
+}
+
+.nav .nav__tab.router-link-active {
+    border-color:
+        var(--color-primary);
+}
+
+.nav .nav__tab:hover {
+    border-color:
+        var(--color-primary);
+}
+
+.nav .nav__actions {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.nav .nav__actions .nav__icon {
+    height: 3rem;
+    width: 3rem;
+
+    border: none;
+
+    background-color: transparent;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background-color 100ms ease;
+}
+
+.nav .nav__actions .nav__icon:hover {
+    background-color:
+        #f1f2f4;
+}
+
+.nav .nav__actions .nav__icon img {
+    height: 1.5rem;
+}
+
+.nav .nav__actions .nav__cta {
+    margin-left: 1rem;
+
+    padding: 0.75rem 1rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7415,
+            #ff5d00
+        );
+
+    color: #ffffff;
+
+    border-radius: 0.6rem;
+
+    box-shadow:
+        0 4px 12px rgba(255, 106, 0, 0.18);
+
+    transition:
+        transform 120ms ease,
+        box-shadow 120ms ease,
+        background 120ms ease;
+}
+
+.nav .nav__actions .nav__cta:hover:not(:active) {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(255, 106, 0, 0.22);
 }
 
 
@@ -180,7 +281,6 @@ main > div {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     grid-column: span 3;
@@ -193,7 +293,6 @@ main > div {
 
 input[type="checkbox"] {
     height: 1.25rem;
-
     width: 1.25rem;
 
     cursor: pointer;
@@ -248,19 +347,310 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   EDITORS BOX
+   PAGE LIST SPACING
    ========================================================= */
 
-.page-list .editors-box {
+.page-list .list-container,
+.page-list .level-container,
+.page-list .meta-container {
+    padding-block: 2rem;
+}
+
+.page-list .list-container {
+    padding-inline: 1rem;
+}
+
+.page-list .meta-container {
+    padding-right: 2rem;
+}
+
+
+/* =========================================================
+   LEVEL LIST
+   ========================================================= */
+
+.page-list .list {
+    table-layout: auto;
+
+    border-collapse: separate;
+    border-spacing: 0 0.35rem;
+}
+
+.page-list .list .rank {
+    text-align: end;
+
+    padding-right: 0.75rem;
+}
+
+.page-list .list .level {
+    width: 100%;
+}
+
+
+/* =========================================================
+   LEVEL BOX
+   ========================================================= */
+
+.page-list .list .level button {
     width: 100%;
 
     box-sizing: border-box;
 
-    margin-top: 0.5rem;
+    background:
+        #f3f4f6 !important;
 
-    background: #f3f4f6;
+    color:
+        #24262b !important;
 
-    color: #24262b;
+    border:
+        1px solid #e1e3e6 !important;
+
+    border-radius:
+        10px;
+
+    padding:
+        0.8rem 1rem;
+
+    text-align:
+        start;
+
+    word-break:
+        normal;
+
+    overflow-wrap:
+        anywhere;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.035);
+
+    transition:
+        background 140ms ease,
+        border-color 140ms ease,
+        box-shadow 140ms ease,
+        transform 140ms ease,
+        color 140ms ease;
+}
+
+
+/* =========================================================
+   LEVEL BOX HOVER
+   ========================================================= */
+
+.page-list .list .level button:hover {
+    background:
+        #e9eaed !important;
+
+    color:
+        #17181c !important;
+
+    border-color:
+        #d5d8dc !important;
+
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.06);
+
+    transform:
+        translateX(2px);
+}
+
+
+/* =========================================================
+   ACTIVE LEVEL
+   ========================================================= */
+
+.page-list .list .level.active button {
+    background:
+        #e8e9ec !important;
+
+    color:
+        #17181c !important;
+
+    border:
+        1px solid #cfd2d7 !important;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.07);
+
+    transform:
+        translateX(2px);
+}
+
+
+/* =========================================================
+   ERROR LEVEL
+   ========================================================= */
+
+.page-list .list .level.error button {
+    color:
+        var(--color-error) !important;
+
+    background:
+        #fafafa !important;
+
+    cursor:
+        not-allowed;
+
+    text-decoration:
+        line-through;
+}
+
+
+/* =========================================================
+   LEVEL CONTENT
+   ========================================================= */
+
+.page-list .level-container .level {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2rem;
+
+    padding-right: 2rem;
+
+    max-width: 48rem;
+}
+
+.page-list .level-container .level .level-authors {
+    display: grid;
+
+    grid-template-columns:
+        max-content 1fr;
+
+    grid-auto-rows:
+        max-content;
+
+    gap: 1rem;
+}
+
+.page-list .level-container .level .video {
+    aspect-ratio: 16 / 9;
+}
+
+.page-list .level-container .level .stats {
+    display: flex;
+
+    justify-content: space-evenly;
+
+    text-align: center;
+
+    gap: 2rem;
+}
+
+.page-list .level-container .level .stats li {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.page-list .level-container .level .records {
+    table-layout: fixed;
+}
+
+.page-list .level-container .level .records tr td:not(:last-child) {
+    padding-right: 1rem;
+}
+
+.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .user,
+.page-list .level-container .level .records .hz {
+    padding-block: 1rem;
+}
+
+.page-list .level-container .level .records .user {
+    width: 100%;
+}
+
+.page-list .level-container .level .records .percent,
+.page-list .level-container .level .records .hz {
+    text-align: end;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.page-list .meta-container .og a:hover,
+.page-list .level-container .level .records a:hover {
+    text-decoration: underline;
+}
+
+a {
+    color:
+        #ff6500;
+
+    text-decoration:
+        none;
+
+    font-weight:
+        600;
+
+    transition:
+        color 0.15s ease;
+}
+
+a:hover {
+    color:
+        #e95700;
+
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   META
+   ========================================================= */
+
+.page-list .meta {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.page-list .meta .errors {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1rem;
+}
+
+.page-list .meta .errors .error {
+    padding: 1rem;
+
+    background-color:
+        var(--color-error);
+
+    color:
+        var(--color-on-error);
+
+    border-radius:
+        0.5rem;
+}
+
+
+/* =========================================================
+   EDITORS BOX
+   ========================================================= */
+
+.page-list .meta .editors-box {
+    box-sizing: border-box;
+
+    width: 100%;
+
+    background:
+        #f3f4f6;
 
     border:
         1px solid #dfe1e5;
@@ -268,18 +658,18 @@ input[type="checkbox"] {
     border-radius:
         14px;
 
+    padding:
+        1.25rem;
+
     box-shadow:
         0 5px 18px rgba(0, 0, 0, 0.055);
-
-    overflow:
-        hidden;
 
     transition:
         border-color 0.16s ease,
         box-shadow 0.16s ease;
 }
 
-.page-list .editors-box:hover {
+.page-list .meta .editors-box:hover {
     border-color:
         #d3d6db;
 
@@ -287,32 +677,12 @@ input[type="checkbox"] {
         0 9px 24px rgba(0, 0, 0, 0.07);
 }
 
-
-/* =========================================================
-   EDITORS HEADER
-   ========================================================= */
-
-.page-list .editors-box__header {
-    box-sizing: border-box;
-
-    width: 100%;
-
-    padding:
-        1.25rem 1.25rem 0.85rem;
-
-    background:
-        #f3f4f6;
-
-    border-bottom:
-        1px solid #dfe1e5;
-}
-
-.page-list .editors-box__header h3 {
+.page-list .meta .editors-box__header h3 {
     margin:
-        0;
+        0 0 1rem 0;
 
-    padding:
-        0;
+    padding-bottom:
+        0.85rem;
 
     color:
         #17181c !important;
@@ -325,6 +695,9 @@ input[type="checkbox"] {
 
     letter-spacing:
         -0.02em;
+
+    border-bottom:
+        1px solid #dfe1e5;
 }
 
 
@@ -332,28 +705,21 @@ input[type="checkbox"] {
    EDITOR LIST
    ========================================================= */
 
-.page-list .editors-box .editors {
-    box-sizing: border-box;
+.page-list .meta .editors {
+    display:
+        flex;
 
-    width: 100%;
+    flex-direction:
+        column;
+
+    gap:
+        0.6rem;
 
     margin:
         0;
 
     padding:
-        0.9rem 1.25rem 1.1rem;
-
-    background:
-        #f3f4f6;
-
-    border:
         0;
-
-    border-radius:
-        0;
-
-    box-shadow:
-        none;
 
     list-style:
         none;
@@ -361,23 +727,24 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   EDITOR ITEMS
+   EDITOR ITEM
    ========================================================= */
 
-.page-list .editors-box .editors li {
-    box-sizing: border-box;
+.page-list .meta .editors li {
+    box-sizing:
+        border-box;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 0.65rem;
+    gap:
+        0.65rem;
 
     padding:
         0.65rem 0.75rem;
-
-    margin:
-        0 0 0.5rem 0;
 
     background:
         #ffffff;
@@ -398,12 +765,7 @@ input[type="checkbox"] {
         box-shadow 0.15s ease;
 }
 
-.page-list .editors-box .editors li:last-child {
-    margin-bottom:
-        0;
-}
-
-.page-list .editors-box .editors li:hover {
+.page-list .meta .editors li:hover {
     background:
         #fffaf6;
 
@@ -417,12 +779,7 @@ input[type="checkbox"] {
         0 4px 12px rgba(0, 0, 0, 0.045);
 }
 
-
-/* =========================================================
-   EDITOR ICON
-   ========================================================= */
-
-.page-list .editors-box .editors li img {
+.page-list .meta .editors li img {
     width:
         22px;
 
@@ -433,13 +790,8 @@ input[type="checkbox"] {
         0;
 }
 
-
-/* =========================================================
-   EDITOR NAME
-   ========================================================= */
-
-.page-list .editors-box .editors li a,
-.page-list .editors-box .editors li p {
+.page-list .meta .editors li a,
+.page-list .meta .editors li p {
     margin:
         0;
 
@@ -452,7 +804,7 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   GUIDELINES / REQUIREMENTS BOX
+   GUIDELINES BOX
    ========================================================= */
 
 .page-list .requirements-box {
@@ -460,13 +812,15 @@ input[type="checkbox"] {
 
     box-sizing: border-box;
 
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 
     padding: 1.25rem;
 
-    background: #f3f4f6;
+    background:
+        #f3f4f6;
 
-    color: #24262b;
+    color:
+        #24262b;
 
     border:
         1px solid #dfe1e5;
@@ -520,11 +874,12 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   INDIVIDUAL GUIDELINES
+   GUIDELINES ITEMS
    ========================================================= */
 
 .page-list .requirements-box p {
-    position: relative;
+    position:
+        relative;
 
     margin:
         0 0 0.6rem 0;
@@ -564,11 +919,6 @@ input[type="checkbox"] {
     margin-bottom:
         0;
 }
-
-
-/* =========================================================
-   GUIDELINE CHECK ICON
-   ========================================================= */
 
 .page-list .requirements-box p::before {
     content:
@@ -617,11 +967,6 @@ input[type="checkbox"] {
         800;
 }
 
-
-/* =========================================================
-   GUIDELINE HOVER
-   ========================================================= */
-
 .page-list .requirements-box p:hover {
     background:
         #fffaf6 !important;
@@ -643,17 +988,13 @@ input[type="checkbox"] {
 
 .discord,
 .discord-link,
+.discord-button,
 .discord-icon,
 .fa-discord,
 [class*="discord"] {
     color:
         #5865f2 !important;
 }
-
-
-/* =========================================================
-   DISCORD BUTTON
-   ========================================================= */
 
 .discord-button {
     background:
@@ -687,180 +1028,7 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   SUBMIT RECORD BUTTON
-   ========================================================= */
-
-.submit-record,
-.submit-record-button,
-button.submit-record {
-    position:
-        relative;
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        0.55rem;
-
-    min-height:
-        44px;
-
-    padding:
-        0.7rem 1.3rem;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff7f24 0%,
-            #ff6a00 50%,
-            #f45a00 100%
-        ) !important;
-
-    color:
-        #ffffff !important;
-
-    border:
-        1px solid
-        rgba(255, 106, 0, 0.45);
-
-    border-radius:
-        10px;
-
-    font-family:
-        inherit;
-
-    font-size:
-        0.78rem;
-
-    font-weight:
-        750;
-
-    letter-spacing:
-        -0.01em;
-
-    cursor:
-        pointer;
-
-    box-shadow:
-        0 4px 12px
-        rgba(255, 106, 0, 0.18),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.22);
-
-    overflow:
-        hidden;
-
-    transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        background 0.16s ease,
-        border-color 0.16s ease;
-}
-
-
-/* Submit button shine */
-
-.submit-record::before,
-.submit-record-button::before,
-button.submit-record::before {
-    content:
-        "";
-
-    position:
-        absolute;
-
-    top:
-        0;
-
-    left:
-        -120%;
-
-    width:
-        70%;
-
-    height:
-        100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.20),
-            transparent
-        );
-
-    transform:
-        skewX(-20deg);
-
-    transition:
-        left 0.45s ease;
-
-    pointer-events:
-        none;
-}
-
-
-/* Submit button hover */
-
-.submit-record:hover,
-.submit-record-button:hover,
-button.submit-record:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #ff913d 0%,
-            #ff7415 50%,
-            #ff6200 100%
-        ) !important;
-
-    color:
-        #ffffff !important;
-
-    border-color:
-        rgba(255, 106, 0, 0.65);
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 10px 25px
-        rgba(255, 106, 0, 0.24),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.25);
-}
-
-.submit-record:hover::before,
-.submit-record-button:hover::before,
-button.submit-record:hover::before {
-    left:
-        140%;
-}
-
-
-/* Submit button click */
-
-.submit-record:active,
-.submit-record-button:active,
-button.submit-record:active {
-    transform:
-        translateY(0);
-
-    box-shadow:
-        0 3px 9px
-        rgba(255, 106, 0, 0.18);
-}
-
-
-/* =========================================================
-   EDITOR
+   EDITOR / EDITOR UI
    ========================================================= */
 
 .editor,
@@ -1181,6 +1349,89 @@ button:active {
 
 
 /* =========================================================
+   SUBMIT RECORD BUTTON
+   ========================================================= */
+
+.nav .nav__actions .nav__cta {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        0.72rem 1.15rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7415 0%,
+            #ff6500 55%,
+            #f35b00 100%
+        ) !important;
+
+    color:
+        #ffffff !important;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius:
+        10px;
+
+    font-size:
+        0.78rem;
+
+    font-weight:
+        750;
+
+    letter-spacing:
+        0.01em;
+
+    text-decoration:
+        none;
+
+    box-shadow:
+        0 4px 12px rgba(255, 106, 0, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.20);
+
+    transition:
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        filter 140ms ease;
+}
+
+.nav .nav__actions .nav__cta:hover {
+    color:
+        #ffffff !important;
+
+    text-decoration:
+        none;
+
+    filter:
+        brightness(1.04);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 22px rgba(255, 106, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24);
+}
+
+.nav .nav__actions .nav__cta:active {
+    transform:
+        translateY(0);
+
+    box-shadow:
+        0 3px 8px rgba(255, 106, 0, 0.18);
+}
+
+
+/* =========================================================
    SECONDARY BUTTON
    ========================================================= */
 
@@ -1212,33 +1463,6 @@ button.secondary:hover,
 
     box-shadow:
         none;
-}
-
-
-/* =========================================================
-   LINKS
-   ========================================================= */
-
-a {
-    color:
-        #ff6500;
-
-    text-decoration:
-        none;
-
-    font-weight:
-        600;
-
-    transition:
-        color 0.15s ease;
-}
-
-a:hover {
-    color:
-        #e95700;
-
-    text-decoration:
-        underline;
 }
 
 
@@ -1413,13 +1637,6 @@ hr {
         margin-top:
             1rem;
     }
-
-    .submit-record,
-    .submit-record-button,
-    button.submit-record {
-        width:
-            100%;
-    }
 }
 
 
@@ -1440,23 +1657,21 @@ hr {
             0.7rem 0.7rem 0.7rem 2.25rem;
     }
 
-    .page-list .editors-box__header {
+    .page-list .list .level button {
         padding:
-            0.9rem 1rem 0.75rem;
+            0.7rem 0.8rem;
     }
 
-    .page-list .editors-box .editors {
-        padding:
-            0.75rem 1rem 1rem;
+    .nav {
+        column-gap:
+            0.5rem;
     }
 
-    .submit-record,
-    .submit-record-button,
-    button.submit-record {
-        min-height:
-            42px;
+    .nav .nav__actions .nav__cta {
+        padding:
+            0.65rem 0.8rem;
 
         font-size:
-            0.75rem;
+            0.7rem;
     }
 }
