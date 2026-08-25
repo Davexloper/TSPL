@@ -300,7 +300,7 @@ export default {
                         </p>
 
                         <p>
-                            Den Rekord geschafft haben auf dem originallen Level.
+                            Den Rekord geschafft haben auf dem originalen Level.
                             (Bitte überprüfe die ID)
                         </p>
 
