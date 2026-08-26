@@ -291,12 +291,12 @@ export default {
                     <div class="requirements-box">
 
                         <h3>
-                            Richtlinien
+                            Rules
                         </h3>
 
                         <p>
-                            Den Rekord geschafft haben ohne cheats.
-                            (FPS Bypass ist erlaubt zu 480 [CBF auch] und Herz zu 240)
+                            Achieved record without cheats
+                            (FPS Bypass up to 360 [CBF] Hz 240)
                         </p>
 
                         <p>
