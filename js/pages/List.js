@@ -300,31 +300,23 @@ export default {
                         </p>
 
                         <p>
-                            Den Rekord geschafft haben auf dem originalen Level.
-                            (Bitte überprüfe die ID)
+                            Achieved record on original level
                         </p>
 
                         <p>
-                            Entweder Clicks oder Taps in der Aufnahme haben
-                            sowie Cheat Indicator.
+                            Either click or taps + cheat indicator
                         </p>
 
                         <p>
-                            Raw Footage nötig
-                            (Oder letzen 7 Minuten vor Completion)
+                            raw footage
                         </p>
 
                         <p>
-                            Die Raw Footage muss den End-Screen zeigen.
+                            raw footage must show end screen
                         </p>
 
                         <p>
-                            Keine Secret-Ways oder Bug-Routen.
-                        </p>
-
-                        <p>
-                            Wenn das Level in Legacy ist,
-                            hat man noch 24 Stunden zeit das Level zu submitten.
+                            No secret-ways
                         </p>
 
                     </div>
