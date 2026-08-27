@@ -7,5 +7,12 @@
     "verification": "https://youtu.be/i53Tj8B_jTE",
     "percentToQualify": 100,
     "password": "Uncopyable",
-    "records": []
+    "records": [
+        {
+            "user": "Guzzy",
+            "link": " https://www.youtube.com/watch?v=Dl6w3jsMzH0",
+            "percent": 100,
+            "hz": 240
+        }
+    ] 
 }
