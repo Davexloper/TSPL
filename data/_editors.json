@@ -1,6 +1,11 @@
 [
     {
         "role": "owner",
+        "name": "Emerald",
+        "link": "https://www.youtube.com/@EmeraldGD"
+    }
+    {
+        "role": "coder",
         "name": "Darnex",
         "link": "https://www.youtube.com/@Prometheus_Alt"
     }
