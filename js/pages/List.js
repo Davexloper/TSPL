@@ -15,7 +15,10 @@ const roleIconMap = {
 };
 
 export default {
-    components: { Spinner, LevelAuthors },
+    components: {
+        Spinner,
+        LevelAuthors
+    },
 
     template: `
         <main v-if="loading">
@@ -95,11 +98,7 @@ export default {
                             </div>
 
                             <p>
-                                {{ score(
-                                    selected + 1,
-                                    100,
-                                    level.percentToQualify
-                                ) }}
+                                {{ listScore(selected + 1) }}
                             </p>
                         </li>
 
@@ -397,7 +396,35 @@ export default {
     },
 
     methods: {
+
         embed,
+
+        /**
+         * Calculate points based on the total number of levels.
+         *
+         * #1 = 250 points
+         * Last level = 1 point
+         */
+        listScore(rank) {
+
+            const totalLevels = this.list.length;
+
+            // Safety check
+            if (totalLevels <= 1) {
+                return 250;
+            }
+
+            // Calculate points from 250 down to 1
+            const points =
+                250 -
+                (rank - 1) *
+                (249 / (totalLevels - 1));
+
+            // Always return a whole number
+            return Math.max(1, Math.round(points));
+        },
+
         score,
+
     },
 };
