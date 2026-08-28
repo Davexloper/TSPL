@@ -7,5 +7,12 @@
     "verification": "https://youtu.be/X7xJaU3xfMA?si=FlXFYqA8eEYbw9qu",
     "percentToQualify": 100,
     "password": "No Password",
-    "records": []
+    "records": [
+        {
+            "user": "Emerald",
+            "link": "https://www.youtube.com/watch?v=iX5UPTY7KSw",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
 }
