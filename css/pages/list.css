@@ -1,33 +1,40 @@
+/* =========================================================
+   PAGE LIST
+   Compact / Clean / Modern
+   ========================================================= */
+
 .page-list .list-container,
 .page-list .level-container,
 .page-list .meta-container {
-    padding-block: 1.25rem;
+    padding-block: 0.85rem;
 }
 
 .page-list .list-container {
-    padding-inline: 0.75rem;
+    padding-inline: 0.5rem;
 }
 
 .page-list .meta-container {
-    padding-right: 1.25rem;
+    padding-right: 0.9rem;
 }
 
-/* =========================
+/* =========================================================
    LEVEL LIST
-   ========================= */
+   ========================================================= */
 
 .page-list .list {
     table-layout: auto;
     border-collapse: separate;
-    border-spacing: 0 0.45rem;
+    border-spacing: 0 0.28rem;
 }
 
 .page-list .list .rank {
     text-align: end;
-    padding-right: 0.75rem;
-    font-size: 0.85rem;
+    padding-right: 0.55rem;
+
+    font-size: 0.78rem;
     font-weight: 700;
-    opacity: 0.55;
+
+    opacity: 0.48;
     white-space: nowrap;
 }
 
@@ -37,26 +44,21 @@
 
 .page-list .list .level button {
     position: relative;
+
     width: 100%;
 
-    background:
-        linear-gradient(
-            135deg,
-            color-mix(in srgb, var(--color-background) 96%, white),
-            var(--color-background)
-        );
+    padding: 0.58rem 0.72rem;
 
+    background: var(--color-background);
     color: var(--color-on-background);
 
     border: 1px solid color-mix(
         in srgb,
-        var(--color-on-background) 8%,
+        var(--color-on-background) 6%,
         transparent
     );
 
-    border-radius: 0.7rem;
-
-    padding: 0.75rem 0.9rem;
+    border-radius: 0.55rem;
 
     text-align: start;
     word-break: normal;
@@ -64,107 +66,77 @@
 
     cursor: pointer;
 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.035);
+
     transition:
-        background-color 0.18s ease,
-        border-color 0.18s ease,
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        color 0.18s ease;
-}
-
-.page-list .list .level button::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-
-    background: linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--color-primary) 7%, transparent),
-        transparent 55%
-    );
-
-    opacity: 0;
-    transition: opacity 0.18s ease;
+        transform 0.16s ease,
+        background-color 0.16s ease,
+        border-color 0.16s ease,
+        box-shadow 0.16s ease;
 }
 
 .page-list .list .level button:hover {
     background-color: var(--color-background-hover);
-    color: var(--color-on-background-hover);
 
     border-color: color-mix(
         in srgb,
-        var(--color-primary) 30%,
+        var(--color-primary) 20%,
         transparent
     );
 
     transform: translateX(2px);
 
     box-shadow:
-        0 5px 18px color-mix(
+        0 4px 12px color-mix(
             in srgb,
-            var(--color-primary) 10%,
+            var(--color-primary) 9%,
             transparent
         );
 }
 
-.page-list .list .level button:hover::before {
-    opacity: 1;
-}
-
 .page-list .list .level button:active {
-    transform: translateX(2px) scale(0.99);
+    transform: translateX(2px) scale(0.992);
 }
 
-/* Selected level */
+/* Selected */
 
 .page-list .list .level.active button {
-    background:
-        linear-gradient(
-            135deg,
-            var(--color-primary),
-            color-mix(
-                in srgb,
-                var(--color-primary) 78%,
-                black
-            )
-        );
-
+    background: var(--color-primary);
     color: var(--color-on-primary);
 
     border-color: color-mix(
         in srgb,
-        var(--color-primary) 70%,
+        var(--color-primary) 75%,
         white
     );
 
     box-shadow:
-        0 6px 22px color-mix(
+        0 4px 14px color-mix(
             in srgb,
-            var(--color-primary) 25%,
+            var(--color-primary) 18%,
             transparent
         );
 }
 
-/* Broken level */
+/* Error */
 
 .page-list .list .level.error button {
     color: var(--color-error);
+
     cursor: not-allowed;
     text-decoration: line-through;
 
-    opacity: 0.7;
+    opacity: 0.62;
 
     background: color-mix(
         in srgb,
-        var(--color-error) 5%,
+        var(--color-error) 4%,
         var(--color-background)
     );
 
     border-color: color-mix(
         in srgb,
-        var(--color-error) 18%,
+        var(--color-error) 12%,
         transparent
     );
 }
@@ -174,79 +146,84 @@
     box-shadow: none;
 }
 
-/* =========================
+/* =========================================================
    LEVEL CONTENT
-   ========================= */
+   ========================================================= */
 
 .page-list .level-container .level {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
 
-    padding-right: 1.25rem;
+    gap: 0.85rem;
+
+    padding-right: 0.9rem;
 
     max-width: 48rem;
 }
 
-/* Authors */
+/* =========================================================
+   AUTHORS
+   ========================================================= */
 
 .page-list .level-container .level .level-authors {
     display: grid;
+
     grid-template-columns: max-content 1fr;
     grid-auto-rows: max-content;
 
-    gap: 0.65rem 0.85rem;
+    gap: 0.45rem 0.7rem;
 
-    padding: 0.9rem 1rem;
-
-    border-radius: 0.7rem;
+    padding: 0.65rem 0.75rem;
 
     background: color-mix(
         in srgb,
-        var(--color-background) 92%,
-        var(--color-primary)
+        var(--color-primary) 3.5%,
+        var(--color-background)
     );
 
     border: 1px solid color-mix(
         in srgb,
-        var(--color-primary) 12%,
+        var(--color-on-background) 6%,
         transparent
     );
+
+    border-radius: 0.55rem;
 }
 
-/* Video */
+/* =========================================================
+   VIDEO
+   ========================================================= */
 
 .page-list .level-container .level .video {
     aspect-ratio: 16 / 9;
 
     overflow: hidden;
 
-    border-radius: 0.75rem;
+    border-radius: 0.6rem;
 
     border: 1px solid color-mix(
         in srgb,
-        var(--color-on-background) 10%,
+        var(--color-on-background) 8%,
         transparent
     );
 
     box-shadow:
-        0 8px 25px color-mix(
-            in srgb,
-            black 14%,
-            transparent
-        );
+        0 5px 18px rgba(0, 0, 0, 0.09);
 }
 
-/* Stats */
+/* =========================================================
+   STATS
+   ========================================================= */
 
 .page-list .level-container .level .stats {
     display: flex;
+
     justify-content: space-evenly;
     align-items: stretch;
 
     text-align: center;
 
-    gap: 0.65rem;
+    gap: 0.45rem;
 }
 
 .page-list .level-container .level .stats li {
@@ -254,83 +231,81 @@
     flex-direction: column;
     align-items: center;
 
-    gap: 0.3rem;
+    gap: 0.2rem;
 
     flex: 1;
 
-    padding: 0.7rem 0.5rem;
-
-    border-radius: 0.65rem;
+    padding: 0.5rem 0.35rem;
 
     background: color-mix(
         in srgb,
-        var(--color-background) 94%,
-        var(--color-primary)
+        var(--color-primary) 2.5%,
+        var(--color-background)
     );
 
     border: 1px solid color-mix(
         in srgb,
-        var(--color-on-background) 7%,
+        var(--color-on-background) 6%,
         transparent
     );
 
+    border-radius: 0.5rem;
+
     transition:
-        transform 0.18s ease,
-        border-color 0.18s ease,
-        background-color 0.18s ease;
+        transform 0.16s ease,
+        background-color 0.16s ease,
+        border-color 0.16s ease;
 }
 
 .page-list .level-container .level .stats li:hover {
-    transform: translateY(-2px);
-
-    border-color: color-mix(
-        in srgb,
-        var(--color-primary) 25%,
-        transparent
-    );
+    transform: translateY(-1px);
 
     background-color: color-mix(
         in srgb,
-        var(--color-primary) 7%,
+        var(--color-primary) 5%,
         var(--color-background)
+    );
+
+    border-color: color-mix(
+        in srgb,
+        var(--color-primary) 18%,
+        transparent
     );
 }
 
-/* =========================
+/* =========================================================
    RECORDS
-   ========================= */
+   ========================================================= */
 
 .page-list .level-container .level .records {
     table-layout: fixed;
-
     width: 100%;
 
     border-collapse: separate;
-    border-spacing: 0 0.2rem;
+    border-spacing: 0 0.1rem;
 }
 
 .page-list .level-container .level .records tr {
     transition:
-        background-color 0.15s ease,
-        transform 0.15s ease;
+        background-color 0.14s ease;
 }
 
 .page-list .level-container .level .records tr:hover {
     background-color: color-mix(
         in srgb,
-        var(--color-primary) 5%,
+        var(--color-primary) 4%,
         transparent
     );
 }
 
 .page-list .level-container .level .records tr td:not(:last-child) {
-    padding-right: 0.75rem;
+    padding-right: 0.55rem;
 }
 
 .page-list .level-container .level .records .percent,
 .page-list .level-container .level .records .user,
 .page-list .level-container .level .records .hz {
-    padding-block: 0.65rem;
+    padding-block: 0.42rem;
 }
 
 .page-list .level-container .level .records .user {
@@ -344,45 +319,51 @@
     font-variant-numeric: tabular-nums;
 }
 
-/* Links */
+/* =========================================================
+   LINKS
+   ========================================================= */
 
 .page-list .meta-container .og a,
 .page-list .level-container .level .records a {
     transition:
-        color 0.15s ease,
-        opacity 0.15s ease;
+        opacity 0.14s ease,
+        color 0.14s ease;
 }
 
 .page-list .meta-container .og a:hover,
 .page-list .level-container .level .records a:hover {
     text-decoration: underline;
-    opacity: 0.85;
+    opacity: 0.78;
 }
 
-/* =========================
+/* =========================================================
    META
-   ========================= */
+   ========================================================= */
 
 .page-list .meta {
     display: flex;
     flex-direction: column;
 
-    gap: 1.25rem;
+    gap: 0.85rem;
 }
+
+/* =========================================================
+   ERRORS
+   ========================================================= */
 
 .page-list .meta .errors {
     display: flex;
     flex-direction: column;
 
-    gap: 0.6rem;
+    gap: 0.45rem;
 }
 
 .page-list .meta .errors .error {
-    padding: 0.75rem 0.9rem;
+    padding: 0.58rem 0.7rem;
 
     background: color-mix(
         in srgb,
-        var(--color-error) 10%,
+        var(--color-error) 8%,
         var(--color-background)
     );
 
@@ -390,50 +371,45 @@
 
     border: 1px solid color-mix(
         in srgb,
-        var(--color-error) 20%,
+        var(--color-error) 16%,
         transparent
     );
 
-    border-radius: 0.65rem;
+    border-radius: 0.5rem;
 
-    box-shadow:
-        0 4px 14px color-mix(
-            in srgb,
-            var(--color-error) 8%,
-            transparent
-        );
+    font-size: 0.9rem;
 }
 
-/* =========================
+/* =========================================================
    EDITORS
-   ========================= */
+   ========================================================= */
 
 .page-list .meta .editors {
     display: flex;
     flex-direction: column;
 
-    gap: 0.4rem;
+    gap: 0.22rem;
 }
 
 .page-list .meta .editors li {
     display: flex;
     align-items: center;
 
-    gap: 0.5rem;
+    gap: 0.4rem;
 
-    padding: 0.45rem 0.6rem;
+    padding: 0.32rem 0.45rem;
 
-    border-radius: 0.55rem;
+    border-radius: 0.4rem;
 
     transition:
-        background-color 0.15s ease,
-        transform 0.15s ease;
+        background-color 0.14s ease,
+        transform 0.14s ease;
 }
 
 .page-list .meta .editors li:hover {
     background-color: color-mix(
         in srgb,
-        var(--color-primary) 6%,
+        var(--color-primary) 5%,
         transparent
     );
 
@@ -441,21 +417,21 @@
 }
 
 .page-list .meta .editors li img {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.05rem;
+    height: 1.05rem;
 
     object-fit: contain;
 
-    border-radius: 0.3rem;
+    border-radius: 0.25rem;
 }
 
 .page-list .meta .editors li a {
     transition:
-        color 0.15s ease,
-        opacity 0.15s ease;
+        opacity 0.14s ease,
+        color 0.14s ease;
 }
 
 .page-list .meta .editors li a:hover {
     text-decoration: underline;
-    opacity: 0.85;
+    opacity: 0.8;
 }
