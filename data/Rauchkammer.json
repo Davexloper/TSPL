@@ -7,5 +7,12 @@
     "verification": "https://youtu.be/mB72ZChvg8o",
     "percentToQualify": 100,
     "password": "No Password",
-    "records": []
+    "records": [
+        {
+            "user": "Darnex",
+            "link": "https://www.youtube.com/watch?v=VBirLXJsNgw",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
 }
