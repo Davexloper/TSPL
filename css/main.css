@@ -1187,207 +1187,6 @@ input[type="checkbox"] {
 
 
 /* =========================================================
-   EDITOR
-   ========================================================= */
-
-.editor,
-.editor-container,
-.guidelines-editor,
-.rules-editor {
-    background:
-        #ffffff !important;
-
-    color:
-        #17181c !important;
-
-    border:
-        1px solid #e5e7eb;
-
-    border-radius:
-        14px;
-
-    overflow:
-        hidden;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.045);
-
-    margin-bottom:
-        1rem;
-}
-
-.editor-header,
-.editor-title,
-.guidelines-header,
-.rules-header {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    min-height:
-        58px;
-
-    padding:
-        0 1.25rem;
-
-    background:
-        #fafafa !important;
-
-    color:
-        #17181c !important;
-
-    border-bottom:
-        1px solid #e5e7eb;
-}
-
-.editor-body,
-.editor-content,
-.guidelines-content,
-.rules-content {
-    padding:
-        1.25rem;
-
-    background:
-        #ffffff !important;
-
-    color:
-        #17181c !important;
-}
-
-
-/* =========================================================
-   TOOLBAR
-   ========================================================= */
-
-.toolbar,
-.editor-toolbar {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        0.35rem;
-
-    padding:
-        0.55rem 0.7rem;
-
-    margin-bottom:
-        0.85rem;
-
-    background:
-        #f7f7f8 !important;
-
-    border:
-        1px solid #e3e5e8;
-
-    border-radius:
-        8px;
-}
-
-.toolbar button,
-.editor-toolbar button {
-    width:
-        32px;
-
-    height:
-        32px;
-
-    padding:
-        0;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    background:
-        transparent !important;
-
-    color:
-        #666b74 !important;
-
-    border:
-        0;
-
-    border-radius:
-        7px;
-
-    box-shadow:
-        none;
-}
-
-.toolbar button:hover,
-.editor-toolbar button:hover {
-    background:
-        #fff0e3 !important;
-
-    color:
-        #ff6a00 !important;
-
-    transform:
-        none;
-
-    box-shadow:
-        none;
-}
-
-
-/* =========================================================
-   TEXT EDITOR
-   ========================================================= */
-
-[contenteditable="true"] {
-    min-height:
-        160px;
-
-    padding:
-        1rem;
-
-    background:
-        #ffffff !important;
-
-    color:
-        #17181c !important;
-
-    border:
-        1px solid #dfe2e6;
-
-    border-radius:
-        8px;
-
-    outline:
-        none;
-
-    line-height:
-        1.6;
-
-    transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-[contenteditable="true"]:focus {
-    border-color:
-        #ff6a00;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255, 106, 0, 0.10);
-}
-
-
-/* =========================================================
    INPUTS
    ========================================================= */
 
@@ -2388,3 +2187,160 @@ header .logo:hover img {
     color:
         #17181c;
 }
+
+/* =========================================================
+   LEVEL SIZE / DENSITY
+   ========================================================= */
+
+.page-list .list .rank {
+    width: 2.4rem;
+    padding-right: 0.45rem;
+}
+
+.page-list .list .rank p {
+    font-size: 0.62rem;
+    font-weight: 650;
+}
+
+.page-list .list .level button {
+    min-height: 2.05rem;
+    padding: 0.32rem 0.58rem;
+
+    border-radius: 7px;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.025);
+}
+
+.page-list .list .level button .type-label-lg {
+    font-size: 0.67rem;
+    font-weight: 650;
+    line-height: 1.2;
+}
+
+.page-list .list {
+    border-spacing: 0 0.22rem;
+}
+
+/* =========================================================
+   SUBMIT BUTTON FINAL FIX
+   ========================================================= */
+
+/*
+   Do NOT rely only on .btn.
+   Some TSPL submit controls are rendered as anchors / router links.
+   These selectors cover the actual interactive submit surfaces
+   without changing the HTML structure.
+*/
+
+a.btn,
+button.btn,
+input.btn,
+.btn,
+button[type="submit"],
+input[type="submit"],
+a[href*="submit"],
+a[href*="verification"],
+a[href*="record"] {
+    box-sizing: border-box !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-height: 38px !important;
+
+    padding: 0.62rem 1rem !important;
+
+    border: 1px solid #ff6500 !important;
+    border-radius: 9px !important;
+
+    background: linear-gradient(
+        180deg,
+        #ff7b1a 0%,
+        #ff6500 100%
+    ) !important;
+
+    color: #ffffff !important;
+
+    font-family: inherit !important;
+    font-size: 0.75rem !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+
+    text-decoration: none !important;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.06),
+        0 4px 11px rgba(255, 106, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
+
+    cursor: pointer !important;
+
+    transition:
+        transform 0.16s ease,
+        box-shadow 0.16s ease,
+        background 0.16s ease !important;
+}
+
+a.btn:hover,
+button.btn:hover,
+input.btn:hover,
+.btn:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+a[href*="submit"]:hover,
+a[href*="verification"]:hover,
+a[href*="record"]:hover {
+    background: linear-gradient(
+        180deg,
+        #ff882e 0%,
+        #ff6905 100%
+    ) !important;
+
+    border-color: #ff5b00 !important;
+    color: #ffffff !important;
+
+    transform: translateY(-1px) !important;
+
+    box-shadow:
+        0 2px 3px rgba(0, 0, 0, 0.06),
+        0 8px 18px rgba(255, 106, 0, 0.21),
+        inset 0 1px 0 rgba(255, 255, 255, 0.27) !important;
+}
+
+a.btn:active,
+button.btn:active,
+input.btn:active,
+.btn:active,
+button[type="submit"]:active,
+input[type="submit"]:active {
+    transform: translateY(0) !important;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.08),
+        inset 0 2px 3px rgba(0, 0, 0, 0.09) !important;
+}
+
+/* Submit Verification specifically */
+a[href*="verification"],
+a[href*="verify"],
+button[data-action*="verification"],
+button[data-action*="verify"] {
+    background: linear-gradient(
+        180deg,
+        #ff7b1a 0%,
+        #ff6500 100%
+    ) !important;
+
+    border: 1px solid #ff6500 !important;
+    color: #ffffff !important;
+
+    border-radius: 9px !important;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.06),
+        0 4px 11px rgba(255, 106, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
+}
+
