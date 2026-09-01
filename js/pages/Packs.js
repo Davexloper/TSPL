@@ -23,7 +23,6 @@ export default {
                 >
 
                     <div class="pack-header">
-
                         <div class="pack-info">
                             <h1>{{ pack.name }}</h1>
 
@@ -37,26 +36,23 @@ export default {
                             class="pack-color"
                             :style="{ backgroundColor: pack.color }"
                         ></div>
-
                     </div>
 
                     <div class="pack-levels">
 
                         <button
-                            v-for="levelPath in pack.levels"
-                            :key="levelPath"
+                            v-for="levelIdentifier in pack.levels"
+                            :key="levelIdentifier"
                             class="pack-level"
-                            @click="openLevel(levelPath)"
+                            @click="openLevel(levelIdentifier)"
                         >
-
                             <span class="pack-level-rank">
-                                #{{ getLevelRank(levelPath) }}
+                                #{{ getLevelRank(levelIdentifier) }}
                             </span>
 
                             <span class="pack-level-name">
-                                {{ getLevelName(levelPath) }}
+                                {{ getLevelName(levelIdentifier) }}
                             </span>
-
                         </button>
 
                     </div>
@@ -87,73 +83,59 @@ export default {
 
     async mounted() {
         this.list = await fetchList();
-        this.packs = await fetchPacks();
-
-        if (!this.packs) {
-            this.packs = [];
-        }
-
-        if (!this.list) {
-            this.list = [];
-        }
+        this.packs = await fetchPacks() || [];
 
         this.loading = false;
     },
 
     methods: {
 
-        findLevelIndex(levelIdentifier) {
+        findLevelIndex(identifier) {
             return this.list.findIndex(([level]) => {
                 if (!level) {
                     return false;
                 }
 
                 return (
-                    level.path === levelIdentifier ||
-                    level.name === levelIdentifier
+                    level.path === identifier ||
+                    level.name === identifier
                 );
             });
         },
 
-        getLevel(levelIdentifier) {
-            const index = this.findLevelIndex(levelIdentifier);
+        getLevelName(identifier) {
+            const index = this.findLevelIndex(identifier);
 
             if (index === -1) {
-                return null;
+                return identifier;
             }
 
-            return this.list[index][0];
+            return this.list[index][0].name;
         },
 
-        getLevelName(levelIdentifier) {
-            const level = this.getLevel(levelIdentifier);
-
-            return level?.name || levelIdentifier;
-        },
-
-        getLevelRank(levelIdentifier) {
-            const index = this.findLevelIndex(levelIdentifier);
+        getLevelRank(identifier) {
+            const index = this.findLevelIndex(identifier);
 
             return index === -1 ? "?" : index + 1;
         },
 
-        openLevel(levelIdentifier) {
-            const index = this.findLevelIndex(levelIdentifier);
+        openLevel(identifier) {
+            const index = this.findLevelIndex(identifier);
 
             if (index === -1) {
                 console.error(
-                    `Could not find level "${levelIdentifier}" in the list.`
+                    `Level "${identifier}" could not be found in _list.json.`
                 );
 
                 return;
             }
 
-            sessionStorage.setItem(
-                "selectedLevel",
-                index.toString()
-            );
-
-            this.$router.push("/");
+            this.$router.push({
+                path: "/",
+                query: {
+                    level: index
+                }
+            });
         }
 
     }
