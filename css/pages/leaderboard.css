@@ -1,77 +1,378 @@
 /* =========================================================
-   COMPLETED PACKS
+   LEADERBOARD
    ========================================================= */
 
-.page-leaderboard-container .completed-packs {
-    margin-top: 1.5rem;
+.page-leaderboard-container {
+    width: 100%;
+    min-height: calc(100vh - 4rem);
 }
 
-.page-leaderboard-container .completed-packs h2 {
-    margin-bottom: 0.75rem;
+.page-leaderboard {
+    display: grid;
+
+    grid-template-columns:
+        minmax(18rem, 25rem)
+        minmax(0, 1fr);
+
+    gap: 1.5rem;
+
+    width: 100%;
+    max-width: 120rem;
+
+    margin: 0 auto;
+
+    padding: 1.25rem;
 }
 
-.page-leaderboard-container .pack-list {
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.page-leaderboard .error-container {
+    grid-column: 1 / -1;
+}
+
+.page-leaderboard .error {
+    padding: 0.8rem 1rem;
+
+    border-radius: 0.7rem;
+
+    background: color-mix(
+        in srgb,
+        var(--color-error) 8%,
+        var(--color-background)
+    );
+
+    color: var(--color-error);
+}
+
+
+/* =========================================================
+   BOARD
+   ========================================================= */
+
+.page-leaderboard .board-container {
+    min-width: 0;
+
+    overflow-y: auto;
+    max-height: calc(100vh - 6.5rem);
+
+    padding-right: 0.25rem;
+}
+
+
+/* =========================================================
+   BOARD TABLE
+   ========================================================= */
+
+.page-leaderboard .board {
+    width: 100%;
+
+    table-layout: fixed;
+
+    border-collapse: separate;
+    border-spacing: 0 0.35rem;
+}
+
+
+/* =========================================================
+   BOARD ROW
+   ========================================================= */
+
+.page-leaderboard .board tr {
+    width: 100%;
+}
+
+
+/* =========================================================
+   RANK
+   ========================================================= */
+
+.page-leaderboard .board .rank {
+    width: 4.5rem;
+
+    padding: 0.7rem 0.5rem;
+
+    text-align: right;
+
+    white-space: nowrap;
+
+    color: var(--color-on-background);
+
+    opacity: 0.5;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TOTAL / POINTS
+   ========================================================= */
+
+.page-leaderboard .board .total {
+    width: 5rem;
+
+    padding: 0.7rem 0.5rem;
+
+    text-align: right;
+
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   USER
+   ========================================================= */
+
+.page-leaderboard .board .user {
+    width: auto;
+
+    padding: 0;
+}
+
+
+.page-leaderboard .board .user button {
+    display: block;
+
+    width: 100%;
+
+    padding: 0.7rem 0.85rem;
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 7%,
+        transparent
+    );
+
+    border-radius: 0.65rem;
+
+    background:
+        var(--color-background);
+
+    color:
+        var(--color-on-background);
+
+    text-align: left;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.page-leaderboard .board .user button:hover {
+    background:
+        var(--color-background-hover);
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--color-primary) 25%,
+            transparent
+        );
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   SELECTED PLAYER
+   ========================================================= */
+
+.page-leaderboard .board tr.selected .user button {
+    background:
+        var(--color-primary);
+
+    color:
+        var(--color-on-primary);
+
+    border-color:
+        var(--color-primary);
+}
+
+
+.page-leaderboard .board tr.selected .rank,
+.page-leaderboard .board tr.selected .total {
+    color:
+        var(--color-primary);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PLAYER CONTAINER
+   ========================================================= */
+
+.page-leaderboard .player-container {
+    min-width: 0;
+
+    padding: 0 1rem 2rem 0;
+}
+
+
+/* =========================================================
+   PLAYER
+   ========================================================= */
+
+.page-leaderboard .player {
+    width: 100%;
+    max-width: 60rem;
+
     display: flex;
 
     flex-direction: column;
 
-    gap: 0.45rem;
+    gap: 1.4rem;
 }
 
-.page-leaderboard-container .completed-pack {
+
+/* =========================================================
+   PLAYER HEADER
+   ========================================================= */
+
+.page-leaderboard .player-header {
     display: flex;
 
     align-items: center;
 
-    gap: 0.75rem;
+    padding-bottom: 0.8rem;
 
-    width: 100%;
-
-    padding: 0.65rem 0.75rem;
-
-    box-sizing: border-box;
-
-    background: var(--color-background);
-
-    border: 1px solid;
-
-    border-left-width: 3px;
-
-    border-radius: 0.55rem;
-
-    transition:
-        transform 0.14s ease,
-        background-color 0.14s ease;
+    border-bottom: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 8%,
+        transparent
+    );
 }
 
-.page-leaderboard-container .completed-pack:hover {
-    transform: translateX(2px);
 
-    background-color: var(--color-background-hover);
+.page-leaderboard .player-header h1 {
+    margin: 0;
+
+    line-height: 1.1;
 }
 
-.page-leaderboard-container .completed-pack-color {
-    width: 0.75rem;
-    height: 0.75rem;
 
-    flex-shrink: 0;
+.page-leaderboard .player-points {
+    margin-top: 0.35rem;
 
-    border-radius: 50%;
+    opacity: 0.55;
+
+    font-weight: 700;
 }
 
-.page-leaderboard-container .completed-pack-info {
+
+/* =========================================================
+   PLAYER SECTIONS
+   ========================================================= */
+
+.page-leaderboard .player-section {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.55rem;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+.page-leaderboard .section-header {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     gap: 1rem;
-
-    width: 100%;
 }
 
-.page-leaderboard-container .completed-pack-info p {
+
+.page-leaderboard .section-header h2 {
     margin: 0;
+}
+
+
+.page-leaderboard .section-header span {
+    min-width: 2rem;
+
+    padding: 0.2rem 0.55rem;
+
+    border-radius: 999px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--color-primary) 10%,
+            var(--color-background)
+        );
+
+    color:
+        var(--color-primary);
+
+    text-align: center;
+
+    font-weight: 700;
+
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   RECORD TABLE
+   ========================================================= */
+
+.page-leaderboard .table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0 0.15rem;
+
+    table-layout: fixed;
+}
+
+
+/* =========================================================
+   TABLE RANK
+   ========================================================= */
+
+.page-leaderboard .table .rank {
+    width: 4.5rem;
+
+    padding: 0.55rem 0.6rem;
+
+    color:
+        var(--color-on-background);
+
+    opacity: 0.45;
+
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   LEVEL
+   ========================================================= */
+
+.page-leaderboard .table .level {
+    width: auto;
+
+    padding: 0.55rem 0.6rem;
 
     overflow: hidden;
 
@@ -80,12 +381,209 @@
     white-space: nowrap;
 }
 
-.page-leaderboard-container .completed-pack-info span {
-    flex-shrink: 0;
 
-    font-size: 0.78rem;
+.page-leaderboard .table .level a {
+    color:
+        var(--color-primary);
 
-    opacity: 0.5;
+    text-decoration: none;
+
+    font-weight: 700;
+
+    transition:
+        opacity 0.15s ease;
+}
+
+
+.page-leaderboard .table .level a:hover {
+    opacity: 0.7;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   SCORE
+   ========================================================= */
+
+.page-leaderboard .table .score {
+    width: 5.5rem;
+
+    padding: 0.55rem 0.6rem;
+
+    text-align: right;
+
+    white-space: nowrap;
 
     font-variant-numeric: tabular-nums;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLE ROW HOVER
+   ========================================================= */
+
+.page-leaderboard .table tr {
+    border-radius: 0.5rem;
+
+    transition:
+        background-color 0.15s ease;
+}
+
+
+.page-leaderboard .table tr:hover {
+    background:
+        color-mix(
+            in srgb,
+            var(--color-primary) 4%,
+            transparent
+        );
+}
+
+
+/* =========================================================
+   COMPLETED PACKS
+   ========================================================= */
+
+.page-leaderboard .packs-section {
+    padding: 1rem;
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 8%,
+        transparent
+    );
+
+    border-radius: 0.8rem;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--color-primary) 3%,
+            var(--color-background)
+        );
+}
+
+
+.page-leaderboard .completed-packs {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.45rem;
+}
+
+
+.page-leaderboard .completed-pack {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.7rem;
+
+    padding: 0.65rem 0.75rem;
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--pack-color) 25%,
+        transparent
+    );
+
+    border-radius: 0.6rem;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--pack-color) 6%,
+            var(--color-background)
+        );
+}
+
+
+.page-leaderboard .completed-pack-color {
+    flex: 0 0 auto;
+
+    width: 0.7rem;
+    height: 0.7rem;
+
+    border-radius: 50%;
+
+    background:
+        var(--pack-color);
+
+    box-shadow:
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--pack-color) 12%,
+            transparent
+        );
+}
+
+
+.page-leaderboard .completed-pack div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.1rem;
+}
+
+
+.page-leaderboard .completed-pack strong {
+    color:
+        var(--color-on-background);
+}
+
+
+.page-leaderboard .completed-pack small {
+    opacity: 0.55;
+
+    font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   NO DATA
+   ========================================================= */
+
+.page-leaderboard .no-player-data {
+    padding: 1rem;
+
+    border-radius: 0.7rem;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--color-on-background) 4%,
+            var(--color-background)
+        );
+
+    opacity: 0.55;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .page-leaderboard {
+        grid-template-columns: 1fr;
+    }
+
+
+    .page-leaderboard .board-container {
+        max-height: none;
+    }
+
+
+    .page-leaderboard .player-container {
+        padding-right: 0;
+    }
+
 }
