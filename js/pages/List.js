@@ -348,6 +348,7 @@ export default {
     data: () => ({
         list: [],
         editors: [],
+        levelPacks: {},
         loading: true,
         selected: 0,
         errors: [],
