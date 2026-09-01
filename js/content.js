@@ -43,27 +43,56 @@ export async function fetchList() {
     }
 }
 
+/**
+ * Load all packs from `_packs.json`
+ */
 export async function fetchPacks() {
     try {
         const packsResult = await fetch(`${dir}/_packs.json`);
-        return await packsResult.json();
-    } catch {
-        console.error("Failed to load packs.");
-        return null;
+
+        if (!packsResult.ok) {
+            throw new Error(`HTTP ${packsResult.status}`);
+        }
+
+        const packs = await packsResult.json();
+
+        if (!Array.isArray(packs)) {
+            throw new Error('_packs.json must contain an array.');
+        }
+
+        return packs;
+    } catch (error) {
+        console.error('Failed to load packs.', error);
+        return [];
     }
 }
 
+/**
+ * Create a map containing all packs each level belongs to.
+ *
+ * Example:
+ *
+ * {
+ *     "Bloodbath": [
+ *         {
+ *             id: 1,
+ *             name: "Apocalyptic Duoly",
+ *             color: "#00ff00"
+ *         }
+ *     ]
+ * }
+ */
 export async function fetchLevelPacks() {
     const packs = await fetchPacks();
 
-    if (!packs) {
-        return {};
-    }
-
     const levelPacks = {};
 
-    packs.forEach(pack => {
-        pack.levels.forEach(level => {
+    packs.forEach((pack) => {
+        if (!Array.isArray(pack.levels)) {
+            return;
+        }
+
+        pack.levels.forEach((level) => {
             if (!levelPacks[level]) {
                 levelPacks[level] = [];
             }
@@ -71,7 +100,7 @@ export async function fetchLevelPacks() {
             levelPacks[level].push({
                 id: pack.id,
                 name: pack.name,
-                color: pack.color
+                color: pack.color,
             });
         });
     });
@@ -146,7 +175,6 @@ export async function fetchLeaderboard() {
             link: level.verification,
         });
 
-
         /*
          * Records
          */
@@ -162,7 +190,6 @@ export async function fetchLeaderboard() {
             };
 
             const { completed, progressed } = scoreMap[user];
-
 
             /*
              * Completed
@@ -185,7 +212,6 @@ export async function fetchLeaderboard() {
                 return;
             }
 
-
             /*
              * Progressed
              */
@@ -205,7 +231,6 @@ export async function fetchLeaderboard() {
             });
         });
     });
-
 
     /*
      * Wrap in extra Object containing
@@ -231,7 +256,6 @@ export async function fetchLeaderboard() {
             ...scores,
         };
     });
-
 
     /*
      * Sort by total score
