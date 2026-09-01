@@ -4,10 +4,14 @@
 
 .page-leaderboard-container {
     width: 100%;
+    max-width: 100%;
     min-height: calc(100vh - 4rem);
+
     box-sizing: border-box;
+
     overflow-x: hidden;
 }
+
 
 .page-leaderboard {
     display: grid;
@@ -16,10 +20,13 @@
 
     width: 100%;
     max-width: 120rem;
+
     margin: 0 auto;
     padding: 1.25rem;
 
     box-sizing: border-box;
+
+    min-width: 0;
 }
 
 
@@ -29,10 +36,20 @@
 
 .page-leaderboard .error-container {
     grid-column: 1 / -1;
+
+    min-width: 0;
+    max-width: 100%;
+
+    box-sizing: border-box;
 }
 
+
 .page-leaderboard .error {
+    width: 100%;
+    max-width: 100%;
+
     padding: 0.8rem 1rem;
+
     border-radius: 0.7rem;
 
     background: color-mix(
@@ -42,6 +59,8 @@
     );
 
     color: var(--color-error);
+
+    box-sizing: border-box;
 }
 
 
@@ -50,14 +69,18 @@
    ========================================================= */
 
 .page-leaderboard .board-container {
-    min-width: 0;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
 
+    box-sizing: border-box;
+
+    overflow-x: hidden;
     overflow-y: auto;
+
     max-height: calc(100vh - 6.5rem);
 
     padding-right: 0.25rem;
-    box-sizing: border-box;
 }
 
 
@@ -67,11 +90,15 @@
 
 .page-leaderboard .board {
     width: 100%;
+    max-width: 100%;
     min-width: 0;
 
     table-layout: fixed;
+
     border-collapse: separate;
     border-spacing: 0 0.35rem;
+
+    box-sizing: border-box;
 }
 
 
@@ -81,6 +108,7 @@
 
 .page-leaderboard .board tr {
     width: 100%;
+    max-width: 100%;
 }
 
 
@@ -100,6 +128,8 @@
     opacity: 0.5;
 
     font-weight: 700;
+
+    box-sizing: border-box;
 }
 
 
@@ -117,6 +147,8 @@
 
     font-variant-numeric: tabular-nums;
     font-weight: 700;
+
+    box-sizing: border-box;
 }
 
 
@@ -127,13 +159,19 @@
 .page-leaderboard .board .user {
     width: auto;
     min-width: 0;
+    max-width: 100%;
+
     padding: 0;
+
+    box-sizing: border-box;
 }
+
 
 .page-leaderboard .board .user button {
     display: block;
 
     width: 100%;
+    max-width: 100%;
     min-width: 0;
 
     padding: 0.7rem 0.85rem;
@@ -154,13 +192,18 @@
 
     cursor: pointer;
 
+    box-sizing: border-box;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     transition:
         background-color 0.15s ease,
         border-color 0.15s ease,
         transform 0.15s ease;
-
-    box-sizing: border-box;
 }
+
 
 .page-leaderboard .board .user button:hover {
     background: var(--color-background-hover);
@@ -185,6 +228,7 @@
     border-color: var(--color-primary);
 }
 
+
 .page-leaderboard .board tr.selected .rank,
 .page-leaderboard .board tr.selected .total {
     color: var(--color-primary);
@@ -197,14 +241,16 @@
    ========================================================= */
 
 .page-leaderboard .player-container {
-    min-width: 0;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
 
     padding: 0 0 2rem 0;
 
     box-sizing: border-box;
 
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
 }
 
 
@@ -213,12 +259,12 @@
    ========================================================= */
 
 .page-leaderboard .player {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-
     display: flex;
     flex-direction: column;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
 
     gap: 1.25rem;
 
@@ -236,6 +282,7 @@
 
     width: 100%;
     min-width: 0;
+    max-width: 100%;
 
     padding-bottom: 0.8rem;
 
@@ -246,17 +293,24 @@
     );
 
     box-sizing: border-box;
+
+    overflow: hidden;
 }
+
 
 .page-leaderboard .player-header h1 {
     margin: 0;
+
     min-width: 0;
+    max-width: 100%;
 
     line-height: 1.1;
 
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 
 .page-leaderboard .player-points {
     margin-top: 0.35rem;
@@ -276,6 +330,7 @@
 
     width: 100%;
     min-width: 0;
+    max-width: 100%;
 
     gap: 0.55rem;
 
@@ -294,17 +349,25 @@
 
     width: 100%;
     min-width: 0;
+    max-width: 100%;
 
     gap: 1rem;
+
+    box-sizing: border-box;
 }
+
 
 .page-leaderboard .section-header h2 {
     margin: 0;
+
     min-width: 0;
+    max-width: 100%;
 
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 
 .page-leaderboard .section-header span {
     flex: 0 0 auto;
@@ -326,6 +389,8 @@
     text-align: center;
     font-weight: 700;
     font-size: 0.85rem;
+
+    box-sizing: border-box;
 }
 
 
@@ -335,12 +400,38 @@
 
 .page-leaderboard .table {
     width: 100%;
+    max-width: 100%;
     min-width: 0;
 
     border-collapse: separate;
     border-spacing: 0 0.15rem;
 
     table-layout: fixed;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TABLE ROW
+   ========================================================= */
+
+.page-leaderboard .table tr {
+    width: 100%;
+    max-width: 100%;
+
+    border-radius: 0.5rem;
+
+    transition: background-color 0.15s ease;
+}
+
+
+.page-leaderboard .table tr:hover {
+    background: color-mix(
+        in srgb,
+        var(--color-primary) 4%,
+        transparent
+    );
 }
 
 
@@ -358,6 +449,8 @@
 
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
+
+    box-sizing: border-box;
 }
 
 
@@ -368,22 +461,36 @@
 .page-leaderboard .table .level {
     width: auto;
     min-width: 0;
+    max-width: 100%;
 
     padding: 0.55rem 0.6rem;
 
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    box-sizing: border-box;
 }
 
+
 .page-leaderboard .table .level a {
+    display: block;
+
+    max-width: 100%;
+    min-width: 0;
+
     color: var(--color-primary);
 
     text-decoration: none;
     font-weight: 700;
 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     transition: opacity 0.15s ease;
 }
+
 
 .page-leaderboard .table .level a:hover {
     opacity: 0.7;
@@ -405,25 +512,8 @@
 
     font-variant-numeric: tabular-nums;
     font-weight: 700;
-}
 
-
-/* =========================================================
-   TABLE ROW HOVER
-   ========================================================= */
-
-.page-leaderboard .table tr {
-    border-radius: 0.5rem;
-
-    transition: background-color 0.15s ease;
-}
-
-.page-leaderboard .table tr:hover {
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 4%,
-        transparent
-    );
+    box-sizing: border-box;
 }
 
 
@@ -437,6 +527,7 @@
 
     width: 100%;
     min-width: 0;
+    max-width: 100%;
 
     margin-top: 0.5rem;
     padding: 1rem;
@@ -456,6 +547,8 @@
     );
 
     box-sizing: border-box;
+
+    overflow: hidden;
 }
 
 
@@ -469,9 +562,13 @@
 
     width: 100%;
     min-width: 0;
+    max-width: 100%;
 
     gap: 0.45rem;
+
+    box-sizing: border-box;
 }
+
 
 .page-leaderboard .completed-pack {
     display: flex;
@@ -479,6 +576,7 @@
 
     width: 100%;
     min-width: 0;
+    max-width: 100%;
 
     gap: 0.7rem;
     padding: 0.65rem 0.75rem;
@@ -498,7 +596,10 @@
     );
 
     box-sizing: border-box;
+
+    overflow: hidden;
 }
+
 
 .page-leaderboard .completed-pack-color {
     flex: 0 0 auto;
@@ -518,17 +619,23 @@
         );
 }
 
+
 .page-leaderboard .completed-pack div {
     display: flex;
     flex-direction: column;
 
     min-width: 0;
+    max-width: 100%;
 
     gap: 0.1rem;
+
+    overflow: hidden;
 }
+
 
 .page-leaderboard .completed-pack strong {
     min-width: 0;
+    max-width: 100%;
 
     color: var(--color-on-background);
 
@@ -537,9 +644,17 @@
     white-space: nowrap;
 }
 
+
 .page-leaderboard .completed-pack small {
+    min-width: 0;
+    max-width: 100%;
+
     opacity: 0.55;
     font-size: 0.8rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -548,6 +663,9 @@
    ========================================================= */
 
 .page-leaderboard .no-player-data {
+    width: 100%;
+    max-width: 100%;
+
     padding: 1rem;
 
     border-radius: 0.7rem;
@@ -561,43 +679,68 @@
     opacity: 0.55;
 
     text-align: center;
+
+    box-sizing: border-box;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE — 1100px
    ========================================================= */
 
 @media (max-width: 1100px) {
     .page-leaderboard {
         grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+
         gap: 1rem;
     }
 }
 
 
+/* =========================================================
+   RESPONSIVE — 900px
+   ========================================================= */
+
 @media (max-width: 900px) {
     .page-leaderboard {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+
+        width: 100%;
+        max-width: 100%;
     }
 
     .page-leaderboard .board-container {
         max-height: none;
+        overflow-x: hidden;
+        overflow-y: visible;
     }
 
     .page-leaderboard .player-container {
+        width: 100%;
+        max-width: 100%;
+
         padding-right: 0;
-        overflow: visible;
+
+        overflow-x: hidden;
+        overflow-y: visible;
     }
 
     .page-leaderboard .player {
-        max-width: none;
+        width: 100%;
+        max-width: 100%;
     }
 }
 
 
+/* =========================================================
+   RESPONSIVE — 600px
+   ========================================================= */
+
 @media (max-width: 600px) {
     .page-leaderboard {
+        width: 100%;
+        max-width: 100%;
+
         padding: 0.75rem;
         gap: 1rem;
     }
@@ -613,5 +756,38 @@
 
     .page-leaderboard .table .score {
         width: 4.5rem;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL
+   ========================================================= */
+
+@media (max-width: 400px) {
+    .page-leaderboard {
+        padding: 0.5rem;
+    }
+
+    .page-leaderboard .board .rank,
+    .page-leaderboard .table .rank {
+        width: 2.5rem;
+
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .page-leaderboard .board .total {
+        width: 3.5rem;
+
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .page-leaderboard .table .score {
+        width: 4rem;
+
+        padding-left: 0.35rem;
+        padding-right: 0.35rem;
     }
 }
