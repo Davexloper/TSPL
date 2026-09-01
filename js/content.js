@@ -53,6 +53,32 @@ export async function fetchPacks() {
     }
 }
 
+export async function fetchLevelPacks() {
+    const packs = await fetchPacks();
+
+    if (!packs) {
+        return {};
+    }
+
+    const levelPacks = {};
+
+    packs.forEach(pack => {
+        pack.levels.forEach(level => {
+            if (!levelPacks[level]) {
+                levelPacks[level] = [];
+            }
+
+            levelPacks[level].push({
+                id: pack.id,
+                name: pack.name,
+                color: pack.color
+            });
+        });
+    });
+
+    return levelPacks;
+}
+
 export async function fetchEditors() {
     try {
         const editorsResults = await fetch(`${dir}/_editors.json`);
