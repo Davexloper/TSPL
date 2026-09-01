@@ -1,11 +1,12 @@
 [
     {
         "id": 1,
-        "name": "Apocalyptic Duoly",
+        "name": "Apocalyptic Trilogy",
         "color": "#00ff00",
         "levels": [
             "Bloodbath",
             "Cataclysm",
+            "Aftermath"
         ]
     }
-]  
+]
