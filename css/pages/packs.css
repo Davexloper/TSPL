@@ -5,7 +5,8 @@
 .page-packs {
     width: 100%;
     min-height: 100%;
-    padding: 0.6rem 0.75rem;
+
+    padding: 0.5rem 0.6rem;
 
     box-sizing: border-box;
 }
@@ -24,7 +25,7 @@
 
     margin: 0;
 
-    gap: 0.6rem;
+    gap: 0.55rem;
 
     box-sizing: border-box;
 }
@@ -38,16 +39,14 @@
     display: grid;
 
     /*
-        ┌──────────────┬──────────┬───────────────┐
-        │ PACK INFO    │ VICTORS  │ LEVELS        │
-        │              │          │               │
-        └──────────────┴──────────┴───────────────┘
+        INFO       VICTORS              LEVELS
+        22%        25%                  53%
     */
 
     grid-template-columns:
-        23%
-        minmax(0, 22%)
-        minmax(0, 55%);
+        22%
+        25%
+        minmax(0, 53%);
 
     grid-template-areas:
         "header victors levels";
@@ -59,24 +58,24 @@
     min-height: 9rem;
     max-height: 9rem;
 
-    overflow: hidden;
+    margin: 0;
 
-    position: relative;
+    overflow: hidden;
 
     background:
         linear-gradient(
-            135deg,
+            110deg,
             color-mix(
                 in srgb,
                 var(--pack-color) 5%,
                 var(--color-background)
             ),
-            var(--color-background) 60%
+            var(--color-background)
         );
 
     border: 1px solid color-mix(
         in srgb,
-        var(--pack-color) 20%,
+        var(--pack-color) 22%,
         transparent
     );
 
@@ -86,17 +85,10 @@
 
     box-sizing: border-box;
 
-    box-shadow:
-        0 2px 8px color-mix(
-            in srgb,
-            var(--pack-color) 5%,
-            transparent
-        );
-
     transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        border-color 0.16s ease;
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
 }
 
 
@@ -114,9 +106,9 @@
     );
 
     box-shadow:
-        0 6px 18px color-mix(
+        0 6px 20px color-mix(
             in srgb,
-            var(--pack-color) 11%,
+            var(--pack-color) 10%,
             transparent
         );
 }
@@ -137,17 +129,18 @@
 
     width: 100%;
     min-width: 0;
+    height: 100%;
 
-    padding: 0.8rem 0.9rem;
+    padding: 0.75rem 0.85rem;
 
-    gap: 0.4rem;
+    gap: 0.35rem;
 
     background:
         linear-gradient(
             135deg,
             color-mix(
                 in srgb,
-                var(--pack-color) 9%,
+                var(--pack-color) 10%,
                 transparent
             ),
             transparent
@@ -157,7 +150,7 @@
 
     border-right: 1px solid color-mix(
         in srgb,
-        var(--pack-color) 12%,
+        var(--pack-color) 13%,
         transparent
     );
 
@@ -166,14 +159,16 @@
 
 
 /* =========================================================
-   COLOR DOT
+   PACK DOT
    ========================================================= */
 
 .page-packs .pack-color {
-    width: 0.6rem;
-    height: 0.6rem;
+    display: block;
 
-    flex: 0 0 auto;
+    width: 0.58rem;
+    height: 0.58rem;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
@@ -182,7 +177,7 @@
     box-shadow:
         0 0 0 3px color-mix(
             in srgb,
-            var(--pack-color) 11%,
+            var(--pack-color) 12%,
             transparent
         ),
         0 0 10px color-mix(
@@ -194,7 +189,7 @@
 
 
 /* =========================================================
-   PACK TITLE
+   PACK INFO TEXT
    ========================================================= */
 
 .page-packs .pack-info {
@@ -216,10 +211,10 @@
 
     color: var(--pack-color);
 
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 800;
 
-    line-height: 1.2;
+    line-height: 1.15;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -232,7 +227,7 @@
 
     color: var(--color-on-background);
 
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 600;
 
     opacity: 0.45;
@@ -240,7 +235,7 @@
 
 
 /* =========================================================
-   VICTORS
+   VICTORS PANEL
    ========================================================= */
 
 .page-packs .pack-victors {
@@ -250,25 +245,32 @@
     flex-direction: column;
 
     width: 100%;
+    height: 100%;
+
     min-width: 0;
     min-height: 0;
 
     padding: 0.65rem 0.75rem;
 
-    gap: 0.3rem;
+    gap: 0.25rem;
 
     overflow-x: hidden;
     overflow-y: auto;
 
-    background: color-mix(
-        in srgb,
-        var(--pack-color) 2%,
-        transparent
-    );
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--pack-color) 3%,
+                transparent
+            ),
+            transparent
+        );
 
     border-right: 1px solid color-mix(
         in srgb,
-        var(--pack-color) 12%,
+        var(--pack-color) 13%,
         transparent
     );
 
@@ -291,7 +293,7 @@
    ========================================================= */
 
 .page-packs .pack-victors::-webkit-scrollbar {
-    width: 4px;
+    width: 3px;
 }
 
 .page-packs .pack-victors::-webkit-scrollbar-track {
@@ -314,11 +316,13 @@
    ========================================================= */
 
 .page-packs .pack-victors h2 {
-    margin: 0;
+    display: block;
+
+    margin: 0 0 0.15rem;
 
     color: var(--pack-color);
 
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 800;
 
     line-height: 1.1;
@@ -330,10 +334,14 @@
    ========================================================= */
 
 .page-packs .pack-victors .victor-count {
+    display: block;
+
     color: var(--pack-color);
 
     font-size: 0.62rem;
     font-weight: 750;
+
+    line-height: 1.1;
 }
 
 
@@ -349,9 +357,9 @@
     font-size: 0.65rem;
     font-weight: 600;
 
-    opacity: 0.65;
-
     line-height: 1.25;
+
+    opacity: 0.65;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -360,7 +368,7 @@
 
 
 /* =========================================================
-   LEVELS
+   LEVELS PANEL
    ========================================================= */
 
 .page-packs .pack-levels {
@@ -368,18 +376,20 @@
 
     display: flex;
     flex-direction: column;
+
     justify-content: center;
 
     width: 100%;
-    min-width: 0;
     height: 100%;
 
-    padding: 0.45rem 0.5rem;
+    min-width: 0;
+
+    padding: 0.45rem 0.55rem;
 
     gap: 0.3rem;
 
     /*
-       LEVELS NEVER SCROLL
+       NEVER SCROLL
     */
 
     overflow: hidden;
@@ -396,7 +406,7 @@
     display: grid;
 
     grid-template-columns:
-        2.8rem
+        2.6rem
         minmax(0, 1fr);
 
     align-items: center;
@@ -408,9 +418,9 @@
 
     height: 2.35rem;
 
-    padding: 0 0.8rem;
+    padding: 0 0.7rem;
 
-    gap: 0.7rem;
+    gap: 0.5rem;
 
     background:
         linear-gradient(
@@ -420,7 +430,11 @@
                 var(--pack-color) 5%,
                 var(--color-background)
             ),
-            var(--color-background)
+            color-mix(
+                in srgb,
+                var(--pack-color) 1%,
+                var(--color-background)
+            )
         );
 
     border: 1px solid color-mix(
@@ -431,7 +445,7 @@
 
     border-radius: 0.5rem;
 
-    color: var(--color-on-background);
+    color: var(--pack-color);
 
     font-family: inherit;
 
@@ -442,10 +456,10 @@
     box-sizing: border-box;
 
     transition:
-        transform 0.14s ease,
-        background 0.14s ease,
-        border-color 0.14s ease,
-        box-shadow 0.14s ease;
+        transform 0.13s ease,
+        background 0.13s ease,
+        border-color 0.13s ease,
+        box-shadow 0.13s ease;
 }
 
 
@@ -466,7 +480,7 @@
             ),
             color-mix(
                 in srgb,
-                var(--pack-color) 3%,
+                var(--pack-color) 4%,
                 var(--color-background)
             )
         );
@@ -501,8 +515,6 @@
     font-size: 0.68rem;
     font-weight: 800;
 
-    opacity: 0.85;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -521,7 +533,7 @@
 
     color: var(--pack-color);
 
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 750;
 
     text-align: right;
@@ -538,6 +550,24 @@
 
 .page-packs .pack-level::after {
     display: none;
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   If "Victors" is currently outside .pack-victors,
+   style direct pack headings as the victors heading.
+   ========================================================= */
+
+.page-packs .pack > h2 {
+    margin: 0;
+
+    color: var(--pack-color);
+
+    font-size: 0.72rem;
+    font-weight: 800;
+
+    line-height: 1.1;
 }
 
 
@@ -578,27 +608,6 @@
 }
 
 
-.page-packs .no-packs h2 {
-    margin: 0 0 0.25rem;
-
-    color: var(--color-on-background);
-
-    font-size: 0.95rem;
-    font-weight: 750;
-}
-
-
-.page-packs .no-packs p {
-    margin: 0;
-
-    color: var(--color-on-background);
-
-    opacity: 0.45;
-
-    font-size: 0.75rem;
-}
-
-
 /* =========================================================
    DARK MODE
    ========================================================= */
@@ -613,27 +622,21 @@
 }
 
 
-.dark .page-packs .pack:hover {
-    box-shadow:
-        0 7px 20px color-mix(
-            in srgb,
-            var(--pack-color) 13%,
-            transparent
-        );
-}
-
-
 /* =========================================================
    TABLET
    ========================================================= */
 
 @media (max-width: 900px) {
 
+    .page-packs {
+        padding: 0.45rem 0.5rem;
+    }
+
     .page-packs .pack {
         grid-template-columns:
+            24%
             25%
-            23%
-            minmax(0, 52%);
+            minmax(0, 51%);
     }
 
 }
@@ -643,52 +646,54 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 700px) {
-
-    .page-packs {
-        padding: 0.5rem;
-    }
+@media (max-width: 650px) {
 
     .page-packs .pack {
         grid-template-columns:
-            32%
-            68%;
+            27%
+            25%
+            minmax(0, 48%);
 
-        grid-template-areas:
-            "header levels";
-
-        height: 9rem;
-        min-height: 9rem;
-        max-height: 9rem;
+        height: 8.5rem;
+        min-height: 8.5rem;
+        max-height: 8.5rem;
     }
-
-    /*
-       On smaller screens, victors are placed
-       underneath the pack info inside the left side.
-    */
 
     .page-packs .pack-header {
         padding: 0.65rem;
     }
 
     .page-packs .pack-info h1 {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .page-packs .pack-info p {
+        font-size: 0.6rem;
+    }
+
+    .page-packs .pack-victors {
+        padding: 0.55rem;
+    }
+
+    .page-packs .pack-levels {
+        padding: 0.35rem;
+        gap: 0.25rem;
     }
 
     .page-packs .pack-level {
-        flex-basis: 2.1rem;
-        height: 2.1rem;
+        height: 2.15rem;
+        flex-basis: 2.15rem;
 
         grid-template-columns:
-            2rem
+            2.1rem
             minmax(0, 1fr);
 
-        padding-inline: 0.55rem;
+        padding: 0 0.5rem;
     }
 
     .page-packs .pack-level-victor,
     .page-packs .pack-level-name {
-        font-size: 0.64rem;
+        font-size: 0.62rem;
     }
 
 }
@@ -700,27 +705,38 @@
 
 @media (max-width: 450px) {
 
+    .page-packs {
+        padding: 0.35rem;
+    }
+
     .page-packs .pack {
         grid-template-columns:
-            35%
-            65%;
+            29%
+            24%
+            minmax(0, 47%);
     }
 
     .page-packs .pack-info h1 {
-        font-size: 0.78rem;
+        font-size: 0.72rem;
+    }
+
+    .page-packs .pack-victors h2 {
+        font-size: 0.65rem;
+    }
+
+    .page-packs .pack-victors p {
+        font-size: 0.58rem;
     }
 
     .page-packs .pack-level {
         grid-template-columns:
-            1.7rem
+            1.8rem
             minmax(0, 1fr);
-
-        padding-inline: 0.45rem;
     }
 
     .page-packs .pack-level-victor,
     .page-packs .pack-level-name {
-        font-size: 0.58rem;
+        font-size: 0.57rem;
     }
 
 }
