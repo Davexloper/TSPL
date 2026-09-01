@@ -1,463 +1,834 @@
-import { store } from "../main.js";
-import { embed } from "../util.js";
-import { score } from "../score.js";
-import {
-    fetchEditors,
-    fetchList,
-    fetchLevelPacks
-} from "../content.js";
-
-import Spinner from "../components/Spinner.js";
-import LevelAuthors from "../components/List/LevelAuthors.js";
-
-const roleIconMap = {
-    owner: "crown",
-    admin: "user-gear",
-    helper: "user-shield",
-    dev: "code",
-    trial: "user-lock",
-};
-
-export default {
-    components: {
-        Spinner,
-        LevelAuthors
-    },
-
-    template: `
-        <main v-if="loading">
-            <Spinner></Spinner>
-        </main>
-
-        <main v-else class="page-list">
-
-            <!-- =========================================
-                 LEVEL LIST
-                 ========================================= -->
-
-            <div class="list-container">
-                <table class="list" v-if="list">
-                    <tr v-for="([level, err], i) in list">
-
-                        <td class="rank">
-                            <p v-if="i + 1 <= 150" class="type-label-lg">
-                                #{{ i + 1 }}
-                            </p>
-
-                            <p v-else class="type-label-lg">
-                                Legacy
-                            </p>
-                        </td>
-
-                        <td
-                            class="level"
-                            :class="{
-                                'active': selected == i,
-                                'error': !level
-                            }"
-                        >
-                            <button @click="selected = i">
-                                <span class="type-label-lg">
-                                    {{ level?.name || \`Error (\${err}.json)\` }}
-                                </span>
-                            </button>
-                        </td>
-
-                    </tr>
-                </table>
-            </div>
-
-
-            <!-- =========================================
-                 LEVEL INFORMATION
-                 ========================================= -->
-
-            <div class="level-container">
-
-                <div class="level" v-if="level">
-
-                    <h1>{{ level.name }}</h1>
-
-                    <!-- PACKS -->
-
-                    <div
-                        v-if="levelPacks[level.path]?.length"
-                        class="level-packs"
-                    >
-
-                        <span class="pack-label">
-                            Pack:
-                        </span>
-
-                        <span
-                            v-for="pack in levelPacks[level.path]"
-                            :key="pack.id"
-                            class="pack-badge"
-                            :style="{
-                                backgroundColor: pack.color
-                            }"
-                        >
-                            {{ pack.name }}
-                        </span>
-
-                    </div>
-
-                    <LevelAuthors
-                        :author="level.author"
-                        :creators="level.creators"
-                        :verifier="level.verifier"
-                    ></LevelAuthors>
-
-                    <iframe
-                        class="video"
-                        id="videoframe"
-                        :src="video"
-                        frameborder="0"
-                    ></iframe>
-
-
-                    <!-- STATS -->
+import { round, score } from './score.js';
 
-                    <ul class="stats">
+/**
+ * Path to directory containing `_list.json` and all levels
+ */
+const dir = '/data';
 
-                        <li>
-                            <div class="type-title-sm">
-                                Points when completed
-                            </div>
 
-                            <p>
-                                {{ listScore(selected + 1) }}
-                            </p>
-                        </li>
-
-                        <li>
-                            <div class="type-title-sm">
-                                ID
-                            </div>
-
-                            <p>
-                                {{ level.id }}
-                            </p>
-                        </li>
-
-                        <li>
-                            <div class="type-title-sm">
-                                Password
-                            </div>
+/* =========================================================
+   LIST
+   ========================================================= */
 
-                            <p>
-                                {{ level.password || 'Free to Copy' }}
-                            </p>
-                        </li>
+export async function fetchList() {
+    const listResult = await fetch(`${dir}/_list.json`);
 
-                    </ul>
+    try {
+        const list = await listResult.json();
 
+        return await Promise.all(
+            list.map(async (path, rank) => {
 
-                    <!-- RECORDS -->
+                const levelResult =
+                    await fetch(`${dir}/${path}.json`);
 
-                    <h2>Records</h2>
+                try {
 
-                    <p v-if="selected + 1 <= 75">
-                        <strong>
-                            {{ level.percentToQualify }}%
-                        </strong>
-                        or better to qualify
-                    </p>
+                    const level =
+                        await levelResult.json();
 
-                    <p v-else-if="selected + 1 <= 150">
-                        <strong>100%</strong>
-                        or better to qualify
-                    </p>
+                    return [
+                        {
+                            ...level,
+                            path,
 
-                    <p v-else>
-                        This level does not accept new records.
-                    </p>
+                            records:
+                                Array.isArray(level.records)
+                                    ? level.records.sort(
+                                        (a, b) =>
+                                            b.percent - a.percent
+                                    )
+                                    : [],
+                        },
 
+                        null,
+                    ];
 
-                    <table class="records">
+                } catch {
 
-                        <tr
-                            v-for="record in level.records"
-                            class="record"
-                        >
+                    console.error(
+                        `Failed to load level #${rank + 1} ${path}.`
+                    );
 
-                            <td class="percent">
-                                <p>
-                                    {{ record.percent }}%
-                                </p>
-                            </td>
+                    return [
+                        null,
+                        path
+                    ];
+                }
+            }),
+        );
 
-                            <td class="user">
-                                <a
-                                    :href="record.link"
-                                    target="_blank"
-                                    class="type-label-lg"
-                                >
-                                    {{ record.user }}
-                                </a>
-                            </td>
+    } catch {
 
-                            <td class="mobile">
-                                <img
-                                    v-if="record.mobile"
-                                    :src="\`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`"
-                                    alt="Mobile"
-                                >
-                            </td>
+        console.error(
+            'Failed to load list.'
+        );
 
-                            <td class="hz">
-                                <p>
-                                    {{ record.hz }}Hz
-                                </p>
-                            </td>
+        return null;
+    }
+}
 
-                        </tr>
 
-                    </table>
+/* =========================================================
+   PACKS
+   ========================================================= */
 
-                </div>
+export async function fetchPacks() {
 
+    try {
 
-                <!-- NO LEVEL -->
+        const packsResult =
+            await fetch(`${dir}/_packs.json`);
 
-                <div
-                    v-else
-                    class="level"
-                    style="
-                        height: 100%;
-                        justify-content: center;
-                        align-items: center;
-                    "
-                >
-                    <p>
-                        (ノಠ益ಠ)ノ彡┻━┻
-                    </p>
-                </div>
-
-            </div>
-
-
-            <!-- =========================================
-                 META
-                 ========================================= -->
-
-            <div class="meta-container">
-
-                <div class="meta">
-
-
-                    <!-- ERRORS -->
-
-                    <div
-                        class="errors"
-                        v-show="errors.length > 0"
-                    >
-                        <p
-                            class="error"
-                            v-for="error of errors"
-                        >
-                            {{ error }}
-                        </p>
-                    </div>
-
-
-                    <!-- ORIGINAL CONTENT -->
-
-                    <div class="og">
-                    </div>
-
-
-                    <!-- =========================================
-                         EDITORS BOX
-                         ========================================= -->
-
-                    <div
-                        v-if="editors"
-                        class="editors-box"
-                    >
-
-                        <div class="editors-box__header">
-                            <h3>Editors</h3>
-                        </div>
-
-                        <ol class="editors">
-
-                            <li
-                                v-for="editor in editors"
-                            >
-
-                                <img
-                                    :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`"
-                                    :alt="editor.role"
-                                >
-
-                                <a
-                                    v-if="editor.link"
-                                    class="type-label-lg link"
-                                    target="_blank"
-                                    :href="editor.link"
-                                >
-                                    {{ editor.name }}
-                                </a>
-
-                                <p v-else>
-                                    {{ editor.name }}
-                                </p>
-
-                            </li>
-
-                        </ol>
-
-                    </div>
-
-
-                    <!-- =========================================
-                         GUIDELINES BOX
-                         ========================================= -->
-
-                    <div class="requirements-box">
-
-                        <h3>
-                            Rules
-                        </h3>
-
-                        <p>
-                            Achieved record without cheats
-                            (FPS Bypass up to 360 [CBF] Hz 240)
-                        </p>
-
-                        <p>
-                            Achieved record on original level
-                        </p>
-
-                        <p>
-                            Either click or taps + cheat indicator
-                        </p>
-
-                        <p>
-                            raw footage
-                        </p>
-
-                        <p>
-                            raw footage must show end screen
-                        </p>
-
-                        <p>
-                            No secret-ways
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </main>
-    `,
-
-    data: () => ({
-        list: [],
-        editors: [],
-        levelPacks: {},
-        loading: true,
-        selected: 0,
-        errors: [],
-        roleIconMap,
-        store
-    }),
-
-    computed: {
-
-        level() {
-            return this.list?.[this.selected]?.[0] || null;
-        },
-
-        video() {
-
-            if (!this.level) {
-                return "";
-            }
-
-            if (!this.level.showcase) {
-                return embed(this.level.verification);
-            }
-
-            return embed(
-                this.toggledShowcase
-                    ? this.level.showcase
-                    : this.level.verification
+        if (!packsResult.ok) {
+            throw new Error(
+                `HTTP ${packsResult.status}`
             );
-        },
-
-    },
-
-    async mounted() {
-
-        // Load list
-        this.list = await fetchList();
-
-        // Load editors
-        this.editors = await fetchEditors();
-
-        // Load packs
-        this.levelPacks = await fetchLevelPacks();
-
-
-        // Error handling
-        if (!this.list) {
-
-            this.errors = [
-                "Failed to load list. Retry in a few minutes or notify list staff.",
-            ];
-
-        } else {
-
-            this.errors.push(
-                ...this.list
-                    .filter(([_, err]) => err)
-                    .map(([_, err]) => {
-                        return `Failed to load level. (${err}.json)`;
-                    })
-            );
-
-            if (!this.editors) {
-                this.errors.push(
-                    "Failed to load list editors."
-                );
-            }
-
         }
 
-        this.loading = false;
-    },
+        const packs =
+            await packsResult.json();
 
-    methods: {
+        if (!Array.isArray(packs)) {
+            throw new Error(
+                '_packs.json must contain an array.'
+            );
+        }
 
-        embed,
+        return packs;
 
-        /**
-         * Calculate points based on the total number of levels.
-         *
-         * #1 = 250 points
-         * Last level = 1 point
-         */
-        listScore(rank) {
+    } catch (error) {
 
-            const totalLevels = this.list.length;
+        console.error(
+            'Failed to load packs:',
+            error
+        );
 
-            if (totalLevels <= 1) {
-                return 250;
+        return [];
+    }
+}
+
+
+/* =========================================================
+   LEVEL -> PACKS
+   ========================================================= */
+
+export async function fetchLevelPacks() {
+
+    const packs =
+        await fetchPacks();
+
+    const levelPacks = {};
+
+    for (const pack of packs) {
+
+        if (!Array.isArray(pack.levels)) {
+            continue;
+        }
+
+        for (const identifier of pack.levels) {
+
+            const key =
+                String(identifier)
+                    .toLowerCase();
+
+            if (!levelPacks[key]) {
+                levelPacks[key] = [];
             }
 
-            const points =
-                250 -
-                (rank - 1) *
-                (249 / (totalLevels - 1));
+            levelPacks[key].push({
 
-            return Math.max(1, Math.round(points));
-        },
+                id: pack.id,
 
-        score,
+                name: pack.name,
 
-    },
-};
+                color:
+                    pack.color ||
+                    '#ffffff',
+
+                levels:
+                    pack.levels
+
+            });
+        }
+    }
+
+    return levelPacks;
+}
+
+
+/* =========================================================
+   FIND LEVEL
+   ========================================================= */
+
+/**
+ * Finds a level by:
+ *
+ * - level name
+ * - level path
+ * - level ID
+ */
+export function findLevel(list, identifier) {
+
+    if (!list || identifier === undefined || identifier === null) {
+        return -1;
+    }
+
+    const search =
+        String(identifier)
+            .toLowerCase()
+            .trim();
+
+
+    return list.findIndex(([level]) => {
+
+        if (!level) {
+            return false;
+        }
+
+        const name =
+            String(level.name || '')
+                .toLowerCase()
+                .trim();
+
+        const path =
+            String(level.path || '')
+                .toLowerCase()
+                .trim();
+
+        const id =
+            String(level.id || '')
+                .toLowerCase()
+                .trim();
+
+        return (
+            name === search ||
+            path === search ||
+            id === search
+        );
+    });
+}
+
+
+/* =========================================================
+   COMPLETED PLAYERS FOR PACK
+   ========================================================= */
+
+/**
+ * Returns all players that completed
+ * every level in a pack with 100%.
+ */
+export function getPackCompletedPlayers(
+    list,
+    pack
+) {
+
+    if (
+        !list ||
+        !pack ||
+        !Array.isArray(pack.levels) ||
+        pack.levels.length === 0
+    ) {
+        return [];
+    }
+
+
+    /*
+     * Find every actual level belonging
+     * to this pack.
+     */
+
+    const packLevels = [];
+
+    for (const identifier of pack.levels) {
+
+        const index =
+            findLevel(
+                list,
+                identifier
+            );
+
+        if (index === -1) {
+
+            console.warn(
+                `Pack "${pack.name}" references level "${identifier}" but it could not be found.`
+            );
+
+            continue;
+        }
+
+        const level =
+            list[index][0];
+
+        if (!level) {
+            continue;
+        }
+
+        packLevels.push(level);
+    }
+
+
+    /*
+     * If we couldn't find all levels,
+     * don't mark anyone as completing
+     * the pack.
+     */
+
+    if (
+        packLevels.length !==
+        pack.levels.length
+    ) {
+        return [];
+    }
+
+
+    /*
+     * Collect players who have 100%
+     * on every level.
+     */
+
+    const players =
+        new Map();
+
+
+    for (const level of packLevels) {
+
+        const completedUsers =
+            new Set();
+
+        for (const record of level.records || []) {
+
+            if (
+                record.percent === 100 &&
+                record.user
+            ) {
+
+                completedUsers.add(
+                    record.user.toLowerCase()
+                );
+
+                if (!players.has(
+                    record.user.toLowerCase()
+                )) {
+
+                    players.set(
+                        record.user.toLowerCase(),
+                        {
+                            name: record.user,
+                            levels: new Set()
+                        }
+                    );
+                }
+
+                players
+                    .get(
+                        record.user.toLowerCase()
+                    )
+                    .levels
+                    .add(level.name);
+            }
+        }
+
+
+        /*
+         * Remove players that didn't
+         * complete this level.
+         */
+
+        for (const [
+            username,
+            player
+        ] of players) {
+
+            if (
+                !completedUsers.has(username)
+            ) {
+
+                players.delete(username);
+            }
+        }
+    }
+
+
+    return Array.from(
+        players.values()
+    )
+        .filter(
+            player =>
+                player.levels.size ===
+                packLevels.length
+        )
+        .map(
+            player =>
+                player.name
+        )
+        .sort(
+            (a, b) =>
+                a.localeCompare(b)
+        );
+}
+
+
+/* =========================================================
+   COMPLETED PACKS FOR PLAYER
+   ========================================================= */
+
+export function getCompletedPacks(
+    list,
+    packs,
+    username
+) {
+
+    if (
+        !list ||
+        !packs ||
+        !username
+    ) {
+        return [];
+    }
+
+
+    const searchUsername =
+        username.toLowerCase();
+
+
+    return packs.filter(
+        pack => {
+
+            const players =
+                getPackCompletedPlayers(
+                    list,
+                    pack
+                );
+
+            return players.some(
+                player =>
+                    player.toLowerCase() ===
+                    searchUsername
+            );
+        }
+    );
+}
+
+
+/* =========================================================
+   PACK PROGRESS
+   ========================================================= */
+
+export function getPackProgress(
+    list,
+    pack,
+    username
+) {
+
+    if (
+        !list ||
+        !pack ||
+        !Array.isArray(pack.levels)
+    ) {
+
+        return {
+            completed: 0,
+            total: 0,
+            complete: false,
+            levels: []
+        };
+    }
+
+
+    const levels = [];
+
+    let completed = 0;
+
+
+    for (
+        let i = 0;
+        i < pack.levels.length;
+        i++
+    ) {
+
+        const identifier =
+            pack.levels[i];
+
+        const index =
+            findLevel(
+                list,
+                identifier
+            );
+
+
+        if (index === -1) {
+
+            levels.push({
+
+                identifier,
+
+                name: identifier,
+
+                path: identifier,
+
+                completed: false
+
+            });
+
+            continue;
+        }
+
+
+        const level =
+            list[index][0];
+
+
+        const record =
+            (level.records || []).find(
+                record =>
+                    record.user &&
+                    record.user.toLowerCase() ===
+                    username.toLowerCase() &&
+                    record.percent === 100
+            );
+
+
+        const isCompleted =
+            Boolean(record);
+
+
+        if (isCompleted) {
+            completed++;
+        }
+
+
+        levels.push({
+
+            identifier,
+
+            name: level.name,
+
+            path: level.path,
+
+            completed: isCompleted
+
+        });
+    }
+
+
+    return {
+
+        completed,
+
+        total: pack.levels.length,
+
+        complete:
+            completed ===
+            pack.levels.length,
+
+        levels
+
+    };
+}
+
+
+/* =========================================================
+   EDITORS
+   ========================================================= */
+
+export async function fetchEditors() {
+
+    try {
+
+        const editorsResults =
+            await fetch(
+                `${dir}/_editors.json`
+            );
+
+        return await editorsResults.json();
+
+    } catch {
+
+        return null;
+    }
+}
+
+
+/* =========================================================
+   LEADERBOARD
+   ========================================================= */
+
+export async function fetchLeaderboard() {
+
+    const list =
+        await fetchList();
+
+    const packs =
+        await fetchPacks();
+
+
+    if (!list) {
+
+        return [
+            [],
+            ['_list.json']
+        ];
+    }
+
+
+    const totalLevels =
+        list.length;
+
+
+    const scoreMap = {};
+
+    const errs = [];
+
+
+    /* =====================================================
+       PROCESS LEVELS
+       ===================================================== */
+
+    list.forEach(
+        ([level, err], rank) => {
+
+            if (err) {
+
+                errs.push(err);
+
+                return;
+            }
+
+
+            /* =============================================
+               VERIFIER
+               ============================================= */
+
+            const verifier =
+                Object.keys(scoreMap).find(
+                    u =>
+                        u.toLowerCase() ===
+                        level.verifier.toLowerCase()
+                ) ||
+                level.verifier;
+
+
+            scoreMap[verifier] ??= {
+
+                verified: [],
+
+                completed: [],
+
+                progressed: [],
+
+            };
+
+
+            scoreMap[verifier]
+                .verified
+                .push({
+
+                    rank:
+                        rank + 1,
+
+                    level:
+                        level.name,
+
+                    path:
+                        level.path,
+
+                    score:
+                        score(
+                            rank + 1,
+                            100,
+                            level.percentToQualify,
+                            totalLevels
+                        ),
+
+                    link:
+                        level.verification,
+
+                });
+
+
+            /* =============================================
+               RECORDS
+               ============================================= */
+
+            for (
+                const record
+                of level.records || []
+            ) {
+
+                if (!record.user) {
+                    continue;
+                }
+
+
+                const user =
+                    Object.keys(scoreMap).find(
+                        u =>
+                            u.toLowerCase() ===
+                            record.user.toLowerCase()
+                    ) ||
+                    record.user;
+
+
+                scoreMap[user] ??= {
+
+                    verified: [],
+
+                    completed: [],
+
+                    progressed: [],
+
+                };
+
+
+                /* =========================================
+                   COMPLETED
+                   ========================================= */
+
+                if (
+                    record.percent ===
+                    100
+                ) {
+
+                    scoreMap[user]
+                        .completed
+                        .push({
+
+                            rank:
+                                rank + 1,
+
+                            level:
+                                level.name,
+
+                            path:
+                                level.path,
+
+                            score:
+                                score(
+                                    rank + 1,
+                                    100,
+                                    level.percentToQualify,
+                                    totalLevels
+                                ),
+
+                            link:
+                                record.link,
+
+                        });
+
+                    continue;
+                }
+
+
+                /* =========================================
+                   PROGRESSED
+                   ========================================= */
+
+                scoreMap[user]
+                    .progressed
+                    .push({
+
+                        rank:
+                            rank + 1,
+
+                        level:
+                            level.name,
+
+                        path:
+                            level.path,
+
+                        percent:
+                            record.percent,
+
+                        score:
+                            score(
+                                rank + 1,
+                                record.percent,
+                                level.percentToQualify,
+                                totalLevels
+                            ),
+
+                        link:
+                            record.link,
+
+                    });
+            }
+        }
+    );
+
+
+    /* =====================================================
+       CREATE FINAL ENTRIES
+       ===================================================== */
+
+    const res =
+        Object.entries(scoreMap)
+            .map(
+                ([user, scores]) => {
+
+                    const {
+                        verified,
+                        completed,
+                        progressed
+                    } = scores;
+
+
+                    const total =
+                        [
+                            verified,
+                            completed,
+                            progressed
+                        ]
+                            .flat()
+                            .reduce(
+                                (prev, cur) =>
+                                    prev +
+                                    cur.score,
+                                0
+                            );
+
+
+                    const completedPacks =
+                        getCompletedPacks(
+                            list,
+                            packs,
+                            user
+                        );
+
+
+                    return {
+
+                        user,
+
+                        total:
+                            round(total),
+
+                        verified,
+
+                        completed,
+
+                        progressed,
+
+                        completedPacks
+
+                    };
+                }
+            );
+
+
+    /* =====================================================
+       SORT
+       ===================================================== */
+
+    res.sort(
+        (a, b) =>
+            b.total -
+            a.total
+    );
+
+
+    return [
+        res,
+        errs
+    ];
+}
