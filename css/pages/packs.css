@@ -3,6 +3,8 @@
    ========================================================= */
 
 .page-packs {
+    display: block;
+
     width: 100%;
     min-height: 100%;
 
@@ -13,16 +15,15 @@
 
 
 /* =========================================================
-   PACKS GRID
+   PACKS CONTAINER
    ========================================================= */
 
 .page-packs .packs-container {
-    display: grid;
+    display: flex;
 
-    /*
-     * EXACTLY 4 PACKS PER ROW
-     */
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    flex-wrap: wrap;
+
+    align-items: flex-start;
 
     width: 100%;
     max-width: none;
@@ -32,8 +33,6 @@
     gap: 0.65rem;
 
     box-sizing: border-box;
-
-    align-items: start;
 }
 
 
@@ -44,23 +43,26 @@
 .page-packs .pack {
     display: grid;
 
-    /*
-     * Keep the same proportions as before
-     */
     grid-template-columns:
         22%
         25%
-        minmax(0, 53%);
+        53%;
 
     grid-template-areas:
         "header victors levels";
 
-    width: 100%;
-    min-width: 0;
-
     /*
-     * SAME HEIGHT AS BEFORE
+     * FESTE PACK-GRÖSSE
+     *
+     * Dadurch werden die Packs nicht
+     * vom Grid zusammengestaucht.
      */
+    flex: 0 0 720px;
+
+    width: 720px;
+    min-width: 720px;
+    max-width: 720px;
+
     height: 9rem;
     min-height: 9rem;
     max-height: 9rem;
@@ -131,7 +133,7 @@
 
 
 /* =========================================================
-   PACK INFO
+   PACK HEADER
    ========================================================= */
 
 .page-packs .pack-header {
@@ -184,7 +186,7 @@
     width: 0.58rem;
     height: 0.58rem;
 
-    flex-shrink: 0;
+    flex: 0 0 auto;
 
     border-radius: 50%;
 
@@ -404,7 +406,6 @@
 
     gap: 0.3rem;
 
-    /* NEVER SCROLL */
     overflow: hidden;
 
     box-sizing: border-box;
@@ -603,6 +604,27 @@
 }
 
 
+.page-packs .no-packs h2 {
+    margin: 0 0 0.25rem;
+
+    color: var(--color-on-background);
+
+    font-size: 0.95rem;
+    font-weight: 750;
+}
+
+
+.page-packs .no-packs p {
+    margin: 0;
+
+    color: var(--color-on-background);
+
+    opacity: 0.45;
+
+    font-size: 0.75rem;
+}
+
+
 /* =========================================================
    DARK MODE
    ========================================================= */
@@ -616,6 +638,7 @@
         );
 }
 
+
 .dark .page-packs .pack:hover {
     box-shadow:
         0 7px 20px color-mix(
@@ -627,41 +650,126 @@
 
 
 /* =========================================================
-   3 PER ROW
+   DESKTOP
+   ========================================================= */
+
+/*
+ * 4 PACKS nebeneinander, solange genug Platz vorhanden ist.
+ * Die Packs selbst bleiben 720px breit.
+ */
+
+@media (min-width: 2900px) {
+
+    .page-packs .packs-container {
+        gap: 0.75rem;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1500px) {
+
+    .page-packs .pack {
+        flex-basis: 600px;
+
+        width: 600px;
+        min-width: 600px;
+        max-width: 600px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALLER TABLET
    ========================================================= */
 
 @media (max-width: 1250px) {
 
-    .page-packs .packs-container {
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
+    .page-packs .pack {
+        flex-basis: 520px;
+
+        width: 520px;
+        min-width: 520px;
+        max-width: 520px;
     }
 
 }
 
 
 /* =========================================================
-   2 PER ROW
+   MOBILE
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
+
+    .page-packs {
+        padding: 0.45rem;
+    }
 
     .page-packs .packs-container {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        flex-direction: column;
+
+        width: 100%;
+
+        gap: 0.55rem;
+    }
+
+    .page-packs .pack {
+        flex: 0 0 auto;
+
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+
+        height: 9rem;
+        min-height: 9rem;
+        max-height: 9rem;
     }
 
 }
 
 
 /* =========================================================
-   1 PER ROW
+   VERY SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 450px) {
 
-    .page-packs .packs-container {
-        grid-template-columns: 1fr;
+    .page-packs .pack {
+        grid-template-columns:
+            29%
+            24%
+            47%;
+    }
+
+    .page-packs .pack-info h1 {
+        font-size: 0.72rem;
+    }
+
+    .page-packs .pack-victors h2 {
+        font-size: 0.65rem;
+    }
+
+    .page-packs .pack-victors p {
+        font-size: 0.58rem;
+    }
+
+    .page-packs .pack-level {
+        grid-template-columns:
+            1.8rem
+            minmax(0, 1fr);
+
+        padding: 0 0.45rem;
+    }
+
+    .page-packs .pack-level-victor,
+    .page-packs .pack-level-name {
+        font-size: 0.57rem;
     }
 
 }
