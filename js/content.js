@@ -43,6 +43,16 @@ export async function fetchList() {
     }
 }
 
+export async function fetchPacks() {
+    try {
+        const packsResult = await fetch(`${dir}/_packs.json`);
+        return await packsResult.json();
+    } catch {
+        console.error("Failed to load packs.");
+        return null;
+    }
+}
+
 export async function fetchEditors() {
     try {
         const editorsResults = await fetch(`${dir}/_editors.json`);
