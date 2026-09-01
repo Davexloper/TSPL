@@ -1,6 +1,8 @@
 import {
     fetchPacks,
-    fetchList
+    fetchList,
+    getCompletedPlayersForPack,
+    findLevel
 } from '../content.js';
 
 import Spinner from '../components/Spinner.js';
@@ -32,19 +34,12 @@ export default {
 
             <div class="packs-container">
 
-
-                <!-- =================================================
-                     NO PACKS
-                     ================================================= -->
-
                 <div
                     v-if="packs.length === 0"
                     class="no-packs"
                 >
 
-                    <h2>
-                        No Packs
-                    </h2>
+                    <h2>No Packs</h2>
 
                     <p>
                         No packs have been added yet.
@@ -52,10 +47,6 @@ export default {
 
                 </div>
 
-
-                <!-- =================================================
-                     PACKS
-                     ================================================= -->
 
                 <div
                     v-for="pack in packs"
@@ -66,9 +57,6 @@ export default {
                             pack.color || '#ffffff'
                     }"
                 >
-
-
-                    <!-- HEADER -->
 
                     <div class="pack-header">
 
@@ -85,7 +73,6 @@ export default {
 
                         </div>
 
-
                         <span
                             class="pack-color"
                             :style="{
@@ -96,8 +83,6 @@ export default {
 
                     </div>
 
-
-                    <!-- LEVELS -->
 
                     <div class="pack-levels">
 
@@ -117,7 +102,6 @@ export default {
                                 #{{ index + 1 }}
                             </span>
 
-
                             <span
                                 class="pack-level-name"
                             >
@@ -129,14 +113,7 @@ export default {
                     </div>
 
 
-                    <!-- COMPLETED PLAYERS -->
-
-                    <div
-                        class="pack-completed"
-                        v-if="
-                            getCompletedPlayers(pack).length
-                        "
-                    >
+                    <div class="pack-completed">
 
                         <div class="pack-completed-header">
 
@@ -153,7 +130,12 @@ export default {
                         </div>
 
 
-                        <div class="pack-completed-players">
+                        <div
+                            v-if="
+                                getCompletedPlayers(pack).length
+                            "
+                            class="pack-completed-players"
+                        >
 
                             <div
                                 v-for="
@@ -170,19 +152,11 @@ export default {
 
                         </div>
 
-                    </div>
 
-
-                    <div
-                        v-else
-                        class="pack-completed empty"
-                    >
-
-                        <h2>
-                            Completed by
-                        </h2>
-
-                        <p>
+                        <p
+                            v-else
+                            class="empty"
+                        >
                             Nobody yet.
                         </p>
 
@@ -202,18 +176,21 @@ export default {
 
         list: [],
 
-        loading: true,
+        loading: true
 
     }),
 
 
     async mounted() {
 
-        this.packs = await fetchPacks() || [];
+        this.packs =
+            await fetchPacks() || [];
 
-        this.list = await fetchList() || [];
+        this.list =
+            await fetchList() || [];
 
-        this.loading = false;
+        this.loading =
+            false;
 
     },
 
@@ -221,84 +198,48 @@ export default {
     methods: {
 
         /* =====================================================
-           FIND LEVEL IN CURRENT LIST
+           FIND LEVEL
            ===================================================== */
 
-        findLevelInList(identifier) {
+        findLevel(identifier) {
 
-            if (!this.list) {
+            const index =
+                findLevel(
+                    this.list,
+                    identifier
+                );
+
+
+            if (
+                index === -1
+            ) {
+
                 return null;
-            }
-
-            const search =
-                String(identifier).toLowerCase();
-
-
-            for (let i = 0; i < this.list.length; i++) {
-
-                const level =
-                    this.list[i]?.[0];
-
-
-                if (!level) {
-                    continue;
-                }
-
-
-                /*
-                 * Match by level name
-                 */
-
-                if (
-                    String(level.name).toLowerCase() ===
-                    search
-                ) {
-
-                    return {
-                        index: i,
-                        level
-                    };
-
-                }
-
-
-                /*
-                 * Match by path
-                 */
-
-                if (
-                    String(level.path).toLowerCase() ===
-                    search
-                ) {
-
-                    return {
-                        index: i,
-                        level
-                    };
-
-                }
-
-
-                /*
-                 * Match by ID
-                 */
-
-                if (
-                    String(level.id).toLowerCase() ===
-                    search
-                ) {
-
-                    return {
-                        index: i,
-                        level
-                    };
-
-                }
 
             }
 
 
-            return null;
+            return this.list[index]?.[0] || null;
+
+        },
+
+
+        /* =====================================================
+           GET LEVEL NAME
+           ===================================================== */
+
+        getLevelName(identifier) {
+
+            const level =
+                this.findLevel(
+                    identifier
+                );
+
+
+            return (
+                level?.name ||
+                identifier
+            );
 
         },
 
@@ -309,13 +250,16 @@ export default {
 
         openLevel(identifier) {
 
-            const result =
-                this.findLevelInList(
+            const index =
+                findLevel(
+                    this.list,
                     identifier
                 );
 
 
-            if (!result) {
+            if (
+                index === -1
+            ) {
 
                 console.error(
                     `Pack level "${identifier}" could not be found.`
@@ -327,7 +271,8 @@ export default {
 
 
             /*
-             * Use the actual list index.
+             * Save the exact level path
+             * in the URL.
              */
 
             this.$router.push({
@@ -337,38 +282,11 @@ export default {
                 query: {
 
                     level:
-                        result.level.path
+                        this.list[index][0].path
 
                 }
 
             });
-
-        },
-
-
-        /* =====================================================
-           GET LEVEL NAME
-           ===================================================== */
-
-        getLevelName(identifier) {
-
-            const result =
-                this.findLevelInList(
-                    identifier
-                );
-
-
-            if (!result) {
-
-                return identifier;
-
-            }
-
-
-            return (
-                result.level.name ||
-                identifier
-            );
 
         },
 
@@ -379,155 +297,9 @@ export default {
 
         getCompletedPlayers(pack) {
 
-            if (
-                !pack ||
-                !Array.isArray(pack.levels)
-            ) {
-
-                return [];
-
-            }
-
-
-            /*
-             * Find every level in the pack.
-             */
-
-            const levels =
-                pack.levels
-                    .map(identifier => {
-
-                        const result =
-                            this.findLevelInList(
-                                identifier
-                            );
-
-                        return result
-                            ? result.level
-                            : null;
-
-                    })
-                    .filter(level => level);
-
-
-            /*
-             * If a pack references a level
-             * that does not exist, nobody
-             * can complete the pack.
-             */
-
-            if (
-                levels.length !==
-                pack.levels.length
-            ) {
-
-                return [];
-
-            }
-
-
-            /*
-             * Get every player who completed
-             * the first level.
-             */
-
-            const candidates =
-                new Map();
-
-
-            for (
-                const record
-                of levels[0].records || []
-            ) {
-
-                if (
-                    record.percent === 100 &&
-                    record.user
-                ) {
-
-                    const username =
-                        record.user;
-
-
-                    candidates.set(
-                        username.toLowerCase(),
-                        username
-                    );
-
-                }
-
-            }
-
-
-            /*
-             * Check every remaining level.
-             */
-
-            for (
-                let i = 1;
-                i < levels.length;
-                i++
-            ) {
-
-                const level =
-                    levels[i];
-
-
-                const completedUsers =
-                    new Set(
-                        (
-                            level.records ||
-                            []
-                        )
-                            .filter(
-                                record =>
-                                    record.percent === 100 &&
-                                    record.user
-                            )
-                            .map(
-                                record =>
-                                    record.user.toLowerCase()
-                            )
-                    );
-
-
-                /*
-                 * Remove players who haven't
-                 * completed this level.
-                 */
-
-                for (
-                    const username
-                    of candidates.keys()
-                ) {
-
-                    if (
-                        !completedUsers.has(
-                            username
-                        )
-                    ) {
-
-                        candidates.delete(
-                            username
-                        );
-
-                    }
-
-                }
-
-            }
-
-
-            /*
-             * These players completed
-             * EVERY level in the pack.
-             */
-
-            return Array.from(
-                candidates.values()
-            ).sort(
-                (a, b) =>
-                    a.localeCompare(b)
+            return getCompletedPlayersForPack(
+                pack,
+                this.list
             );
 
         }
