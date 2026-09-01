@@ -102,49 +102,57 @@ export default {
 
     methods: {
 
-        getLevel(levelPath) {
-            const result = this.list.find(
-                ([level]) => level?.path === levelPath
-            );
+        findLevelIndex(levelIdentifier) {
+            return this.list.findIndex(([level]) => {
+                if (!level) {
+                    return false;
+                }
 
-            return result ? result[0] : null;
+                return (
+                    level.path === levelIdentifier ||
+                    level.name === levelIdentifier
+                );
+            });
         },
 
-        getLevelName(levelPath) {
-            const level = this.getLevel(levelPath);
+        getLevel(levelIdentifier) {
+            const index = this.findLevelIndex(levelIdentifier);
 
-            return level?.name || levelPath;
+            if (index === -1) {
+                return null;
+            }
+
+            return this.list[index][0];
         },
 
-        getLevelRank(levelPath) {
-            const index = this.list.findIndex(
-                ([level]) => level?.path === levelPath
-            );
+        getLevelName(levelIdentifier) {
+            const level = this.getLevel(levelIdentifier);
+
+            return level?.name || levelIdentifier;
+        },
+
+        getLevelRank(levelIdentifier) {
+            const index = this.findLevelIndex(levelIdentifier);
 
             return index === -1 ? "?" : index + 1;
         },
 
-        openLevel(levelPath) {
-            const index = this.list.findIndex(
-                ([level]) => level?.path === levelPath
-            );
+        openLevel(levelIdentifier) {
+            const index = this.findLevelIndex(levelIdentifier);
 
             if (index === -1) {
+                console.error(
+                    `Could not find level "${levelIdentifier}" in the list.`
+                );
+
                 return;
             }
 
-            /*
-             * Save the selected level so the List page
-             * can open the correct level.
-             */
             sessionStorage.setItem(
                 "selectedLevel",
                 index.toString()
             );
 
-            /*
-             * Navigate to the main list.
-             */
             this.$router.push("/");
         }
 
