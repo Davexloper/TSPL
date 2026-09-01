@@ -5,11 +5,6 @@ import { round, score } from './score.js';
  */
 const dir = '/data';
 
-
-/* =========================================================
-   LIST
-   ========================================================= */
-
 export async function fetchList() {
     const listResult = await fetch(`${dir}/_list.json`);
 
@@ -18,52 +13,34 @@ export async function fetchList() {
 
         return await Promise.all(
             list.map(async (path, rank) => {
-
-                const levelResult =
-                    await fetch(`${dir}/${path}.json`);
+                const levelResult = await fetch(`${dir}/${path}.json`);
 
                 try {
-
-                    const level =
-                        await levelResult.json();
+                    const level = await levelResult.json();
 
                     return [
                         {
                             ...level,
                             path,
-
-                            records:
-                                Array.isArray(level.records)
-                                    ? level.records.sort(
-                                        (a, b) =>
-                                            b.percent - a.percent
-                                    )
-                                    : [],
+                            records: Array.isArray(level.records)
+                                ? level.records.sort(
+                                      (a, b) => b.percent - a.percent
+                                  )
+                                : [],
                         },
-
                         null,
                     ];
-
                 } catch {
-
                     console.error(
                         `Failed to load level #${rank + 1} ${path}.`
                     );
 
-                    return [
-                        null,
-                        path
-                    ];
+                    return [null, path];
                 }
-            }),
+            })
         );
-
     } catch {
-
-        console.error(
-            'Failed to load list.'
-        );
-
+        console.error(`Failed to load list.`);
         return null;
     }
 }
@@ -74,457 +51,185 @@ export async function fetchList() {
    ========================================================= */
 
 export async function fetchPacks() {
-
     try {
-
-        const packsResult =
-            await fetch(`${dir}/_packs.json`);
+        const packsResult = await fetch(`${dir}/_packs.json`);
 
         if (!packsResult.ok) {
-            throw new Error(
-                `HTTP ${packsResult.status}`
-            );
+            throw new Error(`HTTP ${packsResult.status}`);
         }
 
-        const packs =
-            await packsResult.json();
+        const packs = await packsResult.json();
 
         if (!Array.isArray(packs)) {
-            throw new Error(
-                '_packs.json must contain an array.'
-            );
+            throw new Error('_packs.json must contain an array');
         }
 
         return packs;
-
     } catch (error) {
-
-        console.error(
-            'Failed to load packs:',
-            error
-        );
-
-        return [];
+        console.error('Failed to load packs.', error);
+        return null;
     }
 }
 
 
-/* =========================================================
-   LEVEL -> PACKS
-   ========================================================= */
-
+/**
+ * Create a lookup containing all packs for every level.
+ *
+ * A pack can reference a level by:
+ * - level name
+ * - level path
+ * - level id
+ */
 export async function fetchLevelPacks() {
+    const packs = await fetchPacks();
 
-    const packs =
-        await fetchPacks();
+    if (!packs) {
+        return {};
+    }
 
     const levelPacks = {};
 
-    for (const pack of packs) {
-
+    packs.forEach((pack) => {
         if (!Array.isArray(pack.levels)) {
-            continue;
+            return;
         }
 
-        for (const identifier of pack.levels) {
-
-            const key =
-                String(identifier)
-                    .toLowerCase();
+        pack.levels.forEach((levelReference) => {
+            const key = String(levelReference).toLowerCase();
 
             if (!levelPacks[key]) {
                 levelPacks[key] = [];
             }
 
             levelPacks[key].push({
-
                 id: pack.id,
-
                 name: pack.name,
-
-                color:
-                    pack.color ||
-                    '#ffffff',
-
-                levels:
-                    pack.levels
-
+                color: pack.color || '#ffffff',
             });
-        }
-    }
+        });
+    });
 
     return levelPacks;
 }
 
 
-/* =========================================================
-   FIND LEVEL
-   ========================================================= */
-
 /**
- * Finds a level by:
- *
- * - level name
- * - level path
- * - level ID
+ * Find all packs a level belongs to.
  */
-export function findLevel(list, identifier) {
-
-    if (!list || identifier === undefined || identifier === null) {
-        return -1;
+export function getPacksForLevel(level, packs) {
+    if (!level || !packs) {
+        return [];
     }
 
-    const search =
-        String(identifier)
-            .toLowerCase()
-            .trim();
+    const references = [
+        level.name,
+        level.path,
+        level.id,
+    ]
+        .filter((value) => value !== undefined && value !== null)
+        .map((value) => String(value).toLowerCase());
 
-
-    return list.findIndex(([level]) => {
-
-        if (!level) {
+    return packs.filter((pack) => {
+        if (!Array.isArray(pack.levels)) {
             return false;
         }
 
-        const name =
-            String(level.name || '')
-                .toLowerCase()
-                .trim();
-
-        const path =
-            String(level.path || '')
-                .toLowerCase()
-                .trim();
-
-        const id =
-            String(level.id || '')
-                .toLowerCase()
-                .trim();
-
-        return (
-            name === search ||
-            path === search ||
-            id === search
+        return pack.levels.some((packLevel) =>
+            references.includes(String(packLevel).toLowerCase())
         );
     });
 }
 
 
-/* =========================================================
-   COMPLETED PLAYERS FOR PACK
-   ========================================================= */
-
 /**
- * Returns all players that completed
- * every level in a pack with 100%.
+ * Get the IDs of levels completed by a player.
  */
-export function getPackCompletedPlayers(
-    list,
-    pack
-) {
+function getCompletedLevelIds(user, list) {
+    const completed = new Set();
 
-    if (
-        !list ||
-        !pack ||
-        !Array.isArray(pack.levels) ||
-        pack.levels.length === 0
-    ) {
-        return [];
-    }
-
-
-    /*
-     * Find every actual level belonging
-     * to this pack.
-     */
-
-    const packLevels = [];
-
-    for (const identifier of pack.levels) {
-
-        const index =
-            findLevel(
-                list,
-                identifier
-            );
-
-        if (index === -1) {
-
-            console.warn(
-                `Pack "${pack.name}" references level "${identifier}" but it could not be found.`
-            );
-
-            continue;
-        }
-
-        const level =
-            list[index][0];
-
+    list.forEach(([level]) => {
         if (!level) {
-            continue;
+            return;
         }
 
-        packLevels.push(level);
-    }
-
-
-    /*
-     * If we couldn't find all levels,
-     * don't mark anyone as completing
-     * the pack.
-     */
-
-    if (
-        packLevels.length !==
-        pack.levels.length
-    ) {
-        return [];
-    }
-
-
-    /*
-     * Collect players who have 100%
-     * on every level.
-     */
-
-    const players =
-        new Map();
-
-
-    for (const level of packLevels) {
-
-        const completedUsers =
-            new Set();
-
-        for (const record of level.records || []) {
-
-            if (
+        const record = level.records?.find(
+            (record) =>
                 record.percent === 100 &&
-                record.user
-            ) {
-
-                completedUsers.add(
-                    record.user.toLowerCase()
-                );
-
-                if (!players.has(
-                    record.user.toLowerCase()
-                )) {
-
-                    players.set(
-                        record.user.toLowerCase(),
-                        {
-                            name: record.user,
-                            levels: new Set()
-                        }
-                    );
-                }
-
-                players
-                    .get(
-                        record.user.toLowerCase()
-                    )
-                    .levels
-                    .add(level.name);
-            }
-        }
-
-
-        /*
-         * Remove players that didn't
-         * complete this level.
-         */
-
-        for (const [
-            username,
-            player
-        ] of players) {
-
-            if (
-                !completedUsers.has(username)
-            ) {
-
-                players.delete(username);
-            }
-        }
-    }
-
-
-    return Array.from(
-        players.values()
-    )
-        .filter(
-            player =>
-                player.levels.size ===
-                packLevels.length
-        )
-        .map(
-            player =>
-                player.name
-        )
-        .sort(
-            (a, b) =>
-                a.localeCompare(b)
+                record.user.toLowerCase() === user.toLowerCase()
         );
+
+        if (record) {
+            completed.add(String(level.id));
+            completed.add(String(level.name).toLowerCase());
+            completed.add(String(level.path).toLowerCase());
+        }
+    });
+
+    return completed;
 }
 
 
-/* =========================================================
-   COMPLETED PACKS FOR PLAYER
-   ========================================================= */
+/**
+ * Check whether a player completed an entire pack.
+ */
+function hasCompletedPack(user, pack, list) {
+    if (!Array.isArray(pack.levels) || pack.levels.length === 0) {
+        return false;
+    }
 
-export function getCompletedPacks(
-    list,
-    packs,
-    username
-) {
+    const completedLevels = getCompletedLevelIds(user, list);
 
-    if (
-        !list ||
-        !packs ||
-        !username
-    ) {
+    return pack.levels.every((packLevel) => {
+        const reference = String(packLevel).toLowerCase();
+
+        return completedLevels.has(reference);
+    });
+}
+
+
+/**
+ * Get all packs completed by a player.
+ */
+export function getCompletedPacks(user, list, packs) {
+    if (!user || !list || !packs) {
         return [];
     }
 
-
-    const searchUsername =
-        username.toLowerCase();
-
-
-    return packs.filter(
-        pack => {
-
-            const players =
-                getPackCompletedPlayers(
-                    list,
-                    pack
-                );
-
-            return players.some(
-                player =>
-                    player.toLowerCase() ===
-                    searchUsername
-            );
-        }
+    return packs.filter((pack) =>
+        hasCompletedPack(user, pack, list)
     );
 }
 
 
-/* =========================================================
-   PACK PROGRESS
-   ========================================================= */
+/**
+ * Creates a normalized pack completion object for the UI.
+ */
+export async function fetchCompletedPacks() {
+    const list = await fetchList();
+    const packs = await fetchPacks();
 
-export function getPackProgress(
-    list,
-    pack,
-    username
-) {
-
-    if (
-        !list ||
-        !pack ||
-        !Array.isArray(pack.levels)
-    ) {
-
-        return {
-            completed: 0,
-            total: 0,
-            complete: false,
-            levels: []
-        };
+    if (!list || !packs) {
+        return [];
     }
 
+    const users = new Set();
 
-    const levels = [];
-
-    let completed = 0;
-
-
-    for (
-        let i = 0;
-        i < pack.levels.length;
-        i++
-    ) {
-
-        const identifier =
-            pack.levels[i];
-
-        const index =
-            findLevel(
-                list,
-                identifier
-            );
-
-
-        if (index === -1) {
-
-            levels.push({
-
-                identifier,
-
-                name: identifier,
-
-                path: identifier,
-
-                completed: false
-
-            });
-
-            continue;
+    list.forEach(([level]) => {
+        if (!level) {
+            return;
         }
 
-
-        const level =
-            list[index][0];
-
-
-        const record =
-            (level.records || []).find(
-                record =>
-                    record.user &&
-                    record.user.toLowerCase() ===
-                    username.toLowerCase() &&
-                    record.percent === 100
-            );
-
-
-        const isCompleted =
-            Boolean(record);
-
-
-        if (isCompleted) {
-            completed++;
-        }
-
-
-        levels.push({
-
-            identifier,
-
-            name: level.name,
-
-            path: level.path,
-
-            completed: isCompleted
-
+        level.records?.forEach((record) => {
+            if (record.percent === 100 && record.user) {
+                users.add(record.user);
+            }
         });
-    }
+    });
 
-
-    return {
-
-        completed,
-
-        total: pack.levels.length,
-
-        complete:
-            completed ===
-            pack.levels.length,
-
-        levels
-
-    };
+    return Array.from(users).map((user) => ({
+        user,
+        packs: getCompletedPacks(user, list, packs),
+    }));
 }
 
 
@@ -533,18 +238,12 @@ export function getPackProgress(
    ========================================================= */
 
 export async function fetchEditors() {
-
     try {
+        const editorsResults = await fetch(`${dir}/_editors.json`);
+        const editors = await editorsResults.json();
 
-        const editorsResults =
-            await fetch(
-                `${dir}/_editors.json`
-            );
-
-        return await editorsResults.json();
-
+        return editors;
     } catch {
-
         return null;
     }
 }
@@ -555,280 +254,174 @@ export async function fetchEditors() {
    ========================================================= */
 
 export async function fetchLeaderboard() {
-
-    const list =
-        await fetchList();
-
-    const packs =
-        await fetchPacks();
-
+    const list = await fetchList();
 
     if (!list) {
-
-        return [
-            [],
-            ['_list.json']
-        ];
+        return [[], ['_list.json']];
     }
 
+    const packs = await fetchPacks();
 
-    const totalLevels =
-        list.length;
-
+    /*
+     * Number of levels on the list.
+     */
+    const totalLevels = list.length;
 
     const scoreMap = {};
-
     const errs = [];
 
+    list.forEach(([level, err], rank) => {
+        if (err) {
+            errs.push(err);
+            return;
+        }
 
-    /* =====================================================
-       PROCESS LEVELS
-       ===================================================== */
+        /*
+         * Verification
+         */
+        const verifier =
+            Object.keys(scoreMap).find(
+                (u) => u.toLowerCase() === level.verifier.toLowerCase()
+            ) || level.verifier;
 
-    list.forEach(
-        ([level, err], rank) => {
+        scoreMap[verifier] ??= {
+            verified: [],
+            completed: [],
+            progressed: [],
+        };
 
-            if (err) {
+        const { verified } = scoreMap[verifier];
 
-                errs.push(err);
+        verified.push({
+            rank: rank + 1,
+            level: level.name,
+
+            score: score(
+                rank + 1,
+                100,
+                level.percentToQualify,
+                totalLevels
+            ),
+
+            link: level.verification,
+        });
+
+
+        /*
+         * Records
+         */
+        level.records.forEach((record) => {
+            const user =
+                Object.keys(scoreMap).find(
+                    (u) =>
+                        u.toLowerCase() === record.user.toLowerCase()
+                ) || record.user;
+
+            scoreMap[user] ??= {
+                verified: [],
+                completed: [],
+                progressed: [],
+            };
+
+            const { completed, progressed } = scoreMap[user];
+
+
+            /*
+             * Completed
+             */
+            if (record.percent === 100) {
+                completed.push({
+                    rank: rank + 1,
+                    level: level.name,
+
+                    score: score(
+                        rank + 1,
+                        100,
+                        level.percentToQualify,
+                        totalLevels
+                    ),
+
+                    link: record.link,
+                });
 
                 return;
             }
 
 
-            /* =============================================
-               VERIFIER
-               ============================================= */
-
-            const verifier =
-                Object.keys(scoreMap).find(
-                    u =>
-                        u.toLowerCase() ===
-                        level.verifier.toLowerCase()
-                ) ||
-                level.verifier;
-
-
-            scoreMap[verifier] ??= {
-
-                verified: [],
-
-                completed: [],
-
-                progressed: [],
-
-            };
-
-
-            scoreMap[verifier]
-                .verified
-                .push({
-
-                    rank:
-                        rank + 1,
-
-                    level:
-                        level.name,
-
-                    path:
-                        level.path,
-
-                    score:
-                        score(
-                            rank + 1,
-                            100,
-                            level.percentToQualify,
-                            totalLevels
-                        ),
-
-                    link:
-                        level.verification,
-
-                });
-
-
-            /* =============================================
-               RECORDS
-               ============================================= */
-
-            for (
-                const record
-                of level.records || []
-            ) {
-
-                if (!record.user) {
-                    continue;
-                }
-
-
-                const user =
-                    Object.keys(scoreMap).find(
-                        u =>
-                            u.toLowerCase() ===
-                            record.user.toLowerCase()
-                    ) ||
-                    record.user;
-
-
-                scoreMap[user] ??= {
-
-                    verified: [],
-
-                    completed: [],
-
-                    progressed: [],
-
-                };
-
-
-                /* =========================================
-                   COMPLETED
-                   ========================================= */
-
-                if (
-                    record.percent ===
-                    100
-                ) {
-
-                    scoreMap[user]
-                        .completed
-                        .push({
-
-                            rank:
-                                rank + 1,
-
-                            level:
-                                level.name,
-
-                            path:
-                                level.path,
-
-                            score:
-                                score(
-                                    rank + 1,
-                                    100,
-                                    level.percentToQualify,
-                                    totalLevels
-                                ),
-
-                            link:
-                                record.link,
-
-                        });
-
-                    continue;
-                }
-
-
-                /* =========================================
-                   PROGRESSED
-                   ========================================= */
-
-                scoreMap[user]
-                    .progressed
-                    .push({
-
-                        rank:
-                            rank + 1,
-
-                        level:
-                            level.name,
-
-                        path:
-                            level.path,
-
-                        percent:
-                            record.percent,
-
-                        score:
-                            score(
-                                rank + 1,
-                                record.percent,
-                                level.percentToQualify,
-                                totalLevels
-                            ),
-
-                        link:
-                            record.link,
-
-                    });
-            }
-        }
-    );
-
-
-    /* =====================================================
-       CREATE FINAL ENTRIES
-       ===================================================== */
-
-    const res =
-        Object.entries(scoreMap)
-            .map(
-                ([user, scores]) => {
-
-                    const {
-                        verified,
-                        completed,
-                        progressed
-                    } = scores;
-
-
-                    const total =
-                        [
-                            verified,
-                            completed,
-                            progressed
-                        ]
-                            .flat()
-                            .reduce(
-                                (prev, cur) =>
-                                    prev +
-                                    cur.score,
-                                0
-                            );
-
-
-                    const completedPacks =
-                        getCompletedPacks(
-                            list,
-                            packs,
-                            user
-                        );
-
-
-                    return {
-
-                        user,
-
-                        total:
-                            round(total),
-
-                        verified,
-
-                        completed,
-
-                        progressed,
-
-                        completedPacks
-
-                    };
-                }
+            /*
+             * Progressed
+             */
+            progressed.push({
+                rank: rank + 1,
+                level: level.name,
+                percent: record.percent,
+
+                score: score(
+                    rank + 1,
+                    record.percent,
+                    level.percentToQualify,
+                    totalLevels
+                ),
+
+                link: record.link,
+            });
+        });
+    });
+
+
+    /*
+     * Add completed packs to every player.
+     */
+    if (packs) {
+        Object.keys(scoreMap).forEach((user) => {
+            scoreMap[user].packs = getCompletedPacks(
+                user,
+                list,
+                packs
+            );
+        });
+    } else {
+        Object.keys(scoreMap).forEach((user) => {
+            scoreMap[user].packs = [];
+        });
+    }
+
+
+    /*
+     * Wrap in extra Object containing
+     * the user and total score
+     */
+    const res = Object.entries(scoreMap).map(([user, scores]) => {
+        const {
+            verified,
+            completed,
+            progressed,
+            packs,
+        } = scores;
+
+        const total = [verified, completed, progressed]
+            .flat()
+            .reduce(
+                (prev, cur) => prev + cur.score,
+                0
             );
 
+        return {
+            user,
+            total: round(total),
+            verified,
+            completed,
+            progressed,
+            packs,
+        };
+    });
 
-    /* =====================================================
-       SORT
-       ===================================================== */
 
-    res.sort(
-        (a, b) =>
-            b.total -
-            a.total
-    );
-
-
+    /*
+     * Sort by total score
+     */
     return [
-        res,
-        errs
+        res.sort((a, b) => b.total - a.total),
+        errs,
     ];
 }
