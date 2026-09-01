@@ -12,7 +12,12 @@ export default {
         Spinner
     },
 
+
     template: `
+
+        <!-- =====================================================
+             LOADING
+             ===================================================== -->
 
         <main
             v-if="loading"
@@ -24,95 +29,94 @@ export default {
         </main>
 
 
+        <!-- =====================================================
+             PACKS PAGE
+             ===================================================== -->
+
         <main
             v-else
             class="page-packs"
         >
 
-            <div class="packs-container">
-
-                <!-- NO PACKS -->
-
-                <div
-                    v-if="packs.length === 0"
-                    class="no-packs"
-                >
-
-                    <h2>No Packs</h2>
-
-                    <p>
-                        No packs have been added yet.
-                    </p>
-
-                </div>
+            <div class="packs-layout">
 
 
-                <!-- PACKS -->
+                <!-- =================================================
+                     LEFT SIDE - PACK LIST
+                     ================================================= -->
 
-                <div
-                    v-for="pack in packs"
-                    :key="pack.id"
-                    class="pack"
-                    :style="{
-                        '--pack-color':
-                            pack.color || '#ffffff'
-                    }"
-                >
+                <section class="packs-sidebar">
+
 
                     <!-- HEADER -->
 
-                    <div class="pack-header">
+                    <div class="packs-sidebar-header">
 
-                        <div class="pack-info">
+                        <div>
 
                             <h1>
-                                {{ pack.name }}
+                                Packs
                             </h1>
 
                             <p>
-                                {{ pack.levels.length }}
-                                Levels
+                                {{ packs.length }}
+                                {{ packs.length === 1 ? 'Pack' : 'Packs' }}
                             </p>
 
                         </div>
 
-
-                        <span
-                            class="pack-color"
-                            :style="{
-                                backgroundColor:
-                                    pack.color || '#ffffff'
-                            }"
-                        ></span>
-
                     </div>
 
 
-                    <!-- LEVELS -->
+                    <!-- PACK LIST -->
 
-                    <div class="pack-levels">
+                    <div
+                        v-if="packs.length > 0"
+                        class="packs-list"
+                    >
 
                         <button
-                            v-for="(
-                                identifier,
-                                index
-                            ) in pack.levels"
-                            :key="identifier"
-                            class="pack-level"
-                            @click="openLevel(identifier)"
+                            v-for="pack in packs"
+                            :key="pack.id"
+                            class="pack-item"
+                            :class="{
+                                active:
+                                    selectedPack &&
+                                    selectedPack.id === pack.id
+                            }"
+                            :style="{
+                                '--pack-color':
+                                    pack.color || '#ffffff'
+                            }"
+                            @click="selectPack(pack)"
                         >
 
                             <span
-                                class="pack-level-rank"
-                            >
-                                #{{ index + 1 }}
+                                class="pack-item-color"
+                            ></span>
+
+
+                            <span class="pack-item-info">
+
+                                <span class="pack-item-name">
+                                    {{ pack.name }}
+                                </span>
+
+                                <span class="pack-item-count">
+                                    {{ pack.levels.length }} Levels
+                                </span>
+
                             </span>
 
 
-                            <span
-                                class="pack-level-name"
-                            >
-                                {{ getLevelName(identifier) }}
+                            <span class="pack-item-progress">
+
+                                {{ getCompletedPlayers(pack).length }}
+
+                                /
+
+                                {{ pack.levels.length }}
+
                             </span>
 
                         </button>
@@ -120,18 +124,174 @@ export default {
                     </div>
 
 
-                    <!-- VICTORS -->
+                    <!-- NO PACKS -->
 
-                    <div class="pack-completed">
+                    <div
+                        v-else
+                        class="no-packs"
+                    >
 
-                        <div class="pack-completed-header">
+                        <h2>
+                            No Packs
+                        </h2>
+
+                        <p>
+                            No packs have been added yet.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RIGHT SIDE - PACK DETAILS
+                     ================================================= -->
+
+                <section
+                    v-if="selectedPack"
+                    class="pack-detail"
+                    :style="{
+                        '--pack-color':
+                            selectedPack.color || '#ffffff'
+                    }"
+                >
+
+
+                    <!-- =================================================
+                         PACK HEADER
+                         ================================================= -->
+
+                    <header class="pack-detail-header">
+
+                        <div class="pack-detail-title">
+
+                            <div
+                                class="pack-detail-dot"
+                            ></div>
+
+
+                            <div>
+
+                                <h1>
+                                    {{ selectedPack.name }}
+                                </h1>
+
+                                <p>
+                                    {{ selectedPack.levels.length }}
+                                    Levels
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="pack-detail-completion">
+
+                            <strong>
+                                {{ getCompletedPlayers(selectedPack).length }}
+                            </strong>
+
+                            <span>
+                                / completed
+                            </span>
+
+                        </div>
+
+                    </header>
+
+
+                    <!-- PROGRESS BAR -->
+
+                    <div class="pack-progress">
+
+                        <div
+                            class="pack-progress-fill"
+                            :style="{
+                                width:
+                                    getPackProgress(selectedPack) + '%'
+                            }"
+                        ></div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         LEVELS
+                         ================================================= -->
+
+                    <section class="pack-level-section">
+
+                        <div class="section-title">
+
+                            <h2>
+                                Levels
+                            </h2>
+
+                            <span>
+                                {{ selectedPack.levels.length }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="pack-levels">
+
+                            <button
+                                v-for="(
+                                    identifier,
+                                    index
+                                ) in selectedPack.levels"
+                                :key="identifier"
+                                class="pack-level"
+                                @click="openLevel(identifier)"
+                            >
+
+                                <span
+                                    class="pack-level-rank"
+                                >
+                                    #{{ index + 1 }}
+                                </span>
+
+
+                                <span
+                                    class="pack-level-name"
+                                >
+                                    {{ getLevelName(identifier) }}
+                                </span>
+
+
+                                <span
+                                    class="pack-level-arrow"
+                                >
+                                    →
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =================================================
+                         VICTORS
+                         ================================================= -->
+
+                    <section class="pack-victors-section">
+
+                        <div class="section-title">
 
                             <h2>
                                 Victors
                             </h2>
 
                             <span>
-                                {{ getCompletedPlayers(pack).length }}
+                                {{ getCompletedPlayers(selectedPack).length }}
                             </span>
 
                         </div>
@@ -139,7 +299,7 @@ export default {
 
                         <div
                             v-if="
-                                getCompletedPlayers(pack).length > 0
+                                getCompletedPlayers(selectedPack).length > 0
                             "
                             class="pack-completed-players"
                         >
@@ -147,29 +307,60 @@ export default {
                             <div
                                 v-for="
                                     player
-                                    in getCompletedPlayers(pack)
+                                    in getCompletedPlayers(selectedPack)
                                 "
                                 :key="player"
                                 class="pack-completed-player"
                             >
 
-                                {{ player }}
+                                <span class="victor-avatar">
+                                    {{ player.charAt(0).toUpperCase() }}
+                                </span>
+
+                                <span class="victor-name">
+                                    {{ player }}
+                                </span>
 
                             </div>
 
                         </div>
 
 
-                        <p
+                        <div
                             v-else
-                            class="empty"
+                            class="pack-no-victors"
                         >
-                            Nobody yet.
-                        </p>
 
-                    </div>
+                            <span>
+                                No victors yet
+                            </span>
 
-                </div>
+                        </div>
+
+                    </section>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     NOTHING SELECTED
+                     ================================================= -->
+
+                <section
+                    v-else
+                    class="pack-detail empty-detail"
+                >
+
+                    <h2>
+                        Select a Pack
+                    </h2>
+
+                    <p>
+                        Choose a pack from the list.
+                    </p>
+
+                </section>
 
             </div>
 
@@ -177,24 +368,50 @@ export default {
     `,
 
 
+    // =============================================================
+    // DATA
+    // =============================================================
+
     data: () => ({
 
         packs: [],
 
         list: [],
 
+        selectedPack: null,
+
         loading: true
 
     }),
 
+
+    // =============================================================
+    // MOUNTED
+    // =============================================================
 
     async mounted() {
 
         this.packs =
             await fetchPacks() || [];
 
+
         this.list =
             await fetchList() || [];
+
+
+        /*
+         * Automatically select the first pack.
+         */
+
+        if (
+            this.packs.length > 0
+        ) {
+
+            this.selectedPack =
+                this.packs[0];
+
+        }
+
 
         this.loading =
             false;
@@ -202,11 +419,67 @@ export default {
     },
 
 
+    // =============================================================
+    // METHODS
+    // =============================================================
+
     methods: {
 
-        /* =====================================================
+
+        /* =========================================================
+           SELECT PACK
+           ========================================================= */
+
+        selectPack(pack) {
+
+            this.selectedPack =
+                pack;
+
+        },
+
+
+        /* =========================================================
+           PACK PROGRESS
+           ========================================================= */
+
+        getPackProgress(pack) {
+
+            if (
+                !pack ||
+                !Array.isArray(pack.levels) ||
+                pack.levels.length === 0
+            ) {
+
+                return 0;
+
+            }
+
+
+            const completed =
+                this.getCompletedPlayers(pack).length;
+
+
+            /*
+             * This represents the amount of
+             * victors relative to the number
+             * of levels.
+             */
+
+            const progress =
+                Math.min(
+                    100,
+                    (completed / pack.levels.length) * 100
+                );
+
+
+            return progress;
+
+        },
+
+
+        /* =========================================================
            FIND LEVEL
-           ===================================================== */
+           ========================================================= */
 
         getLevel(identifier) {
 
@@ -281,14 +554,15 @@ export default {
                 identifier
             );
 
+
             return null;
 
         },
 
 
-        /* =====================================================
+        /* =========================================================
            GET LEVEL NAME
-           ===================================================== */
+           ========================================================= */
 
         getLevelName(identifier) {
 
@@ -306,9 +580,9 @@ export default {
         },
 
 
-        /* =====================================================
-           OPEN EXACT LEVEL
-           ===================================================== */
+        /* =========================================================
+           OPEN LEVEL
+           ========================================================= */
 
         openLevel(identifier) {
 
@@ -345,20 +619,17 @@ export default {
         },
 
 
-        /* =====================================================
+        /* =========================================================
            GET COMPLETED PLAYERS
            
-           A player counts as completing a level when:
+           A player completes the pack when:
            
-           1. They have a record with 100%
+           - They are the verifier
+             OR
+           - They have a 100% record
            
-           OR
-           
-           2. They are the verifier
-           
-           The player must have completed EVERY
-           level in the pack.
-           ===================================================== */
+           AND they have completed EVERY level.
+           ========================================================= */
 
         getCompletedPlayers(pack) {
 
@@ -374,7 +645,7 @@ export default {
 
 
             /*
-             * Find all levels.
+             * Find every level.
              */
 
             const levels =
@@ -385,7 +656,7 @@ export default {
 
 
             /*
-             * If one of the levels doesn't exist,
+             * If a level cannot be found,
              * nobody can complete the pack.
              */
 
@@ -406,8 +677,8 @@ export default {
 
 
             /*
-             * Create a Set/Map of completed
-             * players for EVERY level.
+             * Get completed players
+             * for every individual level.
              */
 
             const completedPerLevel =
@@ -489,8 +760,8 @@ export default {
 
 
             /*
-             * Start with everybody who completed
-             * the FIRST level.
+             * Start with everyone
+             * who completed level 1.
              */
 
             const candidates =
@@ -500,7 +771,7 @@ export default {
 
 
             /*
-             * Check every remaining level.
+             * Check every other level.
              */
 
             for (
@@ -512,11 +783,6 @@ export default {
                 const completed =
                     completedPerLevel[i];
 
-
-                /*
-                 * Remove anyone who did not
-                 * complete this level.
-                 */
 
                 for (
                     const username
@@ -554,7 +820,7 @@ export default {
 
 
             /*
-             * Return original usernames.
+             * Return usernames.
              */
 
             return Array.from(
