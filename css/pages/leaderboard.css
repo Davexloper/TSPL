@@ -32,6 +32,7 @@
 
 .page-leaderboard > div {
     overflow-y: auto;
+
     scrollbar-width: thin;
     scrollbar-color:
         color-mix(in srgb, var(--color-on-background) 18%, transparent)
@@ -106,17 +107,6 @@
 
     border-collapse: separate;
     border-spacing: 0 0.4rem;
-}
-
-
-/* =========================================================
-   BOARD ROW
-   ========================================================= */
-
-.page-leaderboard .board tr {
-    transition:
-        transform 0.15s ease,
-        opacity 0.15s ease;
 }
 
 
@@ -215,11 +205,6 @@
         transform 0.15s ease;
 }
 
-
-/* =========================================================
-   USER HOVER
-   ========================================================= */
-
 .page-leaderboard .board .user button:hover {
     background: var(--color-background-hover);
 
@@ -227,7 +212,7 @@
 
     border-color: color-mix(
         in srgb,
-        var(--color-primary) 25%,
+        var(--color-primary) 30%,
         transparent
     );
 
@@ -259,10 +244,6 @@
             var(--color-primary) 25%,
             transparent
         );
-}
-
-.page-leaderboard .board .user.active button:hover {
-    transform: translateX(3px);
 }
 
 
@@ -313,6 +294,90 @@
 
 
 /* =========================================================
+   SECTION HEADER
+   ========================================================= */
+
+/*
+   HTML sollte ungefähr so aussehen:
+
+   <div class="section-header">
+       <h2>Completed Levels</h2>
+       <span>12</span>
+   </div>
+*/
+
+.page-leaderboard .section-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    gap: 1rem;
+
+    margin-bottom: 0.25rem;
+}
+
+.page-leaderboard .section-header h2 {
+    margin: 0;
+
+    min-width: 0;
+
+    color: var(--color-on-background);
+
+    font-size: 1.15rem;
+    font-weight: 750;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ORANGE COUNT
+   ========================================================= */
+
+.page-leaderboard .section-header > span {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 2rem;
+    height: 1.7rem;
+
+    padding: 0 0.6rem;
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--color-primary) 25%,
+        transparent
+    );
+
+    border-radius: 999px;
+
+    background: color-mix(
+        in srgb,
+        var(--color-primary) 10%,
+        var(--color-background)
+    );
+
+    color: var(--color-primary);
+
+    font-size: 0.8rem;
+    font-weight: 800;
+
+    font-variant-numeric: tabular-nums;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
    PLAYER TABLE
    ========================================================= */
 
@@ -324,11 +389,6 @@
     border-collapse: separate;
     border-spacing: 0 0.15rem;
 }
-
-
-/* =========================================================
-   PLAYER TABLE CELLS
-   ========================================================= */
 
 .page-leaderboard .player .table tr {
     transition:
@@ -343,14 +403,14 @@
     );
 }
 
+
+/* =========================================================
+   TABLE CELLS
+   ========================================================= */
+
 .page-leaderboard .player .table tr td:not(:last-child) {
     padding-right: 2rem;
 }
-
-
-/* =========================================================
-   PLAYER TABLE CONTENT
-   ========================================================= */
 
 .page-leaderboard .player .table p,
 .page-leaderboard .player .table a {
@@ -383,18 +443,22 @@
 
 .page-leaderboard .player .table .level {
     width: 100%;
-
     min-width: 0;
 
     overflow: hidden;
 }
+
+
+/* =========================================================
+   LEVEL LINKS — ORANGE
+   ========================================================= */
 
 .page-leaderboard .player .table a {
     display: block;
 
     color: var(--color-primary);
 
-    font-weight: 650;
+    font-weight: 700;
 
     text-decoration: none;
 
@@ -434,52 +498,188 @@
 
 
 /* =========================================================
-   SECTION SEPARATION
+   COMPLETED PACKS
    ========================================================= */
 
-.page-leaderboard .player > * {
-    min-width: 0;
-}
+/*
+   Die Pack-Namen werden ebenfalls orange.
+*/
 
-.page-leaderboard .player > h1 {
-    padding-bottom: 1rem;
+.page-leaderboard .packs-section {
+    width: 100%;
 
-    border-bottom: 1px solid color-mix(
+    padding: 1rem;
+
+    border: 1px solid color-mix(
         in srgb,
-        var(--color-on-background) 9%,
+        var(--color-primary) 15%,
         transparent
     );
+
+    border-radius: 0.8rem;
+
+    background: color-mix(
+        in srgb,
+        var(--color-primary) 4%,
+        var(--color-background)
+    );
+
+    box-sizing: border-box;
+}
+
+
+/* Pack list */
+
+.page-leaderboard .completed-packs {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.45rem;
+
+    width: 100%;
+}
+
+
+/* Individual pack */
+
+.page-leaderboard .completed-pack {
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    gap: 0.7rem;
+
+    padding: 0.7rem 0.8rem;
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--color-primary) 15%,
+        transparent
+    );
+
+    border-radius: 0.6rem;
+
+    background: color-mix(
+        in srgb,
+        var(--color-primary) 5%,
+        var(--color-background)
+    );
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+/* Pack hover */
+
+.page-leaderboard .completed-pack:hover {
+    background: color-mix(
+        in srgb,
+        var(--color-primary) 9%,
+        var(--color-background)
+    );
+
+    border-color: color-mix(
+        in srgb,
+        var(--color-primary) 30%,
+        transparent
+    );
+
+    transform: translateX(2px);
+}
+
+
+/* Pack color dot */
+
+.page-leaderboard .completed-pack-color {
+    flex: 0 0 auto;
+
+    width: 0.65rem;
+    height: 0.65rem;
+
+    border-radius: 50%;
+
+    background: var(--pack-color);
+
+    box-shadow:
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--pack-color) 12%,
+            transparent
+        );
+}
+
+
+/* Pack content */
+
+.page-leaderboard .completed-pack div {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    gap: 0.1rem;
 }
 
 
 /* =========================================================
-   SCROLLBAR
+   PACK NAME — ORANGE
    ========================================================= */
 
-.page-leaderboard > div::-webkit-scrollbar {
-    width: 6px;
+.page-leaderboard .completed-pack strong {
+    min-width: 0;
+
+    color: var(--color-primary);
+
+    font-weight: 750;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.page-leaderboard > div::-webkit-scrollbar-track {
-    background: transparent;
+
+/* Pack subtitle */
+
+.page-leaderboard .completed-pack small {
+    color: var(--color-on-background);
+
+    opacity: 0.5;
+
+    font-size: 0.8rem;
 }
 
-.page-leaderboard > div::-webkit-scrollbar-thumb {
-    background: color-mix(
+
+/* =========================================================
+   NO DATA
+   ========================================================= */
+
+.page-leaderboard .no-player-data {
+    padding: 1rem;
+
+    border: 1px dashed color-mix(
         in srgb,
-        var(--color-on-background) 18%,
+        var(--color-on-background) 12%,
         transparent
     );
 
-    border-radius: 999px;
-}
+    border-radius: 0.7rem;
 
-.page-leaderboard > div::-webkit-scrollbar-thumb:hover {
     background: color-mix(
         in srgb,
-        var(--color-on-background) 30%,
-        transparent
+        var(--color-on-background) 3%,
+        var(--color-background)
     );
+
+    opacity: 0.55;
+
+    text-align: center;
 }
 
 
@@ -489,7 +689,7 @@
 
 @media (max-width: 900px) {
     .page-leaderboard {
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: 1fr;
         grid-template-rows: max-content auto auto;
 
         column-gap: 0;
@@ -512,10 +712,6 @@
 }
 
 
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
 @media (max-width: 600px) {
     .page-leaderboard .board-container {
         padding-inline: 0.5rem;
@@ -531,5 +727,12 @@
 
     .page-leaderboard .board .user button {
         padding: 0.7rem 0.8rem;
+    }
+
+    .page-leaderboard .section-header > span {
+        min-width: 1.8rem;
+        height: 1.6rem;
+
+        padding-inline: 0.5rem;
     }
 }
