@@ -43,6 +43,42 @@ export async function fetchList() {
     }
 }
 
+
+/* =========================================================
+   FIND LEVEL
+   ========================================================= */
+
+export async function findLevel(reference) {
+    const list = await fetchList();
+
+    if (!list || reference === undefined || reference === null) {
+        return null;
+    }
+
+    const search = String(reference).toLowerCase();
+
+    for (const [level] of list) {
+        if (!level) {
+            continue;
+        }
+
+        if (
+            String(level.name).toLowerCase() === search ||
+            String(level.id).toLowerCase() === search ||
+            String(level.path).toLowerCase() === search
+        ) {
+            return level;
+        }
+    }
+
+    return null;
+}
+
+
+/* =========================================================
+   PACKS
+   ========================================================= */
+
 export async function fetchPacks() {
     try {
         const packsResult = await fetch(`${dir}/_packs.json`);
@@ -79,6 +115,11 @@ export async function fetchLevelPacks() {
     return levelPacks;
 }
 
+
+/* =========================================================
+   EDITORS
+   ========================================================= */
+
 export async function fetchEditors() {
     try {
         const editorsResults = await fetch(`${dir}/_editors.json`);
@@ -89,6 +130,11 @@ export async function fetchEditors() {
         return null;
     }
 }
+
+
+/* =========================================================
+   LEADERBOARD
+   ========================================================= */
 
 export async function fetchLeaderboard() {
     const list = await fetchList();
