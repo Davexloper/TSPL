@@ -1,7 +1,4 @@
-import {
-    fetchLeaderboard
-} from '../content.js';
-
+import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
 
 import Spinner from '../components/Spinner.js';
@@ -48,28 +45,6 @@ export default {
 
 
                 <!-- =========================================
-                     ERROR
-                     ========================================= -->
-
-                <div
-                    class="error-container"
-                    v-if="err.length > 0"
-                >
-
-                    <p class="error">
-
-                        Leaderboard may be incorrect,
-                        as the following levels could not
-                        be loaded:
-
-                        {{ err.join(', ') }}
-
-                    </p>
-
-                </div>
-
-
-                <!-- =========================================
                      PLAYER LIST
                      ========================================= -->
 
@@ -83,13 +58,12 @@ export default {
                                 in leaderboard
                             "
                             :key="ientry.user"
+
                             :class="{
                                 selected:
                                     selected === i
                             }"
                         >
-
-                            <!-- RANK -->
 
                             <td class="rank">
 
@@ -100,8 +74,6 @@ export default {
                             </td>
 
 
-                            <!-- POINTS -->
-
                             <td class="total">
 
                                 <p>
@@ -111,8 +83,6 @@ export default {
                             </td>
 
 
-                            <!-- USER -->
-
                             <td class="user">
 
                                 <button
@@ -120,9 +90,7 @@ export default {
                                         selected = i
                                     "
                                 >
-
                                     {{ ientry.user }}
-
                                 </button>
 
                             </td>
@@ -146,23 +114,19 @@ export default {
                     <div class="player">
 
 
-                        <!-- PLAYER HEADER -->
+                        <!-- PLAYER -->
 
                         <div class="player-header">
 
-                            <div>
+                            <h1>
+                                #{{ selected + 1 }}
+                                {{ entry.user }}
+                            </h1>
 
-                                <h1>
-                                    #{{ selected + 1 }}
-                                    {{ entry.user }}
-                                </h1>
-
-                                <p class="player-points">
-                                    {{ Math.round(entry.total) }}
-                                    Points
-                                </p>
-
-                            </div>
+                            <p>
+                                {{ Math.round(entry.total) }}
+                                Points
+                            </p>
 
                         </div>
 
@@ -172,11 +136,11 @@ export default {
                              ================================= -->
 
                         <section
-                            class="player-section packs-section"
                             v-if="
                                 entry.packs &&
-                                entry.packs.length > 0
+                                entry.packs.length
                             "
+                            class="player-section packs-section"
                         >
 
                             <div class="section-header">
@@ -199,11 +163,12 @@ export default {
                                         pack in entry.packs
                                     "
                                     :key="pack.id"
+
                                     class="completed-pack"
+
                                     :style="{
                                         '--pack-color':
-                                            pack.color ||
-                                            '#ff7a00'
+                                            pack.color
                                     }"
                                 >
 
@@ -232,15 +197,43 @@ export default {
 
 
                         <!-- =================================
+                             NO PACKS
+                             ================================= -->
+
+                        <section
+                            v-else
+                            class="player-section packs-section"
+                        >
+
+                            <div class="section-header">
+
+                                <h2>
+                                    Completed Packs
+                                </h2>
+
+                                <span>
+                                    0
+                                </span>
+
+                            </div>
+
+                            <p class="no-data">
+                                No completed packs.
+                            </p>
+
+                        </section>
+
+
+                        <!-- =================================
                              VERIFIED
                              ================================= -->
 
                         <section
-                            class="player-section"
                             v-if="
                                 entry.verified &&
-                                entry.verified.length > 0
+                                entry.verified.length
                             "
+                            class="player-section"
                         >
 
                             <div class="section-header">
@@ -260,33 +253,39 @@ export default {
 
                                 <tr
                                     v-for="
-                                        score in entry.verified
+                                        item in entry.verified
                                     "
                                     :key="
                                         'verified-' +
-                                        score.rank +
+                                        item.rank +
                                         '-' +
-                                        score.level
+                                        item.level
                                     "
                                 >
 
                                     <td class="rank">
-                                        #{{ score.rank }}
+
+                                        #{{ item.rank }}
+
                                     </td>
+
 
                                     <td class="level">
 
                                         <a
                                             target="_blank"
-                                            :href="score.link"
+                                            :href="item.link"
                                         >
-                                            {{ score.level }}
+                                            {{ item.level }}
                                         </a>
 
                                     </td>
 
+
                                     <td class="score">
-                                        +{{ Math.round(score.score) }}
+
+                                        +{{ Math.round(item.score) }}
+
                                     </td>
 
                                 </tr>
@@ -301,11 +300,11 @@ export default {
                              ================================= -->
 
                         <section
-                            class="player-section"
                             v-if="
                                 entry.completed &&
-                                entry.completed.length > 0
+                                entry.completed.length
                             "
+                            class="player-section"
                         >
 
                             <div class="section-header">
@@ -325,33 +324,39 @@ export default {
 
                                 <tr
                                     v-for="
-                                        score in entry.completed
+                                        item in entry.completed
                                     "
                                     :key="
                                         'completed-' +
-                                        score.rank +
+                                        item.rank +
                                         '-' +
-                                        score.level
+                                        item.level
                                     "
                                 >
 
                                     <td class="rank">
-                                        #{{ score.rank }}
+
+                                        #{{ item.rank }}
+
                                     </td>
+
 
                                     <td class="level">
 
                                         <a
                                             target="_blank"
-                                            :href="score.link"
+                                            :href="item.link"
                                         >
-                                            {{ score.level }}
+                                            {{ item.level }}
                                         </a>
 
                                     </td>
 
+
                                     <td class="score">
-                                        +{{ Math.round(score.score) }}
+
+                                        +{{ Math.round(item.score) }}
+
                                     </td>
 
                                 </tr>
@@ -366,11 +371,11 @@ export default {
                              ================================= -->
 
                         <section
-                            class="player-section"
                             v-if="
                                 entry.progressed &&
-                                entry.progressed.length > 0
+                                entry.progressed.length
                             "
+                            class="player-section"
                         >
 
                             <div class="section-header">
@@ -390,34 +395,42 @@ export default {
 
                                 <tr
                                     v-for="
-                                        score in entry.progressed
+                                        item in entry.progressed
                                     "
                                     :key="
                                         'progressed-' +
-                                        score.rank +
+                                        item.rank +
                                         '-' +
-                                        score.level
+                                        item.level +
+                                        '-' +
+                                        item.percent
                                     "
                                 >
 
                                     <td class="rank">
-                                        #{{ score.rank }}
+
+                                        #{{ item.rank }}
+
                                     </td>
+
 
                                     <td class="level">
 
                                         <a
                                             target="_blank"
-                                            :href="score.link"
+                                            :href="item.link"
                                         >
-                                            {{ score.percent }}%
-                                            {{ score.level }}
+                                            {{ item.percent }}%
+                                            {{ item.level }}
                                         </a>
 
                                     </td>
 
+
                                     <td class="score">
-                                        +{{ Math.round(score.score) }}
+
+                                        +{{ Math.round(item.score) }}
+
                                     </td>
 
                                 </tr>
@@ -425,32 +438,6 @@ export default {
                             </table>
 
                         </section>
-
-
-                        <!-- =================================
-                             NO INFORMATION
-                             ================================= -->
-
-                        <div
-                            class="no-player-data"
-                            v-if="
-                                (!entry.verified ||
-                                 entry.verified.length === 0) &&
-
-                                (!entry.completed ||
-                                 entry.completed.length === 0) &&
-
-                                (!entry.progressed ||
-                                 entry.progressed.length === 0) &&
-
-                                (!entry.packs ||
-                                 entry.packs.length === 0)
-                            "
-                        >
-
-                            No records yet.
-
-                        </div>
 
 
                     </div>
@@ -485,7 +472,8 @@ export default {
             const [
                 leaderboard,
                 err
-            ] = await fetchLeaderboard();
+            ] =
+                await fetchLeaderboard();
 
 
             this.leaderboard =
@@ -499,7 +487,7 @@ export default {
         } catch (error) {
 
             console.error(
-                'Failed to load leaderboard.',
+                'Failed to load leaderboard:',
                 error
             );
 
