@@ -1,7 +1,6 @@
 import {
     fetchPacks,
-    fetchList,
-    findLevel
+    fetchList
 } from '../content.js';
 
 import Spinner from '../components/Spinner.js';
@@ -91,7 +90,7 @@ export default {
                             class="pack-color"
                             :style="{
                                 backgroundColor:
-                                    pack.color
+                                    pack.color || '#ffffff'
                             }"
                         ></span>
 
@@ -109,9 +108,7 @@ export default {
                             ) in pack.levels"
                             :key="identifier"
                             class="pack-level"
-                            @click="
-                                openLevel(identifier)
-                            "
+                            @click="openLevel(identifier)"
                         >
 
                             <span
@@ -212,16 +209,11 @@ export default {
 
     async mounted() {
 
-        this.packs =
-            await fetchPacks();
+        this.packs = await fetchPacks() || [];
 
+        this.list = await fetchList() || [];
 
-        this.list =
-            await fetchList();
-
-
-        this.loading =
-            false;
+        this.loading = false;
 
     },
 
@@ -229,41 +221,113 @@ export default {
     methods: {
 
         /* =====================================================
+           FIND LEVEL IN CURRENT LIST
+           ===================================================== */
+
+        findLevelInList(identifier) {
+
+            if (!this.list) {
+                return null;
+            }
+
+            const search =
+                String(identifier).toLowerCase();
+
+
+            for (let i = 0; i < this.list.length; i++) {
+
+                const level =
+                    this.list[i]?.[0];
+
+
+                if (!level) {
+                    continue;
+                }
+
+
+                /*
+                 * Match by level name
+                 */
+
+                if (
+                    String(level.name).toLowerCase() ===
+                    search
+                ) {
+
+                    return {
+                        index: i,
+                        level
+                    };
+
+                }
+
+
+                /*
+                 * Match by path
+                 */
+
+                if (
+                    String(level.path).toLowerCase() ===
+                    search
+                ) {
+
+                    return {
+                        index: i,
+                        level
+                    };
+
+                }
+
+
+                /*
+                 * Match by ID
+                 */
+
+                if (
+                    String(level.id).toLowerCase() ===
+                    search
+                ) {
+
+                    return {
+                        index: i,
+                        level
+                    };
+
+                }
+
+            }
+
+
+            return null;
+
+        },
+
+
+        /* =====================================================
            OPEN EXACT LEVEL
            ===================================================== */
 
         openLevel(identifier) {
 
-            const index =
-                findLevel(
-                    this.list,
+            const result =
+                this.findLevelInList(
                     identifier
                 );
 
 
-            if (index === -1) {
+            if (!result) {
 
                 console.error(
                     `Pack level "${identifier}" could not be found.`
                 );
 
                 return;
-            }
 
-
-            const level =
-                this.list[index]?.[0];
-
-
-            if (!level) {
-                return;
             }
 
 
             /*
-             * Navigate to the list page and
-             * tell List.js exactly which level
-             * should be selected.
+             * Use the actual list index.
              */
 
             this.$router.push({
@@ -273,8 +337,7 @@ export default {
                 query: {
 
                     level:
-                        level.path ||
-                        level.name
+                        result.level.path
 
                 }
 
@@ -289,14 +352,13 @@ export default {
 
         getLevelName(identifier) {
 
-            const index =
-                findLevel(
-                    this.list,
+            const result =
+                this.findLevelInList(
                     identifier
                 );
 
 
-            if (index === -1) {
+            if (!result) {
 
                 return identifier;
 
@@ -304,7 +366,7 @@ export default {
 
 
             return (
-                this.list[index][0]?.name ||
+                result.level.name ||
                 identifier
             );
 
@@ -319,9 +381,7 @@ export default {
 
             if (
                 !pack ||
-                !Array.isArray(
-                    pack.levels
-                )
+                !Array.isArray(pack.levels)
             ) {
 
                 return [];
@@ -330,33 +390,30 @@ export default {
 
 
             /*
-             * First find every actual
-             * level in the pack.
+             * Find every level in the pack.
              */
 
             const levels =
                 pack.levels
-                    .map(
-                        identifier =>
-                            findLevel(
-                                this.list,
+                    .map(identifier => {
+
+                        const result =
+                            this.findLevelInList(
                                 identifier
-                            )
-                    )
-                    .filter(
-                        index =>
-                            index !== -1
-                    )
-                    .map(
-                        index =>
-                            this.list[index][0]
-                    );
+                            );
+
+                        return result
+                            ? result.level
+                            : null;
+
+                    })
+                    .filter(level => level);
 
 
             /*
-             * If even one level doesn't
-             * exist, nobody can complete
-             * the pack.
+             * If a pack references a level
+             * that does not exist, nobody
+             * can complete the pack.
              */
 
             if (
@@ -370,8 +427,8 @@ export default {
 
 
             /*
-             * Collect every player who
-             * completed the first level.
+             * Get every player who completed
+             * the first level.
              */
 
             const candidates =
@@ -384,17 +441,17 @@ export default {
             ) {
 
                 if (
-                    record.percent ===
-                    100 &&
+                    record.percent === 100 &&
                     record.user
                 ) {
 
+                    const username =
+                        record.user;
+
+
                     candidates.set(
-
-                        record.user.toLowerCase(),
-
-                        record.user
-
+                        username.toLowerCase(),
+                        username
                     );
 
                 }
@@ -403,7 +460,7 @@ export default {
 
 
             /*
-             * Check every other level.
+             * Check every remaining level.
              */
 
             for (
@@ -424,23 +481,24 @@ export default {
                         )
                             .filter(
                                 record =>
-                                    record.percent ===
-                                    100 &&
+                                    record.percent === 100 &&
                                     record.user
                             )
                             .map(
                                 record =>
-                                    record.user
-                                        .toLowerCase()
+                                    record.user.toLowerCase()
                             )
                     );
 
 
+                /*
+                 * Remove players who haven't
+                 * completed this level.
+                 */
+
                 for (
-                    const [
-                        username
-                    ]
-                    of candidates
+                    const username
+                    of candidates.keys()
                 ) {
 
                     if (
@@ -460,6 +518,11 @@ export default {
             }
 
 
+            /*
+             * These players completed
+             * EVERY level in the pack.
+             */
+
             return Array.from(
                 candidates.values()
             ).sort(
@@ -467,8 +530,8 @@ export default {
                     a.localeCompare(b)
             );
 
-        },
+        }
 
-    },
+    }
 
 };
