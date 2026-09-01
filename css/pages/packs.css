@@ -6,7 +6,7 @@
     width: 100%;
     min-height: 100%;
 
-    padding: 0.5rem 0.6rem;
+    padding: 0.6rem 0.75rem;
 
     box-sizing: border-box;
 }
@@ -19,17 +19,21 @@
 .page-packs .packs-container {
     display: grid;
 
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+    /*
+     * EXACTLY 4 PACKS PER ROW
+     */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 
     width: 100%;
     max-width: none;
 
     margin: 0;
 
-    gap: 0.6rem;
+    gap: 0.65rem;
 
     box-sizing: border-box;
+
+    align-items: start;
 }
 
 
@@ -41,10 +45,8 @@
     display: grid;
 
     /*
-        INFO       VICTORS              LEVELS
-        22%        25%                  53%
-    */
-
+     * Keep the same proportions as before
+     */
     grid-template-columns:
         22%
         25%
@@ -56,6 +58,9 @@
     width: 100%;
     min-width: 0;
 
+    /*
+     * SAME HEIGHT AS BEFORE
+     */
     height: 9rem;
     min-height: 9rem;
     max-height: 9rem;
@@ -63,6 +68,8 @@
     margin: 0;
 
     overflow: hidden;
+
+    position: relative;
 
     background:
         linear-gradient(
@@ -397,7 +404,7 @@
 
     gap: 0.3rem;
 
-    /* Levels do NOT scroll */
+    /* NEVER SCROLL */
     overflow: hidden;
 
     box-sizing: border-box;
@@ -596,27 +603,6 @@
 }
 
 
-.page-packs .no-packs h2 {
-    margin: 0 0 0.25rem;
-
-    color: var(--color-on-background);
-
-    font-size: 0.95rem;
-    font-weight: 750;
-}
-
-
-.page-packs .no-packs p {
-    margin: 0;
-
-    color: var(--color-on-background);
-
-    opacity: 0.45;
-
-    font-size: 0.75rem;
-}
-
-
 /* =========================================================
    DARK MODE
    ========================================================= */
@@ -630,7 +616,6 @@
         );
 }
 
-
 .dark .page-packs .pack:hover {
     box-shadow:
         0 7px 20px color-mix(
@@ -642,10 +627,10 @@
 
 
 /* =========================================================
-   3 PACKS PER ROW
+   3 PER ROW
    ========================================================= */
 
-@media (max-width: 1200px) {
+@media (max-width: 1250px) {
 
     .page-packs .packs-container {
         grid-template-columns:
@@ -656,10 +641,10 @@
 
 
 /* =========================================================
-   2 PACKS PER ROW
+   2 PER ROW
    ========================================================= */
 
-@media (max-width: 850px) {
+@media (max-width: 900px) {
 
     .page-packs .packs-container {
         grid-template-columns:
@@ -670,133 +655,13 @@
 
 
 /* =========================================================
-   1 PACK PER ROW
+   1 PER ROW
    ========================================================= */
 
-@media (max-width: 550px) {
-
-    .page-packs {
-        padding: 0.4rem;
-    }
+@media (max-width: 600px) {
 
     .page-packs .packs-container {
         grid-template-columns: 1fr;
-
-        gap: 0.5rem;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL DESKTOP / TABLET PACK SIZING
-   ========================================================= */
-
-@media (max-width: 1200px) {
-
-    .page-packs .pack {
-        grid-template-columns:
-            22%
-            25%
-            minmax(0, 53%);
-    }
-
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 700px) {
-
-    .page-packs .pack {
-        grid-template-columns:
-            22%
-            25%
-            minmax(0, 53%);
-
-        height: 9rem;
-        min-height: 9rem;
-        max-height: 9rem;
-    }
-
-    .page-packs .pack-header {
-        padding: 0.65rem;
-    }
-
-    .page-packs .pack-info h1 {
-        font-size: 0.8rem;
-    }
-
-    .page-packs .pack-info p {
-        font-size: 0.6rem;
-    }
-
-    .page-packs .pack-victors {
-        padding: 0.55rem;
-    }
-
-    .page-packs .pack-levels {
-        padding: 0.35rem;
-        gap: 0.25rem;
-    }
-
-    .page-packs .pack-level {
-        flex-basis: 2.15rem;
-        height: 2.15rem;
-
-        grid-template-columns:
-            2.1rem
-            minmax(0, 1fr);
-
-        padding: 0 0.5rem;
-    }
-
-    .page-packs .pack-level-victor,
-    .page-packs .pack-level-name {
-        font-size: 0.62rem;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 450px) {
-
-    .page-packs .pack {
-        grid-template-columns:
-            29%
-            24%
-            minmax(0, 47%);
-    }
-
-    .page-packs .pack-info h1 {
-        font-size: 0.72rem;
-    }
-
-    .page-packs .pack-victors h2 {
-        font-size: 0.65rem;
-    }
-
-    .page-packs .pack-victors p {
-        font-size: 0.58rem;
-    }
-
-    .page-packs .pack-level {
-        grid-template-columns:
-            1.8rem
-            minmax(0, 1fr);
-
-        padding: 0 0.45rem;
-    }
-
-    .page-packs .pack-level-victor,
-    .page-packs .pack-level-name {
-        font-size: 0.57rem;
     }
 
 }
