@@ -25,9 +25,7 @@ export default {
                     <div class="pack-header">
 
                         <div class="pack-info">
-                            <h1>
-                                {{ pack.name }}
-                            </h1>
+                            <h1>{{ pack.name }}</h1>
 
                             <p>
                                 {{ pack.levels.length }}
@@ -41,7 +39,6 @@ export default {
                         ></div>
 
                     </div>
-
 
                     <div class="pack-levels">
 
@@ -65,7 +62,6 @@ export default {
                     </div>
 
                 </div>
-
 
                 <div
                     v-if="packs.length === 0"
@@ -133,9 +129,23 @@ export default {
                 ([level]) => level?.path === levelPath
             );
 
-            if (index !== -1) {
-                window.location.hash = `#/${index + 1}`;
+            if (index === -1) {
+                return;
             }
+
+            /*
+             * Save the selected level so the List page
+             * can open the correct level.
+             */
+            sessionStorage.setItem(
+                "selectedLevel",
+                index.toString()
+            );
+
+            /*
+             * Navigate to the main list.
+             */
+            this.$router.push("/");
         }
 
     }
