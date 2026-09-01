@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "name": "Apocalyptic Duoly",
+        "color": "#00ff00",
+        "levels": [
+            "Bloodbath",
+            "Cataclysm",
+        ]
+    }
+]  
