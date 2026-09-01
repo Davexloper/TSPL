@@ -1,7 +1,11 @@
 import { store } from "../main.js";
 import { embed } from "../util.js";
 import { score } from "../score.js";
-import { fetchEditors, fetchList, fetchLevelPacks } from "../content.js";
+import {
+    fetchEditors,
+    fetchList,
+    fetchLevelPacks
+} from "../content.js";
 
 import Spinner from "../components/Spinner.js";
 import LevelAuthors from "../components/List/LevelAuthors.js";
@@ -73,14 +77,19 @@ export default {
                 <div class="level" v-if="level">
 
                     <h1>{{ level.name }}</h1>
-                    
+
+                    <!-- PACKS -->
+
                     <div
                         v-if="levelPacks[level.path]?.length"
                         class="level-packs"
                     >
-                        <span>Pack:</span>
-                    
-                        <a
+
+                        <span class="pack-label">
+                            Pack:
+                        </span>
+
+                        <span
                             v-for="pack in levelPacks[level.path]"
                             :key="pack.id"
                             class="pack-badge"
@@ -89,7 +98,8 @@ export default {
                             }"
                         >
                             {{ pack.name }}
-                        </a>
+                        </span>
+
                     </div>
 
                     <LevelAuthors
@@ -359,10 +369,14 @@ export default {
     computed: {
 
         level() {
-            return this.list[this.selected][0];
+            return this.list?.[this.selected]?.[0] || null;
         },
 
         video() {
+
+            if (!this.level) {
+                return "";
+            }
 
             if (!this.level.showcase) {
                 return embed(this.level.verification);
@@ -385,6 +399,7 @@ export default {
         // Load editors
         this.editors = await fetchEditors();
 
+        // Load packs
         this.levelPacks = await fetchLevelPacks();
 
 
@@ -430,18 +445,15 @@ export default {
 
             const totalLevels = this.list.length;
 
-            // Safety check
             if (totalLevels <= 1) {
                 return 250;
             }
 
-            // Calculate points from 250 down to 1
             const points =
                 250 -
                 (rank - 1) *
                 (249 / (totalLevels - 1));
 
-            // Always return a whole number
             return Math.max(1, Math.round(points));
         },
 
