@@ -73,6 +73,24 @@ export default {
                 <div class="level" v-if="level">
 
                     <h1>{{ level.name }}</h1>
+                    
+                    <div
+                        v-if="levelPacks[level.path]?.length"
+                        class="level-packs"
+                    >
+                        <span>Pack:</span>
+                    
+                        <a
+                            v-for="pack in levelPacks[level.path]"
+                            :key="pack.id"
+                            class="pack-badge"
+                            :style="{
+                                backgroundColor: pack.color
+                            }"
+                        >
+                            {{ pack.name }}
+                        </a>
+                    </div>
 
                     <LevelAuthors
                         :author="level.author"
