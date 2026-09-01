@@ -13,19 +13,21 @@
 
 
 /* =========================================================
-   CONTAINER
+   PACKS GRID
    ========================================================= */
 
 .page-packs .packs-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
     width: 100%;
     max-width: none;
 
     margin: 0;
 
-    gap: 0.55rem;
+    gap: 0.6rem;
 
     box-sizing: border-box;
 }
@@ -70,7 +72,7 @@
                 var(--pack-color) 5%,
                 var(--color-background)
             ),
-            var(--color-background)
+            var(--color-background) 60%
         );
 
     border: 1px solid color-mix(
@@ -84,6 +86,13 @@
     border-radius: 0.7rem;
 
     box-sizing: border-box;
+
+    box-shadow:
+        0 2px 8px color-mix(
+            in srgb,
+            var(--pack-color) 5%,
+            transparent
+        );
 
     transition:
         transform 0.15s ease,
@@ -159,7 +168,7 @@
 
 
 /* =========================================================
-   PACK DOT
+   PACK COLOR DOT
    ========================================================= */
 
 .page-packs .pack-color {
@@ -189,7 +198,7 @@
 
 
 /* =========================================================
-   PACK INFO TEXT
+   PACK INFO
    ========================================================= */
 
 .page-packs .pack-info {
@@ -235,7 +244,7 @@
 
 
 /* =========================================================
-   VICTORS PANEL
+   VICTORS
    ========================================================= */
 
 .page-packs .pack-victors {
@@ -368,7 +377,7 @@
 
 
 /* =========================================================
-   LEVELS PANEL
+   LEVELS
    ========================================================= */
 
 .page-packs .pack-levels {
@@ -388,10 +397,7 @@
 
     gap: 0.3rem;
 
-    /*
-       NEVER SCROLL
-    */
-
+    /* Levels do NOT scroll */
     overflow: hidden;
 
     box-sizing: border-box;
@@ -554,24 +560,6 @@
 
 
 /* =========================================================
-   IMPORTANT:
-   If "Victors" is currently outside .pack-victors,
-   style direct pack headings as the victors heading.
-   ========================================================= */
-
-.page-packs .pack > h2 {
-    margin: 0;
-
-    color: var(--pack-color);
-
-    font-size: 0.72rem;
-    font-weight: 800;
-
-    line-height: 1.1;
-}
-
-
-/* =========================================================
    NO PACKS
    ========================================================= */
 
@@ -608,6 +596,27 @@
 }
 
 
+.page-packs .no-packs h2 {
+    margin: 0 0 0.25rem;
+
+    color: var(--color-on-background);
+
+    font-size: 0.95rem;
+    font-weight: 750;
+}
+
+
+.page-packs .no-packs p {
+    margin: 0;
+
+    color: var(--color-on-background);
+
+    opacity: 0.45;
+
+    font-size: 0.75rem;
+}
+
+
 /* =========================================================
    DARK MODE
    ========================================================= */
@@ -622,21 +631,74 @@
 }
 
 
+.dark .page-packs .pack:hover {
+    box-shadow:
+        0 7px 20px color-mix(
+            in srgb,
+            var(--pack-color) 13%,
+            transparent
+        );
+}
+
+
 /* =========================================================
-   TABLET
+   3 PACKS PER ROW
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
+
+    .page-packs .packs-container {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   2 PACKS PER ROW
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .page-packs .packs-container {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   1 PACK PER ROW
+   ========================================================= */
+
+@media (max-width: 550px) {
 
     .page-packs {
-        padding: 0.45rem 0.5rem;
+        padding: 0.4rem;
     }
+
+    .page-packs .packs-container {
+        grid-template-columns: 1fr;
+
+        gap: 0.5rem;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL DESKTOP / TABLET PACK SIZING
+   ========================================================= */
+
+@media (max-width: 1200px) {
 
     .page-packs .pack {
         grid-template-columns:
-            24%
+            22%
             25%
-            minmax(0, 51%);
+            minmax(0, 53%);
     }
 
 }
@@ -646,17 +708,17 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
 
     .page-packs .pack {
         grid-template-columns:
-            27%
+            22%
             25%
-            minmax(0, 48%);
+            minmax(0, 53%);
 
-        height: 8.5rem;
-        min-height: 8.5rem;
-        max-height: 8.5rem;
+        height: 9rem;
+        min-height: 9rem;
+        max-height: 9rem;
     }
 
     .page-packs .pack-header {
@@ -681,8 +743,8 @@
     }
 
     .page-packs .pack-level {
-        height: 2.15rem;
         flex-basis: 2.15rem;
+        height: 2.15rem;
 
         grid-template-columns:
             2.1rem
@@ -700,14 +762,10 @@
 
 
 /* =========================================================
-   VERY SMALL
+   VERY SMALL MOBILE
    ========================================================= */
 
 @media (max-width: 450px) {
-
-    .page-packs {
-        padding: 0.35rem;
-    }
 
     .page-packs .pack {
         grid-template-columns:
@@ -732,6 +790,8 @@
         grid-template-columns:
             1.8rem
             minmax(0, 1fr);
+
+        padding: 0 0.45rem;
     }
 
     .page-packs .pack-level-victor,
