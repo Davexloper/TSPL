@@ -17,6 +17,7 @@
     padding-right: 0.9rem;
 }
 
+
 /* =========================================================
    LEVEL LIST
    ========================================================= */
@@ -98,8 +99,6 @@
     transform: translateX(2px) scale(0.992);
 }
 
-/* Selected */
-
 .page-list .list .level.active button {
     background: var(--color-primary);
     color: var(--color-on-primary);
@@ -117,8 +116,6 @@
             transparent
         );
 }
-
-/* Error */
 
 .page-list .list .level.error button {
     color: var(--color-error);
@@ -146,6 +143,7 @@
     box-shadow: none;
 }
 
+
 /* =========================================================
    LEVEL CONTENT
    ========================================================= */
@@ -160,6 +158,208 @@
 
     max-width: 48rem;
 }
+
+
+/* =========================================================
+   PACK PANEL
+   ========================================================= */
+
+.page-list .level-pack-panel {
+    width: 100%;
+
+    padding: 0.9rem;
+
+    box-sizing: border-box;
+
+    background: color-mix(
+        in srgb,
+        var(--pack-color) 4%,
+        var(--color-background)
+    );
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--pack-color) 22%,
+        transparent
+    );
+
+    border-left: 3px solid var(--pack-color);
+
+    border-radius: 0.6rem;
+}
+
+.page-list .level-pack-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0.75rem;
+
+    margin-bottom: 0.65rem;
+}
+
+.page-list .level-pack-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.5rem;
+
+    min-width: 0;
+}
+
+.page-list .level-pack-title h3 {
+    margin: 0;
+
+    font-size: 1rem;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.page-list .level-pack-progress {
+    flex-shrink: 0;
+
+    font-size: 0.78rem;
+
+    opacity: 0.55;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* Pack levels */
+
+.page-list .level-pack-levels {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.25rem;
+}
+
+.page-list .level-pack-level {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.55rem;
+
+    width: 100%;
+
+    padding: 0.42rem 0.5rem;
+
+    box-sizing: border-box;
+
+    border-radius: 0.4rem;
+
+    transition:
+        background-color 0.14s ease,
+        transform 0.14s ease;
+}
+
+.page-list .level-pack-level:hover {
+    background-color: color-mix(
+        in srgb,
+        var(--pack-color) 7%,
+        transparent
+    );
+
+    transform: translateX(2px);
+}
+
+
+/* Status */
+
+.page-list .level-pack-status {
+    width: 1.1rem;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    font-weight: 700;
+}
+
+.page-list .level-pack-status.completed {
+    color: var(--pack-color);
+}
+
+.page-list .level-pack-status.incomplete {
+    opacity: 0.22;
+}
+
+
+/* Level name */
+
+.page-list .level-pack-level-name {
+    min-width: 0;
+
+    flex: 1;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* Completed players */
+
+.page-list .level-pack-players {
+    margin-top: 0.8rem;
+
+    padding-top: 0.7rem;
+
+    border-top: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 7%,
+        transparent
+    );
+}
+
+.page-list .level-pack-players h4 {
+    margin: 0 0 0.45rem;
+
+    font-size: 0.8rem;
+
+    opacity: 0.6;
+}
+
+.page-list .level-pack-player {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0.5rem;
+
+    padding: 0.25rem 0;
+
+    font-size: 0.85rem;
+}
+
+.page-list .level-pack-player-name {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.page-list .level-pack-player-count {
+    flex-shrink: 0;
+
+    font-size: 0.75rem;
+
+    opacity: 0.45;
+}
+
 
 /* =========================================================
    AUTHORS
@@ -190,6 +390,7 @@
     border-radius: 0.55rem;
 }
 
+
 /* =========================================================
    VIDEO
    ========================================================= */
@@ -210,6 +411,7 @@
     box-shadow:
         0 5px 18px rgba(0, 0, 0, 0.09);
 }
+
 
 /* =========================================================
    STATS
@@ -273,6 +475,7 @@
     );
 }
 
+
 /* =========================================================
    RECORDS
    ========================================================= */
@@ -319,6 +522,7 @@
     font-variant-numeric: tabular-nums;
 }
 
+
 /* =========================================================
    LINKS
    ========================================================= */
@@ -336,6 +540,7 @@
     opacity: 0.78;
 }
 
+
 /* =========================================================
    META
    ========================================================= */
@@ -346,6 +551,7 @@
 
     gap: 0.85rem;
 }
+
 
 /* =========================================================
    ERRORS
@@ -379,6 +585,7 @@
 
     font-size: 0.9rem;
 }
+
 
 /* =========================================================
    EDITORS
