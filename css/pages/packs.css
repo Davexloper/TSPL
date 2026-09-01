@@ -1,204 +1,271 @@
+/* =========================================================
+   PACKS PAGE
+   ========================================================= */
+
 .page-packs {
     width: 100%;
+
     min-height: 100%;
-    padding: 2rem;
+
+    padding: 1.25rem;
+
     box-sizing: border-box;
 }
 
-.packs-container {
+.page-packs .packs-container {
     width: 100%;
-    max-width: 1100px;
+
+    max-width: 60rem;
+
     margin: 0 auto;
 
     display: flex;
+
     flex-direction: column;
-    gap: 1.5rem;
+
+    gap: 0.75rem;
 }
 
-.pack {
-    position: relative;
 
-    width: 100%;
-    box-sizing: border-box;
+/* =========================================================
+   PACK
+   ========================================================= */
+
+.page-packs .pack {
+    position: relative;
 
     overflow: hidden;
 
-    border: 2px solid var(--pack-color);
-    border-radius: 12px;
+    width: 100%;
 
-    background: var(--background);
+    background: var(--color-background);
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--pack-color) 25%,
+        transparent
+    );
+
+    border-left: 4px solid var(--pack-color);
+
+    border-radius: 0.65rem;
+
+    box-sizing: border-box;
 
     transition:
         transform 0.15s ease,
         box-shadow 0.15s ease;
 }
 
-.pack:hover {
-    transform: translateY(-2px);
+.page-packs .pack:hover {
+    transform: translateY(-1px);
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.12);
+        0 5px 18px color-mix(
+            in srgb,
+            var(--pack-color) 10%,
+            transparent
+        );
 }
 
-.pack::before {
-    content: "";
 
-    position: absolute;
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-    left: 0;
-    top: 0;
-    bottom: 0;
-
-    width: 6px;
-
-    background: var(--pack-color);
-}
-
-.pack-header {
+.page-packs .pack-header {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
-    padding: 1.5rem 1.75rem;
+    gap: 1rem;
 
-    border-bottom: 1px solid var(--border);
+    padding: 0.9rem 1rem;
+
+    border-bottom: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 6%,
+        transparent
+    );
 }
 
-.pack-info h1 {
+.page-packs .pack-info {
+    min-width: 0;
+}
+
+.page-packs .pack-info h1 {
     margin: 0;
+
+    font-size: 1.15rem;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
-.pack-info p {
-    margin: 0.4rem 0 0;
+.page-packs .pack-info p {
+    margin: 0.2rem 0 0;
 
-    opacity: 0.6;
+    font-size: 0.78rem;
+
+    opacity: 0.5;
 }
 
-.pack-color {
-    width: 28px;
-    height: 28px;
+.page-packs .pack-color {
+    width: 0.8rem;
+    height: 0.8rem;
 
     flex-shrink: 0;
 
     border-radius: 50%;
 
     box-shadow:
-        0 0 0 4px rgba(255, 255, 255, 0.08);
+        0 0 0 3px color-mix(
+            in srgb,
+            var(--pack-color) 12%,
+            transparent
+        );
 }
 
-.pack-levels {
+
+/* =========================================================
+   LEVELS
+   ========================================================= */
+
+.page-packs .pack-levels {
     display: flex;
+
     flex-direction: column;
 }
 
-.pack-level {
-    width: 100%;
-
+.page-packs .pack-level {
     display: flex;
+
     align-items: center;
 
-    gap: 1rem;
+    gap: 0.75rem;
 
-    padding: 1rem 1.5rem;
+    width: 100%;
+
+    padding: 0.65rem 1rem;
 
     border: 0;
-    border-bottom: 1px solid var(--border);
+
+    border-bottom: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 5%,
+        transparent
+    );
 
     background: transparent;
+
+    color: var(--color-on-background);
+
+    font-family: inherit;
 
     text-align: left;
 
     cursor: pointer;
 
-    font-family: inherit;
-
     transition:
-        background 0.15s ease,
-        padding-left 0.15s ease;
+        background-color 0.14s ease,
+        padding-left 0.14s ease;
 }
 
-.pack-level:last-child {
-    border-bottom: none;
+.page-packs .pack-level:last-child {
+    border-bottom: 0;
 }
 
-.pack-level:hover {
-    background: rgba(128, 128, 128, 0.08);
-    padding-left: 1.75rem;
+.page-packs .pack-level:hover {
+    padding-left: 1.2rem;
+
+    background: color-mix(
+        in srgb,
+        var(--pack-color) 6%,
+        transparent
+    );
 }
 
-.pack-level-rank {
-    width: 50px;
+.page-packs .pack-level:active {
+    transform: scale(0.995);
+}
+
+.page-packs .pack-level-rank {
+    width: 2.25rem;
 
     flex-shrink: 0;
 
-    opacity: 0.55;
+    font-size: 0.78rem;
 
     font-weight: 700;
+
+    opacity: 0.4;
+
+    text-align: right;
+
+    font-variant-numeric: tabular-nums;
 }
 
-.pack-level-name {
+.page-packs .pack-level-name {
+    min-width: 0;
+
+    flex: 1;
+
     font-weight: 700;
 
-    color: inherit;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
-.no-packs {
+
+/* =========================================================
+   NO PACKS
+   ========================================================= */
+
+.page-packs .no-packs {
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
     justify-content: center;
 
-    padding: 4rem 2rem;
+    padding: 4rem 1rem;
 
     text-align: center;
 
-    opacity: 0.7;
+    opacity: 0.55;
 }
 
-.no-packs h2 {
-    margin: 0 0 0.5rem;
+.page-packs .no-packs h2 {
+    margin: 0 0 0.35rem;
 }
 
-.no-packs p {
+.page-packs .no-packs p {
     margin: 0;
 }
 
 
-/* =========================================
-   LEVEL PAGE PACK BADGES
-   ========================================= */
+/* =========================================================
+   DARK MODE
+   ========================================================= */
 
-.level-packs {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-
-    gap: 0.5rem;
-
-    margin: 0.75rem 0 1rem;
+.dark .page-packs .pack,
+.dark .page-leaderboard-container .completed-pack {
+    box-shadow: none;
 }
 
-.pack-label {
-    font-weight: 700;
-    opacity: 0.65;
-}
-
-.pack-badge {
-    display: inline-flex;
-    align-items: center;
-
-    padding: 0.35rem 0.7rem;
-
-    border-radius: 999px;
-
-    color: #fff;
-
-    font-size: 0.85rem;
-    font-weight: 700;
-
-    line-height: 1;
-
+.dark .page-packs .pack:hover {
     box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.15);
+        0 5px 18px color-mix(
+            in srgb,
+            var(--pack-color) 12%,
+            transparent
+        );
 }
