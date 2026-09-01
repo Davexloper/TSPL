@@ -15,15 +15,14 @@
 
 
 /* =========================================================
-   PACKS CONTAINER
+   PACKS GRID
    ========================================================= */
 
 .page-packs .packs-container {
-    display: flex;
+    display: grid;
 
-    flex-wrap: wrap;
-
-    align-items: flex-start;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
     width: 100%;
     max-width: none;
@@ -33,6 +32,8 @@
     gap: 0.65rem;
 
     box-sizing: border-box;
+
+    align-items: start;
 }
 
 
@@ -51,17 +52,9 @@
     grid-template-areas:
         "header victors levels";
 
-    /*
-     * FESTE PACK-GRÖSSE
-     *
-     * Dadurch werden die Packs nicht
-     * vom Grid zusammengestaucht.
-     */
-    flex: 0 0 720px;
-
-    width: 720px;
-    min-width: 720px;
-    max-width: 720px;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
 
     height: 9rem;
     min-height: 9rem;
@@ -149,9 +142,9 @@
     min-width: 0;
     height: 100%;
 
-    padding: 0.75rem 0.85rem;
+    padding: 0.7rem 0.75rem;
 
-    gap: 0.35rem;
+    gap: 0.3rem;
 
     background:
         linear-gradient(
@@ -177,14 +170,14 @@
 
 
 /* =========================================================
-   PACK COLOR DOT
+   PACK COLOR
    ========================================================= */
 
 .page-packs .pack-color {
     display: block;
 
-    width: 0.58rem;
-    height: 0.58rem;
+    width: 0.55rem;
+    height: 0.55rem;
 
     flex: 0 0 auto;
 
@@ -198,7 +191,7 @@
             var(--pack-color) 12%,
             transparent
         ),
-        0 0 10px color-mix(
+        0 0 9px color-mix(
             in srgb,
             var(--pack-color) 25%,
             transparent
@@ -217,7 +210,7 @@
     width: 100%;
     min-width: 0;
 
-    gap: 0.12rem;
+    gap: 0.1rem;
 }
 
 
@@ -229,7 +222,7 @@
 
     color: var(--pack-color);
 
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 800;
 
     line-height: 1.15;
@@ -245,7 +238,7 @@
 
     color: var(--color-on-background);
 
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 600;
 
     opacity: 0.45;
@@ -253,7 +246,7 @@
 
 
 /* =========================================================
-   VICTORS
+   VICTORS PANEL
    ========================================================= */
 
 .page-packs .pack-victors {
@@ -268,9 +261,9 @@
     min-width: 0;
     min-height: 0;
 
-    padding: 0.65rem 0.75rem;
+    padding: 0.6rem 0.65rem;
 
-    gap: 0.25rem;
+    gap: 0.2rem;
 
     overflow-x: hidden;
     overflow-y: auto;
@@ -336,11 +329,11 @@
 .page-packs .pack-victors h2 {
     display: block;
 
-    margin: 0 0 0.15rem;
+    margin: 0 0 0.1rem;
 
     color: var(--pack-color);
 
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 800;
 
     line-height: 1.1;
@@ -356,7 +349,7 @@
 
     color: var(--pack-color);
 
-    font-size: 0.62rem;
+    font-size: 0.58rem;
     font-weight: 750;
 
     line-height: 1.1;
@@ -372,10 +365,10 @@
 
     color: var(--color-on-background);
 
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     font-weight: 600;
 
-    line-height: 1.25;
+    line-height: 1.2;
 
     opacity: 0.65;
 
@@ -386,7 +379,7 @@
 
 
 /* =========================================================
-   LEVELS
+   LEVELS PANEL
    ========================================================= */
 
 .page-packs .pack-levels {
@@ -402,9 +395,9 @@
 
     min-width: 0;
 
-    padding: 0.45rem 0.55rem;
+    padding: 0.4rem 0.45rem;
 
-    gap: 0.3rem;
+    gap: 0.25rem;
 
     overflow: hidden;
 
@@ -420,21 +413,21 @@
     display: grid;
 
     grid-template-columns:
-        2.6rem
+        2.2rem
         minmax(0, 1fr);
 
     align-items: center;
 
-    flex: 0 0 2.35rem;
+    flex: 0 0 2.15rem;
 
     width: 100%;
     min-width: 0;
 
-    height: 2.35rem;
+    height: 2.15rem;
 
-    padding: 0 0.7rem;
+    padding: 0 0.5rem;
 
-    gap: 0.5rem;
+    gap: 0.35rem;
 
     background:
         linear-gradient(
@@ -457,7 +450,7 @@
         transparent
     );
 
-    border-radius: 0.5rem;
+    border-radius: 0.45rem;
 
     color: var(--pack-color);
 
@@ -526,7 +519,7 @@
 
     color: var(--pack-color);
 
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 800;
 
     overflow: hidden;
@@ -547,7 +540,7 @@
 
     color: var(--pack-color);
 
-    font-size: 0.76rem;
+    font-size: 0.68rem;
     font-weight: 750;
 
     text-align: right;
@@ -650,52 +643,42 @@
 
 
 /* =========================================================
-   DESKTOP
+   4 PER ROW
    ========================================================= */
 
-/*
- * 4 PACKS nebeneinander, solange genug Platz vorhanden ist.
- * Die Packs selbst bleiben 720px breit.
- */
-
-@media (min-width: 2900px) {
+@media (min-width: 1200px) {
 
     .page-packs .packs-container {
-        gap: 0.75rem;
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
     }
 
 }
 
 
 /* =========================================================
-   TABLET
+   3 PER ROW
    ========================================================= */
 
-@media (max-width: 1500px) {
+@media (min-width: 850px) and (max-width: 1199px) {
 
-    .page-packs .pack {
-        flex-basis: 600px;
-
-        width: 600px;
-        min-width: 600px;
-        max-width: 600px;
+    .page-packs .packs-container {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
     }
 
 }
 
 
 /* =========================================================
-   SMALLER TABLET
+   2 PER ROW
    ========================================================= */
 
-@media (max-width: 1250px) {
+@media (min-width: 550px) and (max-width: 849px) {
 
-    .page-packs .pack {
-        flex-basis: 520px;
-
-        width: 520px;
-        min-width: 520px;
-        max-width: 520px;
+    .page-packs .packs-container {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
 }
@@ -705,40 +688,30 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 549px) {
 
     .page-packs {
-        padding: 0.45rem;
+        padding: 0.4rem;
     }
 
     .page-packs .packs-container {
-        flex-direction: column;
-
-        width: 100%;
+        grid-template-columns: 1fr;
 
         gap: 0.55rem;
     }
 
     .page-packs .pack {
-        flex: 0 0 auto;
-
         width: 100%;
-        min-width: 0;
-        max-width: none;
-
-        height: 9rem;
-        min-height: 9rem;
-        max-height: 9rem;
     }
 
 }
 
 
 /* =========================================================
-   VERY SMALL MOBILE
+   VERY SMALL
    ========================================================= */
 
-@media (max-width: 450px) {
+@media (max-width: 400px) {
 
     .page-packs .pack {
         grid-template-columns:
@@ -752,24 +725,24 @@
     }
 
     .page-packs .pack-victors h2 {
-        font-size: 0.65rem;
+        font-size: 0.62rem;
     }
 
     .page-packs .pack-victors p {
-        font-size: 0.58rem;
+        font-size: 0.56rem;
     }
 
     .page-packs .pack-level {
         grid-template-columns:
-            1.8rem
+            1.7rem
             minmax(0, 1fr);
 
-        padding: 0 0.45rem;
+        padding: 0 0.4rem;
     }
 
     .page-packs .pack-level-victor,
     .page-packs .pack-level-name {
-        font-size: 0.57rem;
+        font-size: 0.54rem;
     }
 
 }
