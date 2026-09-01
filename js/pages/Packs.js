@@ -12,7 +12,6 @@ export default {
         Spinner
     },
 
-
     template: `
 
         <main
@@ -32,6 +31,8 @@ export default {
 
             <div class="packs-container">
 
+                <!-- NO PACKS -->
+
                 <div
                     v-if="packs.length === 0"
                     class="no-packs"
@@ -46,6 +47,8 @@ export default {
                 </div>
 
 
+                <!-- PACKS -->
+
                 <div
                     v-for="pack in packs"
                     :key="pack.id"
@@ -56,7 +59,7 @@ export default {
                     }"
                 >
 
-                    <!-- PACK HEADER -->
+                    <!-- HEADER -->
 
                     <div class="pack-header">
 
@@ -67,10 +70,12 @@ export default {
                             </h1>
 
                             <p>
-                                {{ pack.levels.length }} Levels
+                                {{ pack.levels.length }}
+                                Levels
                             </p>
 
                         </div>
+
 
                         <span
                             class="pack-color"
@@ -103,10 +108,11 @@ export default {
                                 #{{ index + 1 }}
                             </span>
 
+
                             <span
                                 class="pack-level-name"
                             >
-                                {{ getLevel(identifier)?.name || identifier }}
+                                {{ getLevelName(identifier) }}
                             </span>
 
                         </button>
@@ -154,7 +160,10 @@ export default {
                         </div>
 
 
-                        <p v-else>
+                        <p
+                            v-else
+                            class="empty"
+                        >
                             Nobody yet.
                         </p>
 
@@ -187,16 +196,6 @@ export default {
         this.list =
             await fetchList() || [];
 
-        console.log(
-            'PACKS:',
-            this.packs
-        );
-
-        console.log(
-            'LEVEL LIST:',
-            this.list
-        );
-
         this.loading =
             false;
 
@@ -206,7 +205,7 @@ export default {
     methods: {
 
         /* =====================================================
-           FIND LEVEL BY NAME / ID / PATH
+           FIND LEVEL
            ===================================================== */
 
         getLevel(identifier) {
@@ -230,6 +229,10 @@ export default {
                 }
 
 
+                /*
+                 * Match by name
+                 */
+
                 if (
                     String(level.name)
                         .trim()
@@ -241,6 +244,10 @@ export default {
                 }
 
 
+                /*
+                 * Match by path
+                 */
+
                 if (
                     String(level.path)
                         .trim()
@@ -251,6 +258,10 @@ export default {
 
                 }
 
+
+                /*
+                 * Match by ID
+                 */
 
                 if (
                     String(level.id)
@@ -276,7 +287,27 @@ export default {
 
 
         /* =====================================================
-           OPEN LEVEL
+           GET LEVEL NAME
+           ===================================================== */
+
+        getLevelName(identifier) {
+
+            const level =
+                this.getLevel(
+                    identifier
+                );
+
+
+            return (
+                level?.name ||
+                identifier
+            );
+
+        },
+
+
+        /* =====================================================
+           OPEN EXACT LEVEL
            ===================================================== */
 
         openLevel(identifier) {
@@ -288,19 +319,13 @@ export default {
 
 
             if (!level) {
-                return;
-            }
 
-
-            const index =
-                this.list.findIndex(
-                    entry =>
-                        entry?.[0] === level
+                console.error(
+                    `Pack level "${identifier}" could not be found.`
                 );
 
-
-            if (index === -1) {
                 return;
+
             }
 
 
@@ -322,6 +347,17 @@ export default {
 
         /* =====================================================
            GET COMPLETED PLAYERS
+           
+           A player counts as completing a level when:
+           
+           1. They have a record with 100%
+           
+           OR
+           
+           2. They are the verifier
+           
+           The player must have completed EVERY
+           level in the pack.
            ===================================================== */
 
         getCompletedPlayers(pack) {
@@ -338,22 +374,19 @@ export default {
 
 
             /*
-             * Resolve every pack level.
+             * Find all levels.
              */
 
             const levels =
                 pack.levels.map(
                     identifier =>
-                        this.getLevel(
-                            identifier
-                        )
+                        this.getLevel(identifier)
                 );
 
 
             /*
-             * If one level could not be found,
-             * don't incorrectly mark anyone
-             * as a Victor.
+             * If one of the levels doesn't exist,
+             * nobody can complete the pack.
              */
 
             if (
@@ -373,101 +406,121 @@ export default {
 
 
             /*
-             * Map:
-             *
-             * lowercase username
-             * ->
-             * original username
+             * Create a Set/Map of completed
+             * players for EVERY level.
              */
 
-            const players =
-                new Map();
+            const completedPerLevel =
+                levels.map(level => {
+
+                    const players =
+                        new Map();
 
 
-            /*
-             * Start with players who
-             * completed the FIRST level.
-             */
+                    /*
+                     * VERIFIER
+                     */
 
-            for (
-                const record
-                of levels[0].records || []
-            ) {
+                    if (
+                        level.verifier
+                    ) {
 
-                const percent =
-                    Number(
-                        record.percent
-                    );
+                        const verifier =
+                            String(
+                                level.verifier
+                            ).trim();
 
 
-                if (
-                    percent === 100 &&
-                    record.user
-                ) {
+                        if (
+                            verifier.length > 0
+                        ) {
 
-                    const username =
-                        String(
+                            players.set(
+                                verifier.toLowerCase(),
+                                verifier
+                            );
+
+                        }
+
+                    }
+
+
+                    /*
+                     * 100% RECORDS
+                     */
+
+                    for (
+                        const record
+                        of level.records || []
+                    ) {
+
+                        if (
+                            Number(
+                                record.percent
+                            ) >= 100 &&
                             record.user
-                        ).trim();
+                        ) {
+
+                            const username =
+                                String(
+                                    record.user
+                                ).trim();
 
 
-                    players.set(
-                        username.toLowerCase(),
-                        username
-                    );
+                            if (
+                                username.length > 0
+                            ) {
 
-                }
+                                players.set(
+                                    username.toLowerCase(),
+                                    username
+                                );
 
-            }
+                            }
+
+                        }
+
+                    }
+
+
+                    return players;
+
+                });
 
 
             /*
-             * Now check every other level.
+             * Start with everybody who completed
+             * the FIRST level.
+             */
+
+            const candidates =
+                new Map(
+                    completedPerLevel[0]
+                );
+
+
+            /*
+             * Check every remaining level.
              */
 
             for (
                 let i = 1;
-                i < levels.length;
+                i < completedPerLevel.length;
                 i++
             ) {
 
                 const completed =
-                    new Set();
-
-
-                for (
-                    const record
-                    of levels[i].records || []
-                ) {
-
-                    if (
-                        Number(
-                            record.percent
-                        ) === 100 &&
-                        record.user
-                    ) {
-
-                        completed.add(
-                            String(
-                                record.user
-                            )
-                                .trim()
-                                .toLowerCase()
-                        );
-
-                    }
-
-                }
+                    completedPerLevel[i];
 
 
                 /*
-                 * Remove anyone who hasn't
-                 * completed this level.
+                 * Remove anyone who did not
+                 * complete this level.
                  */
 
                 for (
                     const username
-                    of players.keys()
+                    of candidates.keys()
                 ) {
 
                     if (
@@ -476,7 +529,7 @@ export default {
                         )
                     ) {
 
-                        players.delete(
+                        candidates.delete(
                             username
                         );
 
@@ -490,7 +543,7 @@ export default {
                  */
 
                 if (
-                    players.size === 0
+                    candidates.size === 0
                 ) {
 
                     return [];
@@ -500,8 +553,12 @@ export default {
             }
 
 
+            /*
+             * Return original usernames.
+             */
+
             return Array.from(
-                players.values()
+                candidates.values()
             ).sort(
                 (a, b) =>
                     a.localeCompare(
