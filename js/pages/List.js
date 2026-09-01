@@ -385,6 +385,8 @@ export default {
         // Load editors
         this.editors = await fetchEditors();
 
+        this.levelPacks = await fetchLevelPacks();
+
 
         // Error handling
         if (!this.list) {
