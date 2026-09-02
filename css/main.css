@@ -1,2346 +1,378 @@
-:root {
-    --color-background: white;
-    --color-on-background: black;
-
-    --color-background-hover: #f5f5f5;
-    --color-on-background-hover: black;
-
-    --color-primary: #ff6a00;
-    --color-primary-hover: #ff7a1a;
-    --color-primary-light: rgba(255, 106, 0, 0.10);
-    --color-on-primary: #17181c;
-
-    --color-error: #de0000;
-    --color-on-error: white;
-
-    --color-border: #e5e7eb;
-    --color-border-hover: #d5d8dd;
-
-    --color-surface: #ffffff;
-    --color-surface-hover: #fafafa;
-
-    --color-discord: #5865f2;
-}
-
-
-/* =========================================================
-   BASE
-   ========================================================= */
-
-html,
-body {
-    height: 100%;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-
-    background: #ffffff;
-    color: #17181c;
-
-    font-family:
-        "Lexend Deca",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-header,
-main {
-    background-color: #ffffff;
-    color: #17181c;
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(16rem, 1fr)
-        minmax(16rem, 2fr)
-        minmax(16rem, 1fr);
-
-    column-gap: 2rem;
-}
-
-header {
-    display: flex;
-
-    padding-inline: calc(25vw - 10rem);
-
-    height: 4rem;
-
-    background: #ffffff !important;
-
-    color: #17181c !important;
-
-    border-bottom:
-        1px solid #e5e7eb;
-
-    box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.06);
-
-    position: relative;
-
-    z-index: 10;
-}
-
-@media screen and (min-width: 1366px) {
-    header {
-        display: grid;
-
-        padding-inline: 0;
-    }
-}
-
-header .logo {
-    justify-self: end;
-
-    align-self: center;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 0.75rem;
-}
-
-header .nav {
-    flex: 1;
-
-    display: flex;
-
-    align-items: center;
-}
-
-
-/* =========================================================
-   HEADER LINKS
-   ========================================================= */
-
-header a {
-    color: #33363c !important;
-
-    text-decoration: none;
-
-    font-weight: 600;
-
-    opacity: 0.9;
-
-    transition:
-        color 0.15s ease,
-        opacity 0.15s ease;
-}
-
-header a:hover {
-    color: #ff6a00 !important;
-
-    opacity: 1;
-
-    text-decoration: none;
-}
-
-
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-main {
-    height: 0;
-
-    flex: 1;
-
-    display: grid;
-
-    grid-template-rows:
-        minmax(0, 1fr);
-
-    column-gap: 2rem;
-
-    background: #ffffff !important;
-}
-
-main > div {
-    overflow-y: auto;
-
-    min-width: 0;
-}
-
-
-/* =========================================================
-   SPINNER
-   ========================================================= */
-
-.spinner {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    grid-column: span 3;
-}
-
-
-/* =========================================================
-   CHECKBOX
-   ========================================================= */
-
-input[type="checkbox"] {
-    height: 1.25rem;
-
-    width: 1.25rem;
-
-    cursor: pointer;
-
-    margin: 0;
-
-    accent-color: #ff6a00;
-}
-
-
-/* =========================================================
-   GENERAL CARDS
-   ========================================================= */
-
-.card,
-.panel,
-.section,
-.rules,
-.guidelines,
-.requirements {
-    background: #ffffff;
-
-    color: #17181c;
-
-    border:
-        1px solid #e5e7eb;
-
-    border-radius:
-        14px;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.045);
-
-    transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        border-color 0.16s ease;
-}
-
-.card:hover,
-.panel:hover,
-.section:hover,
-.rules:hover,
-.guidelines:hover,
-.requirements:hover {
-    border-color:
-        #d9dce1;
-
-    box-shadow:
-        0 10px 25px rgba(0, 0, 0, 0.07);
-}
-
-
-/* =========================================================
-   LEVEL LIST
-   ========================================================= */
-
-.page-list .list-container {
-    padding-inline: 1rem;
-
-    padding-block:
-        1rem;
-}
-
-.page-list .list {
-    table-layout: auto;
-
-    border-collapse:
-        separate;
-
-    border-spacing:
-        0 0.25rem;
-}
-
-
-/* =========================================================
-   LEVEL RANK
-   ========================================================= */
-
-.page-list .list .rank {
-    text-align: end;
-
-    padding-right:
-        0.55rem;
-
-    width:
-        3rem;
-}
-
-.page-list .list .rank p {
-    margin:
-        0;
-
-    color:
-        #9a9da3 !important;
-
-    font-size:
-        0.68rem;
-
-    font-weight:
-        600;
-}
-
-
-/* =========================================================
-   LEVEL CELL
-   ========================================================= */
-
-.page-list .list .level {
-    width:
-        100%;
-}
-
-
-/* =========================================================
-   LEVEL BUTTON
-   ========================================================= */
-
-.page-list .list .level button {
-    width:
-        100%;
-
-    box-sizing:
-        border-box;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    min-height:
-        2.35rem;
-
-    padding:
-        0.45rem 0.7rem;
-
-    background:
-        #f3f4f6 !important;
-
-    color:
-        #363940 !important;
-
-    border:
-        1px solid #e5e7eb;
-
-    border-radius:
-        8px;
-
-    text-align:
-        start;
-
-    word-break:
-        normal;
-
-    overflow-wrap:
-        anywhere;
-
-    cursor:
-        pointer;
-
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.025);
-
-    transition:
-        background 140ms ease,
-        border-color 140ms ease,
-        color 140ms ease,
-        transform 140ms ease,
-        box-shadow 140ms ease;
-}
-
-
-/* =========================================================
-   LEVEL NAME
-   ========================================================= */
-
-.page-list .list .level button .type-label-lg {
-    color:
-        inherit !important;
-
-    font-size:
-        0.74rem;
-
-    font-weight:
-        650;
-
-    line-height:
-        1.3;
-}
-
-
-/* =========================================================
-   LEVEL HOVER
-   ========================================================= */
-
-.page-list .list .level button:hover {
-    background:
-        #eceef1 !important;
-
-    color:
-        #17181c !important;
-
-    border-color:
-        #d9dce1;
-
-    transform:
-        translateX(2px);
-
-    box-shadow:
-        0 3px 9px rgba(0, 0, 0, 0.055);
-}
-
-
-/* =========================================================
-   ACTIVE LEVEL
-   ========================================================= */
-
-.page-list .list .level.active button {
-    background:
-        #e7e9ed !important;
-
-    color:
-        #17181c !important;
-
-    border-color:
-        #d2d5da;
-
-    box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.07);
-
-    transform:
-        translateX(2px);
-}
-
-.page-list .list .level.active button .type-label-lg {
-    color:
-        #17181c !important;
-}
-
-
-/* =========================================================
-   ERROR LEVEL
-   ========================================================= */
-
-.page-list .list .level.error button {
-    background:
-        #f4f4f5 !important;
-
-    color:
-        #c0c2c6 !important;
-
-    border-color:
-        #e5e5e7;
-
-    cursor:
-        not-allowed;
-
-    text-decoration:
-        line-through;
-
-    box-shadow:
-        none;
-}
-
-.page-list .list .level.error button .type-label-lg {
-    color:
-        #c0c2c6 !important;
-}
-
-
-/* =========================================================
-   LEVEL CONTAINER
-   ========================================================= */
-
-.page-list .level-container .level {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        2rem;
-
-    padding-right:
-        2rem;
-
-    max-width:
-        48rem;
-}
-
-.page-list .level-container .level .level-authors {
-    display:
-        grid;
-
-    grid-template-columns:
-        max-content 1fr;
-
-    grid-auto-rows:
-        max-content;
-
-    gap:
-        1rem;
-}
-
-.page-list .level-container .level .video {
-    aspect-ratio:
-        16 / 9;
-}
-
-
-/* =========================================================
-   STATS
-   ========================================================= */
-
-.page-list .level-container .level .stats {
-    display:
-        flex;
-
-    justify-content:
-        space-evenly;
-
-    text-align:
-        center;
-
-    gap:
-        2rem;
-}
-
-.page-list .level-container .level .stats li {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    align-items:
-        center;
-
-    gap:
-        1rem;
-}
-
-
-/* =========================================================
-   RECORDS
-   ========================================================= */
-
-.page-list .level-container .level .records {
-    table-layout:
-        fixed;
-}
-
-.page-list .level-container .level .records tr td:not(:last-child) {
-    padding-right:
-        1rem;
-}
-
-.page-list .level-container .level .records .percent,
-.page-list .level-container .level .records .user,
-.page-list .level-container .level .records .hz {
-    padding-block:
-        1rem;
-}
-
-.page-list .level-container .level .records .user {
-    width:
-        100%;
-}
-
-.page-list .level-container .level .records .percent,
-.page-list .level-container .level .records .hz {
-    text-align:
-        end;
-}
-
-
-/* =========================================================
-   LINKS IN LEVEL
-   ========================================================= */
-
-.page-list .meta-container .og a:hover,
-.page-list .level-container .level .records a:hover {
-    text-decoration:
-        underline;
-}
-
-
-/* =========================================================
-   META
-   ========================================================= */
-
-.page-list .meta {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        2rem;
-}
-
-.page-list .meta .errors {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        1rem;
-}
-
-.page-list .meta .errors .error {
-    padding:
-        1rem;
-
-    background:
-        var(--color-error);
-
-    color:
-        var(--color-on-error);
-
-    border-radius:
-        0.5rem;
-}
-
-
-/* =========================================================
-   EDITORS BOX
-   ========================================================= */
-
-.page-list .meta .editors-box {
-    box-sizing:
-        border-box;
-
-    width:
-        100%;
-
-    margin:
-        0;
-
-    padding:
-        1.25rem;
-
-    background:
-        #f3f4f6;
-
-    color:
-        #24262b;
-
-    border:
-        1px solid #dfe1e5;
-
-    border-radius:
-        14px;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.055);
-
-    transition:
-        border-color 0.16s ease,
-        box-shadow 0.16s ease;
-}
-
-.page-list .meta .editors-box:hover {
-    border-color:
-        #d3d6db;
-
-    box-shadow:
-        0 9px 24px rgba(0, 0, 0, 0.07);
-}
-
-
-/* =========================================================
-   EDITORS HEADER
-   ========================================================= */
-
-.page-list .meta .editors-box__header {
-    margin:
-        0 0 1rem 0;
-
-    padding-bottom:
-        0.85rem;
-
-    border-bottom:
-        1px solid #dfe1e5;
-}
-
-.page-list .meta .editors-box__header h3 {
-    margin:
-        0;
-
-    padding:
-        0;
-
-    color:
-        #17181c !important;
-
-    font-size:
-        1.05rem;
-
-    font-weight:
-        750;
-
-    letter-spacing:
-        -0.02em;
-}
-
-
-/* =========================================================
-   EDITOR LIST
-   ========================================================= */
-
-.page-list .meta .editors {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        0.5rem;
-
-    margin:
-        0;
-
-    padding:
-        0;
-
-    list-style:
-        none;
-}
-
-
-/* =========================================================
-   EDITOR ITEM
-   ========================================================= */
-
-.page-list .meta .editors li {
-    box-sizing:
-        border-box;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        0.65rem;
-
-    padding:
-        0.65rem 0.75rem;
-
-    margin:
-        0;
-
-    background:
-        #ffffff;
-
-    border:
-        1px solid #e2e4e8;
-
-    border-radius:
-        9px;
-
-    box-shadow:
-        0 1px 4px rgba(0, 0, 0, 0.025);
-
-    transition:
-        border-color 0.15s ease,
-        background 0.15s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.page-list .meta .editors li:hover {
-    background:
-        #fffaf6;
-
-    border-color:
-        rgba(255, 106, 0, 0.28);
-
-    transform:
-        translateX(2px);
-
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.045);
-}
-
-
-/* =========================================================
-   EDITOR ICON
-   ========================================================= */
-
-.page-list .meta .editors li img {
-    width:
-        22px;
-
-    height:
-        22px;
-
-    flex-shrink:
-        0;
-}
-
-
-/* =========================================================
-   EDITOR NAME
-   ========================================================= */
-
-.page-list .meta .editors li a,
-.page-list .meta .editors li p {
-    margin:
-        0;
-
-    font-size:
-        0.75rem;
-
-    line-height:
-        1.4;
-}
-
-
-/* =========================================================
-   GUIDELINES / REQUIREMENTS BOX
-   ========================================================= */
-
-.page-list .requirements-box {
-    width:
-        100%;
-
-    box-sizing:
-        border-box;
-
-    margin-top:
-        0;
-
-    padding:
-        1.25rem;
-
-    background:
-        #f3f4f6;
-
-    color:
-        #24262b;
-
-    border:
-        1px solid #dfe1e5;
-
-    border-radius:
-        14px;
-
-    box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.055);
-
-    transition:
-        border-color 0.16s ease,
-        box-shadow 0.16s ease;
-}
-
-.page-list .requirements-box:hover {
-    border-color:
-        #d3d6db;
-
-    box-shadow:
-        0 9px 24px rgba(0, 0, 0, 0.07);
-}
-
-
-/* =========================================================
-   GUIDELINES TITLE
-   ========================================================= */
-
-.page-list .requirements-box h3 {
-    margin:
-        0 0 1rem 0;
-
-    padding-bottom:
-        0.85rem;
-
-    color:
-        #17181c !important;
-
-    font-size:
-        1.05rem;
-
-    font-weight:
-        750;
-
-    letter-spacing:
-        -0.02em;
-
-    border-bottom:
-        1px solid #dfe1e5;
-}
-
-
-/* =========================================================
-   INDIVIDUAL GUIDELINES
-   ========================================================= */
-
-.page-list .requirements-box p {
-    position:
-        relative;
-
-    margin:
-        0 0 0.6rem 0;
-
-    padding:
-        0.75rem 0.85rem 0.75rem 2.4rem;
-
-    background:
-        #ffffff !important;
-
-    color:
-        #5f636b !important;
-
-    border:
-        1px solid #e2e4e8;
-
-    border-radius:
-        9px;
-
-    box-shadow:
-        0 1px 4px rgba(0, 0, 0, 0.025);
-
-    font-size:
-        0.75rem;
-
-    line-height:
-        1.55;
-
-    transition:
-        border-color 0.15s ease,
-        background 0.15s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.page-list .requirements-box p:last-child {
-    margin-bottom:
-        0;
-}
-
-
-/* =========================================================
-   GUIDELINE CHECK ICON
-   ========================================================= */
-
-.page-list .requirements-box p::before {
-    content:
-        "✓";
-
-    position:
-        absolute;
-
-    left:
-        0.8rem;
-
-    top:
-        50%;
-
-    transform:
-        translateY(-50%);
-
-    width:
-        20px;
-
-    height:
-        20px;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border-radius:
-        6px;
-
-    background:
-        #fff0e3;
-
-    color:
-        #ff6a00;
-
-    font-size:
-        0.65rem;
-
-    font-weight:
-        800;
-}
-
-
-/* =========================================================
-   GUIDELINE HOVER
-   ========================================================= */
-
-.page-list .requirements-box p:hover {
-    background:
-        #fffaf6 !important;
-
-    border-color:
-        rgba(255, 106, 0, 0.28);
-
-    transform:
-        translateX(2px);
-
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.045);
-}
-
-
-/* =========================================================
-   DISCORD
-   ========================================================= */
-
-.discord,
-.discord-link,
-.discord-button,
-.discord-icon,
-.fa-discord,
-[class*="discord"] {
-    color:
-        #5865f2 !important;
-}
-
-.discord-button {
-    background:
-        rgba(88, 101, 242, 0.10) !important;
-
-    border:
-        1px solid rgba(88, 101, 242, 0.22) !important;
-
-    border-radius:
-        9px;
-
-    color:
-        #5865f2 !important;
-
-    transition:
-        background 0.15s ease,
-        border-color 0.15s ease,
-        transform 0.15s ease;
-}
-
-.discord-button:hover {
-    background:
-        rgba(88, 101, 242, 0.17) !important;
-
-    border-color:
-        rgba(88, 101, 242, 0.40) !important;
-
-    color:
-        #5865f2 !important;
-}
-
-
-/* =========================================================
-   NAVIGATION
-   ========================================================= */
-
-.nav {
-    display:
-        flex;
-
-    column-gap:
-        2rem;
-}
-
-.nav .nav__tab {
-    padding-top:
-        4px;
-
-    border-bottom:
-        4px solid transparent;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    padding-inline:
-        0.5rem;
-
-    transition:
-        border-color 100ms ease;
-}
-
-.nav .nav__tab.router-link-active {
-    border-color:
-        var(--color-on-primary);
-}
-
-.nav .nav__tab:hover {
-    border-color:
-        var(--color-on-primary);
-}
-
-.nav .nav__actions {
-    flex:
-        1;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        flex-end;
-}
-
-.nav .nav__actions .nav__icon {
-    height:
-        3rem;
-
-    width:
-        3rem;
-
-    border:
-        none;
-
-    background-color:
-        transparent;
-
-    border-radius:
-        50%;
-
-    cursor:
-        pointer;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    transition:
-        background-color 100ms ease;
-}
-
-.nav .nav__actions .nav__icon:hover {
-    background-color:
-        rgba(255, 255, 255, 0.2);
-}
-
-.nav .nav__actions .nav__icon img {
-    height:
-        1.5rem;
-}
-
-.nav .nav__actions .nav__cta {
-    margin-left:
-        1rem;
-
-    padding:
-        1rem;
-
-    background-color:
-        var(--color-on-primary);
-
-    color:
-        var(--color-primary);
-
-    border-radius:
-        0.5rem;
-
-    box-shadow:
-        0 1px 0.5rem 0 rgba(0, 0, 102, 0.5);
-
-    transition:
-        transform 100ms ease;
-}
-
-.nav .nav__actions .nav__cta:hover:not(:active) {
-    transform:
-        translateY(-2px);
-}
-
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
-input,
-textarea,
-select {
-    box-sizing:
-        border-box;
-
-    background:
-        #ffffff !important;
-
-    color:
-        #17181c !important;
-
-    border:
-        1px solid #dfe2e6;
-
-    border-radius:
-        8px;
-
-    padding:
-        0.65rem 0.75rem;
-
-    font-family:
-        inherit;
-
-    outline:
-        none;
-
-    transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-input:hover,
-textarea:hover,
-select:hover {
-    border-color:
-        #cfd3d8;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color:
-        #ff6a00;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(255, 106, 0, 0.10);
-}
-
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-button,
-.btn,
-input[type="submit"],
-input[type="button"] {
-    box-sizing: border-box;
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-height: 38px;
-
-    padding: 0.62rem 1rem;
-
-    border: 1px solid #ff6a00 !important;
-    border-radius: 9px;
-
-    background: linear-gradient(
-        180deg,
-        #ff7a18 0%,
-        #ff6500 100%
-    ) !important;
-
-    color: #ffffff !important;
-
-    font-family: inherit;
-    font-size: 0.76rem;
-    font-weight: 750;
-    line-height: 1;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 1px 1px rgba(0, 0, 0, 0.06),
-        0 4px 10px rgba(255, 106, 0, 0.14),
-        inset 0 1px 0 rgba(255, 255, 255, 0.22);
-
-    text-decoration: none !important;
-
-    transition:
-        transform 0.16s cubic-bezier(.2,.8,.2,1),
-        box-shadow 0.16s ease,
-        background 0.16s ease,
-        border-color 0.16s ease;
-}
-
-button:hover,
-.btn:hover,
-input[type="submit"]:hover,
-input[type="button"]:hover {
-    background: linear-gradient(
-        180deg,
-        #ff842b 0%,
-        #ff6905 100%
-    ) !important;
-
-    color: #ffffff !important;
-
-    border-color: #ff6200 !important;
-
-    transform: translateY(-1px);
-
-    box-shadow:
-        0 2px 2px rgba(0, 0, 0, 0.05),
-        0 7px 17px rgba(255, 106, 0, 0.20),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-button:active,
-.btn:active,
-input[type="submit"]:active,
-input[type="button"]:active {
-    transform: translateY(0);
-
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.08),
-        0 2px 6px rgba(255, 106, 0, 0.12),
-        inset 0 2px 3px rgba(0, 0, 0, 0.08);
-}
-
-button:focus-visible,
-.btn:focus-visible,
-input[type="submit"]:focus-visible,
-input[type="button"]:focus-visible {
-    outline: none;
-
-    box-shadow:
-        0 0 0 3px rgba(255, 106, 0, 0.12),
-        0 5px 14px rgba(255, 106, 0, 0.16);
+:root{
+--bg:#090a0d;--surface:#101216;--surface2:#15171c;--text:#fff;
+--muted:#9297a3;--border:rgba(255,255,255,.07);--primary:#ff7800;
+--primary-hover:#ff8c1a;--primary-light:rgba(255,120,0,.12);
+--success:#22a06b;--error:#e04444;--radius:10px;--small:6px;
+--shadow:0 8px 25px rgba(0,0,0,.25)
 }
-
-
-/* =========================================================
-   SUBMIT BUTTONS
-   ========================================================= */
-
-button.btn,
-a.btn,
-input.btn,
-.btn {
-    min-height: 40px;
-
-    padding:
-        0.68rem 1.1rem;
 
-    border:
-        1px solid #ff6500 !important;
-
-    border-radius:
-        9px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ff7a18 0%,
-            #ff6500 100%
-        ) !important;
-
-    color:
-        #ffffff !important;
-
-    font-weight:
-        750;
-
-    box-shadow:
-        0 2px 3px rgba(0, 0, 0, 0.06),
-        0 5px 13px rgba(255, 106, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.23);
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+margin:0;display:flex;flex-direction:column;background:var(--bg);
+color:var(--text);font-family:"Lexend Deca",-apple-system,BlinkMacSystemFont,
+"Segoe UI",sans-serif
 }
-
-button.btn:hover,
-a.btn:hover,
-input.btn:hover,
-.btn:hover {
-    background:
-        linear-gradient(
-            180deg,
-            #ff862d 0%,
-            #ff6905 100%
-        ) !important;
-
-    border-color:
-        #ff5d00 !important;
-
-    color:
-        #ffffff !important;
 
-    transform:
-        translateY(-1px);
-
-    box-shadow:
-        0 3px 4px rgba(0, 0, 0, 0.05),
-        0 8px 19px rgba(255, 106, 0, 0.21),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+header{
+height:4rem;padding-inline:calc(25vw - 10rem);display:grid;
+grid-template-columns:minmax(16rem,1fr) minmax(16rem,2fr) minmax(16rem,1fr);
+column-gap:2rem;background:#0b0c10;color:#fff;
+border-bottom:1px solid var(--border);z-index:10
 }
-
-
-/* =========================================================
-   NAVIGATION CTA
-   ========================================================= */
-
-.nav .nav__actions .nav__cta {
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    min-height:
-        40px;
-
-    margin-left:
-        1rem;
 
-    padding:
-        0.68rem 1.1rem;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ff7a18 0%,
-            #ff6500 100%
-        ) !important;
-
-    color:
-        #ffffff !important;
-
-    border:
-        1px solid #ff6500 !important;
-
-    border-radius:
-        9px;
-
-    box-shadow:
-        0 2px 3px rgba(0, 0, 0, 0.06),
-        0 5px 13px rgba(255, 106, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.23);
-
-    transition:
-        transform 0.16s cubic-bezier(.2,.8,.2,1),
-        box-shadow 0.16s ease,
-        background 0.16s ease;
+header .logo{justify-self:end;align-self:center;display:flex;align-items:center;gap:.8rem}
+header .logo:before{
+content:"";width:8px;height:26px;border-radius:999px;background:var(--primary)
 }
-
-.nav .nav__actions .nav__cta:hover:not(:active) {
-    background:
-        linear-gradient(
-            180deg,
-            #ff862d 0%,
-            #ff6905 100%
-        ) !important;
-
-    color:
-        #ffffff !important;
+header .nav{display:flex;align-items:center;gap:.5rem}
+header a{color:#fff}
 
-    border-color:
-        #ff5d00 !important;
-
-    transform:
-        translateY(-1px);
-
-    box-shadow:
-        0 3px 4px rgba(0, 0, 0, 0.05),
-        0 8px 19px rgba(255, 106, 0, 0.21),
-        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+main{
+height:0;flex:1;display:grid;
+grid-template-columns:minmax(16rem,1fr) minmax(16rem,2fr) minmax(16rem,1fr);
+grid-template-rows:minmax(0,1fr);column-gap:2rem;
+padding:1rem 0 1.25rem;background:var(--bg);color:#fff
 }
-
-
-/* =========================================================
-   SECONDARY BUTTON
-   ========================================================= */
 
-button.secondary,
-.secondary-button {
-    background:
-        #ffffff !important;
+main>div{overflow-y:auto}
+main h1,main h2,main h3,main h4,main h5{color:#fff}
+main p{color:var(--muted)}
+main hr{border:0;border-top:1px solid var(--border)}
 
-    color:
-        #4b4e55 !important;
+a{color:#ff8a18;font-weight:600;text-decoration:none}
+a:hover{color:#ffa044;text-decoration:none}
 
-    border:
-        1px solid #dfe1e5 !important;
-
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.04);
+button{
+border:0;border-radius:var(--small);padding:.6rem 1rem;
+background:var(--primary);color:#fff;font-family:inherit;font-weight:700;
+cursor:pointer;transition:.15s ease
 }
-
-button.secondary:hover,
-.secondary-button:hover {
-    background:
-        #fff8f3 !important;
-
-    color:
-        #e85d00 !important;
-
-    border-color:
-        rgba(255, 106, 0, 0.42) !important;
+button:hover{background:var(--primary-hover);transform:translateY(-1px);
+box-shadow:0 5px 15px rgba(255,120,0,.2)}
+button:active{transform:none}
 
-    box-shadow:
-        0 4px 12px rgba(255, 106, 0, 0.08);
+button.secondary,.secondary-button{
+background:var(--surface2);color:#fff;border:1px solid var(--border);
+box-shadow:none
 }
-
-
-/* =========================================================
-   LINKS
-   ========================================================= */
-
-
-a {
-    color:
-        #ff6500;
-
-    text-decoration:
-        none;
-
-    font-weight:
-        600;
-
-    transition:
-        color 0.15s ease;
+button.secondary:hover,.secondary-button:hover{
+background:rgba(255,120,0,.1);color:var(--primary);border-color:var(--primary)
 }
-
-a:hover {
-    color:
-        #e95700;
 
-    text-decoration:
-        underline;
+input,textarea,select{
+box-sizing:border-box;background:#0c0e12;color:#fff;border:1px solid var(--border);
+border-radius:var(--small);padding:.65rem .75rem;font-family:inherit;outline:none
 }
-
-
-/* =========================================================
-   TYPOGRAPHY
-   ========================================================= */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color:
-        #17181c !important;
-
-    letter-spacing:
-        -0.02em;
+input:focus,textarea:focus,select:focus{
+border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,120,0,.1)
 }
+input::placeholder,textarea::placeholder{color:#646974}
+input[type=checkbox]{width:1.2rem;height:1.2rem;margin:0;accent-color:var(--primary)}
 
-p {
-    color:
-        #666b74 !important;
-
-    line-height:
-        1.6;
+.card,.panel,.rules,.guidelines,.requirements,
+.editor,.editor-container,.guidelines-editor,.rules-editor{
+background:var(--surface);color:#fff;border:1px solid var(--border);
+border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;margin-bottom:1rem
 }
-
-
-/* =========================================================
-   INFO BOX
-   ========================================================= */
-
-.info-box {
-    padding:
-        1rem 1.1rem;
 
-    margin-bottom:
-        1rem;
-
-    background:
-        rgba(255, 106, 0, 0.07);
-
-    border:
-        1px solid
-        rgba(255, 106, 0, 0.20);
-
-    border-radius:
-        12px;
-
-    color:
-        #b94f00;
+.editor,.editor-container,.guidelines-editor,.rules-editor{
+padding:0;overflow:hidden
 }
-
-
-/* =========================================================
-   BADGES
-   ========================================================= */
-
-.badge {
-    display:
-        inline-flex;
-
-    align-items:
-        center;
 
-    padding:
-        0.3rem 0.65rem;
-
-    border-radius:
-        999px;
-
-    background:
-        rgba(255, 106, 0, 0.08);
-
-    border:
-        1px solid
-        rgba(255, 106, 0, 0.18);
-
-    color:
-        #ff6500;
-
-    font-size:
-        0.7rem;
-
-    font-weight:
-        700;
+.editor-header,.editor-title,.guidelines-header,.rules-header{
+display:flex;align-items:center;justify-content:space-between;
+min-height:55px;padding:0 1rem;background:#111318;
+border-bottom:1px solid var(--border)
 }
-
-
-/* =========================================================
-   DIVIDERS
-   ========================================================= */
-
-hr {
-    border:
-        0;
-
-    border-top:
-        1px solid #e5e7eb;
-
-    margin:
-        1.25rem 0;
+.editor-header h1,.editor-header h2,.editor-title h1,.editor-title h2,
+.guidelines-header h1,.guidelines-header h2,.rules-header h1,.rules-header h2{
+margin:0;font-size:1rem;font-weight:700
 }
-
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-    width:
-        8px;
-
-    height:
-        8px;
+.editor-header:before,.guidelines-header:before,.rules-header:before{
+content:"✎";display:flex;align-items:center;justify-content:center;
+width:32px;height:32px;margin-right:.7rem;border-radius:7px;
+background:var(--primary-light);color:var(--primary)
 }
 
-::-webkit-scrollbar-track {
-    background:
-        transparent;
+.editor-body,.editor-content,.guidelines-content,.rules-content{
+padding:1rem;background:var(--surface)
 }
 
-::-webkit-scrollbar-thumb {
-    background:
-        #d5d8dd;
-
-    border-radius:
-        999px;
+.toolbar,.editor-toolbar{
+display:flex;align-items:center;gap:.35rem;padding:.55rem .65rem;
+background:var(--surface2);border:1px solid var(--border);
+border-radius:var(--small);margin-bottom:.8rem
 }
-
-::-webkit-scrollbar-thumb:hover {
-    background:
-        #bfc3c9;
+.toolbar button,.editor-toolbar button{
+min-width:32px;height:32px;padding:0;background:transparent;
+color:var(--muted);box-shadow:none
 }
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media screen and (max-width: 900px) {
-
-    header,
-    main {
-        grid-template-columns:
-            1fr;
-    }
-
-    main {
-        height:
-            auto;
-
-        padding:
-            1rem;
-    }
-
-    main > div {
-        overflow:
-            visible;
-    }
-
-    header {
-        min-height:
-            4rem;
-
-        padding:
-            0 1rem;
-    }
-
-    .requirements-box {
-        margin-top:
-            1rem;
-    }
+.toolbar button:hover,.editor-toolbar button:hover{
+background:var(--primary-light);color:var(--primary);transform:none;box-shadow:none
 }
-
-
-@media screen and (max-width: 600px) {
-
-    .page-list .list {
-        border-spacing:
-            0 0.2rem;
-    }
-
-    .page-list .list .rank {
-        padding-right:
-            0.4rem;
-
-        width:
-            2.5rem;
-    }
-
-    .page-list .list .rank p {
-        font-size:
-            0.62rem;
-    }
 
-    .page-list .list .level button {
-        min-height:
-            2.15rem;
-
-        padding:
-            0.4rem 0.6rem;
-
-        border-radius:
-            7px;
-    }
-
-    .page-list .list .level button .type-label-lg {
-        font-size:
-            0.7rem;
-    }
-
-    .page-list .meta .editors-box {
-        padding:
-            0.85rem;
-    }
-
-    .page-list .requirements-box {
-        padding:
-            0.85rem;
-    }
-
-    .page-list .requirements-box h3 {
-        font-size:
-            1rem;
-    }
-
-    .page-list .requirements-box p {
-        padding:
-            0.7rem 0.7rem 0.7rem 2.25rem;
-    }
+[contenteditable=true],.editor textarea,.guidelines textarea,.rules textarea{
+width:100%;min-height:180px;padding:1rem;background:#0c0e12;color:#fff;
+border:1px solid var(--border);border-radius:var(--small);outline:none;
+resize:vertical;font-family:inherit;line-height:1.6
 }
-/* =========================================================
-   FINAL POLISH / UNIFIED ACTION BUTTONS
-   Keeps the existing TSPL structure intact.
-   ========================================================= */
-
-:root {
-    --ui-orange: #ff6a00;
-    --ui-orange-hover: #f26300;
-    --ui-orange-soft: #fff5ed;
-    --ui-orange-border: rgba(255, 106, 0, 0.34);
-    --ui-text: #202226;
-    --ui-muted: #70747c;
-    --ui-line: #e7e8eb;
-    --ui-soft: #f8f8f9;
+[contenteditable=true]:focus,.editor textarea:focus,
+.guidelines textarea:focus,.rules textarea:focus{
+border-color:var(--primary)
 }
 
-/* Make every normal action button use the same visual language. */
-.btn,
-button:not(.nav__icon),
-.nav .nav__actions .nav__cta,
-input[type="submit"],
-input[type="button"] {
-    appearance: none;
-    -webkit-appearance: none;
-    box-sizing: border-box;
-
-    min-height: 38px;
-    padding: 0.62rem 0.95rem;
-
-    border: 1px solid var(--ui-orange-border) !important;
-    border-radius: 9px;
-
-    background: #ffffff !important;
-    color: var(--ui-orange) !important;
-
-    font-family: inherit;
-    font-size: 0.76rem;
-    font-weight: 700;
-    line-height: 1;
-
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.025),
-        0 3px 10px rgba(255, 106, 0, 0.045);
-
-    cursor: pointer;
-
-    transition:
-        color 160ms ease,
-        background 160ms ease,
-        border-color 160ms ease,
-        box-shadow 160ms ease,
-        transform 160ms ease;
+.editor-actions,.editor-footer,.guidelines-actions,.rules-actions{
+display:flex;align-items:center;justify-content:flex-end;gap:.5rem;
+padding:.8rem 1rem;background:#0d0f13;border-top:1px solid var(--border)
 }
-
-.btn:hover,
-button:not(.nav__icon):hover,
-.nav .nav__actions .nav__cta:hover,
-input[type="submit"]:hover,
-input[type="button"]:hover {
-    background: var(--ui-orange-soft) !important;
-    color: var(--ui-orange-hover) !important;
-    border-color: rgba(255, 106, 0, 0.62) !important;
 
-    box-shadow:
-        0 4px 12px rgba(255, 106, 0, 0.10);
-
-    transform: translateY(-1px);
+.guideline-item,.rule-item,.requirement-item{
+display:flex;align-items:flex-start;gap:.8rem;padding:.8rem;margin-bottom:.6rem;
+background:var(--surface2);border:1px solid var(--border);
+border-radius:var(--small)
 }
-
-.btn:active,
-button:not(.nav__icon):active,
-.nav .nav__actions .nav__cta:active,
-input[type="submit"]:active,
-input[type="button"]:active {
-    transform: translateY(0);
-    box-shadow:
-        0 1px 4px rgba(0, 0, 0, 0.05);
+.guideline-item:hover,.rule-item:hover,.requirement-item:hover{
+border-color:var(--primary)
 }
-
-.btn:focus-visible,
-button:focus-visible,
-input[type="submit"]:focus-visible,
-input[type="button"]:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-input:focus-visible {
-    outline: none;
-    border-color: var(--ui-orange) !important;
-    box-shadow:
-        0 0 0 3px rgba(255, 106, 0, 0.12),
-        0 3px 10px rgba(255, 106, 0, 0.06);
+.guideline-number,.rule-number,.requirement-number{
+flex-shrink:0;width:28px;height:28px;display:flex;align-items:center;
+justify-content:center;border-radius:7px;background:var(--primary-light);
+color:var(--primary);font-size:.8rem;font-weight:800
 }
 
-/* Submit Verification now gets exactly the same orange outline treatment
-   as Submit Record instead of looking like a separate component. */
-.nav .nav__actions .nav__cta {
-    margin-left: 0.75rem;
-    padding: 0.68rem 0.9rem;
-    background: #ffffff !important;
-    color: var(--ui-orange) !important;
-    border: 1px solid var(--ui-orange-border) !important;
-    border-radius: 9px;
-    box-shadow: 0 2px 8px rgba(255, 106, 0, 0.055);
-}
+/* =========================================
+   PAGE LIST
+   ========================================= */
 
-.nav .nav__actions .nav__cta:hover:not(:active) {
-    background: var(--ui-orange-soft) !important;
-    color: var(--ui-orange-hover) !important;
-    border-color: rgba(255, 106, 0, 0.62) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(255, 106, 0, 0.10);
-}
+.page-list{color:#fff}
+.page-list h1,.page-list h2,.page-list h3{color:#fff}
+.page-list p{color:var(--muted)}
 
-/* Do not let the global button styling ruin toolbar/icon controls. */
-.toolbar button,
-.editor-toolbar button,
-.nav .nav__actions .nav__icon {
-    min-height: 0;
-    padding: 0;
-    border: 0 !important;
-    box-shadow: none !important;
+.page-list .list-container{
+background:transparent;padding:.25rem 0
 }
 
-/* Cleaner level buttons. */
-.page-list .list .level button {
-    background: #f8f8f9 !important;
-    border: 1px solid #e7e8eb !important;
-    border-radius: 9px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.025);
+.page-list .list{
+border-collapse:separate;border-spacing:0 2px;width:100%
 }
 
-.page-list .list .level button:hover {
-    background: #ffffff !important;
-    border-color: rgba(255, 106, 0, 0.28) !important;
-    color: #202226 !important;
-    transform: translateX(2px);
-    box-shadow: 0 4px 13px rgba(0, 0, 0, 0.055);
+.page-list .list .rank{
+width:2.2rem;padding-right:.4rem
 }
 
-.page-list .list .level.active button {
-    background: #fff6ef !important;
-    border-color: rgba(255, 106, 0, 0.34) !important;
-    color: #e95d00 !important;
-    box-shadow: 0 4px 13px rgba(255, 106, 0, 0.075);
+.page-list .list .rank p{
+margin:0;color:#666b75!important;font-size:.62rem
 }
 
-/* Cleaner panels without changing the page structure. */
-.page-list .meta .editors-box,
-.page-list .requirements-box,
-.editor,
-.editor-container,
-.guidelines-editor,
-.rules-editor {
-    background: #ffffff;
-    border: 1px solid #e6e7ea;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+.page-list .list .level button{
+width:100%;min-height:25px;height:25px;
+padding:.2rem .55rem!important;
+display:flex;align-items:center;justify-content:space-between;
+background:#111318!important;color:#fff!important;
+border:1px solid rgba(255,255,255,.035)!important;
+border-radius:4px!important;
+box-shadow:none!important;transform:none!important;
+font-size:.7rem
 }
 
-.page-list .meta .editors-box:hover,
-.page-list .requirements-box:hover,
-.editor:hover,
-.editor-container:hover,
-.guidelines-editor:hover,
-.rules-editor:hover {
-    border-color: rgba(255, 106, 0, 0.20);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.055);
+.page-list .list .level button:hover{
+background:#191c22!important;color:#fff!important;
+border-color:rgba(255,255,255,.08)!important;
+box-shadow:none!important
 }
 
-/* Softer editor/header surfaces. */
-.editor-header,
-.editor-title,
-.guidelines-header,
-.rules-header {
-    background: #fafafa !important;
-    border-bottom: 1px solid #e8e9ec;
+.page-list .list .level.active button{
+background:var(--primary)!important;
+color:#fff!important;
+border-color:var(--primary)!important;
+box-shadow:0 3px 10px rgba(255,120,0,.18)!important
 }
 
-.toolbar,
-.editor-toolbar {
-    background: #f8f8f9 !important;
-    border: 1px solid #e5e6e9;
-    border-radius: 9px;
+.page-list .list .level button .type-label-lg{
+color:inherit!important;font-size:.68rem;font-weight:700
 }
 
-/* Inputs should feel like part of the same design system. */
-input,
-textarea,
-select,
-[contenteditable="true"] {
-    border-color: #dfe1e5;
-    border-radius: 9px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.018);
-}
+.page-list .list .level.active button .type-label-lg{color:#fff!important}
 
-input:hover,
-textarea:hover,
-select:hover,
-[contenteditable="true"]:hover {
-    border-color: #cfd2d7;
+.page-list .level-container{
+min-width:0
 }
 
-input:focus,
-textarea:focus,
-select:focus,
-[contenteditable="true"]:focus {
-    border-color: var(--ui-orange) !important;
-    box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.09) !important;
+.page-list .level-container .level{
+display:flex;flex-direction:column;gap:.65rem;
+padding-right:.5rem;max-width:48rem;color:#fff
 }
 
-/* Navigation feels lighter and more intentional. */
-.nav {
-    column-gap: 1.4rem;
+.page-list .level-container .level h1{
+margin:0;font-size:1.55rem;line-height:1.2;color:#fff
 }
 
-.nav .nav__tab {
-    position: relative;
-    border-bottom: 3px solid transparent;
-    color: #555960;
-    transition: color 160ms ease, border-color 160ms ease;
+.page-list .level-container .level h2,
+.page-list .level-container .level h3{
+margin:.1rem 0;color:#fff
 }
 
-.nav .nav__tab.router-link-active,
-.nav .nav__tab:hover {
-    color: var(--ui-orange) !important;
-    border-color: var(--ui-orange) !important;
+.page-list .level-container .level hr{
+width:100%;margin:.15rem 0;border:0;
+border-top:1px solid rgba(255,255,255,.1)
 }
 
-.nav .nav__actions .nav__icon:hover {
-    background: #f5f5f6;
+.page-list .level-container .level p{
+margin:.15rem 0;color:#a0a4ad;font-size:.78rem;line-height:1.5
 }
 
-/* More refined Discord button. */
-.discord-button {
-    border-radius: 9px !important;
-    box-shadow: 0 2px 8px rgba(88, 101, 242, 0.055) !important;
+.page-list .level-container .level .level-authors{
+display:flex;flex-wrap:wrap;gap:.45rem
 }
 
-/* More subtle scrolling. */
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
+.page-list .level-container .level .video{
+width:100%;aspect-ratio:16/9;overflow:hidden;
+background:#050608;border:1px solid var(--border);border-radius:5px
 }
 
-::-webkit-scrollbar-thumb {
-    background: #d7d9dd;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+.page-list .level-container .level iframe,
+.page-list .level-container .level video{
+width:100%;height:100%;border:0
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #bfc2c7;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+.page-list .level-container .level .stats{
+display:flex;flex-wrap:wrap;gap:.2rem;margin:0;padding:0;
+list-style:none
 }
-
-
-/* =========================================================
-   FINAL VISUAL POLISH
-   ========================================================= */
 
-:root {
-    --ui-orange: #ff6a00;
-    --ui-orange-soft: #fff5ed;
-    --ui-border: #e7e8eb;
-    --ui-text: #202228;
-    --ui-muted: #777b83;
+.page-list .level-container .level .stats li{
+display:flex;flex-direction:column;gap:.1rem;
+padding:.35rem .5rem;background:#111318;
+border:1px solid var(--border);border-radius:5px
 }
 
-body {
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff 0%,
-            #fcfcfd 100%
-        );
+.page-list .level-container .level .stats li p{
+margin:0;font-size:.65rem;color:#777c86
 }
 
-header {
-    backdrop-filter:
-        blur(12px);
-
-    -webkit-backdrop-filter:
-        blur(12px);
+.page-list .level-container .level .stats li strong{
+font-size:.75rem;color:#fff
 }
 
-header .logo img {
-    transition:
-        transform 0.18s ease;
+.page-list .level-container .level .records{
+width:100%;font-size:.7rem;color:#fff
 }
 
-header .logo:hover img {
-    transform:
-        scale(1.025);
+.page-list .level-container .level .records table{
+width:100%;border-collapse:collapse
 }
-
-.page-list .list .level button {
-    position:
-        relative;
 
-    overflow:
-        hidden;
+.page-list .level-container .level .records tr{
+border-bottom:1px solid rgba(255,255,255,.045)
 }
-
-.page-list .list .level button::after {
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    background:
-        linear-gradient(
-            110deg,
-            transparent 0%,
-            rgba(255,255,255,0.55) 48%,
-            transparent 62%
-        );
-
-    transform:
-        translateX(-120%);
-
-    transition:
-        transform 0.45s ease;
 
-    pointer-events:
-        none;
+.page-list .level-container .level .records td{
+padding:.45rem .2rem;color:#d8dae0
 }
 
-.page-list .list .level button:hover::after {
-    transform:
-        translateX(120%);
+.page-list .level-container .level .records td:not(:last-child){
+padding-right:.7rem
 }
 
-.page-list .meta .editors-box,
-.page-list .requirements-box {
-    position:
-        relative;
-
-    overflow:
-        hidden;
+.page-list .level-container .level .records .percent{
+color:var(--primary);font-weight:700
 }
-
-.page-list .meta .editors-box::before,
-.page-list .requirements-box::before {
-    content:
-        "";
-
-    position:
-        absolute;
-
-    left:
-        0;
-
-    top:
-        0;
-
-    width:
-        100%;
-
-    height:
-        2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff6a00,
-            rgba(255,106,0,0)
-        );
 
-    opacity:
-        0.75;
+.page-list .level-container .level .records .user{
+color:#fff;font-weight:600
 }
 
-.page-list .meta .editors li,
-.page-list .requirements-box p {
-    will-change:
-        transform;
+.page-list .level-container .level .records .hz{
+color:#777c86
 }
 
-.page-list .level-container .level .video {
-    border:
-        1px solid #e7e8eb;
+/* RIGHT SIDE / META */
 
-    background:
-        #f4f4f5;
+.page-list .meta,
+.page-list .editors,
+.page-list .requirements,
+.page-list .records-container{
+color:#fff
 }
 
-.page-list .level-container .level .stats {
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(0,0,0,0.012)
-        );
+.page-list .meta .card,
+.page-list .meta .panel,
+.page-list .meta .requirements,
+.page-list .meta .editors-box{
+background:#101216!important;color:#fff!important;
+border:1px solid var(--border)!important;
+box-shadow:none!important
 }
 
-.page-list .level-container .level .records tr td {
-    border-bottom:
-        1px solid #f0f0f2;
+.page-list .meta h2,
+.page-list .meta h3,
+.page-list .meta h4{
+color:#fff!important
 }
 
-.page-list .level-container .level .records tr:last-child td {
-    border-bottom:
-        0;
+.page-list .meta p,
+.page-list .meta span{
+color:#969aa4
 }
 
-::selection {
-    background:
-        rgba(255, 106, 0, 0.16);
+.page-list .meta a{color:var(--primary)}
 
-    color:
-        #17181c;
+.page-list .type-label-lg{
+color:inherit;font-size:.7rem
 }
 
-/* =========================================================
-   LEVEL SIZE / DENSITY
-   ========================================================= */
-
-.page-list .list .rank {
-    width: 2.4rem;
-    padding-right: 0.45rem;
-}
-
-.page-list .list .rank p {
-    font-size: 0.62rem;
-    font-weight: 650;
-}
-
-.page-list .list .level button {
-    min-height: 2.05rem;
-    padding: 0.32rem 0.58rem;
-
-    border-radius: 7px;
-
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.025);
+.page-list .difficulty,
+.page-list .difficulty-label{
+color:var(--primary)
 }
 
-.page-list .list .level button .type-label-lg {
-    font-size: 0.67rem;
-    font-weight: 650;
-    line-height: 1.2;
-}
+/* SUBMIT / ACTION BUTTONS */
 
-.page-list .list {
-    border-spacing: 0 0.22rem;
+.page-list .submit,
+.page-list .submit button,
+.page-list .action button,
+.page-list .edit button{
+background:var(--primary)!important;color:#fff!important;
+border:0!important
 }
 
-/* =========================================================
-   SUBMIT BUTTON FINAL FIX
-   ========================================================= */
-
-/*
-   Do NOT rely only on .btn.
-   Some TSPL submit controls are rendered as anchors / router links.
-   These selectors cover the actual interactive submit surfaces
-   without changing the HTML structure.
-*/
-
-a.btn,
-button.btn,
-input.btn,
-.btn,
-button[type="submit"],
-input[type="submit"],
-a[href*="submit"],
-a[href*="verification"],
-a[href*="record"] {
-    box-sizing: border-box !important;
-
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    min-height: 38px !important;
-
-    padding: 0.62rem 1rem !important;
-
-    border: 1px solid #ff6500 !important;
-    border-radius: 9px !important;
-
-    background: linear-gradient(
-        180deg,
-        #ff7b1a 0%,
-        #ff6500 100%
-    ) !important;
-
-    color: #ffffff !important;
-
-    font-family: inherit !important;
-    font-size: 0.75rem !important;
-    font-weight: 750 !important;
-    line-height: 1 !important;
-
-    text-decoration: none !important;
-
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.06),
-        0 4px 11px rgba(255, 106, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
-
-    cursor: pointer !important;
-
-    transition:
-        transform 0.16s ease,
-        box-shadow 0.16s ease,
-        background 0.16s ease !important;
+.page-list .submit button:hover,
+.page-list .action button:hover,
+.page-list .edit button:hover{
+background:var(--primary-hover)!important
 }
 
-a.btn:hover,
-button.btn:hover,
-input.btn:hover,
-.btn:hover,
-button[type="submit"]:hover,
-input[type="submit"]:hover,
-a[href*="submit"]:hover,
-a[href*="verification"]:hover,
-a[href*="record"]:hover {
-    background: linear-gradient(
-        180deg,
-        #ff882e 0%,
-        #ff6905 100%
-    ) !important;
+/* SCROLLBARS */
 
-    border-color: #ff5b00 !important;
-    color: #ffffff !important;
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#292d35;border-radius:999px}
+::-webkit-scrollbar-thumb:hover{background:#3a3f49}
 
-    transform: translateY(-1px) !important;
+/* SPINNER */
 
-    box-shadow:
-        0 2px 3px rgba(0, 0, 0, 0.06),
-        0 8px 18px rgba(255, 106, 0, 0.21),
-        inset 0 1px 0 rgba(255, 255, 255, 0.27) !important;
+.spinner{
+display:flex;align-items:center;justify-content:center;
+grid-column:span 3;color:var(--primary)
 }
 
-a.btn:active,
-button.btn:active,
-input.btn:active,
-.btn:active,
-button[type="submit"]:active,
-input[type="submit"]:active {
-    transform: translateY(0) !important;
+/* MOBILE */
 
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.08),
-        inset 0 2px 3px rgba(0, 0, 0, 0.09) !important;
+@media screen and (max-width:900px){
+header,main{grid-template-columns:1fr}
+header{height:4rem;padding:0 1rem}
+header .logo{justify-self:start}
+main{height:auto;padding:1rem}
+main>div{overflow:visible}
+.page-list .level-container .level{max-width:none;padding-right:0}
+.page-list .list .level button{height:27px}
+.spinner{grid-column:span 1}
 }
-
-/* Submit Verification specifically */
-a[href*="verification"],
-a[href*="verify"],
-button[data-action*="verification"],
-button[data-action*="verify"] {
-    background: linear-gradient(
-        180deg,
-        #ff7b1a 0%,
-        #ff6500 100%
-    ) !important;
 
-    border: 1px solid #ff6500 !important;
-    color: #ffffff !important;
-
-    border-radius: 9px !important;
-
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.06),
-        0 4px 11px rgba(255, 106, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
+@media screen and (max-width:600px){
+.page-list .level-container .level h1{font-size:1.25rem}
+.page-list .level-container .level .stats{gap:.15rem}
+.page-list .level-container .level .stats li{padding:.3rem}
 }
-
