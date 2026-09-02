@@ -1,6 +1,6 @@
 /* =========================================================
    PAGE LIST
-   Compact / Clean / Modern
+   Screenshot-like / Compact / Clean
    ========================================================= */
 
 .page-list .list-container,
@@ -23,123 +23,180 @@
    ========================================================= */
 
 .page-list .list {
+    width: 100%;
+
     table-layout: auto;
+
     border-collapse: separate;
-    border-spacing: 0 0.28rem;
+    border-spacing: 0 0.16rem;
 }
 
+
+/* =========================================================
+   RANK
+   ========================================================= */
+
 .page-list .list .rank {
+    width: 2.6rem;
+
+    padding-right: 0.45rem;
+
     text-align: end;
-    padding-right: 0.55rem;
 
     font-size: 0.78rem;
     font-weight: 700;
 
-    opacity: 0.48;
+    color: #ffffff;
+
+    opacity: 0.7;
+
     white-space: nowrap;
 }
+
+
+/* =========================================================
+   LEVEL CELL
+   ========================================================= */
 
 .page-list .list .level {
     width: 100%;
 }
 
+
+/* =========================================================
+   LEVEL BUTTON
+   ========================================================= */
+
 .page-list .list .level button {
     position: relative;
 
+    display: block;
+
     width: 100%;
 
-    padding: 0.58rem 0.72rem;
+    box-sizing: border-box;
 
-    background: var(--color-background);
-    color: var(--color-on-background);
+    padding: 0.34rem 0.7rem;
 
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 6%,
-        transparent
-    );
+    /* Screenshot-style dark row */
+    background: rgba(255, 255, 255, 0.035);
 
-    border-radius: 0.55rem;
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.035);
+
+    border-radius: 0.32rem;
 
     text-align: start;
+
+    font-size: 0.78rem;
+    font-weight: 500;
+
     word-break: normal;
     overflow-wrap: anywhere;
 
     cursor: pointer;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.035);
+    box-shadow: none;
 
     transition:
-        transform 0.16s ease,
-        background-color 0.16s ease,
-        border-color 0.16s ease,
-        box-shadow 0.16s ease;
+        background-color 0.12s ease,
+        border-color 0.12s ease,
+        transform 0.12s ease;
 }
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
 
 .page-list .list .level button:hover {
-    background-color: var(--color-background-hover);
+    background: rgba(255, 255, 255, 0.075);
 
-    border-color: color-mix(
-        in srgb,
-        var(--color-primary) 20%,
-        transparent
-    );
+    border-color: rgba(255, 255, 255, 0.06);
 
-    transform: translateX(2px);
+    color: #ffffff;
 
-    box-shadow:
-        0 4px 12px color-mix(
-            in srgb,
-            var(--color-primary) 9%,
-            transparent
-        );
+    transform: none;
+
+    box-shadow: none;
 }
 
-.page-list .list .level button:active {
-    transform: translateX(2px) scale(0.992);
-}
+
+/* =========================================================
+   ACTIVE
+   ========================================================= */
 
 .page-list .list .level.active button {
-    background: var(--color-primary);
-    color: var(--color-on-primary);
+    background: #ff7800;
 
-    border-color: color-mix(
-        in srgb,
-        var(--color-primary) 75%,
-        white
-    );
+    color: #ffffff;
 
-    box-shadow:
-        0 4px 14px color-mix(
-            in srgb,
-            var(--color-primary) 18%,
-            transparent
-        );
+    border-color: #ff7800;
+
+    font-weight: 600;
+
+    box-shadow: none;
 }
 
+
+/* Active hover */
+
+.page-list .list .level.active button:hover {
+    background: #ff7800;
+
+    border-color: #ff7800;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   ACTIVE RANK
+   ========================================================= */
+
+.page-list .list .level.active + .rank,
+.page-list .list tr:has(.level.active) .rank {
+    color: #ffffff;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   CLICK
+   ========================================================= */
+
+.page-list .list .level button:active {
+    transform: scale(0.995);
+}
+
+
+/* =========================================================
+   ERROR LEVEL
+   ========================================================= */
+
 .page-list .list .level.error button {
-    color: var(--color-error);
+    color: rgba(255, 255, 255, 0.35);
 
     cursor: not-allowed;
+
     text-decoration: line-through;
 
-    opacity: 0.62;
+    opacity: 0.55;
 
-    background: color-mix(
-        in srgb,
-        var(--color-error) 4%,
-        var(--color-background)
-    );
+    background: rgba(255, 255, 255, 0.02);
 
-    border-color: color-mix(
-        in srgb,
-        var(--color-error) 12%,
-        transparent
-    );
+    border-color: rgba(255, 255, 255, 0.025);
 }
 
 .page-list .list .level.error button:hover {
     transform: none;
+
+    background: rgba(255, 255, 255, 0.02);
+
+    border-color: rgba(255, 255, 255, 0.025);
+
     box-shadow: none;
 }
 
@@ -150,6 +207,7 @@
 
 .page-list .level-container .level {
     display: flex;
+
     flex-direction: column;
 
     gap: 0.85rem;
@@ -232,7 +290,9 @@
 }
 
 
-/* Pack levels */
+/* =========================================================
+   PACK LEVELS
+   ========================================================= */
 
 .page-list .level-pack-levels {
     display: flex;
@@ -273,7 +333,9 @@
 }
 
 
-/* Status */
+/* =========================================================
+   STATUS
+   ========================================================= */
 
 .page-list .level-pack-status {
     width: 1.1rem;
@@ -294,7 +356,9 @@
 }
 
 
-/* Level name */
+/* =========================================================
+   LEVEL NAME
+   ========================================================= */
 
 .page-list .level-pack-level-name {
     min-width: 0;
@@ -309,7 +373,9 @@
 }
 
 
-/* Completed players */
+/* =========================================================
+   COMPLETED PLAYERS
+   ========================================================= */
 
 .page-list .level-pack-players {
     margin-top: 0.8rem;
@@ -369,6 +435,7 @@
     display: grid;
 
     grid-template-columns: max-content 1fr;
+
     grid-auto-rows: max-content;
 
     gap: 0.45rem 0.7rem;
@@ -421,6 +488,7 @@
     display: flex;
 
     justify-content: space-evenly;
+
     align-items: stretch;
 
     text-align: center;
@@ -430,7 +498,9 @@
 
 .page-list .level-container .level .stats li {
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
 
     gap: 0.2rem;
@@ -482,9 +552,11 @@
 
 .page-list .level-container .level .records {
     table-layout: fixed;
+
     width: 100%;
 
     border-collapse: separate;
+
     border-spacing: 0 0.1rem;
 }
 
@@ -537,6 +609,7 @@
 .page-list .meta-container .og a:hover,
 .page-list .level-container .level .records a:hover {
     text-decoration: underline;
+
     opacity: 0.78;
 }
 
@@ -547,6 +620,7 @@
 
 .page-list .meta {
     display: flex;
+
     flex-direction: column;
 
     gap: 0.85rem;
@@ -559,6 +633,7 @@
 
 .page-list .meta .errors {
     display: flex;
+
     flex-direction: column;
 
     gap: 0.45rem;
@@ -593,6 +668,7 @@
 
 .page-list .meta .editors {
     display: flex;
+
     flex-direction: column;
 
     gap: 0.22rem;
@@ -600,6 +676,7 @@
 
 .page-list .meta .editors li {
     display: flex;
+
     align-items: center;
 
     gap: 0.4rem;
@@ -640,5 +717,6 @@
 
 .page-list .meta .editors li a:hover {
     text-decoration: underline;
+
     opacity: 0.8;
 }
