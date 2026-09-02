@@ -1,6 +1,6 @@
 /* =========================================================
    PAGE LIST
-   Screenshot-like / Compact / Clean
+   DARK / CLEAN / SCREENSHOT STYLE
    ========================================================= */
 
 .page-list .list-container,
@@ -19,81 +19,84 @@
 
 
 /* =========================================================
-   LEVEL LIST
+   LEFT LEVEL LIST
    ========================================================= */
 
 .page-list .list {
     width: 100%;
-
-    table-layout: auto;
+    table-layout: fixed;
 
     border-collapse: separate;
-    border-spacing: 0 0.16rem;
+    border-spacing: 0;
+}
+
+.page-list .list tr {
+    height: 26px;
 }
 
 
-/* =========================================================
-   RANK
-   ========================================================= */
+/* Rank */
 
 .page-list .list .rank {
-    width: 2.6rem;
+    width: 48px;
 
-    padding-right: 0.45rem;
+    padding: 0 8px 0 0;
 
-    text-align: end;
+    text-align: right;
 
-    font-size: 0.78rem;
-    font-weight: 700;
+    color: rgba(255, 255, 255, 0.72);
 
-    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
 
-    opacity: 0.7;
+    line-height: 26px;
 
     white-space: nowrap;
 }
 
 
-/* =========================================================
-   LEVEL CELL
-   ========================================================= */
+/* Level */
 
 .page-list .list .level {
     width: 100%;
+    padding: 0;
 }
 
 
-/* =========================================================
-   LEVEL BUTTON
-   ========================================================= */
+/* Level button */
 
 .page-list .list .level button {
-    position: relative;
-
-    display: block;
+    display: flex;
+    align-items: center;
 
     width: 100%;
+    height: 26px;
 
     box-sizing: border-box;
 
-    padding: 0.34rem 0.7rem;
+    padding: 0 10px;
 
-    /* Screenshot-style dark row */
-    background: rgba(255, 255, 255, 0.035);
+    background: rgba(255, 255, 255, 0.025);
 
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.9);
 
-    border: 1px solid rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.025);
 
-    border-radius: 0.32rem;
+    border-radius: 4px;
 
-    text-align: start;
+    outline: none;
 
-    font-size: 0.78rem;
+    text-align: left;
+
+    font-size: 12px;
     font-weight: 500;
 
-    word-break: normal;
-    overflow-wrap: anywhere;
+    line-height: 24px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     cursor: pointer;
 
@@ -101,108 +104,36 @@
 
     transition:
         background-color 0.12s ease,
-        border-color 0.12s ease,
-        transform 0.12s ease;
+        border-color 0.12s ease;
 }
 
 
-/* =========================================================
-   HOVER
-   ========================================================= */
+/* Hover */
 
 .page-list .list .level button:hover {
-    background: rgba(255, 255, 255, 0.075);
+    background: rgba(255, 255, 255, 0.055);
 
-    border-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.04);
 
     color: #ffffff;
-
-    transform: none;
-
-    box-shadow: none;
 }
 
 
-/* =========================================================
-   ACTIVE
-   ========================================================= */
+/* Active */
 
 .page-list .list .level.active button {
     background: #ff7800;
 
-    color: #ffffff;
-
     border-color: #ff7800;
+
+    color: #ffffff;
 
     font-weight: 600;
-
-    box-shadow: none;
-}
-
-
-/* Active hover */
-
-.page-list .list .level.active button:hover {
-    background: #ff7800;
-
-    border-color: #ff7800;
-
-    color: #ffffff;
 }
 
 
 /* =========================================================
-   ACTIVE RANK
-   ========================================================= */
-
-.page-list .list .level.active + .rank,
-.page-list .list tr:has(.level.active) .rank {
-    color: #ffffff;
-
-    opacity: 1;
-}
-
-
-/* =========================================================
-   CLICK
-   ========================================================= */
-
-.page-list .list .level button:active {
-    transform: scale(0.995);
-}
-
-
-/* =========================================================
-   ERROR LEVEL
-   ========================================================= */
-
-.page-list .list .level.error button {
-    color: rgba(255, 255, 255, 0.35);
-
-    cursor: not-allowed;
-
-    text-decoration: line-through;
-
-    opacity: 0.55;
-
-    background: rgba(255, 255, 255, 0.02);
-
-    border-color: rgba(255, 255, 255, 0.025);
-}
-
-.page-list .list .level.error button:hover {
-    transform: none;
-
-    background: rgba(255, 255, 255, 0.02);
-
-    border-color: rgba(255, 255, 255, 0.025);
-
-    box-shadow: none;
-}
-
-
-/* =========================================================
-   LEVEL CONTENT
+   RIGHT LEVEL AREA
    ========================================================= */
 
 .page-list .level-container .level {
@@ -210,251 +141,45 @@
 
     flex-direction: column;
 
-    gap: 0.85rem;
+    gap: 0.65rem;
+
+    width: 100%;
+
+    max-width: none;
 
     padding-right: 0.9rem;
 
-    max-width: 48rem;
+    box-sizing: border-box;
+
+    color: #ffffff;
 }
 
 
 /* =========================================================
-   PACK PANEL
+   LEVEL TITLE
    ========================================================= */
 
-.page-list .level-pack-panel {
-    width: 100%;
+.page-list .level-container .level h1,
+.page-list .level-container .level h2,
+.page-list .level-container .level h3 {
+    color: #ffffff;
 
-    padding: 0.9rem;
+    margin-top: 0;
 
-    box-sizing: border-box;
-
-    background: color-mix(
-        in srgb,
-        var(--pack-color) 4%,
-        var(--color-background)
-    );
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--pack-color) 22%,
-        transparent
-    );
-
-    border-left: 3px solid var(--pack-color);
-
-    border-radius: 0.6rem;
+    margin-bottom: 0.2rem;
 }
 
-.page-list .level-pack-header {
-    display: flex;
 
-    align-items: center;
-    justify-content: space-between;
+/* Description */
 
-    gap: 0.75rem;
+.page-list .level-container .level > p {
+    color: rgba(255, 255, 255, 0.72);
 
-    margin-bottom: 0.65rem;
-}
+    font-size: 0.82rem;
 
-.page-list .level-pack-title {
-    display: flex;
+    line-height: 1.45;
 
-    align-items: center;
-
-    gap: 0.5rem;
-
-    min-width: 0;
-}
-
-.page-list .level-pack-title h3 {
     margin: 0;
-
-    font-size: 1rem;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-.page-list .level-pack-progress {
-    flex-shrink: 0;
-
-    font-size: 0.78rem;
-
-    opacity: 0.55;
-
-    font-variant-numeric: tabular-nums;
-}
-
-
-/* =========================================================
-   PACK LEVELS
-   ========================================================= */
-
-.page-list .level-pack-levels {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 0.25rem;
-}
-
-.page-list .level-pack-level {
-    display: flex;
-
-    align-items: center;
-
-    gap: 0.55rem;
-
-    width: 100%;
-
-    padding: 0.42rem 0.5rem;
-
-    box-sizing: border-box;
-
-    border-radius: 0.4rem;
-
-    transition:
-        background-color 0.14s ease,
-        transform 0.14s ease;
-}
-
-.page-list .level-pack-level:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--pack-color) 7%,
-        transparent
-    );
-
-    transform: translateX(2px);
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-.page-list .level-pack-status {
-    width: 1.1rem;
-
-    flex-shrink: 0;
-
-    text-align: center;
-
-    font-weight: 700;
-}
-
-.page-list .level-pack-status.completed {
-    color: var(--pack-color);
-}
-
-.page-list .level-pack-status.incomplete {
-    opacity: 0.22;
-}
-
-
-/* =========================================================
-   LEVEL NAME
-   ========================================================= */
-
-.page-list .level-pack-level-name {
-    min-width: 0;
-
-    flex: 1;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   COMPLETED PLAYERS
-   ========================================================= */
-
-.page-list .level-pack-players {
-    margin-top: 0.8rem;
-
-    padding-top: 0.7rem;
-
-    border-top: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 7%,
-        transparent
-    );
-}
-
-.page-list .level-pack-players h4 {
-    margin: 0 0 0.45rem;
-
-    font-size: 0.8rem;
-
-    opacity: 0.6;
-}
-
-.page-list .level-pack-player {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 0.5rem;
-
-    padding: 0.25rem 0;
-
-    font-size: 0.85rem;
-}
-
-.page-list .level-pack-player-name {
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-.page-list .level-pack-player-count {
-    flex-shrink: 0;
-
-    font-size: 0.75rem;
-
-    opacity: 0.45;
-}
-
-
-/* =========================================================
-   AUTHORS
-   ========================================================= */
-
-.page-list .level-container .level .level-authors {
-    display: grid;
-
-    grid-template-columns: max-content 1fr;
-
-    grid-auto-rows: max-content;
-
-    gap: 0.45rem 0.7rem;
-
-    padding: 0.65rem 0.75rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 3.5%,
-        var(--color-background)
-    );
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 6%,
-        transparent
-    );
-
-    border-radius: 0.55rem;
 }
 
 
@@ -463,20 +188,63 @@
    ========================================================= */
 
 .page-list .level-container .level .video {
+    width: 100%;
+
     aspect-ratio: 16 / 9;
 
     overflow: hidden;
 
-    border-radius: 0.6rem;
+    background: #0b0b0d;
 
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 8%,
-        transparent
-    );
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    border-radius: 6px;
 
     box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.09);
+        0 4px 18px rgba(0, 0, 0, 0.22);
+}
+
+.page-list .level-container .level .video iframe,
+.page-list .level-container .level .video video {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border: 0;
+}
+
+
+/* =========================================================
+   TAGS
+   ========================================================= */
+
+.page-list .level-container .level .tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin: 0;
+}
+
+.page-list .level-container .level .tags > * {
+    padding: 3px 7px;
+
+    background: rgba(255, 255, 255, 0.055);
+
+    color: rgba(255, 255, 255, 0.82);
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 4px;
+
+    font-size: 11px;
+
+    line-height: 16px;
 }
 
 
@@ -491,58 +259,108 @@
 
     align-items: stretch;
 
-    text-align: center;
+    width: 100%;
 
-    gap: 0.45rem;
+    gap: 0;
+
+    margin: 0;
+
+    padding: 0;
+
+    background: rgba(255, 255, 255, 0.018);
+
+    border-radius: 5px;
+
+    overflow: hidden;
 }
 
 .page-list .level-container .level .stats li {
     display: flex;
 
+    flex: 1;
+
     flex-direction: column;
 
     align-items: center;
+    justify-content: center;
 
-    gap: 0.2rem;
+    min-height: 62px;
 
-    flex: 1;
+    padding: 0.45rem 0.35rem;
 
-    padding: 0.5rem 0.35rem;
+    background: transparent;
 
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 2.5%,
-        var(--color-background)
-    );
+    border: 0;
 
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 6%,
-        transparent
-    );
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
 
-    border-radius: 0.5rem;
+    border-radius: 0;
 
-    transition:
-        transform 0.16s ease,
-        background-color 0.16s ease,
-        border-color 0.16s ease;
+    transition: background-color 0.12s ease;
+}
+
+.page-list .level-container .level .stats li:last-child {
+    border-right: 0;
 }
 
 .page-list .level-container .level .stats li:hover {
-    transform: translateY(-1px);
+    transform: none;
 
-    background-color: color-mix(
-        in srgb,
-        var(--color-primary) 5%,
-        var(--color-background)
-    );
+    background: rgba(255, 255, 255, 0.035);
 
-    border-color: color-mix(
-        in srgb,
-        var(--color-primary) 18%,
-        transparent
-    );
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   STATS LABELS
+   ========================================================= */
+
+.page-list .level-container .level .stats li label,
+.page-list .level-container .level .stats li .label {
+    color: #ff7800;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+}
+
+.page-list .level-container .level .stats li strong,
+.page-list .level-container .level .stats li .value {
+    color: #ffffff;
+
+    font-size: 18px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   AUTHORS
+   ========================================================= */
+
+.page-list .level-container .level .level-authors {
+    display: grid;
+
+    grid-template-columns: max-content 1fr;
+
+    grid-auto-rows: max-content;
+
+    gap: 0.35rem 0.7rem;
+
+    padding: 0.55rem 0.65rem;
+
+    background: rgba(255, 255, 255, 0.018);
+
+    border: 1px solid rgba(255, 255, 255, 0.055);
+
+    border-radius: 5px;
+}
+
+.page-list .level-container .level .level-authors > * {
+    color: rgba(255, 255, 255, 0.75);
 }
 
 
@@ -551,26 +369,29 @@
    ========================================================= */
 
 .page-list .level-container .level .records {
-    table-layout: fixed;
-
     width: 100%;
+
+    table-layout: fixed;
 
     border-collapse: separate;
 
-    border-spacing: 0 0.1rem;
+    border-spacing: 0 1px;
+
+    color: #ffffff;
 }
 
 .page-list .level-container .level .records tr {
-    transition:
-        background-color 0.14s ease;
+    transition: background-color 0.12s ease;
 }
 
 .page-list .level-container .level .records tr:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--color-primary) 4%,
-        transparent
-    );
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.page-list .level-container .level .records td {
+    border: 0;
+
+    color: rgba(255, 255, 255, 0.82);
 }
 
 .page-list .level-container .level .records tr td:not(:last-child) {
@@ -596,21 +417,209 @@
 
 
 /* =========================================================
-   LINKS
+   RECORD LINKS
    ========================================================= */
 
-.page-list .meta-container .og a,
 .page-list .level-container .level .records a {
+    color: #ffffff;
+
+    text-decoration: none;
+
     transition:
-        opacity 0.14s ease,
-        color 0.14s ease;
+        color 0.12s ease,
+        opacity 0.12s ease;
 }
 
-.page-list .meta-container .og a:hover,
 .page-list .level-container .level .records a:hover {
-    text-decoration: underline;
+    color: #ff7800;
 
-    opacity: 0.78;
+    opacity: 1;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   PACK PANEL
+   ========================================================= */
+
+.page-list .level-pack-panel {
+    width: 100%;
+
+    padding: 0.75rem;
+
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.018);
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--pack-color) 22%,
+        transparent
+    );
+
+    border-left: 3px solid var(--pack-color);
+
+    border-radius: 5px;
+}
+
+.page-list .level-pack-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0.75rem;
+
+    margin-bottom: 0.55rem;
+}
+
+.page-list .level-pack-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.5rem;
+
+    min-width: 0;
+}
+
+.page-list .level-pack-title h3 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.page-list .level-pack-progress {
+    flex-shrink: 0;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 0.78rem;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* Pack levels */
+
+.page-list .level-pack-levels {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+.page-list .level-pack-level {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.55rem;
+
+    width: 100%;
+
+    padding: 0.38rem 0.45rem;
+
+    box-sizing: border-box;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    border-radius: 3px;
+
+    transition: background-color 0.12s ease;
+}
+
+.page-list .level-pack-level:hover {
+    background: rgba(255, 255, 255, 0.035);
+
+    transform: none;
+}
+
+
+/* =========================================================
+   PACK STATUS
+   ========================================================= */
+
+.page-list .level-pack-status {
+    width: 1.1rem;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    font-weight: 700;
+}
+
+.page-list .level-pack-status.completed {
+    color: var(--pack-color);
+}
+
+.page-list .level-pack-status.incomplete {
+    color: rgba(255, 255, 255, 0.25);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PACK PLAYER LIST
+   ========================================================= */
+
+.page-list .level-pack-players {
+    margin-top: 0.65rem;
+
+    padding-top: 0.6rem;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.page-list .level-pack-players h4 {
+    margin: 0 0 0.4rem;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 0.78rem;
+}
+
+.page-list .level-pack-player {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0.5rem;
+
+    padding: 0.22rem 0;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 0.82rem;
+}
+
+.page-list .level-pack-player-name {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.page-list .level-pack-player-count {
+    flex-shrink: 0;
+
+    color: rgba(255, 255, 255, 0.4);
+
+    font-size: 0.72rem;
 }
 
 
@@ -623,7 +632,9 @@
 
     flex-direction: column;
 
-    gap: 0.85rem;
+    gap: 0.65rem;
+
+    color: rgba(255, 255, 255, 0.8);
 }
 
 
@@ -636,29 +647,21 @@
 
     flex-direction: column;
 
-    gap: 0.45rem;
+    gap: 0.35rem;
 }
 
 .page-list .meta .errors .error {
-    padding: 0.58rem 0.7rem;
+    padding: 0.5rem 0.65rem;
 
-    background: color-mix(
-        in srgb,
-        var(--color-error) 8%,
-        var(--color-background)
-    );
+    background: rgba(255, 80, 80, 0.06);
 
     color: var(--color-error);
 
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-error) 16%,
-        transparent
-    );
+    border: 1px solid rgba(255, 80, 80, 0.12);
 
-    border-radius: 0.5rem;
+    border-radius: 4px;
 
-    font-size: 0.9rem;
+    font-size: 0.82rem;
 }
 
 
@@ -671,7 +674,7 @@
 
     flex-direction: column;
 
-    gap: 0.22rem;
+    gap: 1px;
 }
 
 .page-list .meta .editors li {
@@ -681,23 +684,19 @@
 
     gap: 0.4rem;
 
-    padding: 0.32rem 0.45rem;
+    padding: 0.28rem 0.4rem;
 
-    border-radius: 0.4rem;
+    color: rgba(255, 255, 255, 0.8);
 
-    transition:
-        background-color 0.14s ease,
-        transform 0.14s ease;
+    border-radius: 3px;
+
+    transition: background-color 0.12s ease;
 }
 
 .page-list .meta .editors li:hover {
-    background-color: color-mix(
-        in srgb,
-        var(--color-primary) 5%,
-        transparent
-    );
+    background: rgba(255, 255, 255, 0.035);
 
-    transform: translateX(2px);
+    transform: none;
 }
 
 .page-list .meta .editors li img {
@@ -710,13 +709,52 @@
 }
 
 .page-list .meta .editors li a {
+    color: #ffffff;
+
     transition:
-        opacity 0.14s ease,
-        color 0.14s ease;
+        color 0.12s ease,
+        opacity 0.12s ease;
 }
 
 .page-list .meta .editors li a:hover {
-    text-decoration: underline;
+    color: #ff7800;
 
-    opacity: 0.8;
+    opacity: 1;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   GENERAL DARK TEXT
+   ========================================================= */
+
+.page-list .level-container .level,
+.page-list .level-container .level span,
+.page-list .level-container .level div {
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.page-list ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.page-list ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.page-list ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+
+    border-radius: 10px;
+}
+
+.page-list ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
