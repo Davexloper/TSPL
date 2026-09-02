@@ -1,101 +1,82 @@
 /* =========================================================
    PAGE LIST
-   DARK / CLEAN / SCREENSHOT STYLE
+   COMPACT DARK LEVEL LIST
    ========================================================= */
 
-.page-list .list-container,
-.page-list .level-container,
-.page-list .meta-container {
-    padding-block: 0.85rem;
-}
-
 .page-list .list-container {
-    padding-inline: 0.5rem;
-}
-
-.page-list .meta-container {
-    padding-right: 0.9rem;
+    padding: 0.55rem 0.45rem;
 }
 
 
 /* =========================================================
-   LEFT LEVEL LIST
+   LEFT LIST
    ========================================================= */
 
 .page-list .list {
     width: 100%;
+
     table-layout: fixed;
 
     border-collapse: separate;
-    border-spacing: 0;
-}
-
-.page-list .list tr {
-    height: 26px;
+    border-spacing: 0 2px;
 }
 
 
 /* Rank */
 
 .page-list .list .rank {
-    width: 48px;
+    width: 34px;
 
-    padding: 0 8px 0 0;
+    padding-right: 5px;
 
     text-align: right;
 
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.55);
 
-    font-size: 12px;
+    font-size: 0.68rem;
     font-weight: 600;
-
-    line-height: 26px;
 
     white-space: nowrap;
 }
 
 
-/* Level */
+/* Level cell */
 
 .page-list .list .level {
     width: 100%;
-    padding: 0;
 }
 
 
-/* Level button */
+/* =========================================================
+   LIST BUTTON
+   ========================================================= */
 
 .page-list .list .level button {
-    display: flex;
-    align-items: center;
-
     width: 100%;
-    height: 26px;
+
+    min-height: 24px;
+
+    padding: 4px 9px;
 
     box-sizing: border-box;
 
-    padding: 0 10px;
-
     background: rgba(255, 255, 255, 0.025);
 
-    color: rgba(255, 255, 255, 0.9);
+    color: #ffffff;
 
     border: 1px solid rgba(255, 255, 255, 0.025);
 
     border-radius: 4px;
 
-    outline: none;
-
-    text-align: left;
-
-    font-size: 12px;
+    font-size: 0.72rem;
     font-weight: 500;
 
-    line-height: 24px;
+    text-align: left;
 
     white-space: nowrap;
 
     overflow: hidden;
+
     text-overflow: ellipsis;
 
     cursor: pointer;
@@ -103,23 +84,31 @@
     box-shadow: none;
 
     transition:
-        background-color 0.12s ease,
+        background 0.12s ease,
         border-color 0.12s ease;
 }
 
 
-/* Hover */
+/* =========================================================
+   LIST HOVER
+   ========================================================= */
 
 .page-list .list .level button:hover {
     background: rgba(255, 255, 255, 0.055);
 
-    border-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.05);
 
     color: #ffffff;
+
+    transform: none;
+
+    box-shadow: none;
 }
 
 
-/* Active */
+/* =========================================================
+   SELECTED
+   ========================================================= */
 
 .page-list .list .level.active button {
     background: #ff7800;
@@ -131,25 +120,41 @@
     font-weight: 600;
 }
 
+.page-list .list .level.active button:hover {
+    background: #ff7800;
+
+    border-color: #ff7800;
+}
+
 
 /* =========================================================
-   RIGHT LEVEL AREA
+   LEVEL DETAIL BOX
    ========================================================= */
 
+.page-list .level-container {
+    padding: 0.55rem 0.65rem;
+}
+
 .page-list .level-container .level {
+    width: 100%;
+
+    max-width: 100%;
+
+    box-sizing: border-box;
+
     display: flex;
 
     flex-direction: column;
 
-    gap: 0.65rem;
+    gap: 0.45rem;
 
-    width: 100%;
+    padding: 0.65rem;
 
-    max-width: none;
+    background: rgba(10, 10, 13, 0.55);
 
-    padding-right: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.045);
 
-    box-sizing: border-box;
+    border-radius: 7px;
 
     color: #ffffff;
 }
@@ -159,27 +164,54 @@
    LEVEL TITLE
    ========================================================= */
 
-.page-list .level-container .level h1,
-.page-list .level-container .level h2,
-.page-list .level-container .level h3 {
+.page-list .level-container .level h1 {
+    margin: 0;
+
+    padding: 0;
+
     color: #ffffff;
 
-    margin-top: 0;
+    font-size: 1.15rem;
 
-    margin-bottom: 0.2rem;
+    font-weight: 600;
+
+    line-height: 1.2;
 }
 
 
-/* Description */
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
 
 .page-list .level-container .level > p {
+    margin: 0;
+
+    padding: 0;
+
     color: rgba(255, 255, 255, 0.72);
 
-    font-size: 0.82rem;
+    font-size: 0.68rem;
 
-    line-height: 1.45;
+    line-height: 1.35;
+}
 
-    margin: 0;
+
+/* =========================================================
+   TITLE SEPARATOR
+   ========================================================= */
+
+.page-list .level-container .level h1::after {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+
+    height: 1px;
+
+    margin-top: 0.32rem;
+
+    background: rgba(255, 255, 255, 0.25);
 }
 
 
@@ -194,18 +226,18 @@
 
     overflow: hidden;
 
-    background: #0b0b0d;
+    margin-top: 0.05rem;
 
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 5px;
 
-    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 
-    box-shadow:
-        0 4px 18px rgba(0, 0, 0, 0.22);
+    background: #08080a;
+
+    box-shadow: none;
 }
 
-.page-list .level-container .level .video iframe,
-.page-list .level-container .level .video video {
+.page-list .level-container .level .video iframe {
     width: 100%;
     height: 100%;
 
@@ -216,7 +248,7 @@
 
 
 /* =========================================================
-   TAGS
+   TAGS / DIFFICULTY
    ========================================================= */
 
 .page-list .level-container .level .tags {
@@ -224,27 +256,25 @@
 
     flex-wrap: wrap;
 
-    align-items: center;
-
-    gap: 4px;
+    gap: 3px;
 
     margin: 0;
 }
 
 .page-list .level-container .level .tags > * {
-    padding: 3px 7px;
+    padding: 2px 5px;
 
-    background: rgba(255, 255, 255, 0.055);
+    color: rgba(255, 255, 255, 0.85);
 
-    color: rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.045);
 
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
-    border-radius: 4px;
+    border-radius: 3px;
 
-    font-size: 11px;
+    font-size: 0.62rem;
 
-    line-height: 16px;
+    line-height: 13px;
 }
 
 
@@ -253,87 +283,113 @@
    ========================================================= */
 
 .page-list .level-container .level .stats {
-    display: flex;
+    display: grid;
 
-    justify-content: space-evenly;
-
-    align-items: stretch;
+    grid-template-columns: repeat(2, 1fr);
 
     width: 100%;
-
-    gap: 0;
 
     margin: 0;
 
     padding: 0;
 
-    background: rgba(255, 255, 255, 0.018);
+    gap: 0;
 
-    border-radius: 5px;
+    background: transparent;
 
-    overflow: hidden;
+    border: 0;
 }
 
-.page-list .level-container .level .stats li {
-    display: flex;
 
-    flex: 1;
+/* Individual stat */
+
+.page-list .level-container .level .stats li {
+    min-height: 48px;
+
+    padding: 0.35rem;
+
+    display: flex;
 
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
-
-    min-height: 62px;
-
-    padding: 0.45rem 0.35rem;
 
     background: transparent;
 
     border: 0;
 
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
 
     border-radius: 0;
 
-    transition: background-color 0.12s ease;
+    gap: 2px;
 }
 
-.page-list .level-container .level .stats li:last-child {
+.page-list .level-container .level .stats li:nth-child(even) {
     border-right: 0;
 }
 
 .page-list .level-container .level .stats li:hover {
+    background: rgba(255, 255, 255, 0.02);
+
     transform: none;
-
-    background: rgba(255, 255, 255, 0.035);
-
-    border-color: rgba(255, 255, 255, 0.08);
 }
 
 
-/* =========================================================
-   STATS LABELS
-   ========================================================= */
+/* Stat labels */
 
 .page-list .level-container .level .stats li label,
 .page-list .level-container .level .stats li .label {
     color: #ff7800;
 
-    font-size: 10px;
+    font-size: 0.55rem;
 
     font-weight: 600;
 
     text-transform: uppercase;
 }
 
+
+/* Stat values */
+
 .page-list .level-container .level .stats li strong,
 .page-list .level-container .level .stats li .value {
     color: #ffffff;
 
-    font-size: 18px;
+    font-size: 0.9rem;
 
     font-weight: 500;
+}
+
+
+/* =========================================================
+   ID + LIST POINTS
+   ========================================================= */
+
+.page-list .level-container .level .level-info {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 0;
+
+    width: 100%;
+}
+
+.page-list .level-container .level .level-info > div {
+    padding: 0.35rem 0.5rem;
+
+    text-align: center;
+
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.page-list .level-container .level .level-info > div:last-child {
+    border-right: 0;
 }
 
 
@@ -346,21 +402,23 @@
 
     grid-template-columns: max-content 1fr;
 
-    grid-auto-rows: max-content;
+    gap: 3px 8px;
 
-    gap: 0.35rem 0.7rem;
+    margin-top: 0.1rem;
 
-    padding: 0.55rem 0.65rem;
+    padding: 0.35rem 0.45rem;
 
-    background: rgba(255, 255, 255, 0.018);
+    background: transparent;
 
-    border: 1px solid rgba(255, 255, 255, 0.055);
+    border: 0;
 
-    border-radius: 5px;
+    border-radius: 0;
 }
 
 .page-list .level-container .level .level-authors > * {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: 0.62rem;
 }
 
 
@@ -377,11 +435,11 @@
 
     border-spacing: 0 1px;
 
-    color: #ffffff;
+    font-size: 0.65rem;
 }
 
 .page-list .level-container .level .records tr {
-    transition: background-color 0.12s ease;
+    transition: background 0.12s ease;
 }
 
 .page-list .level-container .level .records tr:hover {
@@ -389,237 +447,18 @@
 }
 
 .page-list .level-container .level .records td {
-    border: 0;
-
-    color: rgba(255, 255, 255, 0.82);
-}
-
-.page-list .level-container .level .records tr td:not(:last-child) {
-    padding-right: 0.55rem;
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .page-list .level-container .level .records .percent,
 .page-list .level-container .level .records .user,
 .page-list .level-container .level .records .hz {
-    padding-block: 0.42rem;
-}
-
-.page-list .level-container .level .records .user {
-    width: 100%;
+    padding-block: 0.3rem;
 }
 
 .page-list .level-container .level .records .percent,
 .page-list .level-container .level .records .hz {
-    text-align: end;
-
-    font-variant-numeric: tabular-nums;
-}
-
-
-/* =========================================================
-   RECORD LINKS
-   ========================================================= */
-
-.page-list .level-container .level .records a {
-    color: #ffffff;
-
-    text-decoration: none;
-
-    transition:
-        color 0.12s ease,
-        opacity 0.12s ease;
-}
-
-.page-list .level-container .level .records a:hover {
-    color: #ff7800;
-
-    opacity: 1;
-
-    text-decoration: none;
-}
-
-
-/* =========================================================
-   PACK PANEL
-   ========================================================= */
-
-.page-list .level-pack-panel {
-    width: 100%;
-
-    padding: 0.75rem;
-
-    box-sizing: border-box;
-
-    background: rgba(255, 255, 255, 0.018);
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--pack-color) 22%,
-        transparent
-    );
-
-    border-left: 3px solid var(--pack-color);
-
-    border-radius: 5px;
-}
-
-.page-list .level-pack-header {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 0.75rem;
-
-    margin-bottom: 0.55rem;
-}
-
-.page-list .level-pack-title {
-    display: flex;
-
-    align-items: center;
-
-    gap: 0.5rem;
-
-    min-width: 0;
-}
-
-.page-list .level-pack-title h3 {
-    margin: 0;
-
-    color: #ffffff;
-
-    font-size: 1rem;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-.page-list .level-pack-progress {
-    flex-shrink: 0;
-
-    color: rgba(255, 255, 255, 0.55);
-
-    font-size: 0.78rem;
-
-    font-variant-numeric: tabular-nums;
-}
-
-
-/* Pack levels */
-
-.page-list .level-pack-levels {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 1px;
-}
-
-.page-list .level-pack-level {
-    display: flex;
-
-    align-items: center;
-
-    gap: 0.55rem;
-
-    width: 100%;
-
-    padding: 0.38rem 0.45rem;
-
-    box-sizing: border-box;
-
-    color: rgba(255, 255, 255, 0.85);
-
-    border-radius: 3px;
-
-    transition: background-color 0.12s ease;
-}
-
-.page-list .level-pack-level:hover {
-    background: rgba(255, 255, 255, 0.035);
-
-    transform: none;
-}
-
-
-/* =========================================================
-   PACK STATUS
-   ========================================================= */
-
-.page-list .level-pack-status {
-    width: 1.1rem;
-
-    flex-shrink: 0;
-
-    text-align: center;
-
-    font-weight: 700;
-}
-
-.page-list .level-pack-status.completed {
-    color: var(--pack-color);
-}
-
-.page-list .level-pack-status.incomplete {
-    color: rgba(255, 255, 255, 0.25);
-
-    opacity: 1;
-}
-
-
-/* =========================================================
-   PACK PLAYER LIST
-   ========================================================= */
-
-.page-list .level-pack-players {
-    margin-top: 0.65rem;
-
-    padding-top: 0.6rem;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.page-list .level-pack-players h4 {
-    margin: 0 0 0.4rem;
-
-    color: rgba(255, 255, 255, 0.55);
-
-    font-size: 0.78rem;
-}
-
-.page-list .level-pack-player {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 0.5rem;
-
-    padding: 0.22rem 0;
-
-    color: rgba(255, 255, 255, 0.8);
-
-    font-size: 0.82rem;
-}
-
-.page-list .level-pack-player-name {
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-.page-list .level-pack-player-count {
-    flex-shrink: 0;
-
-    color: rgba(255, 255, 255, 0.4);
-
-    font-size: 0.72rem;
+    text-align: right;
 }
 
 
@@ -632,9 +471,28 @@
 
     flex-direction: column;
 
-    gap: 0.65rem;
+    gap: 0.45rem;
 
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* =========================================================
+   PUBLISHER / VERIFIER / CREATORS
+   ========================================================= */
+
+.page-list .meta > * {
+    font-size: 0.65rem;
+}
+
+.page-list .meta a {
+    color: rgba(255, 255, 255, 0.65);
+
+    text-decoration: none;
+}
+
+.page-list .meta a:hover {
+    color: #ffffff;
 }
 
 
@@ -647,21 +505,21 @@
 
     flex-direction: column;
 
-    gap: 0.35rem;
+    gap: 0.3rem;
 }
 
 .page-list .meta .errors .error {
-    padding: 0.5rem 0.65rem;
+    padding: 0.4rem 0.5rem;
 
-    background: rgba(255, 80, 80, 0.06);
+    background: rgba(255, 70, 70, 0.06);
 
     color: var(--color-error);
 
-    border: 1px solid rgba(255, 80, 80, 0.12);
+    border: 1px solid rgba(255, 70, 70, 0.1);
 
     border-radius: 4px;
 
-    font-size: 0.82rem;
+    font-size: 0.65rem;
 }
 
 
@@ -682,79 +540,47 @@
 
     align-items: center;
 
-    gap: 0.4rem;
+    gap: 4px;
 
-    padding: 0.28rem 0.4rem;
-
-    color: rgba(255, 255, 255, 0.8);
+    padding: 3px 4px;
 
     border-radius: 3px;
 
-    transition: background-color 0.12s ease;
+    color: rgba(255, 255, 255, 0.65);
 }
 
 .page-list .meta .editors li:hover {
-    background: rgba(255, 255, 255, 0.035);
+    background: rgba(255, 255, 255, 0.03);
 
     transform: none;
 }
 
 .page-list .meta .editors li img {
-    width: 1.05rem;
-    height: 1.05rem;
+    width: 14px;
+    height: 14px;
 
     object-fit: contain;
 
-    border-radius: 0.25rem;
-}
-
-.page-list .meta .editors li a {
-    color: #ffffff;
-
-    transition:
-        color 0.12s ease,
-        opacity 0.12s ease;
-}
-
-.page-list .meta .editors li a:hover {
-    color: #ff7800;
-
-    opacity: 1;
-
-    text-decoration: none;
+    border-radius: 3px;
 }
 
 
 /* =========================================================
-   GENERAL DARK TEXT
+   RESPONSIVE
    ========================================================= */
 
-.page-list .level-container .level,
-.page-list .level-container .level span,
-.page-list .level-container .level div {
-    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
-}
+@media (max-width: 900px) {
 
+    .page-list .level-container .level {
+        padding: 0.5rem;
+    }
 
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
+    .page-list .level-container .level h1 {
+        font-size: 1rem;
+    }
 
-.page-list ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
+    .page-list .list .level button {
+        font-size: 0.68rem;
+    }
 
-.page-list ::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.page-list ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
-
-    border-radius: 10px;
-}
-
-.page-list ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
 }
