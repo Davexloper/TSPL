@@ -5,8 +5,8 @@
         "color": "#DC143C",
         "levels": [
             "Bloodbath",
-            "Cataclysm",
-            "Aftermath"
+            "Aftermath",
+            "Cataclysm"
         ]
     },
     {
@@ -17,6 +17,16 @@
             "Sonicwave",
             "Catplanet",
             "Tungtungsahurcles"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "The Sequel Pack",
+        "color": "#66FFoo",
+        "levels": [
+            "Bloodlust",
+            "Quantumprocessing",
+            "Acropolix"
         ]
     }
 ]
