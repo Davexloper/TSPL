@@ -1,10 +1,30 @@
 /* =========================================================
    PAGE LIST
-   COMPACT DARK LEVEL LIST
+   DARK / COMPACT / SCREENSHOT STYLE
    ========================================================= */
 
-.page-list .list-container {
-    padding: 0.55rem 0.45rem;
+.page-list {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MAIN 3-COLUMN LAYOUT
+   ========================================================= */
+
+.page-list {
+    display: grid;
+
+    grid-template-columns:
+        minmax(330px, 460px)
+        minmax(500px, 1fr)
+        minmax(300px, 440px);
+
+    gap: 8px;
+
+    width: 100%;
+
+    box-sizing: border-box;
 }
 
 
@@ -12,51 +32,81 @@
    LEFT LIST
    ========================================================= */
 
+.page-list .list-container {
+    min-width: 0;
+
+    padding: 0.75rem 0.45rem;
+
+    background: rgba(12, 13, 16, 0.58);
+
+    border: 1px solid rgba(255, 255, 255, 0.025);
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+}
+
+
+/* List */
+
 .page-list .list {
     width: 100%;
 
     table-layout: fixed;
 
     border-collapse: separate;
+
     border-spacing: 0 2px;
+}
+
+
+/* Rows */
+
+.page-list .list tr {
+    height: 25px;
 }
 
 
 /* Rank */
 
 .page-list .list .rank {
-    width: 34px;
+    width: 42px;
 
-    padding-right: 5px;
+    padding: 0 7px 0 0;
 
     text-align: right;
 
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.72);
 
-    font-size: 0.68rem;
+    font-size: 12px;
+
     font-weight: 600;
 
     white-space: nowrap;
 }
 
 
-/* Level cell */
+/* Level */
 
 .page-list .list .level {
     width: 100%;
+
+    padding: 0;
 }
 
 
-/* =========================================================
-   LIST BUTTON
-   ========================================================= */
+/* List button */
 
 .page-list .list .level button {
+    display: flex;
+
+    align-items: center;
+
     width: 100%;
 
-    min-height: 24px;
+    height: 25px;
 
-    padding: 4px 9px;
+    padding: 0 9px;
 
     box-sizing: border-box;
 
@@ -68,8 +118,11 @@
 
     border-radius: 4px;
 
-    font-size: 0.72rem;
+    font-size: 12px;
+
     font-weight: 500;
+
+    line-height: 23px;
 
     text-align: left;
 
@@ -84,31 +137,23 @@
     box-shadow: none;
 
     transition:
-        background 0.12s ease,
+        background-color 0.12s ease,
         border-color 0.12s ease;
 }
 
 
-/* =========================================================
-   LIST HOVER
-   ========================================================= */
+/* Hover */
 
 .page-list .list .level button:hover {
     background: rgba(255, 255, 255, 0.055);
 
-    border-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.06);
 
     color: #ffffff;
-
-    transform: none;
-
-    box-shadow: none;
 }
 
 
-/* =========================================================
-   SELECTED
-   ========================================================= */
+/* Selected */
 
 .page-list .list .level.active button {
     background: #ff7800;
@@ -120,43 +165,46 @@
     font-weight: 600;
 }
 
-.page-list .list .level.active button:hover {
-    background: #ff7800;
-
-    border-color: #ff7800;
-}
-
 
 /* =========================================================
-   LEVEL DETAIL BOX
+   CENTER LEVEL CONTAINER
    ========================================================= */
 
 .page-list .level-container {
-    padding: 0.55rem 0.65rem;
-}
+    min-width: 0;
 
-.page-list .level-container .level {
-    width: 100%;
-
-    max-width: 100%;
+    padding: 0.75rem 0.5rem;
 
     box-sizing: border-box;
+}
 
+
+/* Actual level */
+
+.page-list .level-container .level {
     display: flex;
 
     flex-direction: column;
 
+    width: 100%;
+
+    max-width: none;
+
+    min-width: 0;
+
+    padding: 0;
+
     gap: 0.45rem;
 
-    padding: 0.65rem;
-
-    background: rgba(10, 10, 13, 0.55);
-
-    border: 1px solid rgba(255, 255, 255, 0.045);
-
-    border-radius: 7px;
+    box-sizing: border-box;
 
     color: #ffffff;
+
+    background: transparent;
+
+    border: 0;
+
+    border-radius: 0;
 }
 
 
@@ -164,10 +212,11 @@
    LEVEL TITLE
    ========================================================= */
 
-.page-list .level-container .level h1 {
+.page-list .level-container .level h1,
+.page-list .level-container .level h2 {
     margin: 0;
 
-    padding: 0;
+    padding: 0 0 5px;
 
     color: #ffffff;
 
@@ -176,6 +225,8 @@
     font-weight: 600;
 
     line-height: 1.2;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 
@@ -186,32 +237,11 @@
 .page-list .level-container .level > p {
     margin: 0;
 
-    padding: 0;
-
     color: rgba(255, 255, 255, 0.72);
 
     font-size: 0.68rem;
 
-    line-height: 1.35;
-}
-
-
-/* =========================================================
-   TITLE SEPARATOR
-   ========================================================= */
-
-.page-list .level-container .level h1::after {
-    content: "";
-
-    display: block;
-
-    width: 100%;
-
-    height: 1px;
-
-    margin-top: 0.32rem;
-
-    background: rgba(255, 255, 255, 0.25);
+    line-height: 1.4;
 }
 
 
@@ -224,31 +254,35 @@
 
     aspect-ratio: 16 / 9;
 
+    margin: 0;
+
+    padding: 0;
+
     overflow: hidden;
 
-    margin-top: 0.05rem;
+    background: #08090b;
 
-    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
 
-    border: 1px solid rgba(255, 255, 255, 0.05);
-
-    background: #08080a;
+    border-radius: 6px;
 
     box-shadow: none;
 }
 
-.page-list .level-container .level .video iframe {
-    width: 100%;
-    height: 100%;
-
+.page-list .level-container .level .video iframe,
+.page-list .level-container .level .video video {
     display: block;
+
+    width: 100%;
+
+    height: 100%;
 
     border: 0;
 }
 
 
 /* =========================================================
-   TAGS / DIFFICULTY
+   TAGS
    ========================================================= */
 
 .page-list .level-container .level .tags {
@@ -256,25 +290,25 @@
 
     flex-wrap: wrap;
 
-    gap: 3px;
+    gap: 4px;
 
     margin: 0;
 }
 
 .page-list .level-container .level .tags > * {
-    padding: 2px 5px;
+    padding: 2px 6px;
 
-    color: rgba(255, 255, 255, 0.85);
+    color: #ffffff;
 
     background: rgba(255, 255, 255, 0.045);
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
-    border-radius: 3px;
+    border-radius: 4px;
 
     font-size: 0.62rem;
 
-    line-height: 13px;
+    line-height: 14px;
 }
 
 
@@ -293,21 +327,14 @@
 
     padding: 0;
 
-    gap: 0;
-
     background: transparent;
 
     border: 0;
+
+    gap: 0;
 }
 
-
-/* Individual stat */
-
 .page-list .level-container .level .stats li {
-    min-height: 48px;
-
-    padding: 0.35rem;
-
     display: flex;
 
     flex-direction: column;
@@ -316,13 +343,17 @@
 
     justify-content: center;
 
+    min-height: 50px;
+
+    padding: 5px;
+
     background: transparent;
 
     border: 0;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    border-right: 1px solid rgba(255, 255, 255, 0.13);
 
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 
     border-radius: 0;
 
@@ -334,9 +365,9 @@
 }
 
 .page-list .level-container .level .stats li:hover {
-    background: rgba(255, 255, 255, 0.02);
-
     transform: none;
+
+    background: rgba(255, 255, 255, 0.02);
 }
 
 
@@ -346,7 +377,7 @@
 .page-list .level-container .level .stats li .label {
     color: #ff7800;
 
-    font-size: 0.55rem;
+    font-size: 0.54rem;
 
     font-weight: 600;
 
@@ -367,33 +398,6 @@
 
 
 /* =========================================================
-   ID + LIST POINTS
-   ========================================================= */
-
-.page-list .level-container .level .level-info {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 0;
-
-    width: 100%;
-}
-
-.page-list .level-container .level .level-info > div {
-    padding: 0.35rem 0.5rem;
-
-    text-align: center;
-
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.page-list .level-container .level .level-info > div:last-child {
-    border-right: 0;
-}
-
-
-/* =========================================================
    AUTHORS
    ========================================================= */
 
@@ -402,11 +406,13 @@
 
     grid-template-columns: max-content 1fr;
 
-    gap: 3px 8px;
+    grid-auto-rows: max-content;
 
-    margin-top: 0.1rem;
+    gap: 4px 8px;
 
-    padding: 0.35rem 0.45rem;
+    margin: 0;
+
+    padding: 5px 7px;
 
     background: transparent;
 
@@ -416,9 +422,62 @@
 }
 
 .page-list .level-container .level .level-authors > * {
-    color: rgba(255, 255, 255, 0.58);
+    color: rgba(255, 255, 255, 0.55);
 
     font-size: 0.62rem;
+}
+
+
+/* =========================================================
+   RIGHT META / RECORDS
+   ========================================================= */
+
+.page-list .meta-container {
+    min-width: 0;
+
+    padding: 0.75rem 0.55rem;
+
+    box-sizing: border-box;
+
+    background: rgba(12, 13, 16, 0.58);
+
+    border: 1px solid rgba(255, 255, 255, 0.025);
+
+    border-radius: 10px;
+}
+
+
+/* Meta */
+
+.page-list .meta {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.55rem;
+
+    width: 100%;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   RECORDS TITLE
+   ========================================================= */
+
+.page-list .meta .records-title,
+.page-list .meta h2,
+.page-list .meta h3 {
+    color: #ffffff;
+
+    margin: 0;
+
+    padding-bottom: 5px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+
+    font-size: 1.05rem;
 }
 
 
@@ -426,6 +485,7 @@
    RECORDS
    ========================================================= */
 
+.page-list .meta .records,
 .page-list .level-container .level .records {
     width: 100%;
 
@@ -433,71 +493,99 @@
 
     border-collapse: separate;
 
-    border-spacing: 0 1px;
+    border-spacing: 0 2px;
 
-    font-size: 0.65rem;
+    color: #ffffff;
+
+    font-size: 0.7rem;
 }
 
+
+/* Record row */
+
+.page-list .meta .records tr,
 .page-list .level-container .level .records tr {
-    transition: background 0.12s ease;
+    transition: background-color 0.12s ease;
 }
 
+
+/* Record hover */
+
+.page-list .meta .records tr:hover,
 .page-list .level-container .level .records tr:hover {
     background: rgba(255, 255, 255, 0.035);
 }
 
+
+/* Record cells */
+
+.page-list .meta .records td,
 .page-list .level-container .level .records td {
-    color: rgba(255, 255, 255, 0.75);
+    padding-top: 4px;
+
+    padding-bottom: 4px;
+
+    color: rgba(255, 255, 255, 0.78);
 }
 
-.page-list .level-container .level .records .percent,
-.page-list .level-container .level .records .user,
-.page-list .level-container .level .records .hz {
-    padding-block: 0.3rem;
+
+/* User */
+
+.page-list .meta .records .user,
+.page-list .level-container .level .records .user {
+    width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
 }
 
-.page-list .level-container .level .records .percent,
+
+/* Percentage */
+
+.page-list .meta .records .percent,
+.page-list .level-container .level .records .percent {
+    text-align: right;
+
+    color: #ffffff;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* Hz */
+
+.page-list .meta .records .hz,
 .page-list .level-container .level .records .hz {
     text-align: right;
+
+    color: rgba(255, 255, 255, 0.55);
+
+    font-variant-numeric: tabular-nums;
 }
 
 
-/* =========================================================
-   META
-   ========================================================= */
+/* Links */
 
-.page-list .meta {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 0.45rem;
-
-    color: rgba(255, 255, 255, 0.7);
-}
-
-
-/* =========================================================
-   PUBLISHER / VERIFIER / CREATORS
-   ========================================================= */
-
-.page-list .meta > * {
-    font-size: 0.65rem;
-}
-
-.page-list .meta a {
-    color: rgba(255, 255, 255, 0.65);
+.page-list .meta .records a,
+.page-list .level-container .level .records a {
+    color: #ffffff;
 
     text-decoration: none;
 }
 
-.page-list .meta a:hover {
-    color: #ffffff;
+.page-list .meta .records a:hover,
+.page-list .level-container .level .records a:hover {
+    color: #ff7800;
+
+    text-decoration: none;
 }
 
 
 /* =========================================================
-   ERRORS
+   META INFORMATION
    ========================================================= */
 
 .page-list .meta .errors {
@@ -505,21 +593,21 @@
 
     flex-direction: column;
 
-    gap: 0.3rem;
+    gap: 4px;
 }
 
 .page-list .meta .errors .error {
-    padding: 0.4rem 0.5rem;
-
-    background: rgba(255, 70, 70, 0.06);
+    padding: 5px 7px;
 
     color: var(--color-error);
+
+    background: rgba(255, 70, 70, 0.05);
 
     border: 1px solid rgba(255, 70, 70, 0.1);
 
     border-radius: 4px;
 
-    font-size: 0.65rem;
+    font-size: 0.68rem;
 }
 
 
@@ -544,19 +632,20 @@
 
     padding: 3px 4px;
 
-    border-radius: 3px;
+    color: rgba(255, 255, 255, 0.7);
 
-    color: rgba(255, 255, 255, 0.65);
+    border-radius: 3px;
 }
 
 .page-list .meta .editors li:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.035);
 
     transform: none;
 }
 
 .page-list .meta .editors li img {
     width: 14px;
+
     height: 14px;
 
     object-fit: contain;
@@ -564,23 +653,141 @@
     border-radius: 3px;
 }
 
+.page-list .meta .editors li a {
+    color: rgba(255, 255, 255, 0.75);
+
+    text-decoration: none;
+}
+
+.page-list .meta .editors li a:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   PACK
+   ========================================================= */
+
+.page-list .level-pack-panel {
+    width: 100%;
+
+    padding: 0.7rem;
+
+    box-sizing: border-box;
+
+    background: rgba(255, 255, 255, 0.02);
+
+    border: 1px solid color-mix(
+        in srgb,
+        var(--pack-color) 22%,
+        transparent
+    );
+
+    border-left: 3px solid var(--pack-color);
+
+    border-radius: 5px;
+}
+
+.page-list .level-pack-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 0.5rem;
+
+    margin-bottom: 0.5rem;
+}
+
+.page-list .level-pack-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.4rem;
+
+    min-width: 0;
+}
+
+.page-list .level-pack-title h3 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 0.85rem;
+}
+
+.page-list .level-pack-progress {
+    flex-shrink: 0;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 0.65rem;
+}
+
+.page-list .level-pack-levels {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+.page-list .level-pack-level {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.4rem;
+
+    padding: 4px;
+
+    color: rgba(255, 255, 255, 0.8);
+
+    border-radius: 3px;
+}
+
+.page-list .level-pack-level:hover {
+    background: rgba(255, 255, 255, 0.035);
+
+    transform: none;
+}
+
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
 
-    .page-list .level-container .level {
-        padding: 0.5rem;
+    .page-list {
+        grid-template-columns:
+            300px
+            minmax(450px, 1fr);
     }
 
-    .page-list .level-container .level h1 {
-        font-size: 1rem;
+    .page-list .meta-container {
+        grid-column: 2;
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .page-list {
+        display: flex;
+
+        flex-direction: column;
     }
 
-    .page-list .list .level button {
-        font-size: 0.68rem;
+    .page-list .list-container,
+    .page-list .level-container,
+    .page-list .meta-container {
+        width: 100%;
     }
 
+    .page-list .meta-container {
+        grid-column: auto;
+    }
 }
