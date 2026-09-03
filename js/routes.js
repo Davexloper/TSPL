@@ -2,6 +2,7 @@ import List from './pages/List.js';
 import Leaderboard from './pages/Leaderboard.js';
 import Roulette from './pages/Roulette.js';
 import Packs from './pages/Packs.js';
+import Profile from './pages/Profile.js';
 
 
 export default [
@@ -14,6 +15,11 @@ export default [
     {
         path: '/leaderboard',
         component: Leaderboard
+    },
+
+    {
+        path: '/profile/:username',
+        component: Profile
     },
 
     {
