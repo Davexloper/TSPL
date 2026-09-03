@@ -33,7 +33,7 @@ export async function fetchList() {
                             ...level,
                             path,
                             records:
-                                level.records.sort(
+                                (level.records || []).sort(
                                     (a, b) =>
                                         b.percent -
                                         a.percent
@@ -51,7 +51,7 @@ export async function fetchList() {
                     return [null, path];
                 }
 
-            }),
+            })
 
         );
 
@@ -86,12 +86,12 @@ export async function fetchEditors() {
 
 
 /**
- * Load level packs.
+ * Load packs
  *
  * Expected file:
  * /data/_packs.json
  */
-export async function fetchLevelPacks() {
+export async function fetchPacks() {
 
     try {
 
@@ -99,6 +99,7 @@ export async function fetchLevelPacks() {
             await fetch(`${dir}/_packs.json`);
 
         if (!result.ok) {
+
             return {};
         }
 
@@ -106,8 +107,22 @@ export async function fetchLevelPacks() {
 
     } catch {
 
+        console.error(
+            'Failed to load packs.'
+        );
+
         return {};
     }
+}
+
+
+/**
+ * Alias used by List.js
+ */
+export async function fetchLevelPacks() {
+
+    return await fetchPacks();
+
 }
 
 
@@ -115,30 +130,59 @@ export async function fetchLevelPacks() {
  * Find a level by:
  * - name
  * - path
- * - Geometry Dash ID
+ * - ID
  */
-export function findLevel(list, identifier) {
+export function findLevel(
+    list,
+    identifier
+) {
 
-    if (!list || !identifier) {
+    if (
+        !list ||
+        !identifier
+    ) {
+
         return -1;
     }
 
+
     const search =
-        String(identifier).toLowerCase();
+        String(
+            identifier
+        ).toLowerCase();
 
-    return list.findIndex(([level]) => {
 
-        if (!level) {
-            return false;
+    return list.findIndex(
+        ([level]) => {
+
+            if (!level) {
+
+                return false;
+            }
+
+
+            return (
+
+                String(
+                    level.name
+                ).toLowerCase() === search
+
+                ||
+
+                String(
+                    level.path
+                ).toLowerCase() === search
+
+                ||
+
+                String(
+                    level.id
+                ).toLowerCase() === search
+
+            );
+
         }
-
-        return (
-            String(level.name).toLowerCase() === search ||
-            String(level.path).toLowerCase() === search ||
-            String(level.id).toLowerCase() === search
-        );
-
-    });
+    );
 }
 
 
@@ -147,8 +191,13 @@ export async function fetchLeaderboard() {
     const list =
         await fetchList();
 
+
     if (!list) {
-        return [[], ['_list.json']];
+
+        return [
+            [],
+            ['_list.json']
+        ];
     }
 
 
@@ -181,6 +230,12 @@ export async function fetchLeaderboard() {
             }
 
 
+            if (!level) {
+
+                return;
+            }
+
+
             /*
              * Verification
              */
@@ -189,18 +244,27 @@ export async function fetchLeaderboard() {
                 Object.keys(scoreMap).find(
                     u =>
                         u.toLowerCase() ===
-                        level.verifier.toLowerCase()
-                ) || level.verifier;
+                        String(
+                            level.verifier
+                        ).toLowerCase()
+                ) ||
+                level.verifier;
 
 
             scoreMap[verifier] ??= {
+
                 verified: [],
+
                 completed: [],
+
                 progressed: [],
+
             };
 
 
-            const { verified } =
+            const {
+                verified
+            } =
                 scoreMap[verifier];
 
 
@@ -230,28 +294,40 @@ export async function fetchLeaderboard() {
              * Records
              */
 
-            level.records.forEach(
+            (
+                level.records || []
+            ).forEach(
                 record => {
 
                     const user =
-                        Object.keys(scoreMap).find(
+                        Object.keys(
+                            scoreMap
+                        ).find(
                             u =>
                                 u.toLowerCase() ===
-                                record.user.toLowerCase()
-                        ) || record.user;
+                                String(
+                                    record.user
+                                ).toLowerCase()
+                        ) ||
+                        record.user;
 
 
                     scoreMap[user] ??= {
+
                         verified: [],
+
                         completed: [],
+
                         progressed: [],
+
                     };
 
 
                     const {
                         completed,
                         progressed
-                    } = scoreMap[user];
+                    } =
+                        scoreMap[user];
 
 
                     /*
@@ -329,45 +405,47 @@ export async function fetchLeaderboard() {
      */
 
     const res =
-        Object.entries(scoreMap)
-            .map(
-                ([user, scores]) => {
+        Object.entries(
+            scoreMap
+        ).map(
+            ([user, scores]) => {
 
-                    const {
+                const {
+                    verified,
+                    completed,
+                    progressed
+                } =
+                    scores;
+
+
+                const total =
+                    [
                         verified,
                         completed,
                         progressed
-                    } = scores;
+                    ]
+                        .flat()
+                        .reduce(
+                            (prev, cur) =>
+                                prev +
+                                cur.score,
+                            0
+                        );
 
 
-                    const total =
-                        [
-                            verified,
-                            completed,
-                            progressed
-                        ]
-                            .flat()
-                            .reduce(
-                                (prev, cur) =>
-                                    prev +
-                                    cur.score,
-                                0
-                            );
+                return {
 
+                    user,
 
-                    return {
+                    total:
+                        round(total),
 
-                        user,
+                    ...scores,
 
-                        total:
-                            round(total),
+                };
 
-                        ...scores,
-
-                    };
-
-                }
-            );
+            }
+        );
 
 
     /*
