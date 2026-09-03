@@ -58,11 +58,6 @@ export default {
                                 in leaderboard
                             "
                             :key="ientry.user"
-
-                            :class="{
-                                selected:
-                                    selected === i
-                            }"
                         >
 
                             <td class="rank">
@@ -87,7 +82,9 @@ export default {
 
                                 <button
                                     @click="
-                                        selected = i
+                                        openProfile(
+                                            ientry.user
+                                        )
                                     "
                                 >
                                     {{ ientry.user }}
@@ -359,6 +356,7 @@ export default {
 
                                     </td>
 
+
                                 </tr>
 
                             </table>
@@ -433,7 +431,8 @@ export default {
 
                                     </td>
 
-                                </tr>
+
+                                    </tr>
 
                             </table>
 
@@ -508,7 +507,16 @@ export default {
 
     methods: {
 
-        localize
+        localize,
+
+        openProfile(username) {
+
+            this.$router.push(
+                '/profile/' +
+                encodeURIComponent(username)
+            );
+
+        }
 
     }
 
