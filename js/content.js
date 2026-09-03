@@ -1,1 +1,199 @@
-import { round, score } from './score.js'; /** * Path to directory containing _list.json, * _packs.json and all levels. */ const dir = '/data'; /* ========================================================= LEVEL LIST ========================================================= */ export async function fetchList() { const listResult = await fetch(${dir}/_list.json); try { const list = await listResult.json(); return await Promise.all( list.map(async (path, rank) => { const levelResult = await fetch(${dir}/${path}.json); try { const level = await levelResult.json(); return [ { ...level, path, records: Array.isArray(level.records) ? level.records.sort( (a, b) => b.percent - a.percent ) : [] }, null ]; } catch { console.error( Failed to load level #${rank + 1} ${path}. ); return [ null, path ]; } }) ); } catch { console.error( 'Failed to load list.' ); return null; } } /* ========================================================= FIND LEVEL ========================================================= */ /** * Finds a level inside fetchList(). * * The identifier can be: * - level name * - level path * - level id */ export function findLevel(list, identifier) { if (!Array.isArray(list)) { return -1; } if ( identifier === undefined || identifier === null ) { return -1; } const search = String(identifier) .trim() .toLowerCase(); return list.findIndex( ([level]) => { if (!level) { return false; } const name = String(level.name ?? '') .trim() .toLowerCase(); const path = String(level.path ?? '') .trim() .toLowerCase(); const id = String(level.id ?? '') .trim() .toLowerCase(); return ( name === search || path === search || id === search || ${path}.json === search ); } ); } /* ========================================================= PACKS ========================================================= */ export async function fetchPacks() { try { const packsResult = await fetch(${dir}/_packs.json); return await packsResult.json(); } catch { console.error( 'Failed to load packs.' ); return null; } } /* ========================================================= LEVEL -> PACKS ========================================================= */ export async function fetchLevelPacks() { const packs = await fetchPacks(); if (!Array.isArray(packs)) { return {}; } const list = await fetchList(); if (!list) { return {}; } const levelPacks = {}; packs.forEach(pack => { if ( !pack || !Array.isArray(pack.levels) ) { return; } pack.levels.forEach(identifier => { const index = findLevel( list, identifier ); if (index === -1) { return; } const level = list[index]?.[0]; if (!level) { return; } /* * Store by the actual level path. * This is important because List.js * uses level.path. */ const key = level.path; if (!levelPacks[key]) { levelPacks[key] = []; } levelPacks[key].push({ id: pack.id, name: pack.name, color: pack.color || '#ff7a00' }); }); }); return levelPacks; } /* ========================================================= EDITORS ========================================================= */ export async function fetchEditors() { try { const editorsResults = await fetch(${dir}/_editors.json); return await editorsResults.json(); } catch { return null; } } /* ========================================================= GET COMPLETED USERS FOR A PACK ========================================================= */ /** * A player has completed a level when: * * 1. They have a 100% record * * OR * * 2. They are the verifier of the level * * Therefore verifiers automatically count as * completed/victors. */ function getLevelCompletedUsers(level) { const users = new Map(); if (!level) { return users; } /* * VERIFIER */ if (level.verifier) { const verifier = String(level.verifier).trim(); if (verifier) { users.set( verifier.toLowerCase(), verifier ); } } /* * 100% RECORDS */ for ( const record of level.records || [] ) { if ( record && Number(record.percent) === 100 && record.user ) { const username = String(record.user).trim(); if (!username) { continue; } const key = username.toLowerCase(); if (!users.has(key)) { users.set( key, username ); } } } return users; } /* ========================================================= COMPLETED PACKS FOR PLAYER ========================================================= */ /** * Returns every pack completed by a player. * * A player must have completed EVERY level * in the pack. * * Verifiers count as completed. */ export function getCompletedPacks( username, packs, list ) { if ( !username || !Array.isArray(packs) || !Array.isArray(list) ) { return []; } const userKey = String(username) .trim() .toLowerCase(); const completedPacks = []; for ( const pack of packs ) { if ( !pack || !Array.isArray(pack.levels) || pack.levels.length === 0 ) { continue; } let completed = true; /* * Check every level in the pack. */ for ( const identifier of pack.levels ) { const index = findLevel( list, identifier ); /* * If the level cannot be found, * the pack cannot be completed. */ if (index === -1) { completed = false; break; } const level = list[index]?.[0]; if (!level) { completed = false; break; } const users = getLevelCompletedUsers( level ); /* * Player did not complete * this particular level. */ if ( !users.has(userKey) ) { completed = false; break; } } if (completed) { completedPacks.push({ id: pack.id, name: pack.name, color: pack.color || '#ff7a00', levels: pack.levels.length }); } } return completedPacks; } /* ========================================================= LEADERBOARD ========================================================= */ export async function fetchLeaderboard() { const list = await fetchList(); if (!list) { return [ [], ['_list.json'] ]; } const packs = await fetchPacks(); /* * Number of levels. */ const totalLevels = list.length; const scoreMap = {}; const errs = []; /* ===================================================== LEVELS ===================================================== */ list.forEach( ([level, err], rank) => { if (err) { errs.push(err); return; } /* * ============================================= * VERIFIER * ============================================= */ const verifier = Object.keys(scoreMap).find( u => u.toLowerCase() === level.verifier.toLowerCase() ) || level.verifier; scoreMap[verifier] ??= { verified: [], completed: [], progressed: [] }; const { verified } = scoreMap[verifier]; verified.push({ rank: rank + 1, level: level.name, score: score( rank + 1, 100, level.percentToQualify, totalLevels ), link: level.verification }); /* * ============================================= * RECORDS * ============================================= */ for ( const record of level.records || [] ) { if (!record.user) { continue; } const user = Object.keys(scoreMap).find( u => u.toLowerCase() === record.user.toLowerCase() ) || record.user; scoreMap[user] ??= { verified: [], completed: [], progressed: [] }; const { completed, progressed } = scoreMap[user]; /* * COMPLETED */ if ( Number(record.percent) === 100 ) { /* * Do not add verifier twice * if they also have a 100% record. */ const alreadyCompleted = completed.some( item => item.rank === rank + 1 ); if (!alreadyCompleted) { completed.push({ rank: rank + 1, level: level.name, score: score( rank + 1, 100, level.percentToQualify, totalLevels ), link: record.link }); } continue; } /* * PROGRESSED */ progressed.push({ rank: rank + 1, level: level.name, percent: record.percent, score: score( rank + 1, record.percent, level.percentToQualify, totalLevels ), link: record.link }); } } ); /* ===================================================== ADD COMPLETED PACKS ===================================================== */ for ( const user of Object.keys(scoreMap) ) { scoreMap[user].packs = getCompletedPacks( user, packs || [], list ); } /* ===================================================== BUILD RESULT ===================================================== */ const res = Object.entries(scoreMap) .map( ([user, scores]) => { const { verified, completed, progressed, packs } = scores; const total = [ verified, completed, progressed ] .flat() .reduce( ( prev, cur ) => prev + cur.score, 0 ); return { user, total: round(total), verified, completed, progressed, packs: packs || [] }; } ); /* ===================================================== SORT ===================================================== */ return [ res.sort( (a, b) => b.total - a.total ), errs ]; }
+import { round, score } from './score.js';
+
+/**
+ * Path to directory containing `_list.json` and all levels
+ */
+const dir = '/data';
+
+export async function fetchList() {
+    const listResult = await fetch(`${dir}/_list.json`);
+
+    try {
+        const list = await listResult.json();
+
+        return await Promise.all(
+            list.map(async (path, rank) => {
+                const levelResult = await fetch(`${dir}/${path}.json`);
+                try {
+                    const level = await levelResult.json();
+                    return [
+                        {
+                            ...level,
+                            path,
+                            records: level.records.sort(
+                                (a, b) => b.percent - a.percent,
+                            ),
+                        },
+                        null,
+                    ];
+                } catch {
+                    console.error(
+                        `Failed to load level #${rank + 1} ${path}.`
+                    );
+                    return [null, path];
+                }
+            }),
+        );
+    } catch {
+        console.error(`Failed to load list.`);
+        return null;
+    }
+}
+
+export async function fetchEditors() {
+    try {
+        const editorsResults = await fetch(`${dir}/_editors.json`);
+        const editors = await editorsResults.json();
+
+        return editors;
+    } catch {
+        return null;
+    }
+}
+
+export async function fetchLeaderboard() {
+    const list = await fetchList();
+    if (!list) {
+        return [[], ['_list.json']];
+    }
+
+    /*
+     * Number of levels on the list.
+     *
+     * This is used by score() so the points
+     * dynamically scale from:
+     *
+     * #1     = 250 points
+     * Last   = 1 point
+     */
+    const totalLevels = list.length;
+
+    const scoreMap = {};
+    const errs = [];
+
+    list.forEach(([level, err], rank) => {
+        if (err) {
+            errs.push(err);
+            return;
+        }
+
+        /*
+         * Verification
+         */
+        const verifier = Object.keys(scoreMap).find(
+            (u) => u.toLowerCase() === level.verifier.toLowerCase(),
+        ) || level.verifier;
+
+        scoreMap[verifier] ??= {
+            verified: [],
+            completed: [],
+            progressed: [],
+        };
+
+        const { verified } = scoreMap[verifier];
+
+        verified.push({
+            rank: rank + 1,
+            level: level.name,
+            score: score(
+                rank + 1,
+                100,
+                level.percentToQualify,
+                totalLevels
+            ),
+
+            link: level.verification,
+        });
+
+
+        /*
+         * Records
+         */
+        level.records.forEach((record) => {
+            const user = Object.keys(scoreMap).find(
+                (u) => u.toLowerCase() === record.user.toLowerCase(),
+            ) || record.user;
+
+            scoreMap[user] ??= {
+                verified: [],
+                completed: [],
+                progressed: [],
+            };
+
+            const { completed, progressed } = scoreMap[user];
+
+
+            /*
+             * Completed
+             */
+            if (record.percent === 100) {
+                completed.push({
+                    rank: rank + 1,
+                    level: level.name,
+                    score: score(
+                        rank + 1,
+                        100,
+                        level.percentToQualify,
+                        totalLevels
+                    ),
+
+                    link: record.link,
+                });
+
+                return;
+            }
+
+
+            /*
+             * Progressed
+             */
+            progressed.push({
+                rank: rank + 1,
+                level: level.name,
+                percent: record.percent,
+                score: score(
+                    rank + 1,
+                    record.percent,
+                    level.percentToQualify,
+                    totalLevels
+                ),
+
+                link: record.link,
+            });
+        });
+    });
+
+    /*
+     * Wrap in extra Object containing
+     * the user and total score
+     */
+    const res = Object.entries(scoreMap).map(([user, scores]) => {
+        const {
+            verified,
+            completed,
+            progressed
+        } = scores;
+
+        const total = [verified, completed, progressed]
+            .flat()
+            .reduce(
+                (prev, cur) => prev + cur.score,
+                0
+            );
+
+        return {
+            user,
+            total: round(total),
+            ...scores,
+        };
+    });
+
+
+    /*
+     * Sort by total score
+     */
+    return [
+        res.sort((a, b) => b.total - a.total),
+        errs
+    ];
+}
