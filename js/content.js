@@ -1,9 +1,5 @@
 import { round, score } from './score.js';
 
-/**
- * Path to directory containing _list.json,
- * _packs.json and all levels.
- */
 const dir = '/data';
 
 
@@ -83,14 +79,6 @@ export async function fetchList() {
    FIND LEVEL
    ========================================================= */
 
-/**
- * Finds a level inside fetchList().
- *
- * The identifier can be:
- * - level name
- * - level path
- * - level id
- */
 export function findLevel(list, identifier) {
 
     if (!Array.isArray(list)) {
@@ -224,12 +212,6 @@ export async function fetchLevelPacks() {
             }
 
 
-            /*
-             * Store by the actual level path.
-             * This is important because List.js
-             * uses level.path.
-             */
-
             const key =
                 level.path;
 
@@ -280,21 +262,9 @@ export async function fetchEditors() {
 
 
 /* =========================================================
-   GET COMPLETED USERS FOR A PACK
+   LEVEL -> COMPLETED USERS
    ========================================================= */
 
-/**
- * A player has completed a level when:
- *
- * 1. They have a 100% record
- *
- * OR
- *
- * 2. They are the verifier of the level
- *
- * Therefore verifiers automatically count as
- * completed/victors.
- */
 function getLevelCompletedUsers(level) {
 
     const users = new Map();
@@ -375,14 +345,6 @@ function getLevelCompletedUsers(level) {
    COMPLETED PACKS FOR PLAYER
    ========================================================= */
 
-/**
- * Returns every pack completed by a player.
- *
- * A player must have completed EVERY level
- * in the pack.
- *
- * Verifiers count as completed.
- */
 export function getCompletedPacks(
     username,
     packs,
@@ -421,13 +383,8 @@ export function getCompletedPacks(
         }
 
 
-        let completed =
-            true;
+        let completed = true;
 
-
-        /*
-         * Check every level in the pack.
-         */
 
         for (
             const identifier
@@ -440,11 +397,6 @@ export function getCompletedPacks(
                     identifier
                 );
 
-
-            /*
-             * If the level cannot be found,
-             * the pack cannot be completed.
-             */
 
             if (index === -1) {
 
@@ -473,11 +425,6 @@ export function getCompletedPacks(
                     level
                 );
 
-
-            /*
-             * Player did not complete
-             * this particular level.
-             */
 
             if (
                 !users.has(userKey)
@@ -518,6 +465,125 @@ export function getCompletedPacks(
 
 
 /* =========================================================
+   CREATED LEVELS FOR PLAYER
+   ========================================================= */
+
+/*
+ * Supports both:
+ *
+ * creator: "Username"
+ *
+ * and:
+ *
+ * creators: ["Username", "Username2"]
+ */
+
+export function getCreatedLevels(
+    username,
+    list
+) {
+
+    if (
+        !username ||
+        !Array.isArray(list)
+    ) {
+        return [];
+    }
+
+
+    const userKey =
+        String(username)
+            .trim()
+            .toLowerCase();
+
+
+    const createdLevels = [];
+
+
+    list.forEach(
+        ([level], index) => {
+
+            if (!level) {
+                return;
+            }
+
+
+            const creators = [];
+
+
+            /*
+             * Single creator
+             */
+
+            if (level.creator) {
+
+                creators.push(
+                    String(level.creator)
+                );
+
+            }
+
+
+            /*
+             * Multiple creators
+             */
+
+            if (
+                Array.isArray(level.creators)
+            ) {
+
+                creators.push(
+                    ...level.creators.map(
+                        creator =>
+                            String(creator)
+                    )
+                );
+
+            }
+
+
+            const isCreator =
+                creators.some(
+                    creator =>
+                        creator
+                            .trim()
+                            .toLowerCase() ===
+                        userKey
+                );
+
+
+            if (!isCreator) {
+                return;
+            }
+
+
+            createdLevels.push({
+
+                rank:
+                    index + 1,
+
+                level:
+                    level.name,
+
+                link:
+                    level.verification ||
+                    level.link ||
+                    null,
+
+                path:
+                    level.path
+
+            });
+
+        }
+    );
+
+
+    return createdLevels;
+}
+
+
+/* =========================================================
    LEADERBOARD
    ========================================================= */
 
@@ -540,10 +606,6 @@ export async function fetchLeaderboard() {
     const packs =
         await fetchPacks();
 
-
-    /*
-     * Number of levels.
-     */
 
     const totalLevels =
         list.length;
@@ -571,61 +633,63 @@ export async function fetchLeaderboard() {
 
 
             /*
-             * =============================================
              * VERIFIER
-             * =============================================
              */
 
-            const verifier =
-                Object.keys(scoreMap).find(
-                    u =>
-                        u.toLowerCase() ===
-                        level.verifier.toLowerCase()
-                ) || level.verifier;
+            if (level.verifier) {
+
+                const verifier =
+                    Object.keys(scoreMap).find(
+                        u =>
+                            u.toLowerCase() ===
+                            level.verifier.toLowerCase()
+                    ) || level.verifier;
 
 
-            scoreMap[verifier] ??= {
+                scoreMap[verifier] ??= {
 
-                verified: [],
+                    verified: [],
 
-                completed: [],
+                    completed: [],
 
-                progressed: []
+                    progressed: [],
 
-            };
+                    created: []
 
-
-            const {
-                verified
-            } = scoreMap[verifier];
+                };
 
 
-            verified.push({
+                const {
+                    verified
+                } = scoreMap[verifier];
 
-                rank:
-                    rank + 1,
 
-                level:
-                    level.name,
+                verified.push({
 
-                score:
-                    score(
+                    rank:
                         rank + 1,
-                        100,
-                        level.percentToQualify,
-                        totalLevels
-                    ),
 
-                link:
-                    level.verification
+                    level:
+                        level.name,
 
-            });
+                    score:
+                        score(
+                            rank + 1,
+                            100,
+                            level.percentToQualify,
+                            totalLevels
+                        ),
+
+                    link:
+                        level.verification
+
+                });
+
+            }
 
 
             /*
-             * =============================================
              * RECORDS
-             * =============================================
              */
 
             for (
@@ -652,7 +716,9 @@ export async function fetchLeaderboard() {
 
                     completed: [],
 
-                    progressed: []
+                    progressed: [],
+
+                    created: []
 
                 };
 
@@ -670,11 +736,6 @@ export async function fetchLeaderboard() {
                 if (
                     Number(record.percent) === 100
                 ) {
-
-                    /*
-                     * Do not add verifier twice
-                     * if they also have a 100% record.
-                     */
 
                     const alreadyCompleted =
                         completed.some(
@@ -750,7 +811,7 @@ export async function fetchLeaderboard() {
 
 
     /* =====================================================
-       ADD COMPLETED PACKS
+       ADD COMPLETED PACKS + CREATED LEVELS
        ===================================================== */
 
     for (
@@ -762,6 +823,13 @@ export async function fetchLeaderboard() {
             getCompletedPacks(
                 user,
                 packs || [],
+                list
+            );
+
+
+        scoreMap[user].created =
+            getCreatedLevels(
+                user,
                 list
             );
 
@@ -781,7 +849,8 @@ export async function fetchLeaderboard() {
                         verified,
                         completed,
                         progressed,
-                        packs
+                        packs,
+                        created
                     } = scores;
 
 
@@ -817,7 +886,10 @@ export async function fetchLeaderboard() {
                         progressed,
 
                         packs:
-                            packs || []
+                            packs || [],
+
+                        created:
+                            created || []
 
                     };
 
