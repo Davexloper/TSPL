@@ -7,5 +7,12 @@
     "verification": "https://youtu.be/NIPPFGFFo1s",
     "percentToQualify": 100,
     "password": "No Password",
-    "records": []
+    "records": [
+        {
+            "user": "KirtaPP143",
+            "link": "https://www.youtube.com/watch?v=4cFQNSaqqvc",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
 }
