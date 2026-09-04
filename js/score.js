@@ -29,10 +29,10 @@ export function score(rank, percent, minPercent, totalLevels = 150) {
      * The amount of points is distributed evenly
      * between the first and last level.
      */
-    let score = 10000;
+    let score = 250;
 
     if (totalLevels > 1) {
-        score = 10000 - (rank - 1) * (249 / (totalLevels - 1));
+        score = 250 - (rank - 1) * (249 / (totalLevels - 1));
     }
 
     /*
