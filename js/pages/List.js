@@ -482,33 +482,51 @@ export default {
                  META
                  ================================================= -->
 
-            <div class="meta-container">
-
+           <div class="meta-container">
                 <div class="meta">
-
-
-                    <!-- ERRORS -->
-
-                    <div
-                        class="errors"
-                        v-show="errors.length > 0"
-                    >
-
-                        <p
-                            class="error"
-                            v-for="error of errors"
-                            :key="error"
-                        >
-                            {{ error }}
-                        </p>
-
+                    <div class="errors" v-show="errors.length > 0">
+                        <p class="error" v-for="error of errors">{{ error }}</p>
                     </div>
-
-
+                    <div class="og">
+                        <p class="type-label-md"></a></p>
+                    </div>
+                    <template v-if="editors">
+                        <h3>List Editors</h3>
+                        <ol class="editors">
+                            <li v-for="editor in editors">
+                                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
+                                <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
+                                <p v-else>{{ editor.name }}</p>
+                            </li>
+                        </ol>
+                    </template>
+                    <h3>Submission Requirements</h3>
+                    <p>
+                        Achieved the record without using hacks (however, FPS bypass is allowed, up to 240 FPS [CBF too])
+                    </p>
+                    <p>
+                        Achieved the record on the level that is listed on the site - please check the level ID before you submit a record
+                    </p>
+                    <p>
+                        Have either source audio or clicks/taps in the Raw Footage (You don't need it in the Record): Edited audio only does not count.
+                    </p>
+                    <p>
+                        The recording must have a previous attempt and entire death animation shown before the completion, unless the completion is on the first attempt. Everyplay records are exempt from this
+                    </p>
+                    <p>
+                        The recording must also show the player hit the endwall, or the completion will be invalidated.
+                    </p>
+                    <p>
+                        Do not use secret routes or bug routes
+                    </p>
+                    <p>
+                        Do not use easy modes, only a record of the unmodified level qualifies
+                    </p>
+                    <p>
+                        Once a level falls onto the Legacy List, we accept records for it for 24 hours after it falls off, then afterwards we never accept records for said level
+                    </p>
                 </div>
-
             </div>
-
         </main>
     `,
 
