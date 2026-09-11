@@ -1,1713 +1,430 @@
-/* =========================================================
-   PAGE LIST
-   DARK / COMPACT / GEOMETRY DASH STYLE
-   ========================================================= */
+import { store } from "../main.js";
+import { embed } from "../util.js";
+import { fetchList } from "../content.js";
 
-.page-list {
-    --accent: #ff7800;
-    --accent-light: #ff9a3c;
+import Spinner from "../components/Spinner.js";
+import LevelAuthors from "../components/List/LevelAuthors.js";
 
-    --bg-main: #08090c;
+export default {
+    components: {
+        Spinner,
+        LevelAuthors
+    },
 
-    --bg-card: rgba(15, 17, 22, 0.86);
-    --bg-card-hover: rgba(24, 26, 32, 0.94);
+    template: `
+        <main v-if="loading">
+            <Spinner></Spinner>
+        </main>
 
-    --bg-soft: rgba(255, 255, 255, 0.035);
-    --bg-softer: rgba(255, 255, 255, 0.018);
+        <main v-else class="page-list">
 
-    --border: rgba(255, 255, 255, 0.075);
-    --border-soft: rgba(255, 255, 255, 0.045);
+            <!-- =========================================
+                 LEFT — LEVEL LIST
+                 ========================================= -->
 
-    --text: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.62);
-    --text-dim: rgba(255, 255, 255, 0.4);
+            <section class="list-container">
 
-    width: 100%;
-    height: 100%;
+                <div class="list-header">
+                    <div>
+                        <span class="list-title">TSPL</span>
+                        <span class="list-subtitle">The Shitty List</span>
+                    </div>
 
-    min-width: 0;
-    min-height: 0;
+                    <span class="list-count">
+                        {{ list.length }} levels
+                    </span>
+                </div>
 
-    display: grid;
+                <div class="list-scroll">
 
-    /*
-        Screenshot:
-        LEFT    = ~25%
-        CENTER  = ~50%
-        RIGHT   = ~25%
-    */
-    grid-template-columns:
-        minmax(0, 1fr)
-        minmax(0, 2fr)
-        minmax(0, 1fr);
+                    <button
+                        v-for="([item, err], i) in list"
+                        :key="i"
+                        class="list-level"
+                        :class="{
+                            active: selected === i,
+                            error: !item
+                        }"
+                        @click="selected = i"
+                    >
 
-    gap: 10px;
+                        <span class="list-rank">
+                            {{ i + 1 <= 150 ? '#' + (i + 1) : 'L' }}
+                        </span>
 
-    box-sizing: border-box;
+                        <span class="list-level-name">
+                            {{ item?.name || 'Error (' + err + '.json)' }}
+                        </span>
 
-    color: var(--text);
+                        <span
+                            v-if="item"
+                            class="list-arrow"
+                        >
+                            →
+                        </span>
 
-    overflow: hidden;
-}
+                    </button>
 
+                </div>
 
-/* =========================================================
-   GENERAL CONTAINERS
-   ========================================================= */
+            </section>
 
-.page-list .list-container,
-.page-list .meta-container,
-.page-list .level-container {
-    min-width: 0;
-    min-height: 0;
 
-    box-sizing: border-box;
-}
+            <!-- =========================================
+                 CENTER — LEVEL
+                 ========================================= -->
 
+            <section class="level-container">
 
-/* =========================================================
-   LEFT LIST CONTAINER
-   ========================================================= */
+                <div
+                    v-if="level"
+                    class="level-panel"
+                >
 
-.page-list .list-container {
-    position: relative;
+                    <div class="level-heading">
 
-    width: 100%;
-    height: 100%;
+                        <div class="level-rank">
+                            #{{ selected + 1 }}
+                        </div>
 
-    padding: 10px 8px;
+                        <div>
+                            <h1>{{ level.name }}</h1>
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.035),
-            rgba(255, 255, 255, 0.008)
-        ),
-        var(--bg-card);
+                            <LevelAuthors
+                                :author="level.author"
+                                :creators="level.creators"
+                                :verifier="level.verifier"
+                            ></LevelAuthors>
+                        </div>
 
-    border: 1px solid var(--border);
+                    </div>
 
-    border-radius: 9px;
 
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+                    <!-- VIDEO -->
 
-    backdrop-filter: blur(8px);
+                    <div class="video-wrapper">
 
-    overflow-y: auto;
-    overflow-x: hidden;
-}
+                        <iframe
+                            class="video"
+                            id="videoframe"
+                            :src="video"
+                            frameborder="0"
+                            allowfullscreen
+                        ></iframe>
 
+                    </div>
 
-/* Top highlight */
 
-.page-list .list-container::before,
-.page-list .meta-container::before,
-.page-list .level-container::before {
-    content: "";
+                    <!-- STATS -->
 
-    position: absolute;
+                    <div class="stats">
 
-    top: 0;
+                        <div class="stat">
+                            <span class="stat-label">
+                                Points
+                            </span>
 
-    left: 12px;
-    right: 12px;
+                            <strong>
+                                {{ listScore(selected + 1) }}
+                            </strong>
+                        </div>
 
-    height: 1px;
+                        <div class="stat">
+                            <span class="stat-label">
+                                ID
+                            </span>
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 120, 0, 0.28),
-            transparent
-        );
+                            <strong>
+                                {{ level.id }}
+                            </strong>
+                        </div>
 
-    pointer-events: none;
-}
+                        <div class="stat">
+                            <span class="stat-label">
+                                Password
+                            </span>
 
+                            <strong>
+                                {{ level.password || 'Free to Copy' }}
+                            </strong>
+                        </div>
 
-/* =========================================================
-   LIST HEADER / TABS
-   ========================================================= */
+                    </div>
 
-.page-list .list-container .tabs,
-.page-list .list-container .categories {
-    display: flex;
 
-    width: 100%;
+                    <!-- LEVEL INFO -->
 
-    margin-bottom: 9px;
+                    <div class="level-info">
 
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.07);
-}
+                        <div>
+                            <span class="info-label">
+                                Verification
+                            </span>
 
+                            <a
+                                :href="level.verification"
+                                target="_blank"
+                            >
+                                Watch video
+                            </a>
+                        </div>
 
-/* Generic tab buttons */
+                        <div v-if="level.showcase">
+                            <span class="info-label">
+                                Showcase
+                            </span>
 
-.page-list .list-container .tabs button,
-.page-list .list-container .categories button {
-    flex: 1;
+                            <a
+                                :href="level.showcase"
+                                target="_blank"
+                            >
+                                Watch showcase
+                            </a>
+                        </div>
 
-    height: 38px;
+                    </div>
 
-    padding: 0 8px;
+                </div>
 
-    background: transparent;
 
-    color: rgba(255, 255, 255, 0.38);
+                <!-- NO LEVEL -->
 
-    border: 0;
+                <div
+                    v-else
+                    class="level-empty"
+                >
+                    <span>¯\\_(ツ)_/¯</span>
+                    <p>No level selected</p>
+                </div>
 
-    border-bottom:
-        2px solid transparent;
+            </section>
 
-    border-radius: 0;
 
-    box-shadow: none;
+            <!-- =========================================
+                 RIGHT — RECORDS ONLY
+                 ========================================= -->
 
-    font-size: 12px;
+            <aside class="records-container">
 
-    font-weight: 700;
+                <div
+                    v-if="level"
+                    class="records-panel"
+                >
 
-    text-transform: uppercase;
+                    <div class="records-header">
 
-    transition:
-        color 0.15s ease,
-        background 0.15s ease,
-        border-color 0.15s ease;
-}
+                        <div>
+                            <span class="records-label">
+                                RECORDS
+                            </span>
 
-.page-list .list-container .tabs button:hover,
-.page-list .list-container .categories button:hover {
-    color: rgba(255, 255, 255, 0.7);
+                            <h2>
+                                {{ level.name }}
+                            </h2>
+                        </div>
 
-    background:
-        rgba(255, 255, 255, 0.025);
+                        <span class="records-count">
+                            {{ level.records?.length || 0 }}
+                        </span>
 
-    transform: none;
+                    </div>
 
-    box-shadow: none;
-}
 
-.page-list .list-container .tabs button.active,
-.page-list .list-container .categories button.active {
-    color: #ffffff;
+                    <!-- QUALIFICATION -->
 
-    border-bottom-color:
-        var(--accent);
+                    <div class="qualification">
 
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(255, 120, 0, 0.025)
-        );
-}
+                        <span>
+                            Qualification
+                        </span>
 
+                        <strong v-if="selected + 1 <= 75">
+                            {{ level.percentToQualify }}%
+                        </strong>
 
-/* =========================================================
-   SEARCH
-   ========================================================= */
+                        <strong v-else-if="selected + 1 <= 150">
+                            100%
+                        </strong>
 
-.page-list .list-container input[type="search"],
-.page-list .list-container .search input,
-.page-list .list-container input {
-    width: 100%;
+                        <strong v-else>
+                            Closed
+                        </strong>
 
-    height: 28px;
+                    </div>
 
-    padding:
-        0 9px;
 
-    margin-bottom: 7px;
+                    <!-- RECORD LIST -->
 
-    background:
-        rgba(5, 6, 9, 0.65);
+                    <div class="records-list">
 
-    color: #ffffff;
+                        <div
+                            v-if="!level.records || level.records.length === 0"
+                            class="no-records"
+                        >
+                            No records yet.
+                        </div>
 
-    border:
-        1px solid rgba(255, 255, 255, 0.045);
+                        <a
+                            v-for="record in level.records"
+                            :key="record.user + '-' + record.percent"
+                            :href="record.link"
+                            target="_blank"
+                            class="record"
+                        >
 
-    border-radius: 5px;
+                            <div class="record-percent">
+                                {{ record.percent }}%
+                            </div>
 
-    outline: none;
+                            <div class="record-user">
+                                <span>
+                                    {{ record.user }}
+                                </span>
 
-    font-size: 10px;
+                                <small v-if="record.mobile">
+                                    Mobile
+                                </small>
+                            </div>
 
-    box-shadow: none;
-}
+                            <div class="record-hz">
+                                {{ record.hz }}Hz
+                            </div>
 
-.page-list .list-container input[type="search"]:focus,
-.page-list .list-container .search input:focus,
-.page-list .list-container input:focus {
-    border-color:
-        rgba(255, 120, 0, 0.35);
+                        </a>
 
-    box-shadow:
-        0 0 0 2px
-        rgba(255, 120, 0, 0.06);
-}
+                    </div>
 
+                </div>
 
-/* =========================================================
-   LEVEL LIST TABLE
-   ========================================================= */
+            </aside>
 
-.page-list .list {
-    width: 100%;
 
-    table-layout: fixed;
+            <!-- =========================================
+                 ERRORS
+                 ========================================= -->
 
-    border-collapse: separate;
+            <div
+                v-if="errors.length"
+                class="page-errors"
+            >
 
-    border-spacing:
-        0 3px;
-}
+                <p
+                    v-for="error in errors"
+                    :key="error"
+                >
+                    {{ error }}
+                </p>
 
+            </div>
 
-/* Rows */
+        </main>
+    `,
 
-.page-list .list tr {
-    height: 28px;
+    data: () => ({
+        list: [],
+        loading: true,
+        selected: 0,
+        errors: [],
+        store
+    }),
 
-    transition:
-        background 0.12s ease;
-}
+    computed: {
 
+        level() {
+            return this.list[this.selected]?.[0] || null;
+        },
 
-/* =========================================================
-   RANK
-   ========================================================= */
+        video() {
 
-.page-list .list .rank {
-    width: 38px;
+            if (!this.level) {
+                return "";
+            }
 
-    padding:
-        0 7px 0 0;
+            if (!this.level.showcase) {
+                return embed(this.level.verification);
+            }
 
-    text-align: right;
+            return embed(
+                this.toggledShowcase
+                    ? this.level.showcase
+                    : this.level.verification
+            );
+        }
 
-    color:
-        var(--text-dim);
+    },
 
-    font-size: 10px;
+    async mounted() {
 
-    font-weight: 700;
+        try {
 
-    font-variant-numeric:
-        tabular-nums;
+            this.list = await fetchList();
 
-    white-space:
-        nowrap;
+            if (!this.list) {
 
-    transition:
-        color 0.12s ease;
-}
+                this.errors.push(
+                    "Failed to load list. Retry in a few minutes or notify list staff."
+                );
 
-.page-list .list tr:hover .rank {
-    color:
-        var(--accent-light);
-}
+                this.list = [];
 
+            } else {
 
-/* =========================================================
-   LEVEL CELL
-   ========================================================= */
+                this.errors.push(
+                    ...this.list
+                        .filter(([_, err]) => err)
+                        .map(([_, err]) => {
+                            return `Failed to load level. (${err}.json)`;
+                        })
+                );
 
-.page-list .list .level {
-    width: 100%;
+            }
 
-    padding: 0;
-}
+        } catch (error) {
 
+            console.error(error);
 
-/* =========================================================
-   LEVEL BUTTON
-   ========================================================= */
+            this.errors.push(
+                "Failed to load list."
+            );
 
-.page-list .list .level button {
-    position: relative;
+            this.list = [];
 
-    display: flex;
+        } finally {
 
-    align-items: center;
+            this.loading = false;
 
-    width: 100%;
-    height: 27px;
+        }
 
-    padding:
-        0 9px;
+    },
 
-    box-sizing: border-box;
+    methods: {
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.035),
-            rgba(255, 255, 255, 0.018)
-        );
+        embed,
 
-    color:
-        rgba(255, 255, 255, 0.78);
+        /**
+         * Calculate points based on the total number of levels.
+         *
+         * #1 = 250 points
+         * Last level = 1 point
+         */
+        listScore(rank) {
 
-    border:
-        1px solid var(--border-soft);
+            const totalLevels = this.list.length;
 
-    border-radius: 5px;
+            if (totalLevels <= 1) {
+                return 250;
+            }
 
-    font-size: 10.5px;
+            const points =
+                250 -
+                (rank - 1) *
+                (249 / (totalLevels - 1));
 
-    font-weight: 500;
+            return Math.max(
+                1,
+                Math.round(points)
+            );
+        }
 
-    line-height: 25px;
-
-    text-align: left;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    cursor: pointer;
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.018);
-
-    transform: none;
-
-    transition:
-        background 0.12s ease,
-        border-color 0.12s ease,
-        color 0.12s ease,
-        transform 0.12s ease,
-        box-shadow 0.12s ease;
-}
-
-
-/* Small orange indicator */
-
-.page-list .list .level button::before {
-    content: "";
-
-    flex-shrink: 0;
-
-    width: 2px;
-    height: 0;
-
-    margin-right: 0;
-
-    border-radius: 2px;
-
-    background:
-        var(--accent);
-
-    opacity: 0;
-
-    transition:
-        height 0.12s ease,
-        margin-right 0.12s ease,
-        opacity 0.12s ease;
-}
-
-
-/* Hover */
-
-.page-list .list .level button:hover {
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255, 120, 0, 0.08),
-            rgba(255, 255, 255, 0.03)
-        );
-
-    border-color:
-        rgba(255, 120, 0, 0.23);
-
-    color:
-        #ffffff;
-
-    transform:
-        translateX(1px);
-
-    box-shadow:
-        0 3px 10px
-        rgba(0, 0, 0, 0.16);
-}
-
-.page-list .list .level button:hover::before {
-    height: 12px;
-
-    margin-right: 6px;
-
-    opacity: 1;
-}
-
-
-/* =========================================================
-   ACTIVE LEVEL
-   ========================================================= */
-
-.page-list .list .level.active button {
-    background:
-        linear-gradient(
-            100deg,
-            #ff7800,
-            #ff8a1c
-        );
-
-    border-color:
-        rgba(255, 185, 105, 0.5);
-
-    color:
-        #ffffff;
-
-    font-weight:
-        700;
-
-    transform:
-        translateX(1px);
-
-    box-shadow:
-        0 5px 14px
-        rgba(255, 120, 0, 0.18),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.16);
-}
-
-.page-list .list .level.active button::before {
-    display: none;
-}
-
-
-/* =========================================================
-   CENTER LEVEL CONTAINER
-   ========================================================= */
-
-.page-list .level-container {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    padding: 0;
-
-    box-sizing: border-box;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-
-/* =========================================================
-   ACTUAL LEVEL CARD
-   ========================================================= */
-
-.page-list .level-container .level {
-    display: flex;
-
-    flex-direction: column;
-
-    width: 100%;
-    min-width: 0;
-
-    padding:
-        10px 14px 16px;
-
-    gap:
-        8px;
-
-    box-sizing: border-box;
-
-    color:
-        var(--text);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.035),
-            rgba(255, 255, 255, 0.008)
-        ),
-        rgba(15, 17, 22, 0.78);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        9px;
-
-    box-shadow:
-        0 12px 32px
-        rgba(0, 0, 0, 0.25),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.02);
-
-    backdrop-filter:
-        blur(8px);
-}
-
-
-/* =========================================================
-   TITLE
-   ========================================================= */
-
-.page-list .level-container .level h1,
-.page-list .level-container .level h2 {
-    position: relative;
-
-    margin:
-        0;
-
-    padding:
-        0 0 6px;
-
-    color:
-        #ffffff;
-
-    font-size:
-        1.15rem;
-
-    font-weight:
-        700;
-
-    line-height:
-        1.2;
-
-    letter-spacing:
-        -0.015em;
-
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.09);
-}
-
-
-/* Orange title line */
-
-.page-list .level-container .level h1::after,
-.page-list .level-container .level h2::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    bottom:
-        -1px;
-
-    width:
-        40px;
-
-    height:
-        2px;
-
-    background:
-        var(--accent);
-
-    border-radius:
-        2px;
-}
-
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
-
-.page-list .level-container .level > p {
-    margin:
-        0;
-
-    color:
-        rgba(255, 255, 255, 0.65);
-
-    font-size:
-        9.5px;
-
-    line-height:
-        1.45;
-}
-
-
-/* =========================================================
-   VIDEO
-   ========================================================= */
-
-.page-list .level-container .level .video {
-    position: relative;
-
-    width: 100%;
-
-    aspect-ratio:
-        16 / 9;
-
-    margin:
-        1px 0;
-
-    padding:
-        0;
-
-    overflow:
-        hidden;
-
-    background:
-        #050608;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.075);
-
-    border-radius:
-        7px;
-
-    box-shadow:
-        0 8px 22px
-        rgba(0, 0, 0, 0.3);
-}
-
-
-/* Video overlay */
-
-.page-list .level-container .level .video::after {
-    content: "";
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.025);
-
-    border-radius:
-        inherit;
-
-    pointer-events:
-        none;
-}
-
-
-.page-list .level-container .level .video iframe,
-.page-list .level-container .level .video video {
-    display:
-        block;
-
-    width:
-        100%;
-
-    height:
-        100%;
-
-    border:
-        0;
-}
-
-
-/* =========================================================
-   TAGS
-   ========================================================= */
-
-.page-list .level-container .level .tags {
-    display:
-        flex;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        4px;
-
-    margin:
-        0;
-}
-
-
-.page-list .level-container .level .tags > * {
-    padding:
-        2px 6px;
-
-    color:
-        rgba(255, 255, 255, 0.7);
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.08);
-
-    border-radius:
-        4px;
-
-    font-size:
-        8px;
-
-    font-weight:
-        600;
-
-    line-height:
-        13px;
-
-    transition:
-        background 0.12s ease,
-        border-color 0.12s ease,
-        color 0.12s ease;
-}
-
-
-.page-list .level-container .level .tags > *:hover {
-    color:
-        #ffffff;
-
-    background:
-        rgba(255, 120, 0, 0.08);
-
-    border-color:
-        rgba(255, 120, 0, 0.23);
-}
-
-
-/* =========================================================
-   STATS
-   ========================================================= */
-
-.page-list .level-container .level .stats {
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    width:
-        100%;
-
-    margin:
-        1px 0 0;
-
-    padding:
-        0;
-
-    background:
-        rgba(255, 255, 255, 0.015);
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.07);
-
-    border-radius:
-        6px;
-
-    overflow:
-        hidden;
-}
-
-
-.page-list .level-container .level .stats li {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    min-height:
-        48px;
-
-    padding:
-        5px;
-
-    background:
-        transparent;
-
-    border:
-        0;
-
-    border-right:
-        1px solid
-        rgba(255, 255, 255, 0.07);
-
-    gap:
-        2px;
-
-    transition:
-        background 0.12s ease;
-}
-
-
-.page-list .level-container .level .stats li:last-child {
-    border-right:
-        0;
-}
-
-
-.page-list .level-container .level .stats li:hover {
-    background:
-        rgba(255, 120, 0, 0.035);
-
-    transform:
-        none;
-}
-
-
-/* Stat labels */
-
-.page-list .level-container .level .stats li label,
-.page-list .level-container .level .stats li .label {
-    color:
-        var(--accent);
-
-    font-size:
-        7px;
-
-    font-weight:
-        700;
-
-    letter-spacing:
-        0.04em;
-
-    text-transform:
-        uppercase;
-}
-
-
-/* Stat values */
-
-.page-list .level-container .level .stats li strong,
-.page-list .level-container .level .stats li .value {
-    color:
-        #ffffff;
-
-    font-size:
-        13px;
-
-    font-weight:
-        600;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-/* =========================================================
-   AUTHORS / INFO
-   ========================================================= */
-
-.page-list .level-container .level .level-authors {
-    display:
-        grid;
-
-    grid-template-columns:
-        max-content 1fr;
-
-    gap:
-        3px 8px;
-
-    margin:
-        0;
-
-    padding:
-        5px 7px;
-
-    background:
-        rgba(255, 255, 255, 0.015);
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.05);
-
-    border-radius:
-        5px;
-}
-
-
-.page-list .level-container .level .level-authors > * {
-    color:
-        rgba(255, 255, 255, 0.45);
-
-    font-size:
-        8px;
-}
-
-
-/* =========================================================
-   RIGHT RECORDS CONTAINER
-   ONLY RECORDS
-   ========================================================= */
-
-.page-list .meta-container {
-    position:
-        relative;
-
-    width:
-        100%;
-
-    height:
-        100%;
-
-    padding:
-        10px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.035),
-            rgba(255, 255, 255, 0.008)
-        ),
-        var(--bg-card);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        9px;
-
-    box-shadow:
-        0 10px 30px
-        rgba(0, 0, 0, 0.25),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.02);
-
-    backdrop-filter:
-        blur(8px);
-
-    overflow:
-        auto;
-}
-
-
-/* =========================================================
-   META
-   ========================================================= */
-
-.page-list .meta {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    width:
-        100%;
-
-    gap:
-        8px;
-
-    color:
-        #ffffff;
-}
-
-
-/* =========================================================
-   RECORDS HEADER
-   ========================================================= */
-
-.page-list .meta h2,
-.page-list .meta h3,
-.page-list .meta .records-title {
-    position:
-        relative;
-
-    margin:
-        0;
-
-    padding:
-        0 0 7px;
-
-    color:
-        #ffffff;
-
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.09);
-
-    font-size:
-        0.9rem;
-
-    font-weight:
-        700;
-}
-
-
-.page-list .meta h2::after,
-.page-list .meta h3::after,
-.page-list .meta .records-title::after {
-    content: "";
-
-    position:
-        absolute;
-
-    left:
-        0;
-
-    bottom:
-        -1px;
-
-    width:
-        30px;
-
-    height:
-        2px;
-
-    background:
-        var(--accent);
-
-    border-radius:
-        2px;
-}
-
-
-/* =========================================================
-   RECORD SEARCH
-   ========================================================= */
-
-.page-list .meta input,
-.page-list .meta input[type="search"],
-.page-list .meta .search input {
-    width:
-        100%;
-
-    height:
-        28px;
-
-    padding:
-        0 9px;
-
-    margin:
-        0;
-
-    background:
-        rgba(5, 6, 9, 0.65);
-
-    color:
-        #ffffff;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.045);
-
-    border-radius:
-        5px;
-
-    font-size:
-        9px;
-
-    box-shadow:
-        none;
-}
-
-
-.page-list .meta input:focus,
-.page-list .meta input[type="search"]:focus,
-.page-list .meta .search input:focus {
-    border-color:
-        rgba(255, 120, 0, 0.3);
-
-    box-shadow:
-        0 0 0 2px
-        rgba(255, 120, 0, 0.05);
-}
-
-
-/* =========================================================
-   RECORD TABLE
-   ========================================================= */
-
-.page-list .meta .records {
-    width:
-        100%;
-
-    table-layout:
-        fixed;
-
-    border-collapse:
-        separate;
-
-    border-spacing:
-        0 3px;
-
-    color:
-        #ffffff;
-
-    font-size:
-        9px;
-}
-
-
-/* Rows */
-
-.page-list .meta .records tr {
-    transition:
-        background 0.12s ease;
-}
-
-
-.page-list .meta .records tr:hover {
-    background:
-        rgba(255, 120, 0, 0.035);
-}
-
-
-/* Cells */
-
-.page-list .meta .records td {
-    padding:
-        5px 3px;
-
-    color:
-        rgba(255, 255, 255, 0.65);
-
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.035);
-}
-
-
-/* User */
-
-.page-list .meta .records .user {
-    width:
-        100%;
-
-    overflow:
-        hidden;
-
-    text-overflow:
-        ellipsis;
-
-    white-space:
-        nowrap;
-
-    color:
-        rgba(255, 255, 255, 0.8);
-}
-
-
-/* Percentage */
-
-.page-list .meta .records .percent {
-    color:
-        #ffffff;
-
-    text-align:
-        right;
-
-    font-weight:
-        600;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-/* Hz / date */
-
-.page-list .meta .records .hz {
-    color:
-        var(--text-dim);
-
-    text-align:
-        right;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-/* Links */
-
-.page-list .meta .records a {
-    color:
-        rgba(255, 255, 255, 0.8);
-
-    text-decoration:
-        none;
-
-    transition:
-        color 0.12s ease;
-}
-
-
-.page-list .meta .records a:hover {
-    color:
-        var(--accent-light);
-}
-
-
-/* =========================================================
-   RECORD FLAGS / ICONS
-   ========================================================= */
-
-.page-list .meta .records img {
-    width:
-        16px;
-
-    height:
-        16px;
-
-    object-fit:
-        contain;
-
-    vertical-align:
-        middle;
-
-    border-radius:
-        2px;
-}
-
-
-/* =========================================================
-   PAGINATION
-   ========================================================= */
-
-.page-list .meta .pagination {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        4px;
-
-    margin-top:
-        2px;
-}
-
-
-.page-list .meta .pagination button {
-    min-width:
-        28px;
-
-    height:
-        25px;
-
-    padding:
-        0 6px;
-
-    background:
-        rgba(255, 255, 255, 0.025);
-
-    color:
-        rgba(255, 255, 255, 0.5);
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.06);
-
-    border-radius:
-        4px;
-
-    box-shadow:
-        none;
-
-    font-size:
-        8px;
-}
-
-
-.page-list .meta .pagination button:hover {
-    background:
-        rgba(255, 120, 0, 0.08);
-
-    color:
-        #ffffff;
-
-    border-color:
-        rgba(255, 120, 0, 0.25);
-
-    transform:
-        none;
-
-    box-shadow:
-        none;
-}
-
-
-.page-list .meta .pagination button.active {
-    background:
-        var(--accent);
-
-    color:
-        #ffffff;
-
-    border-color:
-        var(--accent);
-}
-
-
-/* =========================================================
-   YOUTUBE / VIDEO ICON ON RIGHT
-   ========================================================= */
-
-.page-list .meta .youtube,
-.page-list .meta .video-link {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    width:
-        28px;
-
-    height:
-        24px;
-
-    margin-left:
-        auto;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.06);
-
-    border-radius:
-        5px;
-
-    color:
-        #ffffff;
-
-    transition:
-        background 0.12s ease,
-        border-color 0.12s ease;
-}
-
-
-.page-list .meta .youtube:hover,
-.page-list .meta .video-link:hover {
-    background:
-        rgba(255, 120, 0, 0.08);
-
-    border-color:
-        rgba(255, 120, 0, 0.25);
-}
-
-
-/* =========================================================
-   LEVEL PACK
-   ========================================================= */
-
-.page-list .level-pack-panel {
-    position:
-        relative;
-
-    width:
-        100%;
-
-    padding:
-        9px;
-
-    box-sizing:
-        border-box;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.035),
-            rgba(255, 255, 255, 0.012)
-        );
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.06);
-
-    border-left:
-        2px solid
-        var(--pack-color, var(--accent));
-
-    border-radius:
-        6px;
-
-    box-shadow:
-        0 5px 16px
-        rgba(0, 0, 0, 0.18);
-}
-
-
-.page-list .level-pack-header {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    gap:
-        6px;
-
-    margin-bottom:
-        5px;
-}
-
-
-.page-list .level-pack-title {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        5px;
-
-    min-width:
-        0;
-}
-
-
-.page-list .level-pack-title h3 {
-    margin:
-        0;
-
-    color:
-        #ffffff;
-
-    font-size:
-        10px;
-
-    font-weight:
-        700;
-}
-
-
-.page-list .level-pack-progress {
-    flex-shrink:
-        0;
-
-    color:
-        var(--text-dim);
-
-    font-size:
-        8px;
-
-    font-variant-numeric:
-        tabular-nums;
-}
-
-
-.page-list .level-pack-levels {
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    gap:
-        2px;
-}
-
-
-.page-list .level-pack-level {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        5px;
-
-    padding:
-        4px;
-
-    color:
-        rgba(255, 255, 255, 0.7);
-
-    border-radius:
-        4px;
-
-    transition:
-        background 0.12s ease,
-        transform 0.12s ease;
-}
-
-
-.page-list .level-pack-level:hover {
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    transform:
-        translateX(2px);
-}
-
-
-/* =========================================================
-   SCROLLBARS
-   ========================================================= */
-
-.page-list ::-webkit-scrollbar {
-    width:
-        5px;
-
-    height:
-        5px;
-}
-
-
-.page-list ::-webkit-scrollbar-track {
-    background:
-        transparent;
-}
-
-
-.page-list ::-webkit-scrollbar-thumb {
-    background:
-        rgba(255, 255, 255, 0.11);
-
-    border-radius:
-        999px;
-}
-
-
-.page-list ::-webkit-scrollbar-thumb:hover {
-    background:
-        rgba(255, 120, 0, 0.4);
-}
-
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
-@media (max-width: 1200px) {
-
-    .page-list {
-        grid-template-columns:
-            minmax(260px, 1fr)
-            minmax(450px, 2fr)
-            minmax(240px, 1fr);
-
-        gap:
-            8px;
     }
-}
-
-
-@media (max-width: 950px) {
-
-    .page-list {
-        grid-template-columns:
-            minmax(230px, 1fr)
-            minmax(400px, 2fr);
-    }
-
-    .page-list .meta-container {
-        display:
-            none;
-    }
-}
-
-
-@media (max-width: 700px) {
-
-    .page-list {
-        display:
-            flex;
-
-        flex-direction:
-            column;
-
-        height:
-            auto;
-
-        min-height:
-            100%;
-
-        gap:
-            8px;
-
-        overflow:
-            visible;
-    }
-
-    .page-list .list-container {
-        width:
-            100%;
-
-        height:
-            400px;
-    }
-
-    .page-list .level-container {
-        width:
-            100%;
-
-        height:
-            auto;
-
-        overflow:
-            visible;
-    }
-
-    .page-list .meta-container {
-        display:
-            block;
-
-        width:
-            100%;
-
-        height:
-            auto;
-    }
-}
-
-
-@media (max-width: 450px) {
-
-    .page-list {
-        gap:
-            6px;
-    }
-
-    .page-list .list-container,
-    .page-list .meta-container {
-        padding:
-            8px 6px;
-    }
-
-    .page-list .level-container .level {
-        padding:
-            9px;
-    }
-
-    .page-list .level-container .level h1,
-    .page-list .level-container .level h2 {
-        font-size:
-            1rem;
-    }
-
-    .page-list .level-container .level .stats li {
-        min-height:
-            44px;
-    }
-
-    .page-list .level-container .level .stats li strong,
-    .page-list .level-container .level .stats li .value {
-        font-size:
-            11px;
-    }
-}
+};
