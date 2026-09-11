@@ -1,430 +1,1022 @@
 import { store } from "../main.js";
 import { embed } from "../util.js";
-import { fetchList } from "../content.js";
+import { score } from "../score.js";
+
+import {
+    fetchEditors,
+    fetchList,
+    fetchLevelPacks,
+    findLevel
+} from "../content.js";
 
 import Spinner from "../components/Spinner.js";
 import LevelAuthors from "../components/List/LevelAuthors.js";
 
+
+const roleIconMap = {
+
+    owner: "crown",
+
+    admin: "user-gear",
+
+    helper: "user-shield",
+
+    dev: "code",
+
+    trial: "user-lock",
+
+};
+
+
 export default {
+
     components: {
+
         Spinner,
+
         LevelAuthors
+
     },
 
+
     template: `
+
         <main v-if="loading">
+
             <Spinner></Spinner>
+
         </main>
 
-        <main v-else class="page-list">
 
-            <!-- =========================================
-                 LEFT — LEVEL LIST
-                 ========================================= -->
+        <main
+            v-else
+            class="page-list"
+        >
 
-            <section class="list-container">
 
-                <div class="list-header">
-                    <div>
-                        <span class="list-title">TSPL</span>
-                        <span class="list-subtitle">The Shitty List</span>
-                    </div>
+            <!-- =================================================
+                 LEVEL LIST
+                 ================================================= -->
 
-                    <span class="list-count">
-                        {{ list.length }} levels
-                    </span>
-                </div>
+            <div class="list-container">
 
-                <div class="list-scroll">
+                <table
+                    class="list"
+                    v-if="list"
+                >
 
-                    <button
-                        v-for="([item, err], i) in list"
+                    <tr
+                        v-for="([level, err], i) in list"
                         :key="i"
-                        class="list-level"
-                        :class="{
-                            active: selected === i,
-                            error: !item
-                        }"
-                        @click="selected = i"
                     >
 
-                        <span class="list-rank">
-                            {{ i + 1 <= 150 ? '#' + (i + 1) : 'L' }}
-                        </span>
+                        <td class="rank">
 
-                        <span class="list-level-name">
-                            {{ item?.name || 'Error (' + err + '.json)' }}
-                        </span>
-
-                        <span
-                            v-if="item"
-                            class="list-arrow"
-                        >
-                            →
-                        </span>
-
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- =========================================
-                 CENTER — LEVEL
-                 ========================================= -->
-
-            <section class="level-container">
-
-                <div
-                    v-if="level"
-                    class="level-panel"
-                >
-
-                    <div class="level-heading">
-
-                        <div class="level-rank">
-                            #{{ selected + 1 }}
-                        </div>
-
-                        <div>
-                            <h1>{{ level.name }}</h1>
-
-                            <LevelAuthors
-                                :author="level.author"
-                                :creators="level.creators"
-                                :verifier="level.verifier"
-                            ></LevelAuthors>
-                        </div>
-
-                    </div>
-
-
-                    <!-- VIDEO -->
-
-                    <div class="video-wrapper">
-
-                        <iframe
-                            class="video"
-                            id="videoframe"
-                            :src="video"
-                            frameborder="0"
-                            allowfullscreen
-                        ></iframe>
-
-                    </div>
-
-
-                    <!-- STATS -->
-
-                    <div class="stats">
-
-                        <div class="stat">
-                            <span class="stat-label">
-                                Points
-                            </span>
-
-                            <strong>
-                                {{ listScore(selected + 1) }}
-                            </strong>
-                        </div>
-
-                        <div class="stat">
-                            <span class="stat-label">
-                                ID
-                            </span>
-
-                            <strong>
-                                {{ level.id }}
-                            </strong>
-                        </div>
-
-                        <div class="stat">
-                            <span class="stat-label">
-                                Password
-                            </span>
-
-                            <strong>
-                                {{ level.password || 'Free to Copy' }}
-                            </strong>
-                        </div>
-
-                    </div>
-
-
-                    <!-- LEVEL INFO -->
-
-                    <div class="level-info">
-
-                        <div>
-                            <span class="info-label">
-                                Verification
-                            </span>
-
-                            <a
-                                :href="level.verification"
-                                target="_blank"
+                            <p
+                                v-if="i + 1 <= 150"
+                                class="type-label-lg"
                             >
-                                Watch video
-                            </a>
-                        </div>
+                                #{{ i + 1 }}
+                            </p>
 
-                        <div v-if="level.showcase">
-                            <span class="info-label">
-                                Showcase
-                            </span>
-
-                            <a
-                                :href="level.showcase"
-                                target="_blank"
+                            <p
+                                v-else
+                                class="type-label-lg"
                             >
-                                Watch showcase
-                            </a>
-                        </div>
+                                Legacy
+                            </p>
 
-                    </div>
-
-                </div>
+                        </td>
 
 
-                <!-- NO LEVEL -->
-
-                <div
-                    v-else
-                    class="level-empty"
-                >
-                    <span>¯\\_(ツ)_/¯</span>
-                    <p>No level selected</p>
-                </div>
-
-            </section>
-
-
-            <!-- =========================================
-                 RIGHT — RECORDS ONLY
-                 ========================================= -->
-
-            <aside class="records-container">
-
-                <div
-                    v-if="level"
-                    class="records-panel"
-                >
-
-                    <div class="records-header">
-
-                        <div>
-                            <span class="records-label">
-                                RECORDS
-                            </span>
-
-                            <h2>
-                                {{ level.name }}
-                            </h2>
-                        </div>
-
-                        <span class="records-count">
-                            {{ level.records?.length || 0 }}
-                        </span>
-
-                    </div>
-
-
-                    <!-- QUALIFICATION -->
-
-                    <div class="qualification">
-
-                        <span>
-                            Qualification
-                        </span>
-
-                        <strong v-if="selected + 1 <= 75">
-                            {{ level.percentToQualify }}%
-                        </strong>
-
-                        <strong v-else-if="selected + 1 <= 150">
-                            100%
-                        </strong>
-
-                        <strong v-else>
-                            Closed
-                        </strong>
-
-                    </div>
-
-
-                    <!-- RECORD LIST -->
-
-                    <div class="records-list">
-
-                        <div
-                            v-if="!level.records || level.records.length === 0"
-                            class="no-records"
-                        >
-                            No records yet.
-                        </div>
-
-                        <a
-                            v-for="record in level.records"
-                            :key="record.user + '-' + record.percent"
-                            :href="record.link"
-                            target="_blank"
-                            class="record"
+                        <td
+                            class="level"
+                            :class="{
+                                active: selected === i,
+                                error: !level
+                            }"
                         >
 
-                            <div class="record-percent">
-                                {{ record.percent }}%
-                            </div>
+                            <button
+                                @click="selectLevel(i)"
+                            >
 
-                            <div class="record-user">
-                                <span>
-                                    {{ record.user }}
+                                <span class="type-label-lg">
+                                    {{
+                                        level?.name ||
+                                        \`Error (\${err}.json)\`
+                                    }}
                                 </span>
 
-                                <small v-if="record.mobile">
-                                    Mobile
-                                </small>
-                            </div>
+                            </button>
 
-                            <div class="record-hz">
-                                {{ record.hz }}Hz
-                            </div>
+                        </td>
 
-                        </a>
+                    </tr>
 
-                    </div>
-
-                </div>
-
-            </aside>
-
-
-            <!-- =========================================
-                 ERRORS
-                 ========================================= -->
-
-            <div
-                v-if="errors.length"
-                class="page-errors"
-            >
-
-                <p
-                    v-for="error in errors"
-                    :key="error"
-                >
-                    {{ error }}
-                </p>
+                </table>
 
             </div>
 
+
+            <!-- =================================================
+                 LEVEL INFORMATION
+                 ================================================= -->
+
+            <div class="level-container">
+
+                <div
+                    class="level"
+                    v-if="level"
+                >
+
+
+                    <h1>
+                        {{ level.name }}
+                    </h1>
+
+
+                    <!-- =================================================
+                         PACKS
+                         ================================================= -->
+
+                    <div
+                        v-if="currentPacks.length"
+                        class="level-packs"
+                    >
+
+                        <div
+                            v-for="pack in currentPacks"
+                            :key="pack.id"
+                            class="level-pack-panel"
+                            :style="{
+                                '--pack-color': pack.color
+                            }"
+                        >
+
+                            <div class="level-pack-header">
+
+                                <div class="level-pack-title">
+
+                                    <span
+                                        class="level-pack-color"
+                                        :style="{
+                                            backgroundColor: pack.color
+                                        }"
+                                    ></span>
+
+                                    <h3>
+                                        {{ pack.name }}
+                                    </h3>
+
+                                </div>
+
+
+                                <span
+                                    class="level-pack-progress"
+                                >
+                                    {{ pack.levels.length }} Levels
+                                </span>
+
+                            </div>
+
+
+                            <div class="level-pack-levels">
+
+                                <div
+                                    v-for="(
+                                        identifier,
+                                        packIndex
+                                    ) in pack.levels"
+                                    :key="identifier"
+                                    class="level-pack-level"
+                                    :class="{
+                                        current:
+                                            isPackLevel(
+                                                identifier
+                                            )
+                                    }"
+                                    @click="
+                                        openPackLevel(
+                                            identifier
+                                        )
+                                    "
+                                >
+
+                                    <span
+                                        class="level-pack-status"
+                                        :class="{
+                                            current:
+                                                isPackLevel(
+                                                    identifier
+                                                )
+                                        }"
+                                    >
+                                        {{ packIndex + 1 }}
+                                    </span>
+
+
+                                    <span
+                                        class="level-pack-level-name"
+                                    >
+                                        {{ getPackLevelName(identifier) }}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- COMPLETED PLAYERS -->
+
+                            <div
+                                v-if="
+                                    getPackCompletedPlayers(
+                                        pack
+                                    ).length
+                                "
+                                class="level-pack-players"
+                            >
+
+                                <h4>
+                                    Completed by
+                                </h4>
+
+
+                                <div
+                                    v-for="player in getPackCompletedPlayers(pack)"
+                                    :key="player"
+                                    class="level-pack-player"
+                                >
+
+                                    <span
+                                        class="level-pack-player-name"
+                                    >
+                                        {{ player }}
+                                    </span>
+
+                                    <span
+                                        class="level-pack-player-count"
+                                    >
+                                        100%
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                v-else
+                                class="level-pack-players"
+                            >
+
+                                <h4>
+                                    Completed by
+                                </h4>
+
+                                <p>
+                                    Nobody yet.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         AUTHORS
+                         ================================================= -->
+
+                    <LevelAuthors
+                        :author="level.author"
+                        :creators="level.creators"
+                        :verifier="level.verifier"
+                    ></LevelAuthors>
+
+
+                    <!-- =================================================
+                         VIDEO
+                         ================================================= -->
+
+                    <iframe
+                        class="video"
+                        id="videoframe"
+                        :src="video"
+                        frameborder="0"
+                    ></iframe>
+
+
+                    <!-- =================================================
+                         STATS
+                         ================================================= -->
+
+                    <ul class="stats">
+
+                        <li>
+
+                            <div class="type-title-sm">
+                                Points when completed
+                            </div>
+
+                            <p>
+                                {{ listScore(selected + 1) }}
+                            </p>
+
+                        </li>
+
+
+                        <li>
+
+                            <div class="type-title-sm">
+                                ID
+                            </div>
+
+                            <p>
+                                {{ level.id }}
+                            </p>
+
+                        </li>
+
+
+                        <li>
+
+                            <div class="type-title-sm">
+                                Password
+                            </div>
+
+                            <p>
+                                {{ level.password || 'Free to Copy' }}
+                            </p>
+
+                        </li>
+
+                    </ul>
+
+
+                    <!-- =================================================
+                         RECORDS
+                         ================================================= -->
+
+                    <h2>
+                        Records
+                    </h2>
+
+
+                    <p v-if="selected + 1 <= 75">
+
+                        <strong>
+                            {{ level.percentToQualify }}%
+                        </strong>
+
+                        or better to qualify
+
+                    </p>
+
+
+                    <p v-else-if="selected + 1 <= 150">
+
+                        <strong>
+                            100%
+                        </strong>
+
+                        or better to qualify
+
+                    </p>
+
+
+                    <p v-else>
+
+                        This level does not accept new records.
+
+                    </p>
+
+
+                    <table class="records">
+
+                        <tr
+                            v-for="record in level.records"
+                            :key="
+                                record.user +
+                                record.percent
+                            "
+                            class="record"
+                        >
+
+                            <td class="percent">
+
+                                <p>
+                                    {{ record.percent }}%
+                                </p>
+
+                            </td>
+
+
+                            <td class="user">
+
+                                <a
+                                    :href="record.link"
+                                    target="_blank"
+                                    class="type-label-lg"
+                                >
+                                    {{ record.user }}
+                                </a>
+
+                            </td>
+
+
+                            <td class="mobile">
+
+                                <img
+                                    v-if="record.mobile"
+                                    :src="
+                                        \`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`
+                                    "
+                                    alt="Mobile"
+                                >
+
+                            </td>
+
+
+                            <td class="hz">
+
+                                <p>
+                                    {{ record.hz }}Hz
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     NO LEVEL
+                     ================================================= -->
+
+                <div
+                    v-else
+                    class="level"
+                    style="
+                        height: 100%;
+                        justify-content: center;
+                        align-items: center;
+                    "
+                >
+
+                    <p>
+                        (ノಠ益ಠ)ノ彡┻━┻
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 META
+                 ================================================= -->
+
+           <div class="meta-container">
+                <div class="meta">
+                    <div class="errors" v-show="errors.length > 0">
+                        <p class="error" v-for="error of errors">{{ error }}</p>
+                    </div>
+                    <div class="og">
+                        <p class="type-label-md"></a></p>
+                    </div>
+                </div>
+            </div>
         </main>
     `,
 
+
     data: () => ({
+
         list: [],
+
+        editors: [],
+
+        levelPacks: {},
+
         loading: true,
+
         selected: 0,
+
         errors: [],
-        store
+
+        roleIconMap,
+
+        store,
+
     }),
+
 
     computed: {
 
         level() {
-            return this.list[this.selected]?.[0] || null;
+
+            return this.list?.[this.selected]?.[0];
+
         },
+
+
+        currentPacks() {
+
+            if (!this.level) {
+                return [];
+            }
+
+
+            const result = [];
+
+
+            const possibleKeys = [
+
+                String(this.level.name)
+                    .toLowerCase(),
+
+                String(this.level.path)
+                    .toLowerCase(),
+
+                String(this.level.id)
+                    .toLowerCase(),
+
+            ];
+
+
+            for (
+                const key
+                of possibleKeys
+            ) {
+
+                if (
+                    this.levelPacks[key]
+                ) {
+
+                    for (
+                        const pack
+                        of this.levelPacks[key]
+                    ) {
+
+                        if (
+                            !result.some(
+                                p =>
+                                    p.id ===
+                                    pack.id
+                            )
+                        ) {
+
+                            result.push(pack);
+
+                        }
+                    }
+                }
+            }
+
+
+            return result;
+        },
+
 
         video() {
 
             if (!this.level) {
-                return "";
+                return '';
             }
 
+
             if (!this.level.showcase) {
-                return embed(this.level.verification);
+
+                return embed(
+                    this.level.verification
+                );
             }
+
 
             return embed(
                 this.toggledShowcase
                     ? this.level.showcase
                     : this.level.verification
             );
-        }
+        },
 
     },
 
+
     async mounted() {
 
-        try {
+        this.list =
+            await fetchList();
 
-            this.list = await fetchList();
 
-            if (!this.list) {
+        this.editors =
+            await fetchEditors();
+
+
+        this.levelPacks =
+            await fetchLevelPacks();
+
+
+        if (!this.list) {
+
+            this.errors = [
+
+                'Failed to load list. Retry in a few minutes or notify list staff.',
+
+            ];
+
+        } else {
+
+            this.errors.push(
+                ...this.list
+                    .filter(
+                        ([_, err]) =>
+                            err
+                    )
+                    .map(
+                        ([_, err]) =>
+                            `Failed to load level. (${err}.json)`
+                    )
+            );
+
+
+            if (!this.editors) {
 
                 this.errors.push(
-                    "Failed to load list. Retry in a few minutes or notify list staff."
-                );
-
-                this.list = [];
-
-            } else {
-
-                this.errors.push(
-                    ...this.list
-                        .filter(([_, err]) => err)
-                        .map(([_, err]) => {
-                            return `Failed to load level. (${err}.json)`;
-                        })
+                    'Failed to load list editors.'
                 );
 
             }
 
-        } catch (error) {
 
-            console.error(error);
+            /*
+             * Open level from URL query.
+             *
+             * Example:
+             *
+             * #/?level=Bloodbath
+             */
 
-            this.errors.push(
-                "Failed to load list."
-            );
+            const requestedLevel =
+                this.$route?.query?.level;
 
-            this.list = [];
 
-        } finally {
+            if (requestedLevel) {
 
-            this.loading = false;
+                const index =
+                    findLevel(
+                        this.list,
+                        requestedLevel
+                    );
+
+
+                if (index !== -1) {
+
+                    this.selected =
+                        index;
+
+                }
+            }
 
         }
 
+
+        this.loading = false;
     },
+
 
     methods: {
 
         embed,
 
-        /**
-         * Calculate points based on the total number of levels.
-         *
-         * #1 = 250 points
-         * Last level = 1 point
-         */
+
+        /* =====================================================
+           SELECT LEVEL
+           ===================================================== */
+
+        selectLevel(index) {
+
+            this.selected =
+                index;
+
+
+            const level =
+                this.list[index]?.[0];
+
+
+            if (
+                level &&
+                this.$route
+            ) {
+
+                this.$router.replace({
+
+                    path: '/',
+
+                    query: {
+                        level:
+                            level.path ||
+                            level.name
+                    }
+
+                });
+
+            }
+        },
+
+
+        /* =====================================================
+           OPEN PACK LEVEL
+           ===================================================== */
+
+        openPackLevel(identifier) {
+
+            const index =
+                findLevel(
+                    this.list,
+                    identifier
+                );
+
+
+            if (index === -1) {
+
+                console.error(
+                    `Could not find pack level: ${identifier}`
+                );
+
+                return;
+            }
+
+
+            const level =
+                this.list[index]?.[0];
+
+
+            if (!level) {
+                return;
+            }
+
+
+            this.selected =
+                index;
+
+
+            if (this.$router) {
+
+                this.$router.replace({
+
+                    path: '/',
+
+                    query: {
+
+                        level:
+                            level.path ||
+                            level.name
+
+                    }
+
+                });
+
+            }
+
+        },
+
+
+        /* =====================================================
+           GET PACK LEVEL NAME
+           ===================================================== */
+
+        getPackLevelName(identifier) {
+
+            const index =
+                findLevel(
+                    this.list,
+                    identifier
+                );
+
+
+            if (index === -1) {
+
+                return identifier;
+
+            }
+
+
+            return (
+                this.list[index][0]?.name ||
+                identifier
+            );
+        },
+
+
+        /* =====================================================
+           CURRENT LEVEL
+           ===================================================== */
+
+        isPackLevel(identifier) {
+
+            if (!this.level) {
+                return false;
+            }
+
+
+            const found =
+                findLevel(
+                    this.list,
+                    identifier
+                );
+
+
+            if (found === -1) {
+                return false;
+            }
+
+
+            return (
+                found ===
+                this.selected
+            );
+        },
+
+
+        /* =====================================================
+           COMPLETED PACK PLAYERS
+           ===================================================== */
+
+        getPackCompletedPlayers(pack) {
+
+            const players = [];
+
+
+            /*
+             * A player completed a pack if
+             * they have 100% on every level.
+             */
+
+            for (
+                const [level]
+                of this.list
+            ) {
+
+                if (!level) {
+                    continue;
+                }
+
+
+                const isInPack =
+                    pack.levels.some(
+                        identifier => {
+
+                            const search =
+                                String(
+                                    identifier
+                                ).toLowerCase();
+
+                            return (
+                                String(
+                                    level.name
+                                ).toLowerCase() ===
+                                search ||
+
+                                String(
+                                    level.path
+                                ).toLowerCase() ===
+                                search ||
+
+                                String(
+                                    level.id
+                                ).toLowerCase() ===
+                                search
+                            );
+
+                        }
+                    );
+
+
+                if (!isInPack) {
+                    continue;
+                }
+
+
+                for (
+                    const record
+                    of level.records || []
+                ) {
+
+                    if (
+                        record.percent ===
+                        100 &&
+                        record.user
+                    ) {
+
+                        if (
+                            !players.includes(
+                                record.user
+                            )
+                        ) {
+
+                            players.push(
+                                record.user
+                            );
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            /*
+             * Keep only players who have
+             * completed EVERY pack level.
+             */
+
+            return players.filter(
+                username => {
+
+                    return pack.levels.every(
+                        identifier => {
+
+                            const index =
+                                findLevel(
+                                    this.list,
+                                    identifier
+                                );
+
+
+                            if (
+                                index === -1
+                            ) {
+                                return false;
+                            }
+
+
+                            const level =
+                                this.list[index][0];
+
+
+                            return (
+                                level.records ||
+                                []
+                            ).some(
+                                record =>
+                                    record.user &&
+                                    record.user.toLowerCase() ===
+                                    username.toLowerCase() &&
+                                    record.percent ===
+                                    100
+                            );
+
+                        }
+                    );
+
+                }
+            );
+        },
+
+
+        /* =====================================================
+           SCORE
+           ===================================================== */
+
         listScore(rank) {
 
-            const totalLevels = this.list.length;
+            const totalLevels =
+                this.list.length;
 
-            if (totalLevels <= 1) {
+
+            if (
+                totalLevels <= 1
+            ) {
+
                 return 250;
+
             }
+
 
             const points =
                 250 -
                 (rank - 1) *
-                (249 / (totalLevels - 1));
+                (249 /
+                    (totalLevels - 1));
+
 
             return Math.max(
                 1,
                 Math.round(points)
             );
-        }
+        },
 
-    }
+
+        score,
+
+    },
+
 };
