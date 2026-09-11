@@ -1,1022 +1,1713 @@
-import { store } from "../main.js";
-import { embed } from "../util.js";
-import { score } from "../score.js";
+/* =========================================================
+   PAGE LIST
+   DARK / COMPACT / GEOMETRY DASH STYLE
+   ========================================================= */
 
-import {
-    fetchEditors,
-    fetchList,
-    fetchLevelPacks,
-    findLevel
-} from "../content.js";
+.page-list {
+    --accent: #ff7800;
+    --accent-light: #ff9a3c;
 
-import Spinner from "../components/Spinner.js";
-import LevelAuthors from "../components/List/LevelAuthors.js";
+    --bg-main: #08090c;
 
+    --bg-card: rgba(15, 17, 22, 0.86);
+    --bg-card-hover: rgba(24, 26, 32, 0.94);
 
-const roleIconMap = {
+    --bg-soft: rgba(255, 255, 255, 0.035);
+    --bg-softer: rgba(255, 255, 255, 0.018);
 
-    owner: "crown",
+    --border: rgba(255, 255, 255, 0.075);
+    --border-soft: rgba(255, 255, 255, 0.045);
 
-    admin: "user-gear",
+    --text: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.62);
+    --text-dim: rgba(255, 255, 255, 0.4);
 
-    helper: "user-shield",
+    width: 100%;
+    height: 100%;
 
-    dev: "code",
+    min-width: 0;
+    min-height: 0;
 
-    trial: "user-lock",
+    display: grid;
 
-};
+    /*
+        Screenshot:
+        LEFT    = ~25%
+        CENTER  = ~50%
+        RIGHT   = ~25%
+    */
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 2fr)
+        minmax(0, 1fr);
 
+    gap: 10px;
 
-export default {
+    box-sizing: border-box;
 
-    components: {
+    color: var(--text);
 
-        Spinner,
+    overflow: hidden;
+}
 
-        LevelAuthors
 
-    },
+/* =========================================================
+   GENERAL CONTAINERS
+   ========================================================= */
 
+.page-list .list-container,
+.page-list .meta-container,
+.page-list .level-container {
+    min-width: 0;
+    min-height: 0;
 
-    template: `
+    box-sizing: border-box;
+}
 
-        <main v-if="loading">
 
-            <Spinner></Spinner>
+/* =========================================================
+   LEFT LIST CONTAINER
+   ========================================================= */
 
-        </main>
+.page-list .list-container {
+    position: relative;
 
+    width: 100%;
+    height: 100%;
 
-        <main
-            v-else
-            class="page-list"
-        >
+    padding: 10px 8px;
 
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.008)
+        ),
+        var(--bg-card);
 
-            <!-- =================================================
-                 LEVEL LIST
-                 ================================================= -->
+    border: 1px solid var(--border);
 
-            <div class="list-container">
+    border-radius: 9px;
 
-                <table
-                    class="list"
-                    v-if="list"
-                >
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
 
-                    <tr
-                        v-for="([level, err], i) in list"
-                        :key="i"
-                    >
+    backdrop-filter: blur(8px);
 
-                        <td class="rank">
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
-                            <p
-                                v-if="i + 1 <= 150"
-                                class="type-label-lg"
-                            >
-                                #{{ i + 1 }}
-                            </p>
 
-                            <p
-                                v-else
-                                class="type-label-lg"
-                            >
-                                Legacy
-                            </p>
+/* Top highlight */
 
-                        </td>
+.page-list .list-container::before,
+.page-list .meta-container::before,
+.page-list .level-container::before {
+    content: "";
 
+    position: absolute;
 
-                        <td
-                            class="level"
-                            :class="{
-                                active: selected === i,
-                                error: !level
-                            }"
-                        >
+    top: 0;
 
-                            <button
-                                @click="selectLevel(i)"
-                            >
+    left: 12px;
+    right: 12px;
 
-                                <span class="type-label-lg">
-                                    {{
-                                        level?.name ||
-                                        \`Error (\${err}.json)\`
-                                    }}
-                                </span>
+    height: 1px;
 
-                            </button>
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 120, 0, 0.28),
+            transparent
+        );
 
-                        </td>
-
-                    </tr>
-
-                </table>
-
-            </div>
+    pointer-events: none;
+}
 
 
-            <!-- =================================================
-                 LEVEL INFORMATION
-                 ================================================= -->
+/* =========================================================
+   LIST HEADER / TABS
+   ========================================================= */
 
-            <div class="level-container">
+.page-list .list-container .tabs,
+.page-list .list-container .categories {
+    display: flex;
 
-                <div
-                    class="level"
-                    v-if="level"
-                >
+    width: 100%;
 
+    margin-bottom: 9px;
 
-                    <h1>
-                        {{ level.name }}
-                    </h1>
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+}
 
 
-                    <!-- =================================================
-                         PACKS
-                         ================================================= -->
+/* Generic tab buttons */
 
-                    <div
-                        v-if="currentPacks.length"
-                        class="level-packs"
-                    >
+.page-list .list-container .tabs button,
+.page-list .list-container .categories button {
+    flex: 1;
 
-                        <div
-                            v-for="pack in currentPacks"
-                            :key="pack.id"
-                            class="level-pack-panel"
-                            :style="{
-                                '--pack-color': pack.color
-                            }"
-                        >
+    height: 38px;
 
-                            <div class="level-pack-header">
+    padding: 0 8px;
 
-                                <div class="level-pack-title">
+    background: transparent;
 
-                                    <span
-                                        class="level-pack-color"
-                                        :style="{
-                                            backgroundColor: pack.color
-                                        }"
-                                    ></span>
+    color: rgba(255, 255, 255, 0.38);
 
-                                    <h3>
-                                        {{ pack.name }}
-                                    </h3>
+    border: 0;
 
-                                </div>
+    border-bottom:
+        2px solid transparent;
 
+    border-radius: 0;
 
-                                <span
-                                    class="level-pack-progress"
-                                >
-                                    {{ pack.levels.length }} Levels
-                                </span>
+    box-shadow: none;
 
-                            </div>
+    font-size: 12px;
 
+    font-weight: 700;
 
-                            <div class="level-pack-levels">
+    text-transform: uppercase;
 
-                                <div
-                                    v-for="(
-                                        identifier,
-                                        packIndex
-                                    ) in pack.levels"
-                                    :key="identifier"
-                                    class="level-pack-level"
-                                    :class="{
-                                        current:
-                                            isPackLevel(
-                                                identifier
-                                            )
-                                    }"
-                                    @click="
-                                        openPackLevel(
-                                            identifier
-                                        )
-                                    "
-                                >
+    transition:
+        color 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
 
-                                    <span
-                                        class="level-pack-status"
-                                        :class="{
-                                            current:
-                                                isPackLevel(
-                                                    identifier
-                                                )
-                                        }"
-                                    >
-                                        {{ packIndex + 1 }}
-                                    </span>
+.page-list .list-container .tabs button:hover,
+.page-list .list-container .categories button:hover {
+    color: rgba(255, 255, 255, 0.7);
 
+    background:
+        rgba(255, 255, 255, 0.025);
 
-                                    <span
-                                        class="level-pack-level-name"
-                                    >
-                                        {{ getPackLevelName(identifier) }}
-                                    </span>
+    transform: none;
 
-                                </div>
+    box-shadow: none;
+}
 
-                            </div>
+.page-list .list-container .tabs button.active,
+.page-list .list-container .categories button.active {
+    color: #ffffff;
 
+    border-bottom-color:
+        var(--accent);
 
-                            <!-- COMPLETED PLAYERS -->
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255, 120, 0, 0.025)
+        );
+}
 
-                            <div
-                                v-if="
-                                    getPackCompletedPlayers(
-                                        pack
-                                    ).length
-                                "
-                                class="level-pack-players"
-                            >
 
-                                <h4>
-                                    Completed by
-                                </h4>
+/* =========================================================
+   SEARCH
+   ========================================================= */
 
+.page-list .list-container input[type="search"],
+.page-list .list-container .search input,
+.page-list .list-container input {
+    width: 100%;
 
-                                <div
-                                    v-for="player in getPackCompletedPlayers(pack)"
-                                    :key="player"
-                                    class="level-pack-player"
-                                >
+    height: 28px;
 
-                                    <span
-                                        class="level-pack-player-name"
-                                    >
-                                        {{ player }}
-                                    </span>
+    padding:
+        0 9px;
 
-                                    <span
-                                        class="level-pack-player-count"
-                                    >
-                                        100%
-                                    </span>
+    margin-bottom: 7px;
 
-                                </div>
+    background:
+        rgba(5, 6, 9, 0.65);
 
-                            </div>
+    color: #ffffff;
 
+    border:
+        1px solid rgba(255, 255, 255, 0.045);
 
-                            <div
-                                v-else
-                                class="level-pack-players"
-                            >
+    border-radius: 5px;
 
-                                <h4>
-                                    Completed by
-                                </h4>
+    outline: none;
 
-                                <p>
-                                    Nobody yet.
-                                </p>
+    font-size: 10px;
 
-                            </div>
+    box-shadow: none;
+}
 
-                        </div>
+.page-list .list-container input[type="search"]:focus,
+.page-list .list-container .search input:focus,
+.page-list .list-container input:focus {
+    border-color:
+        rgba(255, 120, 0, 0.35);
 
-                    </div>
+    box-shadow:
+        0 0 0 2px
+        rgba(255, 120, 0, 0.06);
+}
 
 
-                    <!-- =================================================
-                         AUTHORS
-                         ================================================= -->
+/* =========================================================
+   LEVEL LIST TABLE
+   ========================================================= */
 
-                    <LevelAuthors
-                        :author="level.author"
-                        :creators="level.creators"
-                        :verifier="level.verifier"
-                    ></LevelAuthors>
+.page-list .list {
+    width: 100%;
 
+    table-layout: fixed;
 
-                    <!-- =================================================
-                         VIDEO
-                         ================================================= -->
+    border-collapse: separate;
 
-                    <iframe
-                        class="video"
-                        id="videoframe"
-                        :src="video"
-                        frameborder="0"
-                    ></iframe>
+    border-spacing:
+        0 3px;
+}
 
 
-                    <!-- =================================================
-                         STATS
-                         ================================================= -->
+/* Rows */
 
-                    <ul class="stats">
+.page-list .list tr {
+    height: 28px;
 
-                        <li>
+    transition:
+        background 0.12s ease;
+}
 
-                            <div class="type-title-sm">
-                                Points when completed
-                            </div>
 
-                            <p>
-                                {{ listScore(selected + 1) }}
-                            </p>
+/* =========================================================
+   RANK
+   ========================================================= */
 
-                        </li>
+.page-list .list .rank {
+    width: 38px;
 
+    padding:
+        0 7px 0 0;
 
-                        <li>
+    text-align: right;
 
-                            <div class="type-title-sm">
-                                ID
-                            </div>
+    color:
+        var(--text-dim);
 
-                            <p>
-                                {{ level.id }}
-                            </p>
+    font-size: 10px;
 
-                        </li>
+    font-weight: 700;
 
+    font-variant-numeric:
+        tabular-nums;
 
-                        <li>
+    white-space:
+        nowrap;
 
-                            <div class="type-title-sm">
-                                Password
-                            </div>
+    transition:
+        color 0.12s ease;
+}
 
-                            <p>
-                                {{ level.password || 'Free to Copy' }}
-                            </p>
+.page-list .list tr:hover .rank {
+    color:
+        var(--accent-light);
+}
 
-                        </li>
 
-                    </ul>
+/* =========================================================
+   LEVEL CELL
+   ========================================================= */
 
+.page-list .list .level {
+    width: 100%;
 
-                    <!-- =================================================
-                         RECORDS
-                         ================================================= -->
+    padding: 0;
+}
 
-                    <h2>
-                        Records
-                    </h2>
 
+/* =========================================================
+   LEVEL BUTTON
+   ========================================================= */
 
-                    <p v-if="selected + 1 <= 75">
+.page-list .list .level button {
+    position: relative;
 
-                        <strong>
-                            {{ level.percentToQualify }}%
-                        </strong>
+    display: flex;
 
-                        or better to qualify
+    align-items: center;
 
-                    </p>
+    width: 100%;
+    height: 27px;
 
+    padding:
+        0 9px;
 
-                    <p v-else-if="selected + 1 <= 150">
+    box-sizing: border-box;
 
-                        <strong>
-                            100%
-                        </strong>
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.018)
+        );
 
-                        or better to qualify
+    color:
+        rgba(255, 255, 255, 0.78);
 
-                    </p>
+    border:
+        1px solid var(--border-soft);
 
+    border-radius: 5px;
 
-                    <p v-else>
+    font-size: 10.5px;
 
-                        This level does not accept new records.
+    font-weight: 500;
 
-                    </p>
+    line-height: 25px;
 
+    text-align: left;
 
-                    <table class="records">
+    white-space: nowrap;
 
-                        <tr
-                            v-for="record in level.records"
-                            :key="
-                                record.user +
-                                record.percent
-                            "
-                            class="record"
-                        >
+    overflow: hidden;
 
-                            <td class="percent">
+    text-overflow: ellipsis;
 
-                                <p>
-                                    {{ record.percent }}%
-                                </p>
+    cursor: pointer;
 
-                            </td>
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.018);
 
+    transform: none;
 
-                            <td class="user">
+    transition:
+        background 0.12s ease,
+        border-color 0.12s ease,
+        color 0.12s ease,
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
 
-                                <a
-                                    :href="record.link"
-                                    target="_blank"
-                                    class="type-label-lg"
-                                >
-                                    {{ record.user }}
-                                </a>
 
-                            </td>
+/* Small orange indicator */
 
+.page-list .list .level button::before {
+    content: "";
 
-                            <td class="mobile">
+    flex-shrink: 0;
 
-                                <img
-                                    v-if="record.mobile"
-                                    :src="
-                                        \`/assets/phone-landscape\${store.dark ? '-dark' : ''}.svg\`
-                                    "
-                                    alt="Mobile"
-                                >
+    width: 2px;
+    height: 0;
 
-                            </td>
+    margin-right: 0;
 
+    border-radius: 2px;
 
-                            <td class="hz">
+    background:
+        var(--accent);
 
-                                <p>
-                                    {{ record.hz }}Hz
-                                </p>
+    opacity: 0;
 
-                            </td>
+    transition:
+        height 0.12s ease,
+        margin-right 0.12s ease,
+        opacity 0.12s ease;
+}
 
-                        </tr>
 
-                    </table>
+/* Hover */
 
-                </div>
+.page-list .list .level button:hover {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 120, 0, 0.08),
+            rgba(255, 255, 255, 0.03)
+        );
 
+    border-color:
+        rgba(255, 120, 0, 0.23);
 
-                <!-- =================================================
-                     NO LEVEL
-                     ================================================= -->
+    color:
+        #ffffff;
 
-                <div
-                    v-else
-                    class="level"
-                    style="
-                        height: 100%;
-                        justify-content: center;
-                        align-items: center;
-                    "
-                >
+    transform:
+        translateX(1px);
 
-                    <p>
-                        (ノಠ益ಠ)ノ彡┻━┻
-                    </p>
+    box-shadow:
+        0 3px 10px
+        rgba(0, 0, 0, 0.16);
+}
 
-                </div>
+.page-list .list .level button:hover::before {
+    height: 12px;
 
-            </div>
+    margin-right: 6px;
 
+    opacity: 1;
+}
 
-            <!-- =================================================
-                 META
-                 ================================================= -->
 
-           <div class="meta-container">
-                <div class="meta">
-                    <div class="errors" v-show="errors.length > 0">
-                        <p class="error" v-for="error of errors">{{ error }}</p>
-                    </div>
-                    <div class="og">
-                        <p class="type-label-md"></a></p>
-                    </div>
-                </div>
-            </div>
-        </main>
-    `,
+/* =========================================================
+   ACTIVE LEVEL
+   ========================================================= */
 
+.page-list .list .level.active button {
+    background:
+        linear-gradient(
+            100deg,
+            #ff7800,
+            #ff8a1c
+        );
 
-    data: () => ({
+    border-color:
+        rgba(255, 185, 105, 0.5);
 
-        list: [],
+    color:
+        #ffffff;
 
-        editors: [],
+    font-weight:
+        700;
 
-        levelPacks: {},
+    transform:
+        translateX(1px);
 
-        loading: true,
+    box-shadow:
+        0 5px 14px
+        rgba(255, 120, 0, 0.18),
 
-        selected: 0,
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.16);
+}
 
-        errors: [],
+.page-list .list .level.active button::before {
+    display: none;
+}
 
-        roleIconMap,
 
-        store,
+/* =========================================================
+   CENTER LEVEL CONTAINER
+   ========================================================= */
 
-    }),
+.page-list .level-container {
+    position: relative;
 
+    width: 100%;
+    height: 100%;
 
-    computed: {
+    padding: 0;
 
-        level() {
+    box-sizing: border-box;
 
-            return this.list?.[this.selected]?.[0];
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
-        },
 
+/* =========================================================
+   ACTUAL LEVEL CARD
+   ========================================================= */
 
-        currentPacks() {
+.page-list .level-container .level {
+    display: flex;
 
-            if (!this.level) {
-                return [];
-            }
+    flex-direction: column;
 
+    width: 100%;
+    min-width: 0;
 
-            const result = [];
+    padding:
+        10px 14px 16px;
 
+    gap:
+        8px;
 
-            const possibleKeys = [
+    box-sizing: border-box;
 
-                String(this.level.name)
-                    .toLowerCase(),
+    color:
+        var(--text);
 
-                String(this.level.path)
-                    .toLowerCase(),
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.008)
+        ),
+        rgba(15, 17, 22, 0.78);
 
-                String(this.level.id)
-                    .toLowerCase(),
+    border:
+        1px solid var(--border);
 
-            ];
+    border-radius:
+        9px;
 
+    box-shadow:
+        0 12px 32px
+        rgba(0, 0, 0, 0.25),
 
-            for (
-                const key
-                of possibleKeys
-            ) {
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.02);
 
-                if (
-                    this.levelPacks[key]
-                ) {
+    backdrop-filter:
+        blur(8px);
+}
 
-                    for (
-                        const pack
-                        of this.levelPacks[key]
-                    ) {
 
-                        if (
-                            !result.some(
-                                p =>
-                                    p.id ===
-                                    pack.id
-                            )
-                        ) {
+/* =========================================================
+   TITLE
+   ========================================================= */
 
-                            result.push(pack);
+.page-list .level-container .level h1,
+.page-list .level-container .level h2 {
+    position: relative;
 
-                        }
-                    }
-                }
-            }
+    margin:
+        0;
 
+    padding:
+        0 0 6px;
 
-            return result;
-        },
+    color:
+        #ffffff;
 
+    font-size:
+        1.15rem;
 
-        video() {
+    font-weight:
+        700;
 
-            if (!this.level) {
-                return '';
-            }
+    line-height:
+        1.2;
 
+    letter-spacing:
+        -0.015em;
 
-            if (!this.level.showcase) {
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+}
 
-                return embed(
-                    this.level.verification
-                );
-            }
 
+/* Orange title line */
 
-            return embed(
-                this.toggledShowcase
-                    ? this.level.showcase
-                    : this.level.verification
-            );
-        },
+.page-list .level-container .level h1::after,
+.page-list .level-container .level h2::after {
+    content: "";
 
-    },
+    position: absolute;
 
+    left: 0;
 
-    async mounted() {
+    bottom:
+        -1px;
 
-        this.list =
-            await fetchList();
+    width:
+        40px;
 
+    height:
+        2px;
 
-        this.editors =
-            await fetchEditors();
+    background:
+        var(--accent);
 
+    border-radius:
+        2px;
+}
 
-        this.levelPacks =
-            await fetchLevelPacks();
 
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
 
-        if (!this.list) {
+.page-list .level-container .level > p {
+    margin:
+        0;
 
-            this.errors = [
+    color:
+        rgba(255, 255, 255, 0.65);
 
-                'Failed to load list. Retry in a few minutes or notify list staff.',
+    font-size:
+        9.5px;
 
-            ];
+    line-height:
+        1.45;
+}
 
-        } else {
 
-            this.errors.push(
-                ...this.list
-                    .filter(
-                        ([_, err]) =>
-                            err
-                    )
-                    .map(
-                        ([_, err]) =>
-                            `Failed to load level. (${err}.json)`
-                    )
-            );
+/* =========================================================
+   VIDEO
+   ========================================================= */
 
+.page-list .level-container .level .video {
+    position: relative;
 
-            if (!this.editors) {
+    width: 100%;
 
-                this.errors.push(
-                    'Failed to load list editors.'
-                );
+    aspect-ratio:
+        16 / 9;
 
-            }
+    margin:
+        1px 0;
 
+    padding:
+        0;
 
-            /*
-             * Open level from URL query.
-             *
-             * Example:
-             *
-             * #/?level=Bloodbath
-             */
+    overflow:
+        hidden;
 
-            const requestedLevel =
-                this.$route?.query?.level;
+    background:
+        #050608;
 
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.075);
 
-            if (requestedLevel) {
+    border-radius:
+        7px;
 
-                const index =
-                    findLevel(
-                        this.list,
-                        requestedLevel
-                    );
+    box-shadow:
+        0 8px 22px
+        rgba(0, 0, 0, 0.3);
+}
 
 
-                if (index !== -1) {
+/* Video overlay */
 
-                    this.selected =
-                        index;
+.page-list .level-container .level .video::after {
+    content: "";
 
-                }
-            }
+    position:
+        absolute;
 
-        }
+    inset:
+        0;
 
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.025);
 
-        this.loading = false;
-    },
+    border-radius:
+        inherit;
 
+    pointer-events:
+        none;
+}
 
-    methods: {
 
-        embed,
+.page-list .level-container .level .video iframe,
+.page-list .level-container .level .video video {
+    display:
+        block;
 
+    width:
+        100%;
 
-        /* =====================================================
-           SELECT LEVEL
-           ===================================================== */
+    height:
+        100%;
 
-        selectLevel(index) {
+    border:
+        0;
+}
 
-            this.selected =
-                index;
 
+/* =========================================================
+   TAGS
+   ========================================================= */
 
-            const level =
-                this.list[index]?.[0];
+.page-list .level-container .level .tags {
+    display:
+        flex;
 
+    flex-wrap:
+        wrap;
 
-            if (
-                level &&
-                this.$route
-            ) {
+    gap:
+        4px;
 
-                this.$router.replace({
+    margin:
+        0;
+}
 
-                    path: '/',
 
-                    query: {
-                        level:
-                            level.path ||
-                            level.name
-                    }
+.page-list .level-container .level .tags > * {
+    padding:
+        2px 6px;
 
-                });
+    color:
+        rgba(255, 255, 255, 0.7);
 
-            }
-        },
+    background:
+        rgba(255, 255, 255, 0.035);
 
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
 
-        /* =====================================================
-           OPEN PACK LEVEL
-           ===================================================== */
+    border-radius:
+        4px;
 
-        openPackLevel(identifier) {
+    font-size:
+        8px;
 
-            const index =
-                findLevel(
-                    this.list,
-                    identifier
-                );
+    font-weight:
+        600;
 
+    line-height:
+        13px;
 
-            if (index === -1) {
+    transition:
+        background 0.12s ease,
+        border-color 0.12s ease,
+        color 0.12s ease;
+}
 
-                console.error(
-                    `Could not find pack level: ${identifier}`
-                );
 
-                return;
-            }
+.page-list .level-container .level .tags > *:hover {
+    color:
+        #ffffff;
 
+    background:
+        rgba(255, 120, 0, 0.08);
 
-            const level =
-                this.list[index]?.[0];
+    border-color:
+        rgba(255, 120, 0, 0.23);
+}
 
 
-            if (!level) {
-                return;
-            }
+/* =========================================================
+   STATS
+   ========================================================= */
 
+.page-list .level-container .level .stats {
+    display:
+        grid;
 
-            this.selected =
-                index;
+    grid-template-columns:
+        repeat(3, 1fr);
 
+    width:
+        100%;
 
-            if (this.$router) {
+    margin:
+        1px 0 0;
 
-                this.$router.replace({
+    padding:
+        0;
 
-                    path: '/',
+    background:
+        rgba(255, 255, 255, 0.015);
 
-                    query: {
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
 
-                        level:
-                            level.path ||
-                            level.name
+    border-radius:
+        6px;
 
-                    }
+    overflow:
+        hidden;
+}
 
-                });
 
-            }
+.page-list .level-container .level .stats li {
+    display:
+        flex;
 
-        },
+    flex-direction:
+        column;
 
+    align-items:
+        center;
 
-        /* =====================================================
-           GET PACK LEVEL NAME
-           ===================================================== */
+    justify-content:
+        center;
 
-        getPackLevelName(identifier) {
+    min-height:
+        48px;
 
-            const index =
-                findLevel(
-                    this.list,
-                    identifier
-                );
+    padding:
+        5px;
 
+    background:
+        transparent;
 
-            if (index === -1) {
+    border:
+        0;
 
-                return identifier;
+    border-right:
+        1px solid
+        rgba(255, 255, 255, 0.07);
 
-            }
+    gap:
+        2px;
 
+    transition:
+        background 0.12s ease;
+}
 
-            return (
-                this.list[index][0]?.name ||
-                identifier
-            );
-        },
 
+.page-list .level-container .level .stats li:last-child {
+    border-right:
+        0;
+}
 
-        /* =====================================================
-           CURRENT LEVEL
-           ===================================================== */
 
-        isPackLevel(identifier) {
+.page-list .level-container .level .stats li:hover {
+    background:
+        rgba(255, 120, 0, 0.035);
 
-            if (!this.level) {
-                return false;
-            }
+    transform:
+        none;
+}
 
 
-            const found =
-                findLevel(
-                    this.list,
-                    identifier
-                );
+/* Stat labels */
 
+.page-list .level-container .level .stats li label,
+.page-list .level-container .level .stats li .label {
+    color:
+        var(--accent);
 
-            if (found === -1) {
-                return false;
-            }
+    font-size:
+        7px;
 
+    font-weight:
+        700;
 
-            return (
-                found ===
-                this.selected
-            );
-        },
+    letter-spacing:
+        0.04em;
 
+    text-transform:
+        uppercase;
+}
 
-        /* =====================================================
-           COMPLETED PACK PLAYERS
-           ===================================================== */
 
-        getPackCompletedPlayers(pack) {
+/* Stat values */
 
-            const players = [];
+.page-list .level-container .level .stats li strong,
+.page-list .level-container .level .stats li .value {
+    color:
+        #ffffff;
 
+    font-size:
+        13px;
 
-            /*
-             * A player completed a pack if
-             * they have 100% on every level.
-             */
+    font-weight:
+        600;
 
-            for (
-                const [level]
-                of this.list
-            ) {
+    font-variant-numeric:
+        tabular-nums;
+}
 
-                if (!level) {
-                    continue;
-                }
 
+/* =========================================================
+   AUTHORS / INFO
+   ========================================================= */
 
-                const isInPack =
-                    pack.levels.some(
-                        identifier => {
+.page-list .level-container .level .level-authors {
+    display:
+        grid;
 
-                            const search =
-                                String(
-                                    identifier
-                                ).toLowerCase();
+    grid-template-columns:
+        max-content 1fr;
 
-                            return (
-                                String(
-                                    level.name
-                                ).toLowerCase() ===
-                                search ||
+    gap:
+        3px 8px;
 
-                                String(
-                                    level.path
-                                ).toLowerCase() ===
-                                search ||
+    margin:
+        0;
 
-                                String(
-                                    level.id
-                                ).toLowerCase() ===
-                                search
-                            );
+    padding:
+        5px 7px;
 
-                        }
-                    );
+    background:
+        rgba(255, 255, 255, 0.015);
 
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.05);
 
-                if (!isInPack) {
-                    continue;
-                }
+    border-radius:
+        5px;
+}
 
 
-                for (
-                    const record
-                    of level.records || []
-                ) {
+.page-list .level-container .level .level-authors > * {
+    color:
+        rgba(255, 255, 255, 0.45);
 
-                    if (
-                        record.percent ===
-                        100 &&
-                        record.user
-                    ) {
+    font-size:
+        8px;
+}
 
-                        if (
-                            !players.includes(
-                                record.user
-                            )
-                        ) {
 
-                            players.push(
-                                record.user
-                            );
-                        }
+/* =========================================================
+   RIGHT RECORDS CONTAINER
+   ONLY RECORDS
+   ========================================================= */
 
-                    }
+.page-list .meta-container {
+    position:
+        relative;
 
-                }
+    width:
+        100%;
 
-            }
+    height:
+        100%;
 
+    padding:
+        10px;
 
-            /*
-             * Keep only players who have
-             * completed EVERY pack level.
-             */
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.008)
+        ),
+        var(--bg-card);
 
-            return players.filter(
-                username => {
+    border:
+        1px solid var(--border);
 
-                    return pack.levels.every(
-                        identifier => {
+    border-radius:
+        9px;
 
-                            const index =
-                                findLevel(
-                                    this.list,
-                                    identifier
-                                );
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.25),
 
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.02);
 
-                            if (
-                                index === -1
-                            ) {
-                                return false;
-                            }
+    backdrop-filter:
+        blur(8px);
 
+    overflow:
+        auto;
+}
 
-                            const level =
-                                this.list[index][0];
 
+/* =========================================================
+   META
+   ========================================================= */
 
-                            return (
-                                level.records ||
-                                []
-                            ).some(
-                                record =>
-                                    record.user &&
-                                    record.user.toLowerCase() ===
-                                    username.toLowerCase() &&
-                                    record.percent ===
-                                    100
-                            );
+.page-list .meta {
+    display:
+        flex;
 
-                        }
-                    );
+    flex-direction:
+        column;
 
-                }
-            );
-        },
+    width:
+        100%;
 
+    gap:
+        8px;
 
-        /* =====================================================
-           SCORE
-           ===================================================== */
+    color:
+        #ffffff;
+}
 
-        listScore(rank) {
 
-            const totalLevels =
-                this.list.length;
+/* =========================================================
+   RECORDS HEADER
+   ========================================================= */
 
+.page-list .meta h2,
+.page-list .meta h3,
+.page-list .meta .records-title {
+    position:
+        relative;
 
-            if (
-                totalLevels <= 1
-            ) {
+    margin:
+        0;
 
-                return 250;
+    padding:
+        0 0 7px;
 
-            }
+    color:
+        #ffffff;
 
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.09);
 
-            const points =
-                250 -
-                (rank - 1) *
-                (249 /
-                    (totalLevels - 1));
+    font-size:
+        0.9rem;
 
+    font-weight:
+        700;
+}
 
-            return Math.max(
-                1,
-                Math.round(points)
-            );
-        },
 
+.page-list .meta h2::after,
+.page-list .meta h3::after,
+.page-list .meta .records-title::after {
+    content: "";
 
-        score,
+    position:
+        absolute;
 
-    },
+    left:
+        0;
 
-};
+    bottom:
+        -1px;
+
+    width:
+        30px;
+
+    height:
+        2px;
+
+    background:
+        var(--accent);
+
+    border-radius:
+        2px;
+}
+
+
+/* =========================================================
+   RECORD SEARCH
+   ========================================================= */
+
+.page-list .meta input,
+.page-list .meta input[type="search"],
+.page-list .meta .search input {
+    width:
+        100%;
+
+    height:
+        28px;
+
+    padding:
+        0 9px;
+
+    margin:
+        0;
+
+    background:
+        rgba(5, 6, 9, 0.65);
+
+    color:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.045);
+
+    border-radius:
+        5px;
+
+    font-size:
+        9px;
+
+    box-shadow:
+        none;
+}
+
+
+.page-list .meta input:focus,
+.page-list .meta input[type="search"]:focus,
+.page-list .meta .search input:focus {
+    border-color:
+        rgba(255, 120, 0, 0.3);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255, 120, 0, 0.05);
+}
+
+
+/* =========================================================
+   RECORD TABLE
+   ========================================================= */
+
+.page-list .meta .records {
+    width:
+        100%;
+
+    table-layout:
+        fixed;
+
+    border-collapse:
+        separate;
+
+    border-spacing:
+        0 3px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        9px;
+}
+
+
+/* Rows */
+
+.page-list .meta .records tr {
+    transition:
+        background 0.12s ease;
+}
+
+
+.page-list .meta .records tr:hover {
+    background:
+        rgba(255, 120, 0, 0.035);
+}
+
+
+/* Cells */
+
+.page-list .meta .records td {
+    padding:
+        5px 3px;
+
+    color:
+        rgba(255, 255, 255, 0.65);
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.035);
+}
+
+
+/* User */
+
+.page-list .meta .records .user {
+    width:
+        100%;
+
+    overflow:
+        hidden;
+
+    text-overflow:
+        ellipsis;
+
+    white-space:
+        nowrap;
+
+    color:
+        rgba(255, 255, 255, 0.8);
+}
+
+
+/* Percentage */
+
+.page-list .meta .records .percent {
+    color:
+        #ffffff;
+
+    text-align:
+        right;
+
+    font-weight:
+        600;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+/* Hz / date */
+
+.page-list .meta .records .hz {
+    color:
+        var(--text-dim);
+
+    text-align:
+        right;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+/* Links */
+
+.page-list .meta .records a {
+    color:
+        rgba(255, 255, 255, 0.8);
+
+    text-decoration:
+        none;
+
+    transition:
+        color 0.12s ease;
+}
+
+
+.page-list .meta .records a:hover {
+    color:
+        var(--accent-light);
+}
+
+
+/* =========================================================
+   RECORD FLAGS / ICONS
+   ========================================================= */
+
+.page-list .meta .records img {
+    width:
+        16px;
+
+    height:
+        16px;
+
+    object-fit:
+        contain;
+
+    vertical-align:
+        middle;
+
+    border-radius:
+        2px;
+}
+
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.page-list .meta .pagination {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        4px;
+
+    margin-top:
+        2px;
+}
+
+
+.page-list .meta .pagination button {
+    min-width:
+        28px;
+
+    height:
+        25px;
+
+    padding:
+        0 6px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color:
+        rgba(255, 255, 255, 0.5);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    border-radius:
+        4px;
+
+    box-shadow:
+        none;
+
+    font-size:
+        8px;
+}
+
+
+.page-list .meta .pagination button:hover {
+    background:
+        rgba(255, 120, 0, 0.08);
+
+    color:
+        #ffffff;
+
+    border-color:
+        rgba(255, 120, 0, 0.25);
+
+    transform:
+        none;
+
+    box-shadow:
+        none;
+}
+
+
+.page-list .meta .pagination button.active {
+    background:
+        var(--accent);
+
+    color:
+        #ffffff;
+
+    border-color:
+        var(--accent);
+}
+
+
+/* =========================================================
+   YOUTUBE / VIDEO ICON ON RIGHT
+   ========================================================= */
+
+.page-list .meta .youtube,
+.page-list .meta .video-link {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        28px;
+
+    height:
+        24px;
+
+    margin-left:
+        auto;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    border-radius:
+        5px;
+
+    color:
+        #ffffff;
+
+    transition:
+        background 0.12s ease,
+        border-color 0.12s ease;
+}
+
+
+.page-list .meta .youtube:hover,
+.page-list .meta .video-link:hover {
+    background:
+        rgba(255, 120, 0, 0.08);
+
+    border-color:
+        rgba(255, 120, 0, 0.25);
+}
+
+
+/* =========================================================
+   LEVEL PACK
+   ========================================================= */
+
+.page-list .level-pack-panel {
+    position:
+        relative;
+
+    width:
+        100%;
+
+    padding:
+        9px;
+
+    box-sizing:
+        border-box;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.012)
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    border-left:
+        2px solid
+        var(--pack-color, var(--accent));
+
+    border-radius:
+        6px;
+
+    box-shadow:
+        0 5px 16px
+        rgba(0, 0, 0, 0.18);
+}
+
+
+.page-list .level-pack-header {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        6px;
+
+    margin-bottom:
+        5px;
+}
+
+
+.page-list .level-pack-title {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    min-width:
+        0;
+}
+
+
+.page-list .level-pack-title h3 {
+    margin:
+        0;
+
+    color:
+        #ffffff;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+}
+
+
+.page-list .level-pack-progress {
+    flex-shrink:
+        0;
+
+    color:
+        var(--text-dim);
+
+    font-size:
+        8px;
+
+    font-variant-numeric:
+        tabular-nums;
+}
+
+
+.page-list .level-pack-levels {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        2px;
+}
+
+
+.page-list .level-pack-level {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        5px;
+
+    padding:
+        4px;
+
+    color:
+        rgba(255, 255, 255, 0.7);
+
+    border-radius:
+        4px;
+
+    transition:
+        background 0.12s ease,
+        transform 0.12s ease;
+}
+
+
+.page-list .level-pack-level:hover {
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    transform:
+        translateX(2px);
+}
+
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+.page-list ::-webkit-scrollbar {
+    width:
+        5px;
+
+    height:
+        5px;
+}
+
+
+.page-list ::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
+
+
+.page-list ::-webkit-scrollbar-thumb {
+    background:
+        rgba(255, 255, 255, 0.11);
+
+    border-radius:
+        999px;
+}
+
+
+.page-list ::-webkit-scrollbar-thumb:hover {
+    background:
+        rgba(255, 120, 0, 0.4);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .page-list {
+        grid-template-columns:
+            minmax(260px, 1fr)
+            minmax(450px, 2fr)
+            minmax(240px, 1fr);
+
+        gap:
+            8px;
+    }
+}
+
+
+@media (max-width: 950px) {
+
+    .page-list {
+        grid-template-columns:
+            minmax(230px, 1fr)
+            minmax(400px, 2fr);
+    }
+
+    .page-list .meta-container {
+        display:
+            none;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .page-list {
+        display:
+            flex;
+
+        flex-direction:
+            column;
+
+        height:
+            auto;
+
+        min-height:
+            100%;
+
+        gap:
+            8px;
+
+        overflow:
+            visible;
+    }
+
+    .page-list .list-container {
+        width:
+            100%;
+
+        height:
+            400px;
+    }
+
+    .page-list .level-container {
+        width:
+            100%;
+
+        height:
+            auto;
+
+        overflow:
+            visible;
+    }
+
+    .page-list .meta-container {
+        display:
+            block;
+
+        width:
+            100%;
+
+        height:
+            auto;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .page-list {
+        gap:
+            6px;
+    }
+
+    .page-list .list-container,
+    .page-list .meta-container {
+        padding:
+            8px 6px;
+    }
+
+    .page-list .level-container .level {
+        padding:
+            9px;
+    }
+
+    .page-list .level-container .level h1,
+    .page-list .level-container .level h2 {
+        font-size:
+            1rem;
+    }
+
+    .page-list .level-container .level .stats li {
+        min-height:
+            44px;
+    }
+
+    .page-list .level-container .level .stats li strong,
+    .page-list .level-container .level .stats li .value {
+        font-size:
+            11px;
+    }
+}
