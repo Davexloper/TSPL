@@ -1,30 +1,97 @@
 /* =========================================================
    PAGE LIST
-   DARK / COMPACT / SCREENSHOT STYLE
+   MODERN DARK / COMPACT / PREMIUM STYLE
    ========================================================= */
 
 .page-list {
-    color: #ffffff;
+    --accent: #ff7800;
+    --accent-light: #ff9a3c;
+
+    --bg-main: #08090c;
+    --bg-card: rgba(17, 19, 24, 0.82);
+    --bg-card-hover: rgba(25, 27, 33, 0.92);
+    --bg-soft: rgba(255, 255, 255, 0.035);
+
+    --border: rgba(255, 255, 255, 0.075);
+    --border-soft: rgba(255, 255, 255, 0.045);
+
+    --text: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.62);
+    --text-dim: rgba(255, 255, 255, 0.4);
+
+    color: var(--text);
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(320px, 390px)
+        minmax(500px, 1fr)
+        minmax(300px, 370px);
+
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+
+    box-sizing: border-box;
 }
 
 
 /* =========================================================
-   MAIN 3-COLUMN LAYOUT
+   GENERAL CARDS
    ========================================================= */
 
-.page-list {
-    display: grid;
+.page-list .list-container,
+.page-list .meta-container {
+    position: relative;
 
-    grid-template-columns:
-        minmax(330px, 460px)
-        minmax(500px, 1fr)
-        minmax(300px, 440px);
+    min-width: 0;
 
-    gap: 8px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.008)
+        ),
+        var(--bg-card);
 
-    width: 100%;
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    backdrop-filter: blur(10px);
 
     box-sizing: border-box;
+}
+
+
+/* Orange top highlight */
+
+.page-list .list-container::before,
+.page-list .meta-container::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 12px;
+    right: 12px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 120, 0, 0.35),
+            transparent
+        );
+
+    pointer-events: none;
 }
 
 
@@ -33,17 +100,7 @@
    ========================================================= */
 
 .page-list .list-container {
-    min-width: 0;
-
-    padding: 0.75rem 0.45rem;
-
-    background: rgba(12, 13, 16, 0.58);
-
-    border: 1px solid rgba(255, 255, 255, 0.025);
-
-    border-radius: 10px;
-
-    box-sizing: border-box;
+    padding: 12px 8px;
 }
 
 
@@ -56,37 +113,53 @@
 
     border-collapse: separate;
 
-    border-spacing: 0 2px;
+    border-spacing: 0 4px;
 }
 
 
 /* Rows */
 
 .page-list .list tr {
-    height: 25px;
+    height: 29px;
 }
 
 
-/* Rank */
+/* =========================================================
+   RANK
+   ========================================================= */
 
 .page-list .list .rank {
     width: 42px;
 
-    padding: 0 7px 0 0;
+    padding: 0 9px 0 0;
 
     text-align: right;
 
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--text-dim);
 
-    font-size: 12px;
+    font-size: 11px;
 
-    font-weight: 600;
+    font-weight: 700;
+
+    font-variant-numeric: tabular-nums;
 
     white-space: nowrap;
+
+    transition:
+        color 0.15s ease;
 }
 
 
-/* Level */
+/* Highlight rank when row hovered */
+
+.page-list .list tr:hover .rank {
+    color: var(--accent-light);
+}
+
+
+/* =========================================================
+   LEVEL
+   ========================================================= */
 
 .page-list .list .level {
     width: 100%;
@@ -95,34 +168,42 @@
 }
 
 
-/* List button */
+/* =========================================================
+   LEVEL BUTTON
+   ========================================================= */
 
 .page-list .list .level button {
+    position: relative;
+
     display: flex;
 
     align-items: center;
 
     width: 100%;
+    height: 29px;
 
-    height: 25px;
-
-    padding: 0 9px;
+    padding: 0 11px;
 
     box-sizing: border-box;
 
-    background: rgba(255, 255, 255, 0.025);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.018)
+        );
 
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.82);
 
-    border: 1px solid rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--border-soft);
 
-    border-radius: 4px;
+    border-radius: 6px;
 
-    font-size: 12px;
+    font-size: 11.5px;
 
     font-weight: 500;
 
-    line-height: 23px;
+    line-height: 27px;
 
     text-align: left;
 
@@ -134,35 +215,97 @@
 
     cursor: pointer;
 
-    box-shadow: none;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.018);
 
     transition:
-        background-color 0.12s ease,
-        border-color 0.12s ease;
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease;
+}
+
+
+/* Tiny accent line */
+
+.page-list .list .level button::before {
+    content: "";
+
+    width: 2px;
+    height: 0;
+
+    margin-right: 0;
+
+    border-radius: 3px;
+
+    background: var(--accent);
+
+    opacity: 0;
+
+    transition:
+        height 0.15s ease,
+        margin-right 0.15s ease,
+        opacity 0.15s ease;
 }
 
 
 /* Hover */
 
 .page-list .list .level button:hover {
-    background: rgba(255, 255, 255, 0.055);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 120, 0, 0.09),
+            rgba(255, 255, 255, 0.035)
+        );
 
-    border-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 120, 0, 0.28);
 
     color: #ffffff;
+
+    transform: translateX(2px);
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+.page-list .list .level button:hover::before {
+    height: 13px;
+
+    margin-right: 7px;
+
+    opacity: 1;
 }
 
 
-/* Selected */
+/* =========================================================
+   SELECTED
+   ========================================================= */
 
 .page-list .list .level.active button {
-    background: #ff7800;
+    background:
+        linear-gradient(
+            100deg,
+            #ff7800,
+            #ff8d21
+        );
 
-    border-color: #ff7800;
+    border-color: rgba(255, 174, 92, 0.5);
 
     color: #ffffff;
 
-    font-weight: 600;
+    font-weight: 700;
+
+    box-shadow:
+        0 6px 18px rgba(255, 120, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+
+    transform: translateX(2px);
+}
+
+.page-list .list .level.active button::before {
+    display: none;
 }
 
 
@@ -173,7 +316,7 @@
 .page-list .level-container {
     min-width: 0;
 
-    padding: 0.75rem 0.5rem;
+    padding: 10px 4px;
 
     box-sizing: border-box;
 }
@@ -187,24 +330,33 @@
     flex-direction: column;
 
     width: 100%;
-
     max-width: none;
-
     min-width: 0;
 
-    padding: 0;
+    padding: 18px;
 
-    gap: 0.45rem;
+    gap: 11px;
 
     box-sizing: border-box;
 
-    color: #ffffff;
+    color: var(--text);
 
-    background: transparent;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.008)
+        );
 
-    border: 0;
+    border: 1px solid var(--border);
 
-    border-radius: 0;
+    border-radius: 13px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+    backdrop-filter: blur(10px);
 }
 
 
@@ -214,19 +366,43 @@
 
 .page-list .level-container .level h1,
 .page-list .level-container .level h2 {
+    position: relative;
+
     margin: 0;
 
-    padding: 0 0 5px;
+    padding: 0 0 10px;
 
     color: #ffffff;
 
-    font-size: 1.15rem;
+    font-size: 1.3rem;
 
-    font-weight: 600;
+    font-weight: 700;
 
     line-height: 1.2;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    letter-spacing: -0.015em;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+
+/* Accent under title */
+
+.page-list .level-container .level h1::after,
+.page-list .level-container .level h2::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -1px;
+
+    width: 45px;
+    height: 2px;
+
+    background: var(--accent);
+
+    border-radius: 2px;
 }
 
 
@@ -237,11 +413,11 @@
 .page-list .level-container .level > p {
     margin: 0;
 
-    color: rgba(255, 255, 255, 0.72);
+    color: var(--text-muted);
 
-    font-size: 0.68rem;
+    font-size: 0.72rem;
 
-    line-height: 1.4;
+    line-height: 1.55;
 }
 
 
@@ -250,31 +426,51 @@
    ========================================================= */
 
 .page-list .level-container .level .video {
+    position: relative;
+
     width: 100%;
 
     aspect-ratio: 16 / 9;
 
-    margin: 0;
+    margin: 2px 0;
 
     padding: 0;
 
     overflow: hidden;
 
-    background: #08090b;
+    background: #050608;
 
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
-    border-radius: 6px;
+    border-radius: 9px;
 
-    box-shadow: none;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35);
 }
+
+
+/* Video inner border */
+
+.page-list .level-container .level .video::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.025);
+
+    border-radius: inherit;
+
+    pointer-events: none;
+}
+
 
 .page-list .level-container .level .video iframe,
 .page-list .level-container .level .video video {
     display: block;
 
     width: 100%;
-
     height: 100%;
 
     border: 0;
@@ -290,25 +486,47 @@
 
     flex-wrap: wrap;
 
-    gap: 4px;
+    gap: 5px;
 
     margin: 0;
 }
 
+
 .page-list .level-container .level .tags > * {
-    padding: 2px 6px;
+    padding: 3px 8px;
 
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.75);
 
-    background: rgba(255, 255, 255, 0.045);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.025)
+        );
 
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.09);
 
-    border-radius: 4px;
+    border-radius: 5px;
 
-    font-size: 0.62rem;
+    font-size: 0.61rem;
+
+    font-weight: 600;
 
     line-height: 14px;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+
+.page-list .level-container .level .tags > *:hover {
+    color: #ffffff;
+
+    background: rgba(255, 120, 0, 0.09);
+
+    border-color: rgba(255, 120, 0, 0.25);
 }
 
 
@@ -323,16 +541,22 @@
 
     width: 100%;
 
-    margin: 0;
+    margin: 2px 0 0;
 
     padding: 0;
 
-    background: transparent;
+    background:
+        rgba(255, 255, 255, 0.018);
 
-    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+
+    border-radius: 8px;
 
     gap: 0;
+
+    overflow: hidden;
 }
+
 
 .page-list .level-container .level .stats li {
     display: flex;
@@ -343,31 +567,42 @@
 
     justify-content: center;
 
-    min-height: 50px;
+    min-height: 58px;
 
-    padding: 5px;
+    padding: 7px;
 
     background: transparent;
 
     border: 0;
 
-    border-right: 1px solid rgba(255, 255, 255, 0.13);
+    border-right: 1px solid rgba(255, 255, 255, 0.075);
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.075);
 
     border-radius: 0;
 
-    gap: 2px;
+    gap: 3px;
+
+    transition:
+        background 0.15s ease;
 }
+
 
 .page-list .level-container .level .stats li:nth-child(even) {
     border-right: 0;
 }
 
+
+.page-list .level-container .level .stats li:nth-last-child(-n + 2) {
+    border-bottom: 0;
+}
+
+
 .page-list .level-container .level .stats li:hover {
     transform: none;
 
-    background: rgba(255, 255, 255, 0.02);
+    background:
+        rgba(255, 120, 0, 0.045);
 }
 
 
@@ -375,11 +610,13 @@
 
 .page-list .level-container .level .stats li label,
 .page-list .level-container .level .stats li .label {
-    color: #ff7800;
+    color: var(--accent);
 
-    font-size: 0.54rem;
+    font-size: 0.55rem;
 
-    font-weight: 600;
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
 
     text-transform: uppercase;
 }
@@ -391,9 +628,11 @@
 .page-list .level-container .level .stats li .value {
     color: #ffffff;
 
-    font-size: 0.9rem;
+    font-size: 0.92rem;
 
-    font-weight: 500;
+    font-weight: 600;
+
+    font-variant-numeric: tabular-nums;
 }
 
 
@@ -408,53 +647,43 @@
 
     grid-auto-rows: max-content;
 
-    gap: 4px 8px;
+    gap: 5px 10px;
 
     margin: 0;
 
-    padding: 5px 7px;
+    padding: 7px 9px;
 
-    background: transparent;
+    background:
+        rgba(255, 255, 255, 0.018);
 
-    border: 0;
+    border: 1px solid rgba(255, 255, 255, 0.055);
 
-    border-radius: 0;
+    border-radius: 7px;
 }
 
-.page-list .level-container .level .level-authors > * {
-    color: rgba(255, 255, 255, 0.55);
 
-    font-size: 0.62rem;
+.page-list .level-container .level .level-authors > * {
+    color: var(--text-muted);
+
+    font-size: 0.63rem;
 }
 
 
 /* =========================================================
-   RIGHT META / RECORDS
+   RIGHT META
    ========================================================= */
 
 .page-list .meta-container {
-    min-width: 0;
-
-    padding: 0.75rem 0.55rem;
-
-    box-sizing: border-box;
-
-    background: rgba(12, 13, 16, 0.58);
-
-    border: 1px solid rgba(255, 255, 255, 0.025);
-
-    border-radius: 10px;
+    padding: 14px 11px;
 }
 
-
-/* Meta */
 
 .page-list .meta {
     display: flex;
 
     flex-direction: column;
 
-    gap: 0.55rem;
+    gap: 10px;
 
     width: 100%;
 
@@ -469,15 +698,40 @@
 .page-list .meta .records-title,
 .page-list .meta h2,
 .page-list .meta h3 {
+    position: relative;
+
     color: #ffffff;
 
     margin: 0;
 
-    padding-bottom: 5px;
+    padding-bottom: 9px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 
     font-size: 1.05rem;
+
+    font-weight: 700;
+}
+
+
+/* Accent */
+
+.page-list .meta .records-title::after,
+.page-list .meta h2::after,
+.page-list .meta h3::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -1px;
+
+    width: 35px;
+    height: 2px;
+
+    background: var(--accent);
+
+    border-radius: 2px;
 }
 
 
@@ -493,19 +747,20 @@
 
     border-collapse: separate;
 
-    border-spacing: 0 2px;
+    border-spacing: 0 3px;
 
     color: #ffffff;
 
-    font-size: 0.7rem;
+    font-size: 0.68rem;
 }
 
 
-/* Record row */
+/* Record rows */
 
 .page-list .meta .records tr,
 .page-list .level-container .level .records tr {
-    transition: background-color 0.12s ease;
+    transition:
+        background 0.15s ease;
 }
 
 
@@ -513,7 +768,8 @@
 
 .page-list .meta .records tr:hover,
 .page-list .level-container .level .records tr:hover {
-    background: rgba(255, 255, 255, 0.035);
+    background:
+        rgba(255, 120, 0, 0.045);
 }
 
 
@@ -521,11 +777,11 @@
 
 .page-list .meta .records td,
 .page-list .level-container .level .records td {
-    padding-top: 4px;
+    padding-top: 6px;
 
-    padding-bottom: 4px;
+    padding-bottom: 6px;
 
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.72);
 }
 
 
@@ -551,6 +807,8 @@
 
     color: #ffffff;
 
+    font-weight: 600;
+
     font-variant-numeric: tabular-nums;
 }
 
@@ -561,7 +819,7 @@
 .page-list .level-container .level .records .hz {
     text-align: right;
 
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--text-dim);
 
     font-variant-numeric: tabular-nums;
 }
@@ -571,14 +829,18 @@
 
 .page-list .meta .records a,
 .page-list .level-container .level .records a {
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.82);
 
     text-decoration: none;
+
+    transition:
+        color 0.15s ease;
 }
+
 
 .page-list .meta .records a:hover,
 .page-list .level-container .level .records a:hover {
-    color: #ff7800;
+    color: var(--accent-light);
 
     text-decoration: none;
 }
@@ -593,19 +855,23 @@
 
     flex-direction: column;
 
-    gap: 4px;
+    gap: 5px;
 }
 
+
 .page-list .meta .errors .error {
-    padding: 5px 7px;
+    padding: 7px 9px;
 
     color: var(--color-error);
 
-    background: rgba(255, 70, 70, 0.05);
+    background:
+        rgba(255, 70, 70, 0.045);
 
-    border: 1px solid rgba(255, 70, 70, 0.1);
+    border: 1px solid rgba(255, 70, 70, 0.12);
 
-    border-radius: 4px;
+    border-left: 2px solid var(--color-error);
+
+    border-radius: 5px;
 
     font-size: 0.68rem;
 }
@@ -620,73 +886,100 @@
 
     flex-direction: column;
 
-    gap: 1px;
+    gap: 2px;
 }
+
 
 .page-list .meta .editors li {
     display: flex;
 
     align-items: center;
 
-    gap: 4px;
+    gap: 7px;
 
-    padding: 3px 4px;
+    padding: 5px 6px;
 
     color: rgba(255, 255, 255, 0.7);
 
-    border-radius: 3px;
+    border-radius: 5px;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 }
+
 
 .page-list .meta .editors li:hover {
-    background: rgba(255, 255, 255, 0.035);
+    background:
+        rgba(255, 120, 0, 0.055);
 
-    transform: none;
+    transform: translateX(2px);
 }
 
-.page-list .meta .editors li img {
-    width: 14px;
 
-    height: 14px;
+.page-list .meta .editors li img {
+    width: 17px;
+
+    height: 17px;
 
     object-fit: contain;
 
-    border-radius: 3px;
+    border-radius: 4px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.25);
 }
+
 
 .page-list .meta .editors li a {
     color: rgba(255, 255, 255, 0.75);
 
     text-decoration: none;
+
+    transition:
+        color 0.15s ease;
 }
 
+
 .page-list .meta .editors li a:hover {
-    color: #ffffff;
+    color: var(--accent-light);
 }
 
 
 /* =========================================================
-   PACK
+   LEVEL PACK
    ========================================================= */
 
 .page-list .level-pack-panel {
+    position: relative;
+
     width: 100%;
 
-    padding: 0.7rem;
+    padding: 11px;
 
     box-sizing: border-box;
 
-    background: rgba(255, 255, 255, 0.02);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.012)
+        );
 
     border: 1px solid color-mix(
         in srgb,
-        var(--pack-color) 22%,
+        var(--pack-color) 28%,
         transparent
     );
 
     border-left: 3px solid var(--pack-color);
 
-    border-radius: 5px;
+    border-radius: 7px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.18);
 }
+
 
 .page-list .level-pack-header {
     display: flex;
@@ -695,63 +988,105 @@
 
     justify-content: space-between;
 
-    gap: 0.5rem;
+    gap: 0.6rem;
 
-    margin-bottom: 0.5rem;
+    margin-bottom: 7px;
 }
+
 
 .page-list .level-pack-title {
     display: flex;
 
     align-items: center;
 
-    gap: 0.4rem;
+    gap: 0.45rem;
 
     min-width: 0;
 }
+
 
 .page-list .level-pack-title h3 {
     margin: 0;
 
     color: #ffffff;
 
-    font-size: 0.85rem;
+    font-size: 0.86rem;
+
+    font-weight: 700;
 }
+
 
 .page-list .level-pack-progress {
     flex-shrink: 0;
 
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-dim);
 
     font-size: 0.65rem;
+
+    font-variant-numeric: tabular-nums;
 }
+
 
 .page-list .level-pack-levels {
     display: flex;
 
     flex-direction: column;
 
-    gap: 1px;
+    gap: 2px;
 }
+
 
 .page-list .level-pack-level {
     display: flex;
 
     align-items: center;
 
-    gap: 0.4rem;
+    gap: 0.45rem;
 
-    padding: 4px;
+    padding: 5px;
 
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.78);
 
-    border-radius: 3px;
+    border-radius: 4px;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 }
 
-.page-list .level-pack-level:hover {
-    background: rgba(255, 255, 255, 0.035);
 
-    transform: none;
+.page-list .level-pack-level:hover {
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    transform: translateX(2px);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.page-list ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+
+.page-list ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.page-list ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+
+    border-radius: 10px;
+}
+
+
+.page-list ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 120, 0, 0.45);
 }
 
 
@@ -759,12 +1094,12 @@
    RESPONSIVE
    ========================================================= */
 
-@media (max-width: 1200px) {
+@media (max-width: 1250px) {
 
     .page-list {
         grid-template-columns:
-            300px
-            minmax(450px, 1fr);
+            280px
+            minmax(430px, 1fr);
     }
 
     .page-list .meta-container {
@@ -773,12 +1108,30 @@
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
+
+    .page-list {
+        grid-template-columns:
+            minmax(240px, 300px)
+            minmax(350px, 1fr);
+
+        gap: 9px;
+    }
+
+    .page-list .level-container .level {
+        padding: 14px;
+    }
+}
+
+
+@media (max-width: 700px) {
 
     .page-list {
         display: flex;
 
         flex-direction: column;
+
+        gap: 8px;
     }
 
     .page-list .list-container,
@@ -787,7 +1140,39 @@
         width: 100%;
     }
 
+    .page-list .level-container {
+        padding: 0;
+    }
+
     .page-list .meta-container {
         grid-column: auto;
+    }
+
+    .page-list .level-container .level {
+        padding: 14px;
+    }
+}
+
+
+/* =========================================================
+   SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    .page-list .level-container .level {
+        padding: 11px;
+
+        border-radius: 9px;
+    }
+
+    .page-list .level-container .level h1,
+    .page-list .level-container .level h2 {
+        font-size: 1.1rem;
+    }
+
+    .page-list .list-container,
+    .page-list .meta-container {
+        padding: 9px 7px;
     }
 }
