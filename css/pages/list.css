@@ -1,6 +1,6 @@
 /* =========================================================
    PAGE LIST
-   MODERN DARK / COMPACT / PREMIUM STYLE
+   DARK / COMPACT / GEOMETRY DASH STYLE
    ========================================================= */
 
 .page-list {
@@ -8,9 +8,12 @@
     --accent-light: #ff9a3c;
 
     --bg-main: #08090c;
-    --bg-card: rgba(17, 19, 24, 0.82);
-    --bg-card-hover: rgba(25, 27, 33, 0.92);
+
+    --bg-card: rgba(15, 17, 22, 0.86);
+    --bg-card-hover: rgba(24, 26, 32, 0.94);
+
     --bg-soft: rgba(255, 255, 255, 0.035);
+    --bg-softer: rgba(255, 255, 255, 0.018);
 
     --border: rgba(255, 255, 255, 0.075);
     --border-soft: rgba(255, 255, 255, 0.045);
@@ -19,33 +22,60 @@
     --text-muted: rgba(255, 255, 255, 0.62);
     --text-dim: rgba(255, 255, 255, 0.4);
 
-    color: var(--text);
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
 
     display: grid;
 
+    /*
+        Screenshot:
+        LEFT    = ~25%
+        CENTER  = ~50%
+        RIGHT   = ~25%
+    */
     grid-template-columns:
-        minmax(320px, 390px)
-        minmax(500px, 1fr)
-        minmax(300px, 370px);
+        minmax(0, 1fr)
+        minmax(0, 2fr)
+        minmax(0, 1fr);
 
-    gap: 12px;
+    gap: 10px;
 
-    width: 100%;
+    box-sizing: border-box;
+
+    color: var(--text);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   GENERAL CONTAINERS
+   ========================================================= */
+
+.page-list .list-container,
+.page-list .meta-container,
+.page-list .level-container {
     min-width: 0;
+    min-height: 0;
 
     box-sizing: border-box;
 }
 
 
 /* =========================================================
-   GENERAL CARDS
+   LEFT LIST CONTAINER
    ========================================================= */
 
-.page-list .list-container,
-.page-list .meta-container {
+.page-list .list-container {
     position: relative;
 
-    min-width: 0;
+    width: 100%;
+    height: 100%;
+
+    padding: 10px 8px;
 
     background:
         linear-gradient(
@@ -57,27 +87,30 @@
 
     border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 9px;
 
     box-shadow:
-        0 12px 35px rgba(0, 0, 0, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+        0 10px 30px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
 
-    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
-/* Orange top highlight */
+/* Top highlight */
 
 .page-list .list-container::before,
-.page-list .meta-container::before {
+.page-list .meta-container::before,
+.page-list .level-container::before {
     content: "";
 
     position: absolute;
 
     top: 0;
+
     left: 12px;
     right: 12px;
 
@@ -87,7 +120,7 @@
         linear-gradient(
             90deg,
             transparent,
-            rgba(255, 120, 0, 0.35),
+            rgba(255, 120, 0, 0.28),
             transparent
         );
 
@@ -96,15 +129,133 @@
 
 
 /* =========================================================
-   LEFT LIST
+   LIST HEADER / TABS
    ========================================================= */
 
-.page-list .list-container {
-    padding: 12px 8px;
+.page-list .list-container .tabs,
+.page-list .list-container .categories {
+    display: flex;
+
+    width: 100%;
+
+    margin-bottom: 9px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
 }
 
 
-/* List */
+/* Generic tab buttons */
+
+.page-list .list-container .tabs button,
+.page-list .list-container .categories button {
+    flex: 1;
+
+    height: 38px;
+
+    padding: 0 8px;
+
+    background: transparent;
+
+    color: rgba(255, 255, 255, 0.38);
+
+    border: 0;
+
+    border-bottom:
+        2px solid transparent;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    transition:
+        color 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.page-list .list-container .tabs button:hover,
+.page-list .list-container .categories button:hover {
+    color: rgba(255, 255, 255, 0.7);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+.page-list .list-container .tabs button.active,
+.page-list .list-container .categories button.active {
+    color: #ffffff;
+
+    border-bottom-color:
+        var(--accent);
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent,
+            rgba(255, 120, 0, 0.025)
+        );
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.page-list .list-container input[type="search"],
+.page-list .list-container .search input,
+.page-list .list-container input {
+    width: 100%;
+
+    height: 28px;
+
+    padding:
+        0 9px;
+
+    margin-bottom: 7px;
+
+    background:
+        rgba(5, 6, 9, 0.65);
+
+    color: #ffffff;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.045);
+
+    border-radius: 5px;
+
+    outline: none;
+
+    font-size: 10px;
+
+    box-shadow: none;
+}
+
+.page-list .list-container input[type="search"]:focus,
+.page-list .list-container .search input:focus,
+.page-list .list-container input:focus {
+    border-color:
+        rgba(255, 120, 0, 0.35);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255, 120, 0, 0.06);
+}
+
+
+/* =========================================================
+   LEVEL LIST TABLE
+   ========================================================= */
 
 .page-list .list {
     width: 100%;
@@ -113,14 +264,18 @@
 
     border-collapse: separate;
 
-    border-spacing: 0 4px;
+    border-spacing:
+        0 3px;
 }
 
 
 /* Rows */
 
 .page-list .list tr {
-    height: 29px;
+    height: 28px;
+
+    transition:
+        background 0.12s ease;
 }
 
 
@@ -129,36 +284,38 @@
    ========================================================= */
 
 .page-list .list .rank {
-    width: 42px;
+    width: 38px;
 
-    padding: 0 9px 0 0;
+    padding:
+        0 7px 0 0;
 
     text-align: right;
 
-    color: var(--text-dim);
+    color:
+        var(--text-dim);
 
-    font-size: 11px;
+    font-size: 10px;
 
     font-weight: 700;
 
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:
+        tabular-nums;
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
 
     transition:
-        color 0.15s ease;
+        color 0.12s ease;
 }
 
-
-/* Highlight rank when row hovered */
-
 .page-list .list tr:hover .rank {
-    color: var(--accent-light);
+    color:
+        var(--accent-light);
 }
 
 
 /* =========================================================
-   LEVEL
+   LEVEL CELL
    ========================================================= */
 
 .page-list .list .level {
@@ -180,9 +337,10 @@
     align-items: center;
 
     width: 100%;
-    height: 29px;
+    height: 27px;
 
-    padding: 0 11px;
+    padding:
+        0 9px;
 
     box-sizing: border-box;
 
@@ -193,17 +351,19 @@
             rgba(255, 255, 255, 0.018)
         );
 
-    color: rgba(255, 255, 255, 0.82);
+    color:
+        rgba(255, 255, 255, 0.78);
 
-    border: 1px solid var(--border-soft);
+    border:
+        1px solid var(--border-soft);
 
-    border-radius: 6px;
+    border-radius: 5px;
 
-    font-size: 11.5px;
+    font-size: 10.5px;
 
     font-weight: 500;
 
-    line-height: 27px;
+    line-height: 25px;
 
     text-align: left;
 
@@ -216,37 +376,43 @@
     cursor: pointer;
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.018);
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.018);
+
+    transform: none;
 
     transition:
-        background 0.15s ease,
-        border-color 0.15s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease,
-        color 0.15s ease;
+        background 0.12s ease,
+        border-color 0.12s ease,
+        color 0.12s ease,
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
 }
 
 
-/* Tiny accent line */
+/* Small orange indicator */
 
 .page-list .list .level button::before {
     content: "";
+
+    flex-shrink: 0;
 
     width: 2px;
     height: 0;
 
     margin-right: 0;
 
-    border-radius: 3px;
+    border-radius: 2px;
 
-    background: var(--accent);
+    background:
+        var(--accent);
 
     opacity: 0;
 
     transition:
-        height 0.15s ease,
-        margin-right 0.15s ease,
-        opacity 0.15s ease;
+        height 0.12s ease,
+        margin-right 0.12s ease,
+        opacity 0.12s ease;
 }
 
 
@@ -256,31 +422,35 @@
     background:
         linear-gradient(
             90deg,
-            rgba(255, 120, 0, 0.09),
-            rgba(255, 255, 255, 0.035)
+            rgba(255, 120, 0, 0.08),
+            rgba(255, 255, 255, 0.03)
         );
 
-    border-color: rgba(255, 120, 0, 0.28);
+    border-color:
+        rgba(255, 120, 0, 0.23);
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    transform: translateX(2px);
+    transform:
+        translateX(1px);
 
     box-shadow:
-        0 4px 14px rgba(0, 0, 0, 0.22);
+        0 3px 10px
+        rgba(0, 0, 0, 0.16);
 }
 
 .page-list .list .level button:hover::before {
-    height: 13px;
+    height: 12px;
 
-    margin-right: 7px;
+    margin-right: 6px;
 
     opacity: 1;
 }
 
 
 /* =========================================================
-   SELECTED
+   ACTIVE LEVEL
    ========================================================= */
 
 .page-list .list .level.active button {
@@ -288,20 +458,27 @@
         linear-gradient(
             100deg,
             #ff7800,
-            #ff8d21
+            #ff8a1c
         );
 
-    border-color: rgba(255, 174, 92, 0.5);
+    border-color:
+        rgba(255, 185, 105, 0.5);
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    font-weight: 700;
+    font-weight:
+        700;
+
+    transform:
+        translateX(1px);
 
     box-shadow:
-        0 6px 18px rgba(255, 120, 0, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+        0 5px 14px
+        rgba(255, 120, 0, 0.18),
 
-    transform: translateX(2px);
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.16);
 }
 
 .page-list .list .level.active button::before {
@@ -314,15 +491,23 @@
    ========================================================= */
 
 .page-list .level-container {
-    min-width: 0;
+    position: relative;
 
-    padding: 10px 4px;
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
 
     box-sizing: border-box;
+
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
-/* Actual level */
+/* =========================================================
+   ACTUAL LEVEL CARD
+   ========================================================= */
 
 .page-list .level-container .level {
     display: flex;
@@ -330,63 +515,81 @@
     flex-direction: column;
 
     width: 100%;
-    max-width: none;
     min-width: 0;
 
-    padding: 18px;
+    padding:
+        10px 14px 16px;
 
-    gap: 11px;
+    gap:
+        8px;
 
     box-sizing: border-box;
 
-    color: var(--text);
+    color:
+        var(--text);
 
     background:
         linear-gradient(
             145deg,
             rgba(255, 255, 255, 0.035),
             rgba(255, 255, 255, 0.008)
-        );
+        ),
+        rgba(15, 17, 22, 0.78);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
-    border-radius: 13px;
+    border-radius:
+        9px;
 
     box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+        0 12px 32px
+        rgba(0, 0, 0, 0.25),
 
-    backdrop-filter: blur(10px);
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.02);
+
+    backdrop-filter:
+        blur(8px);
 }
 
 
 /* =========================================================
-   LEVEL TITLE
+   TITLE
    ========================================================= */
 
 .page-list .level-container .level h1,
 .page-list .level-container .level h2 {
     position: relative;
 
-    margin: 0;
+    margin:
+        0;
 
-    padding: 0 0 10px;
+    padding:
+        0 0 6px;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    font-size: 1.3rem;
+    font-size:
+        1.15rem;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    line-height: 1.2;
+    line-height:
+        1.2;
 
-    letter-spacing: -0.015em;
+    letter-spacing:
+        -0.015em;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.09);
 }
 
 
-/* Accent under title */
+/* Orange title line */
 
 .page-list .level-container .level h1::after,
 .page-list .level-container .level h2::after {
@@ -395,14 +598,21 @@
     position: absolute;
 
     left: 0;
-    bottom: -1px;
 
-    width: 45px;
-    height: 2px;
+    bottom:
+        -1px;
 
-    background: var(--accent);
+    width:
+        40px;
 
-    border-radius: 2px;
+    height:
+        2px;
+
+    background:
+        var(--accent);
+
+    border-radius:
+        2px;
 }
 
 
@@ -411,13 +621,17 @@
    ========================================================= */
 
 .page-list .level-container .level > p {
-    margin: 0;
+    margin:
+        0;
 
-    color: var(--text-muted);
+    color:
+        rgba(255, 255, 255, 0.65);
 
-    font-size: 0.72rem;
+    font-size:
+        9.5px;
 
-    line-height: 1.55;
+    line-height:
+        1.45;
 }
 
 
@@ -430,50 +644,70 @@
 
     width: 100%;
 
-    aspect-ratio: 16 / 9;
+    aspect-ratio:
+        16 / 9;
 
-    margin: 2px 0;
+    margin:
+        1px 0;
 
-    padding: 0;
+    padding:
+        0;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    background: #050608;
+    background:
+        #050608;
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.075);
 
-    border-radius: 9px;
+    border-radius:
+        7px;
 
     box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.35);
+        0 8px 22px
+        rgba(0, 0, 0, 0.3);
 }
 
 
-/* Video inner border */
+/* Video overlay */
 
 .page-list .level-container .level .video::after {
     content: "";
 
-    position: absolute;
+    position:
+        absolute;
 
-    inset: 0;
+    inset:
+        0;
 
-    border: 1px solid rgba(255, 255, 255, 0.025);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.025);
 
-    border-radius: inherit;
+    border-radius:
+        inherit;
 
-    pointer-events: none;
+    pointer-events:
+        none;
 }
 
 
 .page-list .level-container .level .video iframe,
 .page-list .level-container .level .video video {
-    display: block;
+    display:
+        block;
 
-    width: 100%;
-    height: 100%;
+    width:
+        100%;
 
-    border: 0;
+    height:
+        100%;
+
+    border:
+        0;
 }
 
 
@@ -482,51 +716,62 @@
    ========================================================= */
 
 .page-list .level-container .level .tags {
-    display: flex;
+    display:
+        flex;
 
-    flex-wrap: wrap;
+    flex-wrap:
+        wrap;
 
-    gap: 5px;
+    gap:
+        4px;
 
-    margin: 0;
+    margin:
+        0;
 }
 
 
 .page-list .level-container .level .tags > * {
-    padding: 3px 8px;
+    padding:
+        2px 6px;
 
-    color: rgba(255, 255, 255, 0.75);
+    color:
+        rgba(255, 255, 255, 0.7);
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.055),
-            rgba(255, 255, 255, 0.025)
-        );
+        rgba(255, 255, 255, 0.035);
 
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
 
-    border-radius: 5px;
+    border-radius:
+        4px;
 
-    font-size: 0.61rem;
+    font-size:
+        8px;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    line-height: 14px;
+    line-height:
+        13px;
 
     transition:
-        background 0.15s ease,
-        border-color 0.15s ease,
-        color 0.15s ease;
+        background 0.12s ease,
+        border-color 0.12s ease,
+        color 0.12s ease;
 }
 
 
 .page-list .level-container .level .tags > *:hover {
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    background: rgba(255, 120, 0, 0.09);
+    background:
+        rgba(255, 120, 0, 0.08);
 
-    border-color: rgba(255, 120, 0, 0.25);
+    border-color:
+        rgba(255, 120, 0, 0.23);
 }
 
 
@@ -535,74 +780,85 @@
    ========================================================= */
 
 .page-list .level-container .level .stats {
-    display: grid;
+    display:
+        grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
-    width: 100%;
+    width:
+        100%;
 
-    margin: 2px 0 0;
+    margin:
+        1px 0 0;
 
-    padding: 0;
+    padding:
+        0;
 
     background:
-        rgba(255, 255, 255, 0.018);
+        rgba(255, 255, 255, 0.015);
 
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.07);
 
-    border-radius: 8px;
+    border-radius:
+        6px;
 
-    gap: 0;
-
-    overflow: hidden;
+    overflow:
+        hidden;
 }
 
 
 .page-list .level-container .level .stats li {
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    min-height: 58px;
+    min-height:
+        48px;
 
-    padding: 7px;
+    padding:
+        5px;
 
-    background: transparent;
+    background:
+        transparent;
 
-    border: 0;
+    border:
+        0;
 
-    border-right: 1px solid rgba(255, 255, 255, 0.075);
+    border-right:
+        1px solid
+        rgba(255, 255, 255, 0.07);
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.075);
-
-    border-radius: 0;
-
-    gap: 3px;
+    gap:
+        2px;
 
     transition:
-        background 0.15s ease;
+        background 0.12s ease;
 }
 
 
-.page-list .level-container .level .stats li:nth-child(even) {
-    border-right: 0;
-}
-
-
-.page-list .level-container .level .stats li:nth-last-child(-n + 2) {
-    border-bottom: 0;
+.page-list .level-container .level .stats li:last-child {
+    border-right:
+        0;
 }
 
 
 .page-list .level-container .level .stats li:hover {
-    transform: none;
-
     background:
-        rgba(255, 120, 0, 0.045);
+        rgba(255, 120, 0, 0.035);
+
+    transform:
+        none;
 }
 
 
@@ -610,15 +866,20 @@
 
 .page-list .level-container .level .stats li label,
 .page-list .level-container .level .stats li .label {
-    color: var(--accent);
+    color:
+        var(--accent);
 
-    font-size: 0.55rem;
+    font-size:
+        7px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    letter-spacing: 0.05em;
+    letter-spacing:
+        0.04em;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 }
 
 
@@ -626,323 +887,521 @@
 
 .page-list .level-container .level .stats li strong,
 .page-list .level-container .level .stats li .value {
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    font-size: 0.92rem;
+    font-size:
+        13px;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:
+        tabular-nums;
 }
 
 
 /* =========================================================
-   AUTHORS
+   AUTHORS / INFO
    ========================================================= */
 
 .page-list .level-container .level .level-authors {
-    display: grid;
+    display:
+        grid;
 
-    grid-template-columns: max-content 1fr;
+    grid-template-columns:
+        max-content 1fr;
 
-    grid-auto-rows: max-content;
+    gap:
+        3px 8px;
 
-    gap: 5px 10px;
+    margin:
+        0;
 
-    margin: 0;
-
-    padding: 7px 9px;
+    padding:
+        5px 7px;
 
     background:
-        rgba(255, 255, 255, 0.018);
+        rgba(255, 255, 255, 0.015);
 
-    border: 1px solid rgba(255, 255, 255, 0.055);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.05);
 
-    border-radius: 7px;
+    border-radius:
+        5px;
 }
 
 
 .page-list .level-container .level .level-authors > * {
-    color: var(--text-muted);
+    color:
+        rgba(255, 255, 255, 0.45);
 
-    font-size: 0.63rem;
+    font-size:
+        8px;
 }
 
 
 /* =========================================================
-   RIGHT META
+   RIGHT RECORDS CONTAINER
+   ONLY RECORDS
    ========================================================= */
 
 .page-list .meta-container {
-    padding: 14px 11px;
+    position:
+        relative;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    padding:
+        10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.008)
+        ),
+        var(--bg-card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        9px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.25),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.02);
+
+    backdrop-filter:
+        blur(8px);
+
+    overflow:
+        auto;
 }
 
+
+/* =========================================================
+   META
+   ========================================================= */
 
 .page-list .meta {
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    gap: 10px;
+    width:
+        100%;
 
-    width: 100%;
+    gap:
+        8px;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 }
 
 
 /* =========================================================
-   RECORDS TITLE
+   RECORDS HEADER
    ========================================================= */
 
-.page-list .meta .records-title,
 .page-list .meta h2,
-.page-list .meta h3 {
-    position: relative;
+.page-list .meta h3,
+.page-list .meta .records-title {
+    position:
+        relative;
 
-    color: #ffffff;
+    margin:
+        0;
 
-    margin: 0;
+    padding:
+        0 0 7px;
 
-    padding-bottom: 9px;
+    color:
+        #ffffff;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.09);
 
-    font-size: 1.05rem;
+    font-size:
+        0.9rem;
 
-    font-weight: 700;
+    font-weight:
+        700;
 }
 
 
-/* Accent */
-
-.page-list .meta .records-title::after,
 .page-list .meta h2::after,
-.page-list .meta h3::after {
+.page-list .meta h3::after,
+.page-list .meta .records-title::after {
     content: "";
 
-    position: absolute;
+    position:
+        absolute;
 
-    left: 0;
-    bottom: -1px;
+    left:
+        0;
 
-    width: 35px;
-    height: 2px;
+    bottom:
+        -1px;
 
-    background: var(--accent);
+    width:
+        30px;
 
-    border-radius: 2px;
+    height:
+        2px;
+
+    background:
+        var(--accent);
+
+    border-radius:
+        2px;
 }
 
 
 /* =========================================================
-   RECORDS
+   RECORD SEARCH
    ========================================================= */
 
-.page-list .meta .records,
-.page-list .level-container .level .records {
-    width: 100%;
+.page-list .meta input,
+.page-list .meta input[type="search"],
+.page-list .meta .search input {
+    width:
+        100%;
 
-    table-layout: fixed;
+    height:
+        28px;
 
-    border-collapse: separate;
+    padding:
+        0 9px;
 
-    border-spacing: 0 3px;
+    margin:
+        0;
 
-    color: #ffffff;
-
-    font-size: 0.68rem;
-}
-
-
-/* Record rows */
-
-.page-list .meta .records tr,
-.page-list .level-container .level .records tr {
-    transition:
-        background 0.15s ease;
-}
-
-
-/* Record hover */
-
-.page-list .meta .records tr:hover,
-.page-list .level-container .level .records tr:hover {
     background:
-        rgba(255, 120, 0, 0.045);
+        rgba(5, 6, 9, 0.65);
+
+    color:
+        #ffffff;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.045);
+
+    border-radius:
+        5px;
+
+    font-size:
+        9px;
+
+    box-shadow:
+        none;
 }
 
 
-/* Record cells */
+.page-list .meta input:focus,
+.page-list .meta input[type="search"]:focus,
+.page-list .meta .search input:focus {
+    border-color:
+        rgba(255, 120, 0, 0.3);
 
-.page-list .meta .records td,
-.page-list .level-container .level .records td {
-    padding-top: 6px;
+    box-shadow:
+        0 0 0 2px
+        rgba(255, 120, 0, 0.05);
+}
 
-    padding-bottom: 6px;
 
-    color: rgba(255, 255, 255, 0.72);
+/* =========================================================
+   RECORD TABLE
+   ========================================================= */
+
+.page-list .meta .records {
+    width:
+        100%;
+
+    table-layout:
+        fixed;
+
+    border-collapse:
+        separate;
+
+    border-spacing:
+        0 3px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        9px;
+}
+
+
+/* Rows */
+
+.page-list .meta .records tr {
+    transition:
+        background 0.12s ease;
+}
+
+
+.page-list .meta .records tr:hover {
+    background:
+        rgba(255, 120, 0, 0.035);
+}
+
+
+/* Cells */
+
+.page-list .meta .records td {
+    padding:
+        5px 3px;
+
+    color:
+        rgba(255, 255, 255, 0.65);
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.035);
 }
 
 
 /* User */
 
-.page-list .meta .records .user,
-.page-list .level-container .level .records .user {
-    width: 100%;
+.page-list .meta .records .user {
+    width:
+        100%;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    text-overflow: ellipsis;
+    text-overflow:
+        ellipsis;
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
+
+    color:
+        rgba(255, 255, 255, 0.8);
 }
 
 
 /* Percentage */
 
-.page-list .meta .records .percent,
-.page-list .level-container .level .records .percent {
-    text-align: right;
+.page-list .meta .records .percent {
+    color:
+        #ffffff;
 
-    color: #ffffff;
+    text-align:
+        right;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:
+        tabular-nums;
 }
 
 
-/* Hz */
+/* Hz / date */
 
-.page-list .meta .records .hz,
-.page-list .level-container .level .records .hz {
-    text-align: right;
+.page-list .meta .records .hz {
+    color:
+        var(--text-dim);
 
-    color: var(--text-dim);
+    text-align:
+        right;
 
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:
+        tabular-nums;
 }
 
 
 /* Links */
 
-.page-list .meta .records a,
-.page-list .level-container .level .records a {
-    color: rgba(255, 255, 255, 0.82);
+.page-list .meta .records a {
+    color:
+        rgba(255, 255, 255, 0.8);
 
-    text-decoration: none;
+    text-decoration:
+        none;
 
     transition:
-        color 0.15s ease;
+        color 0.12s ease;
 }
 
 
-.page-list .meta .records a:hover,
-.page-list .level-container .level .records a:hover {
-    color: var(--accent-light);
-
-    text-decoration: none;
+.page-list .meta .records a:hover {
+    color:
+        var(--accent-light);
 }
 
 
 /* =========================================================
-   META INFORMATION
+   RECORD FLAGS / ICONS
    ========================================================= */
 
-.page-list .meta .errors {
-    display: flex;
+.page-list .meta .records img {
+    width:
+        16px;
 
-    flex-direction: column;
+    height:
+        16px;
 
-    gap: 5px;
-}
+    object-fit:
+        contain;
 
+    vertical-align:
+        middle;
 
-.page-list .meta .errors .error {
-    padding: 7px 9px;
-
-    color: var(--color-error);
-
-    background:
-        rgba(255, 70, 70, 0.045);
-
-    border: 1px solid rgba(255, 70, 70, 0.12);
-
-    border-left: 2px solid var(--color-error);
-
-    border-radius: 5px;
-
-    font-size: 0.68rem;
+    border-radius:
+        2px;
 }
 
 
 /* =========================================================
-   EDITORS
+   PAGINATION
    ========================================================= */
 
-.page-list .meta .editors {
-    display: flex;
+.page-list .meta .pagination {
+    display:
+        flex;
 
-    flex-direction: column;
+    align-items:
+        center;
 
-    gap: 2px;
+    justify-content:
+        center;
+
+    gap:
+        4px;
+
+    margin-top:
+        2px;
 }
 
 
-.page-list .meta .editors li {
-    display: flex;
+.page-list .meta .pagination button {
+    min-width:
+        28px;
 
-    align-items: center;
+    height:
+        25px;
 
-    gap: 7px;
+    padding:
+        0 6px;
 
-    padding: 5px 6px;
-
-    color: rgba(255, 255, 255, 0.7);
-
-    border-radius: 5px;
-
-    transition:
-        background 0.15s ease,
-        transform 0.15s ease;
-}
-
-
-.page-list .meta .editors li:hover {
     background:
-        rgba(255, 120, 0, 0.055);
+        rgba(255, 255, 255, 0.025);
 
-    transform: translateX(2px);
-}
+    color:
+        rgba(255, 255, 255, 0.5);
 
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
 
-.page-list .meta .editors li img {
-    width: 17px;
-
-    height: 17px;
-
-    object-fit: contain;
-
-    border-radius: 4px;
+    border-radius:
+        4px;
 
     box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.25);
+        none;
+
+    font-size:
+        8px;
 }
 
 
-.page-list .meta .editors li a {
-    color: rgba(255, 255, 255, 0.75);
+.page-list .meta .pagination button:hover {
+    background:
+        rgba(255, 120, 0, 0.08);
 
-    text-decoration: none;
+    color:
+        #ffffff;
+
+    border-color:
+        rgba(255, 120, 0, 0.25);
+
+    transform:
+        none;
+
+    box-shadow:
+        none;
+}
+
+
+.page-list .meta .pagination button.active {
+    background:
+        var(--accent);
+
+    color:
+        #ffffff;
+
+    border-color:
+        var(--accent);
+}
+
+
+/* =========================================================
+   YOUTUBE / VIDEO ICON ON RIGHT
+   ========================================================= */
+
+.page-list .meta .youtube,
+.page-list .meta .video-link {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        28px;
+
+    height:
+        24px;
+
+    margin-left:
+        auto;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    border-radius:
+        5px;
+
+    color:
+        #ffffff;
 
     transition:
-        color 0.15s ease;
+        background 0.12s ease,
+        border-color 0.12s ease;
 }
 
 
-.page-list .meta .editors li a:hover {
-    color: var(--accent-light);
+.page-list .meta .youtube:hover,
+.page-list .meta .video-link:hover {
+    background:
+        rgba(255, 120, 0, 0.08);
+
+    border-color:
+        rgba(255, 120, 0, 0.25);
 }
 
 
@@ -951,13 +1410,17 @@
    ========================================================= */
 
 .page-list .level-pack-panel {
-    position: relative;
+    position:
+        relative;
 
-    width: 100%;
+    width:
+        100%;
 
-    padding: 11px;
+    padding:
+        9px;
 
-    box-sizing: border-box;
+    box-sizing:
+        border-box;
 
     background:
         linear-gradient(
@@ -966,92 +1429,120 @@
             rgba(255, 255, 255, 0.012)
         );
 
-    border: 1px solid color-mix(
-        in srgb,
-        var(--pack-color) 28%,
-        transparent
-    );
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
 
-    border-left: 3px solid var(--pack-color);
+    border-left:
+        2px solid
+        var(--pack-color, var(--accent));
 
-    border-radius: 7px;
+    border-radius:
+        6px;
 
     box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.18);
+        0 5px 16px
+        rgba(0, 0, 0, 0.18);
 }
 
 
 .page-list .level-pack-header {
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    gap: 0.6rem;
+    gap:
+        6px;
 
-    margin-bottom: 7px;
+    margin-bottom:
+        5px;
 }
 
 
 .page-list .level-pack-title {
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 0.45rem;
+    gap:
+        5px;
 
-    min-width: 0;
+    min-width:
+        0;
 }
 
 
 .page-list .level-pack-title h3 {
-    margin: 0;
+    margin:
+        0;
 
-    color: #ffffff;
+    color:
+        #ffffff;
 
-    font-size: 0.86rem;
+    font-size:
+        10px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 }
 
 
 .page-list .level-pack-progress {
-    flex-shrink: 0;
+    flex-shrink:
+        0;
 
-    color: var(--text-dim);
+    color:
+        var(--text-dim);
 
-    font-size: 0.65rem;
+    font-size:
+        8px;
 
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric:
+        tabular-nums;
 }
 
 
 .page-list .level-pack-levels {
-    display: flex;
+    display:
+        flex;
 
-    flex-direction: column;
+    flex-direction:
+        column;
 
-    gap: 2px;
+    gap:
+        2px;
 }
 
 
 .page-list .level-pack-level {
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    gap: 0.45rem;
+    gap:
+        5px;
 
-    padding: 5px;
+    padding:
+        4px;
 
-    color: rgba(255, 255, 255, 0.78);
+    color:
+        rgba(255, 255, 255, 0.7);
 
-    border-radius: 4px;
+    border-radius:
+        4px;
 
     transition:
-        background 0.15s ease,
-        transform 0.15s ease;
+        background 0.12s ease,
+        transform 0.12s ease;
 }
 
 
@@ -1059,34 +1550,42 @@
     background:
         rgba(255, 255, 255, 0.035);
 
-    transform: translateX(2px);
+    transform:
+        translateX(2px);
 }
 
 
 /* =========================================================
-   SCROLLBAR
+   SCROLLBARS
    ========================================================= */
 
 .page-list ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width:
+        5px;
+
+    height:
+        5px;
 }
 
 
 .page-list ::-webkit-scrollbar-track {
-    background: transparent;
+    background:
+        transparent;
 }
 
 
 .page-list ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.12);
+    background:
+        rgba(255, 255, 255, 0.11);
 
-    border-radius: 10px;
+    border-radius:
+        999px;
 }
 
 
 .page-list ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 120, 0, 0.45);
+    background:
+        rgba(255, 120, 0, 0.4);
 }
 
 
@@ -1094,32 +1593,31 @@
    RESPONSIVE
    ========================================================= */
 
-@media (max-width: 1250px) {
+@media (max-width: 1200px) {
 
     .page-list {
         grid-template-columns:
-            280px
-            minmax(430px, 1fr);
-    }
+            minmax(260px, 1fr)
+            minmax(450px, 2fr)
+            minmax(240px, 1fr);
 
-    .page-list .meta-container {
-        grid-column: 2;
+        gap:
+            8px;
     }
 }
 
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
 
     .page-list {
         grid-template-columns:
-            minmax(240px, 300px)
-            minmax(350px, 1fr);
-
-        gap: 9px;
+            minmax(230px, 1fr)
+            minmax(400px, 2fr);
     }
 
-    .page-list .level-container .level {
-        padding: 14px;
+    .page-list .meta-container {
+        display:
+            none;
     }
 }
 
@@ -1127,52 +1625,89 @@
 @media (max-width: 700px) {
 
     .page-list {
-        display: flex;
+        display:
+            flex;
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        gap: 8px;
+        height:
+            auto;
+
+        min-height:
+            100%;
+
+        gap:
+            8px;
+
+        overflow:
+            visible;
     }
 
-    .page-list .list-container,
-    .page-list .level-container,
-    .page-list .meta-container {
-        width: 100%;
+    .page-list .list-container {
+        width:
+            100%;
+
+        height:
+            400px;
     }
 
     .page-list .level-container {
-        padding: 0;
+        width:
+            100%;
+
+        height:
+            auto;
+
+        overflow:
+            visible;
     }
 
     .page-list .meta-container {
-        grid-column: auto;
-    }
+        display:
+            block;
 
-    .page-list .level-container .level {
-        padding: 14px;
+        width:
+            100%;
+
+        height:
+            auto;
     }
 }
 
 
-/* =========================================================
-   SMALL SCREENS
-   ========================================================= */
-
 @media (max-width: 450px) {
 
-    .page-list .level-container .level {
-        padding: 11px;
-
-        border-radius: 9px;
-    }
-
-    .page-list .level-container .level h1,
-    .page-list .level-container .level h2 {
-        font-size: 1.1rem;
+    .page-list {
+        gap:
+            6px;
     }
 
     .page-list .list-container,
     .page-list .meta-container {
-        padding: 9px 7px;
+        padding:
+            8px 6px;
+    }
+
+    .page-list .level-container .level {
+        padding:
+            9px;
+    }
+
+    .page-list .level-container .level h1,
+    .page-list .level-container .level h2 {
+        font-size:
+            1rem;
+    }
+
+    .page-list .level-container .level .stats li {
+        min-height:
+            44px;
+    }
+
+    .page-list .level-container .level .stats li strong,
+    .page-list .level-container .level .stats li .value {
+        font-size:
+            11px;
     }
 }
