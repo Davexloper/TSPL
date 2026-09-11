@@ -30,12 +30,6 @@
 
     display: grid;
 
-    /*
-        Screenshot:
-        LEFT    = ~25%
-        CENTER  = ~50%
-        RIGHT   = ~25%
-    */
     grid-template-columns:
         minmax(0, 1fr)
         minmax(0, 2fr)
@@ -100,7 +94,9 @@
 }
 
 
-/* Top highlight */
+/* =========================================================
+   TOP HIGHLIGHT
+   ========================================================= */
 
 .page-list .list-container::before,
 .page-list .meta-container::before,
@@ -145,8 +141,6 @@
 }
 
 
-/* Generic tab buttons */
-
 .page-list .list-container .tabs button,
 .page-list .list-container .categories button {
     flex: 1;
@@ -180,6 +174,7 @@
         border-color 0.15s ease;
 }
 
+
 .page-list .list-container .tabs button:hover,
 .page-list .list-container .categories button:hover {
     color: rgba(255, 255, 255, 0.7);
@@ -191,6 +186,7 @@
 
     box-shadow: none;
 }
+
 
 .page-list .list-container .tabs button.active,
 .page-list .list-container .categories button.active {
@@ -219,10 +215,11 @@
 
     height: 28px;
 
-    padding:
-        0 9px;
+    padding: 0 9px;
 
     margin-bottom: 7px;
+
+    box-sizing: border-box;
 
     background:
         rgba(5, 6, 9, 0.65);
@@ -240,6 +237,7 @@
 
     box-shadow: none;
 }
+
 
 .page-list .list-container input[type="search"]:focus,
 .page-list .list-container .search input:focus,
@@ -268,8 +266,6 @@
         0 3px;
 }
 
-
-/* Rows */
 
 .page-list .list tr {
     height: 28px;
@@ -308,6 +304,7 @@
         color 0.12s ease;
 }
 
+
 .page-list .list tr:hover .rank {
     color:
         var(--accent-light);
@@ -339,8 +336,7 @@
     width: 100%;
     height: 27px;
 
-    padding:
-        0 9px;
+    padding: 0 9px;
 
     box-sizing: border-box;
 
@@ -390,8 +386,6 @@
 }
 
 
-/* Small orange indicator */
-
 .page-list .list .level button::before {
     content: "";
 
@@ -416,8 +410,6 @@
 }
 
 
-/* Hover */
-
 .page-list .list .level button:hover {
     background:
         linear-gradient(
@@ -439,6 +431,7 @@
         0 3px 10px
         rgba(0, 0, 0, 0.16);
 }
+
 
 .page-list .list .level button:hover::before {
     height: 12px;
@@ -480,6 +473,7 @@
         inset 0 1px 0
         rgba(255, 255, 255, 0.16);
 }
+
 
 .page-list .list .level.active button::before {
     display: none;
@@ -562,8 +556,7 @@
 .page-list .level-container .level h2 {
     position: relative;
 
-    margin:
-        0;
+    margin: 0;
 
     padding:
         0 0 6px;
@@ -588,8 +581,6 @@
         rgba(255, 255, 255, 0.09);
 }
 
-
-/* Orange title line */
 
 .page-list .level-container .level h1::after,
 .page-list .level-container .level h2::after {
@@ -671,8 +662,6 @@
         rgba(0, 0, 0, 0.3);
 }
 
-
-/* Video overlay */
 
 .page-list .level-container .level .video::after {
     content: "";
@@ -862,8 +851,6 @@
 }
 
 
-/* Stat labels */
-
 .page-list .level-container .level .stats li label,
 .page-list .level-container .level .stats li .label {
     color:
@@ -883,8 +870,6 @@
 }
 
 
-/* Stat values */
-
 .page-list .level-container .level .stats li strong,
 .page-list .level-container .level .stats li .value {
     color:
@@ -902,7 +887,7 @@
 
 
 /* =========================================================
-   AUTHORS / INFO
+   AUTHORS
    ========================================================= */
 
 .page-list .level-container .level .level-authors {
@@ -944,7 +929,6 @@
 
 /* =========================================================
    RIGHT RECORDS CONTAINER
-   ONLY RECORDS
    ========================================================= */
 
 .page-list .meta-container {
@@ -959,6 +943,9 @@
 
     padding:
         10px;
+
+    box-sizing:
+        border-box;
 
     background:
         linear-gradient(
@@ -990,7 +977,7 @@
 
 
 /* =========================================================
-   META
+   META / RECORDS
    ========================================================= */
 
 .page-list .meta {
@@ -1045,7 +1032,8 @@
 .page-list .meta h2::after,
 .page-list .meta h3::after,
 .page-list .meta .records-title::after {
-    content: "";
+    content:
+        "";
 
     position:
         absolute;
@@ -1089,6 +1077,9 @@
     margin:
         0;
 
+    box-sizing:
+        border-box;
+
     background:
         rgba(5, 6, 9, 0.65);
 
@@ -1101,6 +1092,9 @@
 
     border-radius:
         5px;
+
+    outline:
+        none;
 
     font-size:
         9px;
@@ -1123,7 +1117,7 @@
 
 
 /* =========================================================
-   RECORD TABLE
+   RECORDS TABLE
    ========================================================= */
 
 .page-list .meta .records {
@@ -1137,7 +1131,7 @@
         separate;
 
     border-spacing:
-        0 3px;
+        0 4px;
 
     color:
         #ffffff;
@@ -1147,40 +1141,104 @@
 }
 
 
-/* Rows */
+/* =========================================================
+   RECORD ROW
+   ========================================================= */
 
 .page-list .meta .records tr {
+    position:
+        relative;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.035),
+            rgba(255, 255, 255, 0.018)
+        );
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.055);
+
+    border-radius:
+        6px;
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.015);
+
     transition:
-        background 0.12s ease;
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
 }
 
 
 .page-list .meta .records tr:hover {
     background:
-        rgba(255, 120, 0, 0.035);
+        linear-gradient(
+            135deg,
+            rgba(255, 120, 0, 0.07),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border-color:
+        rgba(255, 120, 0, 0.2);
+
+    transform:
+        translateX(2px);
+
+    box-shadow:
+        0 4px 12px
+        rgba(0, 0, 0, 0.14);
 }
 
 
-/* Cells */
+/* =========================================================
+   RECORD CELLS
+   ========================================================= */
 
 .page-list .meta .records td {
+    height:
+        34px;
+
     padding:
-        5px 3px;
+        4px 5px;
+
+    box-sizing:
+        border-box;
+
+    vertical-align:
+        middle;
+
+    border:
+        0;
 
     color:
         rgba(255, 255, 255, 0.65);
-
-    border-bottom:
-        1px solid
-        rgba(255, 255, 255, 0.035);
 }
 
 
-/* User */
+/* =========================================================
+   FIRST CELL / VICTOR
+   ========================================================= */
+
+/*
+    Victor bleibt LINKS in der Record-Box.
+    Dadurch sitzt der Name sauber innerhalb
+    des Rechtecks und kann nicht herauslaufen.
+*/
 
 .page-list .meta .records .user {
     width:
-        100%;
+        auto;
+
+    min-width:
+        0;
+
+    padding-left:
+        8px;
 
     overflow:
         hidden;
@@ -1192,42 +1250,188 @@
         nowrap;
 
     color:
-        rgba(255, 255, 255, 0.8);
+        rgba(255, 255, 255, 0.86);
+
+    font-size:
+        9px;
+
+    font-weight:
+        600;
+
+    text-align:
+        left;
 }
 
 
-/* Percentage */
+/* =========================================================
+   PERCENT
+   ========================================================= */
 
 .page-list .meta .records .percent {
+    width:
+        48px;
+
     color:
         #ffffff;
 
     text-align:
         right;
 
+    font-size:
+        9px;
+
     font-weight:
-        600;
+        700;
 
     font-variant-numeric:
         tabular-nums;
+
+    white-space:
+        nowrap;
 }
 
 
-/* Hz / date */
+/* =========================================================
+   HZ
+   ========================================================= */
 
 .page-list .meta .records .hz {
+    width:
+        48px;
+
     color:
         var(--text-dim);
 
     text-align:
         right;
 
+    font-size:
+        8px;
+
     font-variant-numeric:
         tabular-nums;
+
+    white-space:
+        nowrap;
 }
 
 
-/* Links */
+/* =========================================================
+   LAST CELL
+   VIDEO / VICTOR BUTTON
+   ========================================================= */
+
+.page-list .meta .records td:last-child {
+    width:
+        36px;
+
+    padding:
+        4px 5px 4px 3px;
+
+    text-align:
+        right;
+
+    vertical-align:
+        middle;
+}
+
+
+/* =========================================================
+   VIDEO / VICTOR BUTTON
+   ========================================================= */
+
+.page-list .meta .records .youtube,
+.page-list .meta .records .video-link {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        26px;
+
+    height:
+        24px;
+
+    padding:
+        0;
+
+    margin:
+        0;
+
+    box-sizing:
+        border-box;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color:
+        rgba(255, 255, 255, 0.7);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.065);
+
+    border-radius:
+        5px;
+
+    text-decoration:
+        none;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.page-list .meta .records .youtube:hover,
+.page-list .meta .records .video-link:hover {
+    background:
+        rgba(255, 120, 0, 0.11);
+
+    color:
+        #ffffff;
+
+    border-color:
+        rgba(255, 120, 0, 0.28);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.page-list .meta .records .youtube img,
+.page-list .meta .records .video-link img {
+    display:
+        block;
+
+    width:
+        14px;
+
+    height:
+        14px;
+
+    object-fit:
+        contain;
+
+    margin:
+        0;
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
 
 .page-list .meta .records a {
     color:
@@ -1252,10 +1456,10 @@
    ========================================================= */
 
 .page-list .meta .records img {
-    width:
+    max-width:
         16px;
 
-    height:
+    max-height:
         16px;
 
     object-fit:
@@ -1349,59 +1553,6 @@
 
     border-color:
         var(--accent);
-}
-
-
-/* =========================================================
-   YOUTUBE / VIDEO ICON ON RIGHT
-   ========================================================= */
-
-.page-list .meta .youtube,
-.page-list .meta .video-link {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    width:
-        28px;
-
-    height:
-        24px;
-
-    margin-left:
-        auto;
-
-    background:
-        rgba(255, 255, 255, 0.035);
-
-    border:
-        1px solid
-        rgba(255, 255, 255, 0.06);
-
-    border-radius:
-        5px;
-
-    color:
-        #ffffff;
-
-    transition:
-        background 0.12s ease,
-        border-color 0.12s ease;
-}
-
-
-.page-list .meta .youtube:hover,
-.page-list .meta .video-link:hover {
-    background:
-        rgba(255, 120, 0, 0.08);
-
-    border-color:
-        rgba(255, 120, 0, 0.25);
 }
 
 
@@ -1709,5 +1860,39 @@
     .page-list .level-container .level .stats li .value {
         font-size:
             11px;
+    }
+
+    /* Records auf kleinen Bildschirmen kompakter */
+
+    .page-list .meta .records td {
+        height:
+            32px;
+
+        padding:
+            3px;
+    }
+
+    .page-list .meta .records .percent {
+        width:
+            42px;
+    }
+
+    .page-list .meta .records .hz {
+        width:
+            42px;
+    }
+
+    .page-list .meta .records td:last-child {
+        width:
+            32px;
+    }
+
+    .page-list .meta .records .youtube,
+    .page-list .meta .records .video-link {
+        width:
+            23px;
+
+        height:
+            22px;
     }
 }
