@@ -20,5 +20,16 @@
             "Tungtungsahurcles"
         ],
         "difficulty": "Bronze"
-    }
+    },
+    {
+        "id": 3,
+        "name": "RGB Trilogy",
+        "color": "#000000",
+        "levels": [
+            "Sonicwave",
+            "Yatagarasu",
+            "Erebus"
+        ],
+        "difficulty": "Diamond"
+    
 ]
