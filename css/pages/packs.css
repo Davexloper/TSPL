@@ -1,5 +1,6 @@
 /* =========================================================
    PACKS PAGE
+   Clean Dark UI
    ========================================================= */
 
 .page-packs {
@@ -7,7 +8,7 @@
     width: 100%;
     min-height: calc(100vh - 4rem);
 
-    padding: 1rem;
+    padding: 0.9rem;
 
     box-sizing: border-box;
 
@@ -17,20 +18,153 @@
 
 
 /* =========================================================
-   MAIN GRID
+   MAIN LAYOUT
    ========================================================= */
 
-.page-packs .packs-page {
+.page-packs .packs-layout {
 
     display: grid;
 
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(22rem, 0.65fr);
 
-    grid-auto-rows: auto;
+    align-items: start;
 
-    gap: 0.9rem;
+    gap: 0.8rem;
 
     width: 100%;
+
+    min-width: 0;
+
+}
+
+
+/* =========================================================
+   SHARED PANELS
+   ========================================================= */
+
+.page-packs .packs-sidebar,
+.page-packs .pack-detail {
+
+    position: relative;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111214,
+            #0d0e10
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,0.075);
+
+    border-radius: 0.75rem;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,0.25);
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.page-packs .packs-sidebar {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 0;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   SIDEBAR HEADER
+   ========================================================= */
+
+.page-packs .packs-sidebar-header {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 4rem;
+
+    padding:
+        0.8rem 1rem;
+
+    box-sizing: border-box;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.065);
+
+}
+
+
+.page-packs .packs-sidebar-header h1 {
+
+    margin: 0;
+
+    font-size: 1rem;
+
+    font-weight: 800;
+
+    letter-spacing: -0.02em;
+
+}
+
+
+.page-packs .packs-sidebar-header p {
+
+    margin:
+        0.25rem 0 0;
+
+    color:
+        rgba(255,255,255,0.45);
+
+    font-size: 0.6rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   DIFFICULTY GRID
+
+   Row order:
+
+   Bronze     Silver
+   Iron       Gold
+   Diamond    Ruby
+   Platinum
+   ========================================================= */
+
+.page-packs .difficulty-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 0.65rem;
+
+    padding: 0.65rem;
+
+    box-sizing: border-box;
 
 }
 
@@ -47,7 +181,7 @@
 
     min-width: 0;
 
-    height: 24rem;
+    height: 20rem;
 
     overflow: hidden;
 
@@ -56,24 +190,37 @@
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,0.045),
-            rgba(255,255,255,0.018)
+            rgba(255,255,255,0.035),
+            rgba(255,255,255,0.012)
         );
 
-    border: 1px solid
-        rgba(255,255,255,0.08);
+    border:
+        1px solid
+        rgba(255,255,255,0.065);
 
-    border-radius: 0.75rem;
+    border-radius: 0.65rem;
 
-    box-shadow:
-        0 8px 30px
-        rgba(0,0,0,0.2);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.page-packs .difficulty-section:hover {
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--difficulty-color) 20%,
+            rgba(255,255,255,0.065)
+        );
 
 }
 
 
 /* =========================================================
-   HEADER
+   DIFFICULTY HEADER
    ========================================================= */
 
 .page-packs .difficulty-header {
@@ -82,18 +229,23 @@
 
     align-items: center;
 
-    gap: 0.7rem;
+    gap: 0.65rem;
 
     flex: 0 0 auto;
 
-    min-height: 4.2rem;
+    min-height: 3.6rem;
 
-    padding: 0.8rem 1rem;
+    padding:
+        0.7rem 0.8rem;
 
     box-sizing: border-box;
 
-    border-bottom: 1px solid
-        rgba(255,255,255,0.07);
+    background:
+        rgba(255,255,255,0.012);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.055);
 
 }
 
@@ -109,45 +261,38 @@
     align-items: center;
     justify-content: center;
 
-    width: 2rem;
-    height: 2rem;
+    width: 1.8rem;
+    height: 1.8rem;
 
     flex: 0 0 auto;
 
-    border-radius: 0.5rem;
-
-    font-size: 0.8rem;
+    border-radius: 0.45rem;
 
     background:
         color-mix(
             in srgb,
-            var(--difficulty-color) 18%,
+            var(--difficulty-color) 13%,
+            transparent
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--difficulty-color) 30%,
             transparent
         );
 
     color:
         var(--difficulty-color);
 
-    border: 1px solid
-        color-mix(
-            in srgb,
-            var(--difficulty-color) 35%,
-            transparent
-        );
-
-    box-shadow:
-        0 0 18px
-        color-mix(
-            in srgb,
-            var(--difficulty-color) 18%,
-            transparent
-        );
+    font-size: 0.65rem;
 
 }
 
 
 /* =========================================================
-   HEADER TEXT
+   DIFFICULTY TEXT
    ========================================================= */
 
 .page-packs .difficulty-header h2 {
@@ -156,11 +301,9 @@
 
     color: #ffffff;
 
-    font-size: 0.9rem;
+    font-size: 0.78rem;
 
     font-weight: 800;
-
-    line-height: 1.1;
 
 }
 
@@ -169,268 +312,14 @@
 
     display: block;
 
-    margin-top: 0.22rem;
-
-    color:
-        rgba(255,255,255,0.45);
-
-    font-size: 0.58rem;
-
-    font-weight: 600;
-
-}
-
-
-/* =========================================================
-   PACK LIST
-   ========================================================= */
-
-.page-packs .difficulty-list {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 0.3rem;
-
-    flex: 1 1 auto;
-
-    min-height: 0;
-
-    padding: 0.55rem;
-
-    overflow-y: auto;
-
-    overflow-x: hidden;
-
-    box-sizing: border-box;
-
-    scrollbar-width: thin;
-
-    scrollbar-color:
-        rgba(255,255,255,0.18)
-        transparent;
-
-}
-
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-.page-packs .difficulty-list::-webkit-scrollbar {
-
-    width: 4px;
-
-}
-
-
-.page-packs .difficulty-list::-webkit-scrollbar-track {
-
-    background: transparent;
-
-}
-
-
-.page-packs .difficulty-list::-webkit-scrollbar-thumb {
-
-    background:
-        rgba(255,255,255,0.18);
-
-    border-radius: 999px;
-
-}
-
-
-/* =========================================================
-   PACK CARD
-   ========================================================= */
-
-.page-packs .pack-card {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    min-height: 2.7rem;
-
-    flex: 0 0 2.7rem;
-
-    padding: 0.45rem 0.65rem;
-
-    gap: 0.65rem;
-
-    box-sizing: border-box;
-
-    background:
-        rgba(255,255,255,0.025);
-
-    border: 1px solid
-        rgba(255,255,255,0.045);
-
-    border-radius: 0.5rem;
-
-    color: #ffffff;
-
-    font-family: inherit;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    transition:
-        background 0.18s ease,
-        border-color 0.18s ease,
-        transform 0.18s ease,
-        box-shadow 0.18s ease;
-
-}
-
-
-/* =========================================================
-   PACK COLOR
-   ========================================================= */
-
-.page-packs .pack-color {
-
-    width: 0.45rem;
-
-    height: 1.5rem;
-
-    flex: 0 0 auto;
-
-    border-radius: 999px;
-
-    background:
-        var(--pack-color);
-
-    box-shadow:
-        0 0 10px
-        color-mix(
-            in srgb,
-            var(--pack-color) 45%,
-            transparent
-        );
-
-}
-
-
-/* =========================================================
-   PACK CONTENT
-   ========================================================= */
-
-.page-packs .pack-content {
-
-    display: flex;
-
-    flex-direction: column;
-
-    min-width: 0;
-
-    flex: 1 1 auto;
-
-    gap: 0.1rem;
-
-}
-
-
-.page-packs .pack-name {
-
-    display: block;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-
-    color:
-        rgba(255,255,255,0.92);
-
-    font-size: 0.68rem;
-
-    font-weight: 750;
-
-}
-
-
-.page-packs .pack-level-count {
+    margin-top: 0.18rem;
 
     color:
         rgba(255,255,255,0.4);
 
-    font-size: 0.52rem;
+    font-size: 0.53rem;
 
     font-weight: 600;
-
-}
-
-
-/* =========================================================
-   ARROW
-   ========================================================= */
-
-.page-packs .pack-arrow {
-
-    flex: 0 0 auto;
-
-    color:
-        rgba(255,255,255,0.3);
-
-    font-size: 0.7rem;
-
-    transition:
-        transform 0.18s ease,
-        color 0.18s ease;
-
-}
-
-
-/* =========================================================
-   HOVER
-   ========================================================= */
-
-.page-packs .pack-card:hover {
-
-    background:
-        color-mix(
-            in srgb,
-            var(--pack-color) 8%,
-            rgba(255,255,255,0.025)
-        );
-
-    border-color:
-        color-mix(
-            in srgb,
-            var(--pack-color) 30%,
-            rgba(255,255,255,0.05)
-        );
-
-    transform:
-        translateX(2px);
-
-    box-shadow:
-        0 5px 18px
-        color-mix(
-            in srgb,
-            var(--pack-color) 8%,
-            transparent
-        );
-
-}
-
-
-.page-packs .pack-card:hover .pack-arrow {
-
-    color:
-        var(--pack-color);
-
-    transform:
-        translateX(2px);
 
 }
 
@@ -496,12 +385,951 @@
 
 
 /* =========================================================
-   MOBILE
+   DIFFICULTY LIST
    ========================================================= */
 
-@media (max-width: 800px) {
+.page-packs .difficulty-list {
 
-    .page-packs .packs-page {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.28rem;
+
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    padding: 0.5rem;
+
+    box-sizing: border-box;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(255,255,255,0.16)
+        transparent;
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.page-packs .difficulty-list::-webkit-scrollbar {
+
+    width: 4px;
+
+}
+
+
+.page-packs .difficulty-list::-webkit-scrollbar-track {
+
+    background:
+        transparent;
+
+}
+
+
+.page-packs .difficulty-list::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,0.16);
+
+    border-radius: 999px;
+
+}
+
+
+.page-packs .difficulty-list::-webkit-scrollbar-thumb:hover {
+
+    background:
+        rgba(255,255,255,0.27);
+
+}
+
+
+/* =========================================================
+   PACK CARD
+   ========================================================= */
+
+.page-packs .pack-card {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    min-width: 0;
+
+    min-height: 2.65rem;
+
+    flex: 0 0 2.65rem;
+
+    padding:
+        0.4rem 0.55rem;
+
+    gap: 0.55rem;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(255,255,255,0.022);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.045);
+
+    border-radius: 0.45rem;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        transform 0.16s ease,
+        box-shadow 0.16s ease;
+
+}
+
+
+/* =========================================================
+   PACK COLOR
+   ========================================================= */
+
+.page-packs .pack-color {
+
+    width: 0.35rem;
+
+    height: 1.35rem;
+
+    flex: 0 0 auto;
+
+    border-radius: 999px;
+
+    background:
+        var(--pack-color);
+
+    box-shadow:
+        0 0 9px
+        color-mix(
+            in srgb,
+            var(--pack-color) 35%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   PACK CONTENT
+   ========================================================= */
+
+.page-packs .pack-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    flex: 1 1 auto;
+
+}
+
+
+.page-packs .pack-name {
+
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color:
+        rgba(255,255,255,0.9);
+
+    font-size: 0.63rem;
+
+    font-weight: 750;
+
+}
+
+
+.page-packs .pack-level-count {
+
+    margin-top: 0.08rem;
+
+    color:
+        rgba(255,255,255,0.36);
+
+    font-size: 0.5rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   PACK ARROW
+   ========================================================= */
+
+.page-packs .pack-arrow {
+
+    flex: 0 0 auto;
+
+    color:
+        rgba(255,255,255,0.25);
+
+    font-size: 0.65rem;
+
+    transition:
+        transform 0.16s ease,
+        color 0.16s ease;
+
+}
+
+
+/* =========================================================
+   PACK HOVER
+   ========================================================= */
+
+.page-packs .pack-card:hover {
+
+    background:
+        color-mix(
+            in srgb,
+            var(--pack-color) 7%,
+            rgba(255,255,255,0.025)
+        );
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--pack-color) 25%,
+            rgba(255,255,255,0.05)
+        );
+
+    transform:
+        translateX(2px);
+
+}
+
+
+.page-packs .pack-card:hover .pack-arrow {
+
+    color:
+        var(--pack-color);
+
+    transform:
+        translateX(2px);
+
+}
+
+
+/* =========================================================
+   ACTIVE PACK
+   ========================================================= */
+
+.page-packs .pack-card.active {
+
+    background:
+        linear-gradient(
+            90deg,
+            color-mix(
+                in srgb,
+                var(--pack-color) 12%,
+                rgba(255,255,255,0.025)
+            ),
+            rgba(255,255,255,0.018)
+        );
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--pack-color) 35%,
+            rgba(255,255,255,0.06)
+        );
+
+    box-shadow:
+        0 4px 16px
+        color-mix(
+            in srgb,
+            var(--pack-color) 7%,
+            transparent
+        );
+
+}
+
+
+.page-packs .pack-card.active .pack-arrow {
+
+    color:
+        var(--pack-color);
+
+}
+
+
+/* =========================================================
+   EMPTY DIFFICULTY
+   ========================================================= */
+
+.page-packs .difficulty-empty {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 1 1 auto;
+
+    min-height: 4rem;
+
+    color:
+        rgba(255,255,255,0.2);
+
+    font-size: 0.58rem;
+
+}
+
+
+/* =========================================================
+   RIGHT DETAIL PANEL
+   ========================================================= */
+
+.page-packs .pack-detail {
+
+    position: sticky;
+
+    top: 0.8rem;
+
+    min-height: calc(100vh - 5.7rem);
+
+    padding: 1rem;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   DETAIL HEADER
+   ========================================================= */
+
+.page-packs .pack-detail-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    padding-bottom: 0.9rem;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.06);
+
+}
+
+
+.page-packs .pack-detail-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.7rem;
+
+    min-width: 0;
+
+}
+
+
+.page-packs .pack-detail-dot {
+
+    width: 0.55rem;
+
+    height: 2.2rem;
+
+    flex: 0 0 auto;
+
+    border-radius: 999px;
+
+    background:
+        var(--pack-color);
+
+    box-shadow:
+        0 0 14px
+        color-mix(
+            in srgb,
+            var(--pack-color) 45%,
+            transparent
+        );
+
+}
+
+
+.page-packs .pack-detail-header h1 {
+
+    margin: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #ffffff;
+
+    font-size: 1.05rem;
+
+    font-weight: 800;
+
+}
+
+
+.page-packs .pack-detail-header p {
+
+    margin:
+        0.25rem 0 0;
+
+    color:
+        rgba(255,255,255,0.42);
+
+    font-size: 0.6rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   COMPLETION
+   ========================================================= */
+
+.page-packs .pack-detail-completion {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    flex: 0 0 auto;
+
+}
+
+
+.page-packs .pack-detail-completion strong {
+
+    color:
+        var(--pack-color);
+
+    font-size: 1.05rem;
+
+    font-weight: 850;
+
+}
+
+
+.page-packs .pack-detail-completion span {
+
+    color:
+        rgba(255,255,255,0.35);
+
+    font-size: 0.5rem;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.page-packs .pack-progress {
+
+    width: 100%;
+
+    height: 0.25rem;
+
+    margin:
+        0.8rem 0 1rem;
+
+    overflow: hidden;
+
+    background:
+        rgba(255,255,255,0.055);
+
+    border-radius: 999px;
+
+}
+
+
+.page-packs .pack-progress-fill {
+
+    height: 100%;
+
+    background:
+        var(--pack-color);
+
+    border-radius: inherit;
+
+    box-shadow:
+        0 0 10px
+        color-mix(
+            in srgb,
+            var(--pack-color) 50%,
+            transparent
+        );
+
+    transition:
+        width 0.25s ease;
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
+
+.page-packs .section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 0.55rem;
+
+}
+
+
+.page-packs .section-title h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 0.7rem;
+
+    font-weight: 800;
+
+}
+
+
+.page-packs .section-title span {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 1.35rem;
+
+    height: 1.25rem;
+
+    padding:
+        0 0.35rem;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    border-radius: 0.35rem;
+
+    color:
+        rgba(255,255,255,0.45);
+
+    font-size: 0.5rem;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   LEVELS
+   ========================================================= */
+
+.page-packs .pack-level-section {
+
+    margin-bottom: 1.1rem;
+
+}
+
+
+.page-packs .pack-levels {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0.3rem;
+
+}
+
+
+.page-packs .pack-level {
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    min-height: 2.45rem;
+
+    padding:
+        0.35rem 0.55rem;
+
+    gap: 0.55rem;
+
+    box-sizing: border-box;
+
+    background:
+        rgba(255,255,255,0.022);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.045);
+
+    border-radius: 0.45rem;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        transform 0.16s ease;
+
+}
+
+
+.page-packs .pack-level:hover {
+
+    background:
+        color-mix(
+            in srgb,
+            var(--pack-color) 7%,
+            rgba(255,255,255,0.025)
+        );
+
+    border-color:
+        color-mix(
+            in srgb,
+            var(--pack-color) 24%,
+            rgba(255,255,255,0.05)
+        );
+
+    transform:
+        translateX(2px);
+
+}
+
+
+.page-packs .pack-level-rank {
+
+    width: 1.6rem;
+
+    flex: 0 0 auto;
+
+    color:
+        rgba(255,255,255,0.25);
+
+    font-size: 0.52rem;
+
+    font-weight: 700;
+
+}
+
+
+.page-packs .pack-level-name {
+
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color:
+        rgba(255,255,255,0.85);
+
+    font-size: 0.62rem;
+
+    font-weight: 650;
+
+}
+
+
+.page-packs .pack-level-arrow {
+
+    color:
+        rgba(255,255,255,0.25);
+
+    font-size: 0.65rem;
+
+}
+
+
+/* =========================================================
+   VICTORS
+   ========================================================= */
+
+.page-packs .pack-victors-section {
+
+    margin-top: 0.4rem;
+
+}
+
+
+.page-packs .pack-completed-players {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 0.35rem;
+
+    max-height: 20rem;
+
+    overflow-y: auto;
+
+    scrollbar-width: thin;
+
+}
+
+
+.page-packs .pack-completed-player {
+
+    display: flex;
+
+    align-items: center;
+
+    min-width: 0;
+
+    gap: 0.45rem;
+
+    padding:
+        0.35rem;
+
+    background:
+        rgba(255,255,255,0.022);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.045);
+
+    border-radius: 0.45rem;
+
+}
+
+
+.page-packs .victor-avatar {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 1.45rem;
+    height: 1.45rem;
+
+    flex: 0 0 auto;
+
+    border-radius: 0.4rem;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--pack-color) 13%,
+            rgba(255,255,255,0.04)
+        );
+
+    color:
+        var(--pack-color);
+
+    font-size: 0.55rem;
+
+    font-weight: 800;
+
+}
+
+
+.page-packs .victor-name {
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color:
+        rgba(255,255,255,0.72);
+
+    font-size: 0.55rem;
+
+    font-weight: 650;
+
+}
+
+
+.page-packs .pack-no-victors {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 4rem;
+
+    background:
+        rgba(255,255,255,0.018);
+
+    border:
+        1px dashed
+        rgba(255,255,255,0.06);
+
+    border-radius: 0.45rem;
+
+    color:
+        rgba(255,255,255,0.25);
+
+    font-size: 0.58rem;
+
+}
+
+
+/* =========================================================
+   EMPTY DETAIL
+   ========================================================= */
+
+.page-packs .empty-detail {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+}
+
+
+.page-packs .empty-detail h2 {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 0.9rem;
+
+}
+
+
+.page-packs .empty-detail p {
+
+    margin:
+        0.35rem 0 0;
+
+    color:
+        rgba(255,255,255,0.35);
+
+    font-size: 0.6rem;
+
+}
+
+
+/* =========================================================
+   MOBILE / SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .page-packs .packs-layout {
+
+        grid-template-columns:
+            minmax(0, 1fr);
+
+    }
+
+
+    .page-packs .pack-detail {
+
+        position: relative;
+
+        top: auto;
+
+        min-height: auto;
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .page-packs {
+
+        padding: 0.6rem;
+
+    }
+
+
+    .page-packs .difficulty-grid {
+
+        grid-template-columns:
+            minmax(0, 1fr);
+
+    }
+
+
+    .page-packs .difficulty-section {
+
+        height: 19rem;
+
+    }
+
+
+    .page-packs .pack-completed-players {
 
         grid-template-columns:
             minmax(0, 1fr);
