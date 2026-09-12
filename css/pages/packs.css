@@ -1,161 +1,183 @@
 /* =========================================================
    PACKS PAGE
-   Smooth Dark UI
    ========================================================= */
 
 .page-packs {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    min-height: 100%;
 
-    padding: 0.8rem;
+    width: 100%;
+    min-height: calc(100vh - 4rem);
+
+    padding: 1rem;
 
     box-sizing: border-box;
 
-    color: #f5f5f5;
+    color: #ffffff;
+
 }
 
 
 /* =========================================================
-   MAIN LAYOUT
+   MAIN GRID
    ========================================================= */
 
-.page-packs .packs-layout {
+.page-packs .packs-page {
+
     display: grid;
 
-    grid-template-columns:
-        minmax(17rem, 27%)
-        minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    grid-auto-rows: auto;
+
+    gap: 0.9rem;
 
     width: 100%;
-    min-width: 0;
 
-    height: calc(100vh - 5rem);
-    min-height: 32rem;
-
-    gap: 0.75rem;
-
-    box-sizing: border-box;
 }
 
 
 /* =========================================================
-   SHARED PANEL
+   DIFFICULTY SECTION
    ========================================================= */
 
-.page-packs .packs-sidebar,
-.page-packs .pack-detail {
-    position: relative;
+.page-packs .difficulty-section {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    height: 24rem;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
 
     background:
         linear-gradient(
             145deg,
-            #111214 0%,
-            #0d0e10 100%
+            rgba(255,255,255,0.045),
+            rgba(255,255,255,0.018)
         );
 
-    border: 1px solid rgba(255, 255, 255, 0.075);
+    border: 1px solid
+        rgba(255,255,255,0.08);
 
     border-radius: 0.75rem;
 
     box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.025);
+        0 8px 30px
+        rgba(0,0,0,0.2);
 
-    box-sizing: border-box;
-}
-
-
-/* subtle orange atmosphere */
-.page-packs .packs-sidebar::before,
-.page-packs .pack-detail::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 8%;
-    right: 8%;
-
-    height: 1px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 120, 0, 0.28),
-        transparent
-    );
-
-    opacity: 0.65;
-
-    pointer-events: none;
 }
 
 
 /* =========================================================
-   LEFT SIDEBAR
+   HEADER
    ========================================================= */
 
-.page-packs .packs-sidebar {
+.page-packs .difficulty-header {
+
     display: flex;
-    flex-direction: column;
 
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
+    align-items: center;
 
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   SIDEBAR HEADER
-   ========================================================= */
-
-.page-packs .packs-sidebar-header {
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
+    gap: 0.7rem;
 
     flex: 0 0 auto;
 
-    min-height: 4rem;
+    min-height: 4.2rem;
 
-    padding: 0.8rem 0.95rem;
-
-    background: rgba(255, 255, 255, 0.012);
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.065);
+    padding: 0.8rem 1rem;
 
     box-sizing: border-box;
+
+    border-bottom: 1px solid
+        rgba(255,255,255,0.07);
+
 }
 
 
-.page-packs .packs-sidebar-header h1 {
+/* =========================================================
+   DIFFICULTY ICON
+   ========================================================= */
+
+.page-packs .difficulty-icon {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    flex: 0 0 auto;
+
+    border-radius: 0.5rem;
+
+    font-size: 0.8rem;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--difficulty-color) 18%,
+            transparent
+        );
+
+    color:
+        var(--difficulty-color);
+
+    border: 1px solid
+        color-mix(
+            in srgb,
+            var(--difficulty-color) 35%,
+            transparent
+        );
+
+    box-shadow:
+        0 0 18px
+        color-mix(
+            in srgb,
+            var(--difficulty-color) 18%,
+            transparent
+        );
+
+}
+
+
+/* =========================================================
+   HEADER TEXT
+   ========================================================= */
+
+.page-packs .difficulty-header h2 {
+
     margin: 0;
 
     color: #ffffff;
 
-    font-size: 1rem;
+    font-size: 0.9rem;
+
     font-weight: 800;
 
-    letter-spacing: -0.015em;
-
     line-height: 1.1;
+
 }
 
 
-.page-packs .packs-sidebar-header p {
-    margin: 0.25rem 0 0;
+.page-packs .difficulty-header span {
 
-    color: rgba(255, 255, 255, 0.52);
+    display: block;
 
-    font-size: 0.61rem;
+    margin-top: 0.22rem;
+
+    color:
+        rgba(255,255,255,0.45);
+
+    font-size: 0.58rem;
+
     font-weight: 600;
 
-    line-height: 1.1;
 }
 
 
@@ -163,21 +185,22 @@
    PACK LIST
    ========================================================= */
 
-.page-packs .packs-list {
+.page-packs .difficulty-list {
+
     display: flex;
+
     flex-direction: column;
+
+    gap: 0.3rem;
 
     flex: 1 1 auto;
 
-    width: 100%;
-    min-width: 0;
     min-height: 0;
 
-    padding: 0.45rem;
-
-    gap: 0.16rem;
+    padding: 0.55rem;
 
     overflow-y: auto;
+
     overflow-x: hidden;
 
     box-sizing: border-box;
@@ -185,33 +208,46 @@
     scrollbar-width: thin;
 
     scrollbar-color:
-        rgba(255, 255, 255, 0.18)
+        rgba(255,255,255,0.18)
         transparent;
-}
 
-
-.page-packs .packs-list::-webkit-scrollbar {
-    width: 4px;
-}
-
-
-.page-packs .packs-list::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-
-.page-packs .packs-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.18);
-
-    border-radius: 999px;
 }
 
 
 /* =========================================================
-   PACK ITEM
+   SCROLLBAR
    ========================================================= */
 
-.page-packs .pack-item {
+.page-packs .difficulty-list::-webkit-scrollbar {
+
+    width: 4px;
+
+}
+
+
+.page-packs .difficulty-list::-webkit-scrollbar-track {
+
+    background: transparent;
+
+}
+
+
+.page-packs .difficulty-list::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,0.18);
+
+    border-radius: 999px;
+
+}
+
+
+/* =========================================================
+   PACK CARD
+   ========================================================= */
+
+.page-packs .pack-card {
+
     position: relative;
 
     display: flex;
@@ -219,17 +255,22 @@
     align-items: center;
 
     width: 100%;
-    min-width: 0;
 
-    min-height: 2.6rem;
+    min-height: 2.7rem;
 
-    padding: 0.4rem 0.65rem;
+    flex: 0 0 2.7rem;
+
+    padding: 0.45rem 0.65rem;
 
     gap: 0.65rem;
 
-    background: rgba(255, 255, 255, 0.025);
+    box-sizing: border-box;
 
-    border: 1px solid transparent;
+    background:
+        rgba(255,255,255,0.025);
+
+    border: 1px solid
+        rgba(255,255,255,0.045);
 
     border-radius: 0.5rem;
 
@@ -241,640 +282,91 @@
 
     cursor: pointer;
 
-    box-sizing: border-box;
-
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+
 }
 
 
-/* left indicator */
-.page-packs .pack-item::before {
-    content: "";
+/* =========================================================
+   PACK COLOR
+   ========================================================= */
 
-    position: absolute;
+.page-packs .pack-color {
 
-    left: 0;
+    width: 0.45rem;
 
-    top: 50%;
+    height: 1.5rem;
 
-    width: 3px;
-    height: 0;
-
-    background: var(--pack-color);
+    flex: 0 0 auto;
 
     border-radius: 999px;
 
-    transform: translateY(-50%);
-
-    opacity: 0;
+    background:
+        var(--pack-color);
 
     box-shadow:
         0 0 10px
-        color-mix(
-            in srgb,
-            var(--pack-color) 65%,
-            transparent
-        );
-
-    transition:
-        height 0.2s ease,
-        opacity 0.2s ease;
-}
-
-
-/* hover */
-.page-packs .pack-item:hover {
-    background:
-        color-mix(
-            in srgb,
-            var(--pack-color) 7%,
-            rgba(255, 255, 255, 0.025)
-        );
-
-    border-color:
-        color-mix(
-            in srgb,
-            var(--pack-color) 16%,
-            transparent
-        );
-
-    transform: translateX(2px);
-}
-
-
-/* active */
-.page-packs .pack-item.active {
-    background:
-        linear-gradient(
-            90deg,
-            color-mix(
-                in srgb,
-                var(--pack-color) 12%,
-                rgba(255, 255, 255, 0.025)
-            ),
-            rgba(255, 255, 255, 0.025)
-        );
-
-    border-color:
-        color-mix(
-            in srgb,
-            var(--pack-color) 24%,
-            transparent
-        );
-
-    box-shadow:
-        0 4px 18px
-        color-mix(
-            in srgb,
-            var(--pack-color) 7%,
-            transparent
-        );
-}
-
-
-.page-packs .pack-item.active::before {
-    height: 55%;
-
-    opacity: 1;
-}
-
-
-/* =========================================================
-   PACK COLOR DOT
-   ========================================================= */
-
-.page-packs .pack-item-color {
-    display: block;
-
-    width: 0.48rem;
-    height: 0.48rem;
-
-    flex: 0 0 auto;
-
-    border-radius: 50%;
-
-    background: var(--pack-color);
-
-    box-shadow:
-        0 0 8px
-        color-mix(
-            in srgb,
-            var(--pack-color) 50%,
-            transparent
-        );
-}
-
-
-/* =========================================================
-   PACK ITEM INFO
-   ========================================================= */
-
-.page-packs .pack-item-info {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1 1 auto;
-
-    width: 0;
-    min-width: 0;
-
-    gap: 0.1rem;
-}
-
-
-.page-packs .pack-item-name {
-    display: block;
-
-    width: 100%;
-    min-width: 0;
-
-    color: rgba(255, 255, 255, 0.92);
-
-    font-size: 0.68rem;
-    font-weight: 700;
-
-    line-height: 1.15;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-
-.page-packs .pack-item.active .pack-item-name {
-    color: #ffffff;
-}
-
-
-.page-packs .pack-item-count {
-    color: rgba(255, 255, 255, 0.48);
-
-    font-size: 0.53rem;
-    font-weight: 600;
-}
-
-
-.page-packs .pack-item-progress {
-    flex: 0 0 auto;
-
-    color: var(--pack-color);
-
-    font-size: 0.56rem;
-    font-weight: 800;
-
-    text-shadow:
-        0 0 10px
-        color-mix(
-            in srgb,
-            var(--pack-color) 30%,
-            transparent
-        );
-}
-
-
-/* =========================================================
-   RIGHT DETAIL PANEL
-   ========================================================= */
-
-.page-packs .pack-detail {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-
-    padding: 1.1rem 1.15rem;
-
-    overflow: hidden;
-}
-
-
-/* =========================================================
-   RIGHT HEADER
-   ========================================================= */
-
-.page-packs .pack-detail-header {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-    min-width: 0;
-
-    flex: 0 0 auto;
-
-    margin-bottom: 0.7rem;
-
-    gap: 1rem;
-}
-
-
-.page-packs .pack-detail-title {
-    display: flex;
-
-    align-items: center;
-
-    min-width: 0;
-
-    gap: 0.7rem;
-}
-
-
-.page-packs .pack-detail-dot {
-    width: 0.55rem;
-    height: 0.55rem;
-
-    flex: 0 0 auto;
-
-    border-radius: 50%;
-
-    background: var(--pack-color);
-
-    box-shadow:
-        0 0 12px
-        color-mix(
-            in srgb,
-            var(--pack-color) 55%,
-            transparent
-        );
-}
-
-
-.page-packs .pack-detail-title > div:last-child {
-    min-width: 0;
-}
-
-
-.page-packs .pack-detail-header h1 {
-    display: block;
-
-    margin: 0;
-
-    max-width: 100%;
-
-    color: #ffffff;
-
-    font-size: 1.12rem;
-    font-weight: 800;
-
-    letter-spacing: -0.02em;
-
-    line-height: 1.15;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-
-.page-packs .pack-detail-header p {
-    margin: 0.18rem 0 0;
-
-    color: rgba(255, 255, 255, 0.5);
-
-    font-size: 0.59rem;
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   COMPLETION
-   ========================================================= */
-
-.page-packs .pack-detail-completion {
-    display: flex;
-
-    align-items: baseline;
-
-    flex: 0 0 auto;
-
-    white-space: nowrap;
-
-    color: rgba(255, 255, 255, 0.5);
-
-    font-size: 0.59rem;
-}
-
-
-.page-packs .pack-detail-completion strong {
-    margin-right: 0.2rem;
-
-    color: var(--pack-color);
-
-    font-size: 0.72rem;
-    font-weight: 800;
-
-    text-shadow:
-        0 0 12px
-        color-mix(
-            in srgb,
-            var(--pack-color) 35%,
-            transparent
-        );
-}
-
-
-/* =========================================================
-   PROGRESS BAR
-   ========================================================= */
-
-.page-packs .pack-progress {
-    position: relative;
-
-    flex: 0 0 auto;
-
-    width: 100%;
-    height: 4px;
-
-    margin-bottom: 1rem;
-
-    background: rgba(255, 255, 255, 0.075);
-
-    border-radius: 999px;
-
-    overflow: hidden;
-
-    box-shadow:
-        inset 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-
-.page-packs .pack-progress-fill {
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            color-mix(
-                in srgb,
-                var(--pack-color) 75%,
-                #ffffff
-            ),
-            var(--pack-color)
-        );
-
-    border-radius: inherit;
-
-    box-shadow:
-        0 0 12px
         color-mix(
             in srgb,
             var(--pack-color) 45%,
             transparent
         );
 
-    transition: width 0.35s ease;
 }
 
 
 /* =========================================================
-   SECTION TITLE
+   PACK CONTENT
    ========================================================= */
 
-.page-packs .section-title {
+.page-packs .pack-content {
+
     display: flex;
 
-    align-items: center;
-
-    gap: 0.45rem;
-
-    margin-bottom: 0.5rem;
-}
-
-
-.page-packs .section-title h2 {
-    margin: 0;
-
-    color: rgba(255, 255, 255, 0.95);
-
-    font-size: 0.8rem;
-    font-weight: 800;
-
-    line-height: 1.1;
-}
-
-
-.page-packs .section-title span {
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-width: 1rem;
-    height: 1rem;
-
-    padding: 0 0.22rem;
-
-    color: var(--pack-color);
-
-    background:
-        color-mix(
-            in srgb,
-            var(--pack-color) 12%,
-            rgba(255, 255, 255, 0.025)
-        );
-
-    border: 1px solid
-        color-mix(
-            in srgb,
-            var(--pack-color) 20%,
-            transparent
-        );
-
-    border-radius: 0.3rem;
-
-    font-size: 0.49rem;
-    font-weight: 800;
-}
-
-
-/* =========================================================
-   LEVEL SECTION
-   ========================================================= */
-
-.page-packs .pack-level-section {
-    flex: 0 0 auto;
-
-    width: 100%;
-    min-width: 0;
-}
-
-
-/* =========================================================
-   LEVEL LIST
-   ========================================================= */
-
-.page-packs .pack-levels {
-    display: flex;
     flex-direction: column;
 
-    width: 100%;
     min-width: 0;
 
-    gap: 0.22rem;
+    flex: 1 1 auto;
 
-    overflow: hidden;
+    gap: 0.1rem;
+
 }
 
 
-/* =========================================================
-   LEVEL
-   ========================================================= */
+.page-packs .pack-name {
 
-.page-packs .pack-level {
-    position: relative;
-
-    display: grid;
-
-    grid-template-columns:
-        3.4rem
-        minmax(0, 1fr)
-        auto;
-
-    align-items: center;
-
-    width: 100%;
-    min-width: 0;
-
-    height: 2.4rem;
-
-    padding: 0 0.7rem;
-
-    gap: 0.6rem;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.035),
-            rgba(255, 255, 255, 0.018)
-        );
-
-    border: 1px solid rgba(255, 255, 255, 0.065);
-
-    border-radius: 0.5rem;
-
-    color: #ffffff;
-
-    font-family: inherit;
-
-    text-align: left;
-
-    cursor: pointer;
-
-    box-sizing: border-box;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-
-.page-packs .pack-level:hover {
-    background:
-        linear-gradient(
-            90deg,
-            color-mix(
-                in srgb,
-                var(--pack-color) 8%,
-                rgba(255, 255, 255, 0.035)
-            ),
-            rgba(255, 255, 255, 0.025)
-        );
-
-    border-color:
-        color-mix(
-            in srgb,
-            var(--pack-color) 28%,
-            rgba(255, 255, 255, 0.065)
-        );
-
-    transform: translateX(2px);
-
-    box-shadow:
-        0 5px 18px
-        color-mix(
-            in srgb,
-            var(--pack-color) 6%,
-            transparent
-        );
-}
-
-
-.page-packs .pack-level:active {
-    transform: translateX(1px) scale(0.995);
-}
-
-
-/* =========================================================
-   LEVEL RANK
-   ========================================================= */
-
-.page-packs .pack-level-rank {
-    color: var(--pack-color);
-
-    font-size: 0.58rem;
-    font-weight: 800;
-
-    letter-spacing: 0.02em;
-
-    white-space: nowrap;
-
-    text-shadow:
-        0 0 10px
-        color-mix(
-            in srgb,
-            var(--pack-color) 30%,
-            transparent
-        );
-}
-
-
-/* =========================================================
-   LEVEL NAME
-   ========================================================= */
-
-.page-packs .pack-level-name {
     display: block;
 
-    min-width: 0;
-
-    color: rgba(255, 255, 255, 0.9);
-
-    font-size: 0.66rem;
-    font-weight: 700;
-
     overflow: hidden;
+
     text-overflow: ellipsis;
+
     white-space: nowrap;
+
+    color:
+        rgba(255,255,255,0.92);
+
+    font-size: 0.68rem;
+
+    font-weight: 750;
+
 }
 
 
-/* =========================================================
-   DIFFICULTY
-   ========================================================= */
+.page-packs .pack-level-count {
 
-.page-packs .pack-level-difficulty {
-    display: block;
+    color:
+        rgba(255,255,255,0.4);
 
-    min-width: 3.6rem;
+    font-size: 0.52rem;
 
-    color: rgba(255, 255, 255, 0.58);
+    font-weight: 600;
 
-    font-size: 0.56rem;
-    font-weight: 700;
-
-    text-align: right;
-
-    white-space: nowrap;
 }
 
 
@@ -882,284 +374,123 @@
    ARROW
    ========================================================= */
 
-.page-packs .pack-level-arrow {
-    display: none;
-}
+.page-packs .pack-arrow {
 
+    flex: 0 0 auto;
 
-/* =========================================================
-   VICTORS SECTION
-   ========================================================= */
+    color:
+        rgba(255,255,255,0.3);
 
-.page-packs .pack-victors-section {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1 1 auto;
-
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-
-    margin-top: 1.05rem;
-}
-
-
-/* =========================================================
-   VICTOR LIST
-   ========================================================= */
-
-.page-packs .pack-completed-players {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1 1 auto;
-
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-
-    gap: 0.16rem;
-
-    padding-right: 0.25rem;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    box-sizing: border-box;
-
-    scrollbar-width: thin;
-
-    scrollbar-color:
-        rgba(255, 255, 255, 0.18)
-        transparent;
-}
-
-
-.page-packs .pack-completed-players::-webkit-scrollbar {
-    width: 4px;
-}
-
-
-.page-packs .pack-completed-players::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-
-.page-packs .pack-completed-players::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.18);
-
-    border-radius: 999px;
-}
-
-
-/* =========================================================
-   VICTOR
-   ========================================================= */
-
-.page-packs .pack-completed-player {
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-    min-width: 0;
-
-    min-height: 2rem;
-
-    padding: 0.3rem 0.6rem;
-
-    background: rgba(255, 255, 255, 0.025);
-
-    border: 1px solid rgba(255, 255, 255, 0.055);
-
-    border-radius: 0.45rem;
-
-    color: rgba(255, 255, 255, 0.8);
-
-    font-size: 0.63rem;
-    font-weight: 650;
-
-    box-sizing: border-box;
+    font-size: 0.7rem;
 
     transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
+        transform 0.18s ease,
+        color 0.18s ease;
+
 }
 
 
-.page-packs .pack-completed-player:hover {
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.page-packs .pack-card:hover {
+
     background:
         color-mix(
             in srgb,
-            var(--pack-color) 6%,
-            rgba(255, 255, 255, 0.025)
+            var(--pack-color) 8%,
+            rgba(255,255,255,0.025)
         );
 
     border-color:
         color-mix(
             in srgb,
-            var(--pack-color) 20%,
-            rgba(255, 255, 255, 0.055)
+            var(--pack-color) 30%,
+            rgba(255,255,255,0.05)
         );
 
-    transform: translateX(2px);
-}
+    transform:
+        translateX(2px);
 
-
-/* =========================================================
-   NO PROFILE IMAGE
-   ========================================================= */
-
-.page-packs .victor-avatar {
-    display: none;
-}
-
-
-.page-packs .victor-name {
-    display: block;
-
-    width: 100%;
-    min-width: 0;
-
-    color: rgba(255, 255, 255, 0.8);
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   NO VICTORS
-   ========================================================= */
-
-.page-packs .pack-no-victors {
-    display: flex;
-
-    align-items: center;
-    justify-content: flex-start;
-
-    flex: 1;
-
-    min-height: 3rem;
-
-    color: rgba(255, 255, 255, 0.48);
-
-    font-size: 0.63rem;
-}
-
-
-/* =========================================================
-   NO PACKS
-   ========================================================= */
-
-.page-packs .no-packs {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    flex: 1;
-
-    padding: 2rem;
-
-    text-align: center;
-}
-
-
-.page-packs .no-packs h2 {
-    margin: 0 0 0.35rem;
-
-    color: #ffffff;
-
-    font-size: 0.98rem;
-    font-weight: 800;
-}
-
-
-.page-packs .no-packs p {
-    margin: 0;
-
-    color: rgba(255, 255, 255, 0.48);
-
-    font-size: 0.63rem;
-}
-
-
-/* =========================================================
-   EMPTY DETAIL
-   ========================================================= */
-
-.page-packs .empty-detail {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-}
-
-
-.page-packs .empty-detail h2 {
-    margin: 0 0 0.35rem;
-
-    color: #ffffff;
-
-    font-size: 0.98rem;
-    font-weight: 800;
-}
-
-
-.page-packs .empty-detail p {
-    margin: 0;
-
-    color: rgba(255, 255, 255, 0.48);
-
-    font-size: 0.63rem;
-}
-
-
-/* =========================================================
-   DARK MODE
-   ========================================================= */
-
-.dark .page-packs .packs-sidebar,
-.dark .page-packs .pack-detail {
     box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.025);
-}
-
-
-/* =========================================================
-   LARGE SCREENS
-   ========================================================= */
-
-@media (min-width: 1200px) {
-
-    .page-packs .packs-layout {
-        grid-template-columns:
-            minmax(18rem, 27%)
-            minmax(0, 1fr);
-    }
+        0 5px 18px
+        color-mix(
+            in srgb,
+            var(--pack-color) 8%,
+            transparent
+        );
 
 }
 
 
+.page-packs .pack-card:hover .pack-arrow {
+
+    color:
+        var(--pack-color);
+
+    transform:
+        translateX(2px);
+
+}
+
+
 /* =========================================================
-   MEDIUM
+   DIFFICULTY COLORS
    ========================================================= */
 
-@media (max-width: 900px) {
+.page-packs .bronze {
 
-    .page-packs .packs-layout {
-        grid-template-columns:
-            minmax(14rem, 32%)
-            minmax(0, 1fr);
-    }
+    --difficulty-color:
+        #cd7f32;
+
+}
+
+
+.page-packs .silver {
+
+    --difficulty-color:
+        #c0c0c0;
+
+}
+
+
+.page-packs .iron {
+
+    --difficulty-color:
+        #777777;
+
+}
+
+
+.page-packs .gold {
+
+    --difficulty-color:
+        #ffd700;
+
+}
+
+
+.page-packs .diamond {
+
+    --difficulty-color:
+        #4ddcff;
+
+}
+
+
+.page-packs .ruby {
+
+    --difficulty-color:
+        #e0115f;
+
+}
+
+
+.page-packs .platinum {
+
+    --difficulty-color:
+        #b9a7ff;
 
 }
 
@@ -1168,90 +499,13 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 650px) {
+@media (max-width: 800px) {
 
-    .page-packs {
-        padding: 0.45rem;
-    }
+    .page-packs .packs-page {
 
-
-    .page-packs .packs-layout {
-        display: flex;
-        flex-direction: column;
-
-        height: auto;
-        min-height: 0;
-
-        gap: 0.6rem;
-    }
-
-
-    .page-packs .packs-sidebar {
-        height: 14rem;
-        max-height: 14rem;
-    }
-
-
-    .page-packs .pack-detail {
-        min-height: 30rem;
-
-        padding: 0.85rem;
-    }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 450px) {
-
-    .page-packs .pack-detail {
-        padding: 0.75rem;
-    }
-
-
-    .page-packs .pack-detail-header h1 {
-        font-size: 0.98rem;
-    }
-
-
-    .page-packs .pack-level {
         grid-template-columns:
-            2.5rem
-            minmax(0, 1fr)
-            auto;
+            minmax(0, 1fr);
 
-        height: 2.2rem;
-
-        padding-inline: 0.55rem;
-    }
-
-
-    .page-packs .pack-level-name {
-        font-size: 0.62rem;
-    }
-
-
-    .page-packs .pack-level-difficulty {
-        min-width: 3rem;
-
-        font-size: 0.53rem;
-    }
-
-}
-
-
-/* =========================================================
-   ACCESSIBILITY / REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .page-packs * {
-        transition: none !important;
-        animation: none !important;
     }
 
 }
