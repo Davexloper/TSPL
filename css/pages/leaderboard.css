@@ -391,6 +391,7 @@
 
     .page-leaderboard .player-container {
         left:364px;
+        min-width:0;
     }
 
     .page-leaderboard .player h1 {
@@ -426,6 +427,7 @@
 
     .page-leaderboard .player-container {
         left:282px;
+        min-width:0;
     }
 
     .page-leaderboard .player h1 {
