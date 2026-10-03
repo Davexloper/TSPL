@@ -1,8 +1,11 @@
 .page-leaderboard-container {
     width:100%;
     height:100%;
+    min-width:0;
+    min-height:0;
     padding:10px;
     box-sizing:border-box;
+    overflow:hidden;
 }
 
 .page-leaderboard {
@@ -12,22 +15,22 @@
     gap:10px;
     width:100%;
     height:100%;
-    max-width:none;
-    margin:0 auto;
+    min-width:0;
+    min-height:0;
+    margin:0;
     box-sizing:border-box;
 }
 
 .page-leaderboard > div {
     min-width:0;
     min-height:0;
-    overflow-y:auto;
-    scrollbar-width:thin;
-    scrollbar-color:#292d34 transparent;
+    box-sizing:border-box;
 }
 
 .page-leaderboard .error-container {
     grid-column:1 / -1;
     grid-row:1;
+    width:100%;
     padding:0;
 }
 
@@ -42,21 +45,43 @@
     font-weight:600;
 }
 
-.page-leaderboard .board-container,
-.page-leaderboard .player-container {
-    grid-row:2;
-    padding:0;
-}
-
 .page-leaderboard .board-container {
+    grid-column:1;
+    grid-row:2;
+    width:100%;
+    height:100%;
+    min-width:0;
+    min-height:0;
     padding:0;
-}
-
-.page-leaderboard .board-container,
-.page-leaderboard .player-container {
     background:#0b0d10;
     border:1px solid #1b1f25;
     border-radius:8px;
+    box-sizing:border-box;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-width:thin;
+    scrollbar-color:#292d34 transparent;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.02);
+}
+
+.page-leaderboard .player-container {
+    grid-column:2;
+    grid-row:2;
+    width:100%;
+    height:100%;
+    min-width:0;
+    min-height:0;
+    padding:0;
+    background:#0b0d10;
+    border:1px solid #1b1f25;
+    border-radius:8px;
+    box-sizing:border-box;
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-width:thin;
+    scrollbar-color:#292d34 transparent;
     box-shadow:
         0 8px 25px rgba(0,0,0,.24),
         inset 0 1px 0 rgba(255,255,255,.02);
@@ -66,12 +91,12 @@
 .page-leaderboard .player-container::before {
     content:"";
     display:block;
-    height:2px;
     width:100%;
+    height:2px;
     background:linear-gradient(
         90deg,
         transparent,
-        rgba(255,120,0,.35),
+        rgba(255,120,0,.4),
         transparent
     );
     border-radius:8px 8px 0 0;
@@ -85,6 +110,7 @@
     table-layout:fixed;
     border-collapse:separate;
     border-spacing:0 3px;
+    box-sizing:border-box;
 }
 
 .page-leaderboard .board .rank {
@@ -115,6 +141,7 @@
 
 .page-leaderboard .board .user {
     width:100%;
+    min-width:0;
 }
 
 .page-leaderboard .board .user button {
@@ -199,43 +226,31 @@
 .page-leaderboard .player {
     display:flex;
     flex-direction:column;
-    gap:0;
     width:100%;
+    max-width:none;
     min-width:0;
-    padding:0;
+    box-sizing:border-box;
     color:var(--color-on-background);
 }
 
 .page-leaderboard .player > * {
-    margin:0;
-}
-
-.page-leaderboard .player-header {
-    padding:15px 17px 13px;
-    border-bottom:1px solid #1b1f25;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.018),
-            transparent
-        );
+    min-width:0;
 }
 
 .page-leaderboard .player h1 {
     margin:0;
+    padding:17px 18px 13px;
     color:#fff;
     font-size:24px;
     line-height:1.15;
     font-weight:800;
     letter-spacing:-.025em;
-}
-
-.page-leaderboard .player h2 {
-    margin:0 0 8px;
-    color:#fff;
-    font-size:16px;
-    line-height:1.2;
-    font-weight:750;
+    border-bottom:1px solid #1b1f25;
+    background:linear-gradient(
+        180deg,
+        rgba(255,255,255,.018),
+        transparent
+    );
 }
 
 .page-leaderboard .player h1::after {
@@ -249,6 +264,15 @@
     box-shadow:0 0 8px rgba(255,120,0,.25);
 }
 
+.page-leaderboard .player h2 {
+    margin:0;
+    padding:0;
+    color:#fff;
+    font-size:16px;
+    line-height:1.2;
+    font-weight:750;
+}
+
 .page-leaderboard .section-header {
     display:flex;
     align-items:center;
@@ -256,7 +280,7 @@
     width:100%;
     min-width:0;
     gap:10px;
-    margin:0 0 7px;
+    margin:0 0 8px;
 }
 
 .page-leaderboard .section-header h2 {
@@ -290,6 +314,7 @@
 
 .page-leaderboard .player .table {
     width:100%;
+    min-width:0;
     margin:0;
     table-layout:fixed;
     border-collapse:separate;
@@ -317,11 +342,11 @@
 .page-leaderboard .player .table p,
 .page-leaderboard .player .table a {
     margin:0;
-    padding:8px 0;
+    padding:9px 0;
 }
 
 .page-leaderboard .player .table tr td:not(:last-child) {
-    padding-right:8px;
+    padding-right:10px;
 }
 
 .page-leaderboard .player .table .rank {
@@ -348,14 +373,11 @@
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-    transition:
-        color .13s ease,
-        opacity .13s ease;
+    transition:color .13s ease;
 }
 
 .page-leaderboard .player .table a:hover {
     color:#ffad66;
-    opacity:1;
     text-decoration:none;
 }
 
@@ -374,11 +396,12 @@
 
 .page-leaderboard .packs-section {
     width:auto;
-    margin:10px 12px 12px;
-    padding:10px;
+    margin:12px;
+    padding:11px;
     background:#0d1014;
     border:1px solid #1b1f25;
     border-radius:6px;
+    box-sizing:border-box;
 }
 
 .page-leaderboard .completed-packs {
@@ -386,6 +409,7 @@
     flex-direction:column;
     gap:3px;
     width:100%;
+    min-width:0;
 }
 
 .page-leaderboard .completed-pack {
@@ -399,6 +423,7 @@
     background:#101318;
     border:1px solid #1a1e24;
     border-radius:5px;
+    box-sizing:border-box;
     transition:
         background .13s ease,
         border-color .13s ease,
@@ -494,11 +519,8 @@
         padding:8px;
     }
 
-    .page-leaderboard .player-header {
-        padding:17px 20px 15px;
-    }
-
     .page-leaderboard .player h1 {
+        padding:19px 20px 15px;
         font-size:26px;
     }
 }
@@ -522,19 +544,24 @@
 @media (max-width:750px) {
     .page-leaderboard-container {
         height:auto;
+        min-height:100%;
         padding:7px;
+        overflow:visible;
     }
 
     .page-leaderboard {
         grid-template-columns:1fr;
         grid-template-rows:auto auto;
         height:auto;
+        min-height:0;
         gap:7px;
     }
 
     .page-leaderboard .board-container,
     .page-leaderboard .player-container {
+        grid-column:1;
         grid-row:auto;
+        width:100%;
         height:auto;
         max-height:none;
     }
@@ -579,11 +606,8 @@
         font-size:10px;
     }
 
-    .page-leaderboard .player-header {
-        padding:13px 13px 11px;
-    }
-
     .page-leaderboard .player h1 {
+        padding:13px 13px 11px;
         font-size:20px;
     }
 
