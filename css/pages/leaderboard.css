@@ -1,252 +1,93 @@
 .page-leaderboard-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    padding: 12px;
-    box-sizing: border-box;
-    overflow: hidden;
+    display: block;
 }
-
 .page-leaderboard {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 24px);
-    max-height: calc(100vh - 24px);
-    min-width: 0;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.leaderboard-layout {
-    position: relative;
+    height: 100%;
     display: grid;
-    grid-template-columns: 320px minmax(0, 1fr);
-    gap: 12px;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    min-width: 0;
-    min-height: 0;
-    box-sizing: border-box;
+    grid-template-columns: minmax(24rem, 2fr) 3fr;
+    grid-template-rows: max-content 1fr;
+    column-gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
 }
-
-.board-container {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    overflow-x: hidden;
+.page-leaderboard > div {
     overflow-y: auto;
-    box-sizing: border-box;
 }
-
-.board {
-    width: 100%;
-    box-sizing: border-box;
+.page-leaderboard .error-container {
+    grid-row: 1;
+    grid-column: 1 / span 2;
 }
-
-.board-row {
-    display: grid;
-    grid-template-columns: 50px 70px minmax(0, 1fr);
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
+.page-leaderboard .error-container .error {
+    padding: 1rem;
+    background-color: var(--color-error);
+    color: var(--color-on-error);
 }
-
-.board-row .rank,
-.board-row .total,
-.board-row .user {
-    min-width: 0;
-    box-sizing: border-box;
+.page-leaderboard .board-container,
+.page-leaderboard .player-container {
+    grid-row: 2;
+    padding-block: 2rem;
 }
-
-.board-row .user {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.page-leaderboard .board-container {
+    padding-inline: 1rem;
 }
-
-.player-container {
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    min-height: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-
-.player {
-    position: relative;
+.page-leaderboard .board {
+    table-layout: auto;
     display: block;
     width: 100%;
-    min-width: 0;
-    min-height: 100%;
-    height: auto;
-    padding: 20px;
-    box-sizing: border-box;
 }
-
-.player-header {
+.page-leaderboard .board .rank {
+    padding-block: 1rem;
+    text-align: end;
+}
+.page-leaderboard .board .total {
+    padding: 1rem;
+    text-align: end;
+}
+.page-leaderboard .board .user {
     width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
 }
-
-.player-info {
-    min-width: 0;
+.page-leaderboard .board .user button {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: start;
+    word-break: normal;
+    overflow-wrap: anywhere;
 }
-
-.player-info h1 {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.page-leaderboard .board .user button:hover {
+    background-color: var(--color-background-hover);
+    color: var(--color-on-background-hover);
+    cursor: pointer;
 }
-
-.score-section {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
+.page-leaderboard .board .user.active button {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
 }
-
-.section-header {
+.page-leaderboard .player {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 2rem;
+    padding-right: 2rem;
+}
+.page-leaderboard .player .table {
+    table-layout: fixed;
+}
+.page-leaderboard .player .table tr td:not(:last-child) {
+    padding-right: 2rem;
+}
+.page-leaderboard .player .table p,
+.page-leaderboard .player .table a {
+    padding-block: 1rem;
+}
+.page-leaderboard .player .table .rank p,
+.page-leaderboard .player .table .score p {
+    text-align: end;
+}
+.page-leaderboard .player .table .level {
     width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
 }
-
-.score-table {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-.score-row {
-    display: grid;
-    grid-template-columns: 70px minmax(0, 1fr) 100px;
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-.score-rank,
-.score-level,
-.score-points {
-    min-width: 0;
-    box-sizing: border-box;
-}
-
-.score-level {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.player-container::-webkit-scrollbar,
-.board-container::-webkit-scrollbar {
-    width: 7px;
-}
-
-.player-container::-webkit-scrollbar-track,
-.board-container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.player-container::-webkit-scrollbar-thumb,
-.board-container::-webkit-scrollbar-thumb {
-    background: #333;
-    border-radius: 10px;
-}
-
-.player-container::-webkit-scrollbar-thumb:hover,
-.board-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-@media (min-width: 1400px) {
-    .leaderboard-layout {
-        grid-template-columns: 350px minmax(0, 1fr);
-    }
-}
-
-@media (max-width: 900px) {
-    .leaderboard-layout {
-        grid-template-columns: 270px minmax(0, 1fr);
-    }
-
-    .board-row {
-        grid-template-columns: 45px 65px minmax(0, 1fr);
-    }
-}
-
-@media (max-width: 700px) {
-    .page-leaderboard-container {
-        height: auto;
-        max-height: none;
-        min-height: 100vh;
-        overflow-y: auto;
-    }
-
-    .page-leaderboard {
-        height: auto;
-        max-height: none;
-        min-height: 0;
-    }
-
-    .leaderboard-layout {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: auto;
-        max-height: none;
-        min-height: 0;
-        gap: 8px;
-    }
-
-    .board-container {
-        width: 100%;
-        height: 350px;
-        min-height: 350px;
-        flex: none;
-    }
-
-    .player-container {
-        width: 100%;
-        height: auto;
-        min-height: 500px;
-        overflow: visible;
-        flex: none;
-    }
-
-    .player {
-        min-height: 500px;
-        padding: 16px;
-    }
-}
-
-@media (max-width: 450px) {
-    .page-leaderboard-container {
-        padding: 8px;
-    }
-
-    .page-leaderboard {
-        height: auto;
-    }
-
-    .player {
-        padding: 12px;
-    }
-
-    .score-row {
-        grid-template-columns: 50px minmax(0, 1fr) 75px;
-    }
+.page-leaderboard .player .table a:hover {
+    text-decoration: underline;
 }
