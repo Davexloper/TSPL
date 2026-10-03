@@ -21,16 +21,19 @@ export default {
             <Spinner></Spinner>
         </main>
 
-        <main v-else class="page-leaderboard-container">
+        <main
+            v-else
+            class="page-leaderboard-container"
+        >
 
             <div class="page-leaderboard">
 
-                <div class="error-container">
+                <div
+                    class="error-container"
+                    v-if="err.length > 0"
+                >
 
-                    <p
-                        class="error"
-                        v-if="err.length > 0"
-                    >
+                    <p class="error">
                         Leaderboard may be incorrect, as the following
                         levels could not be loaded:
                         {{ err.join(', ') }}
@@ -39,124 +42,51 @@ export default {
                 </div>
 
 
-                <div class="board-container">
+                <div class="leaderboard-layout">
 
-                    <table class="board">
+                    <aside class="board-container">
 
-                        <tr
-                            v-for="(ientry, i) in leaderboard"
-                            :key="ientry.user"
-                        >
+                        <table class="board">
 
-                            <td class="rank">
-
-                                <p class="type-label-lg">
-                                    #{{ i + 1 }}
-                                </p>
-
-                            </td>
-
-
-                            <td class="total">
-
-                                <p class="type-label-lg">
-                                    {{ Math.round(ientry.total) }}
-                                </p>
-
-                            </td>
-
-
-                            <td
-                                class="user"
-                                :class="{
-                                    active: selected == i
-                                }"
+                            <tr
+                                v-for="(ientry, i) in leaderboard"
+                                :key="ientry.user"
                             >
 
-                                <button
-                                    @click="selected = i"
+                                <td class="rank">
+
+                                    <p class="type-label-lg">
+                                        #{{ i + 1 }}
+                                    </p>
+
+                                </td>
+
+
+                                <td class="total">
+
+                                    <p class="type-label-lg">
+                                        {{ Math.round(ientry.total) }}
+                                    </p>
+
+                                </td>
+
+
+                                <td
+                                    class="user"
+                                    :class="{
+                                        active: selected == i
+                                    }"
                                 >
 
-                                    <span class="type-label-lg">
-                                        {{ ientry.user }}
-                                    </span>
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-
-                    </table>
-
-                </div>
-
-
-                <div class="player-container">
-
-                    <div
-                        class="player"
-                        v-if="entry"
-                    >
-
-                        <h1>
-                            #{{ selected + 1 }}
-                            {{ entry.user }}
-                        </h1>
-
-
-                        <h3>
-                            {{ Math.round(entry.total) }}
-                        </h3>
-
-
-                        <h2
-                            v-if="
-                                entry.verified.length > 0
-                            "
-                        >
-                            Verified
-                            ({{ entry.verified.length }})
-                        </h2>
-
-
-                        <table class="table">
-
-                            <tr
-                                v-for="score in entry.verified"
-                                :key="
-                                    score.rank +
-                                    score.level
-                                "
-                            >
-
-                                <td class="rank">
-
-                                    <p>
-                                        #{{ score.rank }}
-                                    </p>
-
-                                </td>
-
-
-                                <td class="level">
-
-                                    <a
-                                        class="type-label-lg"
-                                        target="_blank"
-                                        :href="score.link"
+                                    <button
+                                        @click="selected = i"
                                     >
-                                        {{ score.level }}
-                                    </a>
 
-                                </td>
+                                        <span class="type-label-lg">
+                                            {{ ientry.user }}
+                                        </span>
 
-
-                                <td class="score">
-
-                                    <p>
-                                        +{{ localize(score.score) }}
-                                    </p>
+                                    </button>
 
                                 </td>
 
@@ -164,119 +94,202 @@ export default {
 
                         </table>
 
+                    </aside>
 
-                        <h2
-                            v-if="
-                                entry.completed.length > 0
-                            "
+
+                    <section class="player-container">
+
+                        <div
+                            class="player"
+                            v-if="entry"
                         >
-                            Completed
-                            ({{ entry.completed.length }})
-                        </h2>
+
+                            <h1>
+                                #{{ selected + 1 }}
+                                {{ entry.user }}
+                            </h1>
 
 
-                        <table class="table">
+                            <h3>
+                                {{ Math.round(entry.total) }}
+                            </h3>
 
-                            <tr
-                                v-for="score in entry.completed"
-                                :key="
-                                    score.rank +
-                                    score.level
-                                "
+
+                            <template
+                                v-if="entry.verified.length > 0"
                             >
 
-                                <td class="rank">
-
-                                    <p>
-                                        #{{ score.rank }}
-                                    </p>
-
-                                </td>
+                                <h2>
+                                    Verified
+                                    ({{ entry.verified.length }})
+                                </h2>
 
 
-                                <td class="level">
+                                <table class="table">
 
-                                    <a
-                                        class="type-label-lg"
-                                        target="_blank"
-                                        :href="score.link"
+                                    <tr
+                                        v-for="score in entry.verified"
+                                        :key="
+                                            score.rank +
+                                            score.level
+                                        "
                                     >
-                                        {{ score.level }}
-                                    </a>
 
-                                </td>
+                                        <td class="rank">
 
+                                            <p>
+                                                #{{ score.rank }}
+                                            </p>
 
-                                <td class="score">
-
-                                    <p>
-                                        +{{ localize(score.score) }}
-                                    </p>
-
-                                </td>
-
-                            </tr>
-
-                        </table>
+                                        </td>
 
 
-                        <h2
-                            v-if="
-                                entry.progressed.length > 0
-                            "
-                        >
-                            Progressed
-                            ({{ entry.progressed.length }})
-                        </h2>
+                                        <td class="level">
+
+                                            <a
+                                                class="type-label-lg"
+                                                target="_blank"
+                                                :href="score.link"
+                                            >
+                                                {{ score.level }}
+                                            </a>
+
+                                        </td>
 
 
-                        <table class="table">
+                                        <td class="score">
 
-                            <tr
-                                v-for="score in entry.progressed"
-                                :key="
-                                    score.rank +
-                                    score.level +
-                                    score.percent
-                                "
+                                            <p>
+                                                +{{ localize(score.score) }}
+                                            </p>
+
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+                            </template>
+
+
+                            <template
+                                v-if="entry.completed.length > 0"
                             >
 
-                                <td class="rank">
-
-                                    <p>
-                                        #{{ score.rank }}
-                                    </p>
-
-                                </td>
+                                <h2>
+                                    Completed
+                                    ({{ entry.completed.length }})
+                                </h2>
 
 
-                                <td class="level">
+                                <table class="table">
 
-                                    <a
-                                        class="type-label-lg"
-                                        target="_blank"
-                                        :href="score.link"
+                                    <tr
+                                        v-for="score in entry.completed"
+                                        :key="
+                                            score.rank +
+                                            score.level
+                                        "
                                     >
-                                        {{ score.percent }}%
-                                        {{ score.level }}
-                                    </a>
 
-                                </td>
+                                        <td class="rank">
+
+                                            <p>
+                                                #{{ score.rank }}
+                                            </p>
+
+                                        </td>
 
 
-                                <td class="score">
+                                        <td class="level">
 
-                                    <p>
-                                        +{{ localize(score.score) }}
-                                    </p>
+                                            <a
+                                                class="type-label-lg"
+                                                target="_blank"
+                                                :href="score.link"
+                                            >
+                                                {{ score.level }}
+                                            </a>
 
-                                </td>
+                                        </td>
 
-                            </tr>
 
-                        </table>
+                                        <td class="score">
 
-                    </div>
+                                            <p>
+                                                +{{ localize(score.score) }}
+                                            </p>
+
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+                            </template>
+
+
+                            <template
+                                v-if="entry.progressed.length > 0"
+                            >
+
+                                <h2>
+                                    Progressed
+                                    ({{ entry.progressed.length }})
+                                </h2>
+
+
+                                <table class="table">
+
+                                    <tr
+                                        v-for="score in entry.progressed"
+                                        :key="
+                                            score.rank +
+                                            score.level +
+                                            score.percent
+                                        "
+                                    >
+
+                                        <td class="rank">
+
+                                            <p>
+                                                #{{ score.rank }}
+                                            </p>
+
+                                        </td>
+
+
+                                        <td class="level">
+
+                                            <a
+                                                class="type-label-lg"
+                                                target="_blank"
+                                                :href="score.link"
+                                            >
+                                                {{ score.percent }}%
+                                                {{ score.level }}
+                                            </a>
+
+                                        </td>
+
+
+                                        <td class="score">
+
+                                            <p>
+                                                +{{ localize(score.score) }}
+                                            </p>
+
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+
+                            </template>
+
+                        </div>
+
+                    </section>
 
                 </div>
 
@@ -284,7 +297,6 @@ export default {
 
         </main>
     `,
-
 
     computed: {
 
@@ -298,14 +310,12 @@ export default {
 
     },
 
-
     async mounted() {
 
         const [
             leaderboard,
             err
-        ] =
-            await fetchLeaderboard();
+        ] = await fetchLeaderboard();
 
 
         this.leaderboard =
@@ -314,12 +324,10 @@ export default {
         this.err =
             err;
 
-
         this.loading =
             false;
 
     },
-
 
     methods: {
 
