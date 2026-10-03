@@ -1,31 +1,28 @@
 /* =========================================================
-   LEADERBOARD
-   DARK / COMPACT / MODERN
+   LEADERBOARD LAYOUT — AREDL STYLE
    ========================================================= */
 
 .page-leaderboard-container {
     display: block;
     width: 100%;
-    min-height: 100%;
 }
 
-
-/* =========================================================
-   MAIN WRAPPER
-   ========================================================= */
-
 .page-leaderboard {
-    width: min(100% - 3rem, 92rem);
-    min-height: calc(100vh - 6rem);
+    width: min(100% - 2rem, 90rem);
+    height: calc(100vh - 4rem);
 
     margin: 0 auto;
-    padding: 2rem 0 4rem;
 
     display: grid;
-    grid-template-columns: 24rem minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
 
-    gap: 1.25rem;
+    /* schmale Rangliste + großer Detailbereich */
+    grid-template-columns: 20rem minmax(0, 1fr);
+
+    grid-template-rows: minmax(0, 1fr);
+
+    column-gap: 1rem;
+
+    overflow: hidden;
 }
 
 
@@ -34,102 +31,69 @@
    ========================================================= */
 
 .page-leaderboard .error-container {
-    grid-column: 1 / -1;
-    grid-row: 1;
+    position: absolute;
 
-    margin: 0;
+    top: 1rem;
+    left: 50%;
+
+    width: min(90rem, calc(100% - 2rem));
+
+    transform: translateX(-50%);
+
+    z-index: 10;
 }
 
 .page-leaderboard .error-container .error {
     margin: 0;
+    padding: .75rem 1rem;
 
-    padding: 0.9rem 1.1rem;
+    border-radius: .35rem;
 
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-error) 55%,
-        transparent
-    );
-
-    border-radius: 0.7rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-error) 12%,
-        var(--color-background)
-    );
-
-    color: var(--color-error);
-
-    font-size: 0.9rem;
-    line-height: 1.4;
+    background: var(--color-error);
+    color: var(--color-on-error);
 }
 
 
 /* =========================================================
-   LEFT PLAYER LIST
+   LEFT LEADERBOARD
    ========================================================= */
 
 .page-leaderboard .board-container {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 1;
 
     min-width: 0;
+    min-height: 0;
+
     padding: 0;
 
-    overflow: hidden;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 9%,
-        transparent
-    );
-
-    border-radius: 0.9rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-background) 94%,
-        var(--color-on-background)
-    );
-
-    box-shadow:
-        0 0.5rem 2rem rgba(0, 0, 0, 0.18);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
 /* =========================================================
-   PLAYER TABLE
+   PLAYER LIST
    ========================================================= */
 
 .page-leaderboard .board {
-    display: block;
+    display: table;
 
     width: 100%;
-    height: 100%;
-
-    margin: 0;
 
     table-layout: fixed;
 
-    border-collapse: collapse;
-
-    overflow-y: auto;
-    scrollbar-width: thin;
+    border-collapse: separate;
+    border-spacing: 0 .15rem;
 }
 
 
-/* Remove default table spacing */
+/* =========================================================
+   PLAYER ROW
+   ========================================================= */
 
 .page-leaderboard .board tr {
-    display: table;
-    width: 100%;
-
-    table-layout: fixed;
-
-    transition:
-        background-color 120ms ease,
-        transform 120ms ease;
+    transition: background-color .12s ease;
 }
 
 
@@ -138,9 +102,9 @@
    ========================================================= */
 
 .page-leaderboard .board .rank {
-    width: 3.5rem;
+    width: 3.25rem;
 
-    padding: 0.85rem 0.4rem 0.85rem 0.9rem;
+    padding: .65rem .35rem .65rem .5rem;
 
     text-align: right;
 
@@ -149,11 +113,6 @@
         var(--color-on-background) 45%,
         transparent
     );
-
-    font-size: 0.78rem;
-    font-weight: 600;
-
-    white-space: nowrap;
 }
 
 
@@ -164,19 +123,17 @@
 .page-leaderboard .board .total {
     width: 5rem;
 
-    padding: 0.85rem 0.65rem;
+    padding: .65rem .5rem;
 
     text-align: right;
 
     color: color-mix(
         in srgb,
-        var(--color-on-background) 62%,
+        var(--color-on-background) 55%,
         transparent
     );
 
-    font-size: 0.8rem;
-
-    white-space: nowrap;
+    font-size: .8rem;
 }
 
 
@@ -187,8 +144,13 @@
 .page-leaderboard .board .user {
     width: 100%;
 
-    padding: 0.25rem 0.65rem 0.25rem 0.2rem;
+    padding: 0;
 }
+
+
+/* =========================================================
+   PLAYER BUTTON
+   ========================================================= */
 
 .page-leaderboard .board .user button {
     display: block;
@@ -197,10 +159,10 @@
 
     min-width: 0;
 
-    padding: 0.8rem 0.9rem;
+    padding: .7rem .8rem;
 
     border: 1px solid transparent;
-    border-radius: 0.55rem;
+    border-radius: .3rem;
 
     background: transparent;
 
@@ -208,7 +170,7 @@
 
     text-align: left;
 
-    font-size: 0.9rem;
+    font-size: .9rem;
     font-weight: 600;
 
     white-space: nowrap;
@@ -216,65 +178,45 @@
     text-overflow: ellipsis;
 
     transition:
-        background-color 120ms ease,
-        border-color 120ms ease,
-        color 120ms ease;
-}
-
-
-/* =========================================================
-   PLAYER HOVER
-   ========================================================= */
-
-.page-leaderboard .board .user button:hover {
-    background: var(--color-background-hover);
-
-    color: var(--color-on-background-hover);
-
-    border-color: color-mix(
-        in srgb,
-        var(--color-on-background-hover) 8%,
-        transparent
-    );
+        background-color .12s ease,
+        color .12s ease,
+        border-color .12s ease;
 
     cursor: pointer;
 }
 
 
-/* =========================================================
-   SELECTED PLAYER
-   ========================================================= */
+/* Hover */
+
+.page-leaderboard .board .user button:hover {
+    background: var(--color-background-hover);
+    color: var(--color-on-background-hover);
+}
+
+
+/* Selected */
 
 .page-leaderboard .board .user.active button {
     background: var(--color-primary);
-
     color: var(--color-on-primary);
-
-    border-color: transparent;
-
-    box-shadow:
-        0 0.35rem 1rem color-mix(
-            in srgb,
-            var(--color-primary) 20%,
-            transparent
-        );
 }
 
 
 /* =========================================================
-   RIGHT PLAYER PANEL
+   RIGHT CONTENT
    ========================================================= */
 
 .page-leaderboard .player-container {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
 
     min-width: 0;
+    min-height: 0;
 
     padding: 0;
 
     overflow-y: auto;
-    scrollbar-width: thin;
+    overflow-x: hidden;
 }
 
 
@@ -288,26 +230,9 @@
 
     gap: 1.5rem;
 
-    min-width: 0;
+    width: 100%;
 
-    padding: 1.75rem;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 9%,
-        transparent
-    );
-
-    border-radius: 0.9rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-background) 94%,
-        var(--color-on-background)
-    );
-
-    box-shadow:
-        0 0.5rem 2rem rgba(0, 0, 0, 0.18);
+    padding: 1.25rem 1.5rem 3rem;
 }
 
 
@@ -318,104 +243,65 @@
 .page-leaderboard .player h1 {
     margin: 0;
 
-    font-size: clamp(1.5rem, 2vw, 2rem);
-
+    font-size: 2rem;
     line-height: 1.1;
 
     font-weight: 800;
 
-    letter-spacing: -0.025em;
-
-    color: var(--color-on-background);
+    letter-spacing: -.03em;
 }
 
-
 .page-leaderboard .player h3 {
-    display: inline-flex;
-
-    width: fit-content;
-
-    margin: -1rem 0 0;
-
-    padding: 0.35rem 0.7rem;
-
-    border-radius: 0.45rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 12%,
-        transparent
-    );
+    margin: -.9rem 0 0;
 
     color: var(--color-primary);
 
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: .9rem;
 }
 
 
 /* =========================================================
-   SECTION HEADINGS
+   SECTION
    ========================================================= */
 
 .page-leaderboard .player h2 {
-    display: flex;
-    align-items: center;
-
-    gap: 0.65rem;
-
-    margin: 0;
-
-    padding-bottom: 0.65rem;
+    margin: 1rem 0 0;
+    padding-bottom: .65rem;
 
     border-bottom: 1px solid color-mix(
         in srgb,
-        var(--color-on-background) 8%,
+        var(--color-on-background) 10%,
         transparent
     );
 
-    color: var(--color-on-background);
-
-    font-size: 0.95rem;
-
+    font-size: 1rem;
     font-weight: 750;
-
-    letter-spacing: 0.01em;
-}
-
-
-/* Number inside headings */
-
-.page-leaderboard .player h2::first-letter {
-    color: var(--color-primary);
 }
 
 
 /* =========================================================
-   SCORE TABLE
+   LEVEL TABLE
    ========================================================= */
 
 .page-leaderboard .player .table {
     width: 100%;
 
-    margin: -0.5rem 0 0;
+    margin-top: -.75rem;
 
     table-layout: fixed;
 
     border-collapse: separate;
-    border-spacing: 0 0.25rem;
+    border-spacing: 0;
 }
 
 
 /* =========================================================
-   SCORE ROWS
+   LEVEL ROW
    ========================================================= */
 
 .page-leaderboard .player .table tr {
-    transition:
-        background-color 120ms ease;
+    transition: background-color .12s ease;
 }
-
 
 .page-leaderboard .player .table tr:hover {
     background: color-mix(
@@ -427,26 +313,18 @@
 
 
 /* =========================================================
-   SCORE CELLS
+   LEVEL CELLS
    ========================================================= */
 
 .page-leaderboard .player .table tr td {
-    padding: 0.65rem 0.5rem;
+    padding: .7rem .5rem;
 
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid color-mix(
+        in srgb,
+        var(--color-on-background) 6%,
+        transparent
+    );
 }
-
-
-.page-leaderboard .player .table tr td:first-child {
-    border-radius: 0.45rem 0 0 0.45rem;
-}
-
-
-.page-leaderboard .player .table tr td:last-child {
-    border-radius: 0 0.45rem 0.45rem 0;
-}
-
 
 .page-leaderboard .player .table tr td:not(:last-child) {
     padding-right: 1rem;
@@ -454,11 +332,11 @@
 
 
 /* =========================================================
-   SCORE RANK
+   LEVEL RANK
    ========================================================= */
 
 .page-leaderboard .player .table .rank {
-    width: 4rem;
+    width: 3.5rem;
 }
 
 .page-leaderboard .player .table .rank p {
@@ -466,19 +344,18 @@
 
     color: color-mix(
         in srgb,
-        var(--color-on-background) 45%,
+        var(--color-on-background) 40%,
         transparent
     );
 
     text-align: right;
 
-    font-size: 0.78rem;
-    font-weight: 600;
+    font-size: .75rem;
 }
 
 
 /* =========================================================
-   LEVEL
+   LEVEL NAME
    ========================================================= */
 
 .page-leaderboard .player .table .level {
@@ -490,7 +367,7 @@
 
     width: 100%;
 
-    padding-block: 0.2rem;
+    padding-block: .1rem;
 
     overflow: hidden;
 
@@ -498,18 +375,17 @@
 
     text-decoration: none;
 
-    font-size: 0.9rem;
+    font-size: .9rem;
     font-weight: 600;
 
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-
 .page-leaderboard .player .table .level a:hover {
     color: var(--color-primary);
 
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 
@@ -528,24 +404,8 @@
 
     text-align: right;
 
-    font-size: 0.8rem;
-
+    font-size: .8rem;
     font-weight: 700;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   LOADING
-   ========================================================= */
-
-.page-leaderboard-loading {
-    min-height: 50vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 
@@ -579,24 +439,25 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
 
     .page-leaderboard {
-        width: min(100% - 1.5rem, 60rem);
-
-        padding-top: 1rem;
+        width: calc(100% - 1rem);
+        height: auto;
 
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
+        grid-template-rows: 18rem auto;
 
         gap: 1rem;
+
+        overflow: visible;
     }
 
     .page-leaderboard .board-container {
         grid-column: 1;
         grid-row: 1;
 
-        max-height: 22rem;
+        max-height: 18rem;
     }
 
     .page-leaderboard .player-container {
@@ -607,46 +468,6 @@
     }
 
     .page-leaderboard .player {
-        padding: 1.25rem;
+        padding: 1rem 0 3rem;
     }
-
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 500px) {
-
-    .page-leaderboard {
-        width: calc(100% - 1rem);
-    }
-
-    .page-leaderboard .board .rank {
-        width: 2.8rem;
-        padding-left: 0.5rem;
-    }
-
-    .page-leaderboard .board .total {
-        width: 4rem;
-    }
-
-    .page-leaderboard .board .user button {
-        padding-inline: 0.65rem;
-    }
-
-    .page-leaderboard .player {
-        padding: 1rem;
-        gap: 1.25rem;
-    }
-
-    .page-leaderboard .player .table .rank {
-        width: 2.8rem;
-    }
-
-    .page-leaderboard .player .table .score {
-        width: 5rem;
-    }
-
 }
