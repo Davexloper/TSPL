@@ -1,0 +1,18 @@
+{
+    "id": 114422869,
+    "name": "RIVERS OF NAZARETH",
+    "author": "AudieoVisual",
+    "creators": ["AudieoVisual"],
+    "verifier": "rochiny",
+    "verification": "https://youtu.be/lwriskm7hmQ?si=r8M2lbIQtEZPWObh",
+    "percentToQualify": 100,
+    "password": "No Password",
+    "records": [
+        {
+            "user": "Emerald",
+            "link": "https://www.youtube.com/watch?v=iX5UPTY7KSw",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
+}
