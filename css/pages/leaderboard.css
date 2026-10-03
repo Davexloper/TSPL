@@ -1,7 +1,8 @@
 .page-leaderboard-container {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    max-height: 100vh;
     padding: 12px;
     box-sizing: border-box;
     overflow: hidden;
@@ -10,7 +11,8 @@
 .page-leaderboard {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 24px);
+    max-height: calc(100vh - 24px);
     min-width: 0;
     min-height: 0;
     margin: 0;
@@ -19,20 +21,23 @@
 }
 
 .leaderboard-layout {
-    position: absolute;
-    inset: 0;
+    position: relative;
     display: grid;
     grid-template-columns: 320px minmax(0, 1fr);
     gap: 12px;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
     min-width: 0;
     min-height: 0;
-    height: 100%;
+    box-sizing: border-box;
 }
 
 .board-container {
+    width: 100%;
+    height: 100%;
     min-width: 0;
     min-height: 0;
-    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
@@ -65,21 +70,20 @@
 }
 
 .player-container {
-    min-width: 0;
-    min-height: 0;
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
 }
 
 .player {
-    display: block;
     position: relative;
+    display: block;
     width: 100%;
     min-width: 0;
-    max-width: none;
     min-height: 100%;
     height: auto;
     padding: 20px;
@@ -186,20 +190,24 @@
 
 @media (max-width: 700px) {
     .page-leaderboard-container {
+        height: auto;
+        max-height: none;
+        min-height: 100vh;
         overflow-y: auto;
     }
 
     .page-leaderboard {
         height: auto;
-        min-height: 100%;
+        max-height: none;
+        min-height: 0;
     }
 
     .leaderboard-layout {
-        position: relative;
-        inset: auto;
         display: flex;
         flex-direction: column;
+        width: 100%;
         height: auto;
+        max-height: none;
         min-height: 0;
         gap: 8px;
     }
@@ -228,6 +236,10 @@
 @media (max-width: 450px) {
     .page-leaderboard-container {
         padding: 8px;
+    }
+
+    .page-leaderboard {
+        height: auto;
     }
 
     .player {
