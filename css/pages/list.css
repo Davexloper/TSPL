@@ -22,10 +22,12 @@
 
     width: 100%;
     height: 100%;
+
     min-width: 0;
     min-height: 0;
 
     color: var(--text);
+
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -37,13 +39,14 @@
 }
 
 /* =========================================================
-   PANELS
+   GENERAL PANELS
    ========================================================= */
 
 .page-list .list-container,
 .page-list .meta-container,
 .page-list .level {
     background: var(--bg-card);
+
     border: 1px solid var(--border);
     border-radius: 7px;
 
@@ -62,6 +65,7 @@
 .page-list .list-container,
 .page-list .meta-container {
     position: relative;
+
     width: 100%;
     height: 100%;
 }
@@ -80,7 +84,9 @@
 .page-list .tabs,
 .page-list .categories {
     display: flex;
+
     width: 100%;
+
     margin-bottom: 8px;
 
     border-bottom: 1px solid var(--border-dark);
@@ -91,6 +97,7 @@
     flex: 1;
 
     height: 36px;
+
     padding: 0 8px;
 
     background: transparent;
@@ -101,21 +108,25 @@
 
     font-size: 11px;
     font-weight: 700;
+
     text-transform: uppercase;
 
     cursor: pointer;
+
     transition: .15s ease;
 }
 
 .page-list .tabs button:hover,
 .page-list .categories button:hover {
     color: #fff;
+
     background: rgba(255,255,255,.02);
 }
 
 .page-list .tabs button.active,
 .page-list .categories button.active {
     color: #fff;
+
     border-bottom-color: var(--accent);
 }
 
@@ -136,6 +147,7 @@
     border-radius: 4px;
 
     outline: none;
+
     font-size: 10px;
 
     transition: .15s ease;
@@ -152,6 +164,7 @@
     width: 100%;
 
     table-layout: fixed;
+
     border-collapse: separate;
     border-spacing: 0 3px;
 }
@@ -168,6 +181,7 @@
     color: var(--text-dim);
 
     text-align: right;
+
     font-size: 10px;
     font-weight: 700;
 
@@ -184,6 +198,7 @@
     padding: 0;
 
     background: none;
+
     border: 0;
     box-shadow: none;
 }
@@ -207,6 +222,7 @@
     font-weight: 500;
 
     text-align: left;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -218,22 +234,27 @@
 
 .page-list .list .level button:hover {
     color: #fff;
+
     background: #171a20;
+
     border-color: #292e36;
 }
 
 .page-list .list .level.active button {
     color: #fff;
+
     font-weight: 700;
 
     background: var(--accent);
+
     border-color: #ff983c;
 
-    box-shadow: 0 4px 12px rgba(255,120,0,.18);
+    box-shadow:
+        0 4px 12px rgba(255,120,0,.18);
 }
 
 /* =========================================================
-   CENTER
+   CENTER LEVEL
    ========================================================= */
 
 .page-list .level-container {
@@ -250,9 +271,11 @@
     flex-direction: column;
 
     width: 100%;
+
     min-width: 0;
 
     padding: 12px 14px 16px;
+
     gap: 9px;
 
     color: #fff;
@@ -267,6 +290,7 @@
     position: relative;
 
     margin: 0;
+
     padding-bottom: 7px;
 
     color: #fff;
@@ -313,6 +337,7 @@
 
 .page-list .level-container .level .video {
     width: 100%;
+
     aspect-ratio: 16 / 9;
 
     overflow: hidden;
@@ -322,7 +347,8 @@
     border: 1px solid var(--border);
     border-radius: 6px;
 
-    box-shadow: 0 7px 20px rgba(0,0,0,.3);
+    box-shadow:
+        0 7px 20px rgba(0,0,0,.3);
 }
 
 .page-list .video iframe,
@@ -365,9 +391,11 @@
 
 .page-list .level-container .level .stats {
     display: grid;
+
     grid-template-columns: repeat(3, 1fr);
 
     width: 100%;
+
     margin: 0;
     padding: 0;
 
@@ -382,10 +410,12 @@
 .page-list .level-container .level .stats li {
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
 
     min-height: 48px;
+
     padding: 5px;
 
     gap: 2px;
@@ -419,6 +449,7 @@
 
 .page-list .level-authors {
     display: grid;
+
     grid-template-columns: max-content 1fr;
 
     gap: 3px 8px;
@@ -434,16 +465,17 @@
 
 .page-list .level-authors > * {
     color: #676c75;
+
     font-size: 8px;
 }
 
 /* =========================================================
    RIGHT CONTAINER
-   TDLL / UDDL STYLE CONTENT
+   UDDL / TDLL STYLE
    ========================================================= */
 
 .page-list .meta-container {
-    padding: 11px;
+    padding: 14px;
 
     overflow: auto;
 
@@ -464,24 +496,27 @@
     flex-direction: column;
 
     width: 100%;
-    gap: 12px;
+
+    gap: 15px;
 
     color: #fff;
 }
 
-/* Headings */
+/* =========================================================
+   RIGHT HEADINGS
+   ========================================================= */
 
 .page-list .meta h2,
 .page-list .meta h3 {
     margin: 0;
 
-    padding-bottom: 8px;
+    padding-bottom: 9px;
 
     color: #fff;
 
     border-bottom: 1px solid #1c1f25;
 
-    font-size: 13px;
+    font-size: 19px;
     font-weight: 700;
 
     letter-spacing: -.01em;
@@ -489,17 +524,29 @@
 
 .page-list .meta h2::after,
 .page-list .meta h3::after {
-    width: 26px;
+    content: "";
+
+    display: block;
+
+    width: 32px;
+    height: 2px;
+
+    margin-top: -1px;
+
+    background: var(--accent);
 }
 
-/* Normal text */
+/* =========================================================
+   RIGHT TEXT
+   ========================================================= */
 
 .page-list .meta p {
     margin: 0;
 
     color: #858a93;
 
-    font-size: 9px;
+    font-size: 17px;
+
     line-height: 1.55;
 }
 
@@ -513,20 +560,21 @@
     justify-content: space-between;
 
     margin-top: 2px;
-    padding-bottom: 7px;
+
+    padding-bottom: 9px;
 
     color: #fff;
 
     border-bottom: 1px solid #1c1f25;
 
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 700;
 }
 
 .page-list .meta .records-title::after {
     content: "";
 
-    width: 24px;
+    width: 27px;
     height: 2px;
 
     background: var(--accent);
@@ -542,39 +590,37 @@
     table-layout: fixed;
 
     border-collapse: separate;
-    border-spacing: 0 2px;
+    border-spacing: 0 4px;
 
     color: #fff;
 
-    font-size: 9px;
+    font-size: 16px;
 }
-
-/* Row */
 
 .page-list .meta .records tr {
     background: #101217;
 
     border: 1px solid #1a1d23;
-    border-radius: 4px;
+    border-radius: 5px;
 
     transition: .12s ease;
 }
 
 .page-list .meta .records tr:hover {
     background: #15181e;
+
     border-color: #282d35;
 }
 
-/* Cells */
-
 .page-list .meta .records td {
-    height: 31px;
+    height: 43px;
 
-    padding: 4px 5px;
+    padding: 6px 7px;
 
     color: #777c85;
 
     border: 0;
+
     vertical-align: middle;
 }
 
@@ -583,16 +629,17 @@
 .page-list .meta .records .user {
     min-width: 0;
 
-    padding-left: 8px;
+    padding-left: 10px;
 
     color: #d5d8dd;
 
-    font-size: 9px;
+    font-size: 16px;
     font-weight: 600;
 
     text-align: left;
 
     white-space: nowrap;
+
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -600,13 +647,13 @@
 /* Percentage */
 
 .page-list .meta .records .percent {
-    width: 43px;
+    width: 55px;
 
     color: #fff;
 
     text-align: right;
 
-    font-size: 9px;
+    font-size: 16px;
     font-weight: 700;
 
     font-variant-numeric: tabular-nums;
@@ -615,13 +662,13 @@
 /* Hz */
 
 .page-list .meta .records .hz {
-    width: 43px;
+    width: 55px;
 
     color: #5f646d;
 
     text-align: right;
 
-    font-size: 8px;
+    font-size: 14px;
 
     font-variant-numeric: tabular-nums;
 }
@@ -629,9 +676,9 @@
 /* Video */
 
 .page-list .meta .records td:last-child {
-    width: 34px;
+    width: 43px;
 
-    padding-right: 5px;
+    padding-right: 6px;
 
     text-align: right;
 }
@@ -639,13 +686,15 @@
 .page-list .meta .records .youtube,
 .page-list .meta .records .video-link {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
-    width: 24px;
-    height: 22px;
+    width: 31px;
+    height: 29px;
 
     background: #15181d;
+
     color: #777c85;
 
     border: 1px solid #242830;
@@ -665,13 +714,12 @@
     border-color: #343a44;
 }
 
-/* Record icons */
-
 .page-list .meta .records img {
-    max-width: 14px;
-    max-height: 14px;
+    max-width: 17px;
+    max-height: 17px;
 
     object-fit: contain;
+
     vertical-align: middle;
 }
 
@@ -697,7 +745,7 @@
     display: flex;
     flex-direction: column;
 
-    gap: 3px;
+    gap: 4px;
 
     margin: 0;
     padding: 0;
@@ -709,14 +757,14 @@
     display: flex;
     align-items: center;
 
-    min-height: 29px;
+    min-height: 42px;
 
-    padding: 4px 7px;
+    padding: 6px 9px;
 
     background: #101217;
 
     border: 1px solid #1a1d23;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 .page-list .meta .editors li:hover {
@@ -724,17 +772,18 @@
 }
 
 .page-list .meta .editors img {
-    width: 13px;
-    height: 13px;
+    width: 19px;
+    height: 19px;
 
-    margin-right: 7px;
+    margin-right: 9px;
 }
 
 .page-list .meta .editors p,
 .page-list .meta .editors a {
     color: #a8adb5;
 
-    font-size: 9px;
+    font-size: 16px;
+
     line-height: 1.2;
 }
 
@@ -743,21 +792,24 @@
 }
 
 /* =========================================================
-   SUBMISSION SECTION
+   SUBMISSION / OG
    ========================================================= */
 
 .page-list .meta .og {
-    padding: 7px 8px;
+    padding: 10px;
 
     background: #0a0c0f;
 
     border: 1px solid #171a20;
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 .page-list .meta .og p {
     color: #646a73;
-    font-size: 8px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
 }
 
 .page-list .meta .og a {
@@ -774,19 +826,20 @@
 
 .page-list .pagination {
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    gap: 3px;
+    gap: 4px;
 
-    margin-top: 3px;
+    margin-top: 4px;
 }
 
 .page-list .pagination button {
-    min-width: 27px;
-    height: 24px;
+    min-width: 32px;
+    height: 29px;
 
-    padding: 0 6px;
+    padding: 0 7px;
 
     background: #101217;
     color: #666b74;
@@ -794,19 +847,22 @@
     border: 1px solid #1c1f25;
     border-radius: 4px;
 
-    font-size: 8px;
+    font-size: 12px;
 
     transition: .12s ease;
 }
 
 .page-list .pagination button:hover {
     color: #fff;
+
     border-color: #30353e;
 }
 
 .page-list .pagination button.active {
     background: var(--accent);
+
     color: #fff;
+
     border-color: var(--accent);
 }
 
@@ -822,12 +878,15 @@
     background: #101217;
 
     border: 1px solid #1a1d23;
+
     border-left: 2px solid var(--pack-color,var(--accent));
+
     border-radius: 4px;
 }
 
 .page-list .level-pack-header {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
@@ -836,6 +895,7 @@
 
 .page-list .level-pack-title {
     display: flex;
+
     align-items: center;
 
     gap: 5px;
@@ -851,6 +911,7 @@
 
 .page-list .level-pack-progress {
     color: #626770;
+
     font-size: 8px;
 }
 
@@ -863,6 +924,7 @@
 
 .page-list .level-pack-level {
     display: flex;
+
     align-items: center;
 
     gap: 5px;
@@ -876,6 +938,7 @@
 
 .page-list .level-pack-level:hover {
     background: rgba(255,255,255,.025);
+
     color: #fff;
 }
 
@@ -894,6 +957,7 @@
 
 .page-list ::-webkit-scrollbar-thumb {
     background: #20242b;
+
     border-radius: 10px;
 }
 
@@ -947,11 +1011,13 @@
 
     .page-list .level-container {
         height: auto;
+
         overflow: visible;
     }
 
     .page-list .meta-container {
         display: block;
+
         height: auto;
     }
 }
@@ -986,11 +1052,27 @@
 
     .page-list .meta .records td {
         height: 30px;
+
         padding: 3px;
     }
 
     .page-list .meta .records .percent,
     .page-list .meta .records .hz {
         width: 40px;
+    }
+
+    .page-list .meta h2,
+    .page-list .meta h3 {
+        font-size: 16px;
+    }
+
+    .page-list .meta p {
+        font-size: 14px;
+    }
+
+    .page-list .meta .records,
+    .page-list .meta .records .user,
+    .page-list .meta .records .percent {
+        font-size: 14px;
     }
 }
