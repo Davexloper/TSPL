@@ -1,738 +1,605 @@
-/* =========================================================
-   LEADERBOARD
-   ========================================================= */
-
 .page-leaderboard-container {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
+    width:100%;
+    height:100%;
+    padding:10px;
+    box-sizing:border-box;
 }
 
 .page-leaderboard {
-    height: 100%;
-
-    display: grid;
-    grid-template-columns: minmax(24rem, 2fr) 3fr;
-    grid-template-rows: max-content 1fr;
-
-    column-gap: 2rem;
-
-    width: 100%;
-    max-width: 80rem;
-
-    margin: 0 auto;
-
-    box-sizing: border-box;
+    display:grid;
+    grid-template-columns:340px minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr);
+    gap:10px;
+    width:100%;
+    height:100%;
+    max-width:none;
+    margin:0 auto;
+    box-sizing:border-box;
 }
-
-
-/* =========================================================
-   GENERAL SCROLL CONTAINERS
-   ========================================================= */
 
 .page-leaderboard > div {
-    overflow-y: auto;
-
-    scrollbar-width: thin;
-    scrollbar-color:
-        color-mix(in srgb, var(--color-on-background) 18%, transparent)
-        transparent;
+    min-width:0;
+    min-height:0;
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:#292d34 transparent;
 }
 
-
-/* =========================================================
-   ERROR
-   ========================================================= */
-
 .page-leaderboard .error-container {
-    grid-row: 1;
-    grid-column: 1 / span 2;
-
-    padding: 1rem 0;
+    grid-column:1 / -1;
+    grid-row:1;
+    padding:0;
 }
 
 .page-leaderboard .error-container .error {
-    padding: 0.9rem 1rem;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-error) 25%,
-        transparent
-    );
-
-    border-radius: 0.75rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-error) 10%,
-        var(--color-background)
-    );
-
-    color: var(--color-error);
-
-    font-weight: 600;
-
-    box-sizing: border-box;
+    margin:0;
+    padding:10px 12px;
+    background:rgba(210,60,60,.08);
+    color:var(--color-error);
+    border:1px solid rgba(210,60,60,.2);
+    border-radius:6px;
+    font-size:13px;
+    font-weight:600;
 }
-
-
-/* =========================================================
-   BOARD / PLAYER CONTAINERS
-   ========================================================= */
 
 .page-leaderboard .board-container,
 .page-leaderboard .player-container {
-    grid-row: 2;
-
-    padding-block: 2rem;
-
-    box-sizing: border-box;
+    grid-row:2;
+    padding:0;
 }
 
 .page-leaderboard .board-container {
-    padding-inline: 1rem;
+    padding:0;
 }
 
+.page-leaderboard .board-container,
+.page-leaderboard .player-container {
+    background:#0b0d10;
+    border:1px solid #1b1f25;
+    border-radius:8px;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.02);
+}
 
-/* =========================================================
-   BOARD
-   ========================================================= */
+.page-leaderboard .board-container::before,
+.page-leaderboard .player-container::before {
+    content:"";
+    display:block;
+    height:2px;
+    width:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,120,0,.35),
+        transparent
+    );
+    border-radius:8px 8px 0 0;
+}
 
 .page-leaderboard .board {
-    display: block;
-
-    width: 100%;
-
-    table-layout: auto;
-
-    border-collapse: separate;
-    border-spacing: 0 0.4rem;
+    display:block;
+    width:100%;
+    margin:0;
+    padding:7px;
+    table-layout:fixed;
+    border-collapse:separate;
+    border-spacing:0 3px;
 }
-
-
-/* =========================================================
-   RANK
-   ========================================================= */
 
 .page-leaderboard .board .rank {
-    padding-block: 0.75rem;
-    padding-right: 0.65rem;
-
-    text-align: end;
-
-    color: var(--color-on-background);
-
-    opacity: 0.45;
-
-    font-size: 0.9rem;
-    font-weight: 700;
-
-    font-variant-numeric: tabular-nums;
-
-    white-space: nowrap;
+    width:38px;
+    padding:0 7px 0 3px;
+    color:#50565f;
+    text-align:right;
+    font-size:10px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
 }
 
-
-/* =========================================================
-   TOTAL
-   ========================================================= */
+.page-leaderboard .board tr:hover .rank {
+    color:#a6abb3;
+}
 
 .page-leaderboard .board .total {
-    padding: 0.75rem;
-
-    text-align: end;
-
-    color: var(--color-on-background);
-
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-
-    white-space: nowrap;
+    width:60px;
+    padding:0 8px;
+    color:#858b94;
+    text-align:right;
+    font-size:11px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
 }
 
-
-/* =========================================================
-   USER
-   ========================================================= */
-
 .page-leaderboard .board .user {
-    width: 100%;
+    width:100%;
 }
 
 .page-leaderboard .board .user button {
-    display: block;
-
-    width: 100%;
-
-    padding: 0.8rem 1rem;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-on-background) 8%,
-        transparent
-    );
-
-    border-radius: 0.7rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-on-background) 3%,
-        var(--color-background)
-    );
-
-    color: var(--color-on-background);
-
-    text-align: start;
-
-    font-weight: 650;
-
-    word-break: normal;
-    overflow-wrap: anywhere;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 1px 2px color-mix(
-            in srgb,
-            #000 5%,
-            transparent
-        );
-
+    position:relative;
+    display:flex;
+    align-items:center;
+    width:100%;
+    min-width:0;
+    height:34px;
+    padding:0 10px;
+    background:#101318;
+    color:#b5bac2;
+    border:1px solid #1a1e24;
+    border-radius:5px;
+    text-align:left;
+    font-size:11px;
+    font-weight:600;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    cursor:pointer;
+    box-shadow:none;
     transition:
-        background-color 0.15s ease,
-        border-color 0.15s ease,
-        box-shadow 0.15s ease,
-        transform 0.15s ease;
+        color .13s ease,
+        background .13s ease,
+        border-color .13s ease,
+        transform .13s ease;
+}
+
+.page-leaderboard .board .user button::before {
+    content:"";
+    width:2px;
+    height:0;
+    margin-right:0;
+    background:#ff7800;
+    border-radius:2px;
+    opacity:0;
+    transition:
+        height .13s ease,
+        opacity .13s ease,
+        margin .13s ease;
 }
 
 .page-leaderboard .board .user button:hover {
-    background: var(--color-background-hover);
-
-    color: var(--color-on-background-hover);
-
-    border-color: color-mix(
-        in srgb,
-        var(--color-primary) 30%,
-        transparent
-    );
-
-    box-shadow:
-        0 3px 10px color-mix(
-            in srgb,
-            #000 8%,
-            transparent
-        );
-
-    transform: translateX(2px);
+    background:#171a20;
+    color:#fff;
+    border-color:#292e36;
+    transform:translateX(2px);
 }
 
-
-/* =========================================================
-   ACTIVE USER
-   ========================================================= */
+.page-leaderboard .board .user button:hover::before {
+    height:14px;
+    margin-right:8px;
+    opacity:1;
+}
 
 .page-leaderboard .board .user.active button {
-    background: var(--color-primary);
-
-    color: var(--color-on-primary);
-
-    border-color: var(--color-primary);
-
+    background:linear-gradient(
+        135deg,
+        #ff7100,
+        #ff8b20
+    );
+    color:#fff;
+    border-color:#ff9a42;
     box-shadow:
-        0 4px 12px color-mix(
-            in srgb,
-            var(--color-primary) 25%,
-            transparent
-        );
+        0 4px 14px rgba(255,120,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.18);
+    transform:translateX(2px);
 }
 
-
-/* =========================================================
-   PLAYER
-   ========================================================= */
+.page-leaderboard .board .user.active button::after {
+    content:"";
+    position:absolute;
+    right:9px;
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 7px rgba(255,255,255,.8);
+}
 
 .page-leaderboard .player {
-    display: flex;
-    flex-direction: column;
-
-    gap: 2rem;
-
-    padding-right: 2rem;
-
-    box-sizing: border-box;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    width:100%;
+    min-width:0;
+    padding:0;
+    color:var(--color-on-background);
 }
 
+.page-leaderboard .player > * {
+    margin:0;
+}
 
-/* =========================================================
-   PLAYER HEADINGS
-   ========================================================= */
-
-.page-leaderboard .player h1,
-.page-leaderboard .player h2 {
-    margin-top: 0;
-
-    color: var(--color-on-background);
-
-    line-height: 1.2;
+.page-leaderboard .player-header {
+    padding:15px 17px 13px;
+    border-bottom:1px solid #1b1f25;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.018),
+            transparent
+        );
 }
 
 .page-leaderboard .player h1 {
-    margin-bottom: 0.35rem;
-
-    font-size: clamp(1.6rem, 3vw, 2.25rem);
-    font-weight: 800;
-
-    letter-spacing: -0.025em;
+    margin:0;
+    color:#fff;
+    font-size:24px;
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:-.025em;
 }
 
 .page-leaderboard .player h2 {
-    margin-bottom: 0.75rem;
-
-    font-size: 1.15rem;
-    font-weight: 750;
+    margin:0 0 8px;
+    color:#fff;
+    font-size:16px;
+    line-height:1.2;
+    font-weight:750;
 }
 
-
-/* =========================================================
-   SECTION HEADER
-   ========================================================= */
-
-/*
-   HTML sollte ungefähr so aussehen:
-
-   <div class="section-header">
-       <h2>Completed Levels</h2>
-       <span>12</span>
-   </div>
-*/
+.page-leaderboard .player h1::after {
+    content:"";
+    display:block;
+    width:34px;
+    height:2px;
+    margin-top:9px;
+    background:#ff7800;
+    border-radius:2px;
+    box-shadow:0 0 8px rgba(255,120,0,.25);
+}
 
 .page-leaderboard .section-header {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-
-    gap: 1rem;
-
-    margin-bottom: 0.25rem;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    min-width:0;
+    gap:10px;
+    margin:0 0 7px;
 }
 
 .page-leaderboard .section-header h2 {
-    margin: 0;
-
-    min-width: 0;
-
-    color: var(--color-on-background);
-
-    font-size: 1.15rem;
-    font-weight: 750;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    min-width:0;
+    margin:0;
+    color:#fff;
+    font-size:15px;
+    font-weight:750;
+    line-height:1.2;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
-
-
-/* =========================================================
-   ORANGE COUNT
-   ========================================================= */
 
 .page-leaderboard .section-header > span {
-    flex: 0 0 auto;
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-width: 2rem;
-    height: 1.7rem;
-
-    padding: 0 0.6rem;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-primary) 25%,
-        transparent
-    );
-
-    border-radius: 999px;
-
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 10%,
-        var(--color-background)
-    );
-
-    color: var(--color-primary);
-
-    font-size: 0.8rem;
-    font-weight: 800;
-
-    font-variant-numeric: tabular-nums;
-
-    box-sizing: border-box;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    flex:0 0 auto;
+    min-width:25px;
+    height:21px;
+    padding:0 7px;
+    background:rgba(255,120,0,.08);
+    color:#ff9a3c;
+    border:1px solid rgba(255,120,0,.22);
+    border-radius:5px;
+    font-size:10px;
+    font-weight:800;
+    font-variant-numeric:tabular-nums;
 }
 
-
-/* =========================================================
-   PLAYER TABLE
-   ========================================================= */
-
 .page-leaderboard .player .table {
-    width: 100%;
-
-    table-layout: fixed;
-
-    border-collapse: separate;
-    border-spacing: 0 0.15rem;
+    width:100%;
+    margin:0;
+    table-layout:fixed;
+    border-collapse:separate;
+    border-spacing:0;
 }
 
 .page-leaderboard .player .table tr {
-    transition:
-        background-color 0.15s ease;
+    border-bottom:1px solid #171a20;
+    transition:background .12s ease;
 }
 
 .page-leaderboard .player .table tr:hover {
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 4%,
-        transparent
-    );
+    background:rgba(255,120,0,.025);
 }
 
+.page-leaderboard .player .table tr:last-child {
+    border-bottom:0;
+}
 
-/* =========================================================
-   TABLE CELLS
-   ========================================================= */
-
-.page-leaderboard .player .table tr td:not(:last-child) {
-    padding-right: 2rem;
+.page-leaderboard .player .table td {
+    padding:0;
+    vertical-align:middle;
 }
 
 .page-leaderboard .player .table p,
 .page-leaderboard .player .table a {
-    padding-block: 0.7rem;
+    margin:0;
+    padding:8px 0;
 }
 
-.page-leaderboard .player .table p {
-    margin: 0;
+.page-leaderboard .player .table tr td:not(:last-child) {
+    padding-right:8px;
 }
-
-
-/* =========================================================
-   TABLE RANK
-   ========================================================= */
 
 .page-leaderboard .player .table .rank {
-    width: 4rem;
-
-    color: var(--color-on-background);
-
-    opacity: 0.45;
-
-    font-variant-numeric: tabular-nums;
+    width:42px;
+    padding-left:4px;
+    color:#555b64;
+    text-align:center;
+    font-size:10px;
+    font-variant-numeric:tabular-nums;
 }
-
-
-/* =========================================================
-   LEVEL
-   ========================================================= */
 
 .page-leaderboard .player .table .level {
-    width: 100%;
-    min-width: 0;
-
-    overflow: hidden;
+    width:100%;
+    min-width:0;
+    overflow:hidden;
 }
 
-
-/* =========================================================
-   LEVEL LINKS — ORANGE
-   ========================================================= */
-
 .page-leaderboard .player .table a {
-    display: block;
-
-    color: var(--color-primary);
-
-    font-weight: 700;
-
-    text-decoration: none;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
+    display:block;
+    color:#ff8a20;
+    font-size:12px;
+    font-weight:700;
+    text-decoration:none;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     transition:
-        color 0.15s ease,
-        opacity 0.15s ease;
+        color .13s ease,
+        opacity .13s ease;
 }
 
 .page-leaderboard .player .table a:hover {
-    color: var(--color-primary);
-
-    opacity: 0.7;
-
-    text-decoration: underline;
+    color:#ffad66;
+    opacity:1;
+    text-decoration:none;
 }
 
-
-/* =========================================================
-   SCORE
-   ========================================================= */
-
 .page-leaderboard .player .table .score {
-    width: 5rem;
-
-    font-variant-numeric: tabular-nums;
-    font-weight: 700;
+    width:72px;
+    color:#c5c9cf;
+    font-size:11px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
 }
 
 .page-leaderboard .player .table .rank p,
 .page-leaderboard .player .table .score p {
-    text-align: end;
+    text-align:right;
 }
-
-
-/* =========================================================
-   COMPLETED PACKS
-   ========================================================= */
-
-/*
-   Die Pack-Namen werden ebenfalls orange.
-*/
 
 .page-leaderboard .packs-section {
-    width: 100%;
-
-    padding: 1rem;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-primary) 15%,
-        transparent
-    );
-
-    border-radius: 0.8rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 4%,
-        var(--color-background)
-    );
-
-    box-sizing: border-box;
+    width:auto;
+    margin:10px 12px 12px;
+    padding:10px;
+    background:#0d1014;
+    border:1px solid #1b1f25;
+    border-radius:6px;
 }
-
-
-/* Pack list */
 
 .page-leaderboard .completed-packs {
-    display: flex;
-    flex-direction: column;
-
-    gap: 0.45rem;
-
-    width: 100%;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    width:100%;
 }
-
-
-/* Individual pack */
 
 .page-leaderboard .completed-pack {
-    display: flex;
-
-    align-items: center;
-
-    width: 100%;
-
-    gap: 0.7rem;
-
-    padding: 0.7rem 0.8rem;
-
-    border: 1px solid color-mix(
-        in srgb,
-        var(--color-primary) 15%,
-        transparent
-    );
-
-    border-radius: 0.6rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 5%,
-        var(--color-background)
-    );
-
-    box-sizing: border-box;
-
+    display:flex;
+    align-items:center;
+    width:100%;
+    min-width:0;
+    gap:9px;
+    min-height:37px;
+    padding:6px 8px;
+    background:#101318;
+    border:1px solid #1a1e24;
+    border-radius:5px;
     transition:
-        background-color 0.15s ease,
-        border-color 0.15s ease,
-        transform 0.15s ease;
+        background .13s ease,
+        border-color .13s ease,
+        transform .13s ease;
 }
-
-
-/* Pack hover */
 
 .page-leaderboard .completed-pack:hover {
-    background: color-mix(
-        in srgb,
-        var(--color-primary) 9%,
-        var(--color-background)
-    );
-
-    border-color: color-mix(
-        in srgb,
-        var(--color-primary) 30%,
-        transparent
-    );
-
-    transform: translateX(2px);
+    background:#171a20;
+    border-color:#292e36;
+    transform:translateX(2px);
 }
 
-
-/* Pack color dot */
-
 .page-leaderboard .completed-pack-color {
-    flex: 0 0 auto;
-
-    width: 0.65rem;
-    height: 0.65rem;
-
-    border-radius: 50%;
-
-    background: var(--pack-color);
-
+    flex:0 0 auto;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--pack-color);
     box-shadow:
         0 0 0 3px color-mix(
             in srgb,
-            var(--pack-color) 12%,
+            var(--pack-color) 10%,
             transparent
         );
 }
 
-
-/* Pack content */
-
 .page-leaderboard .completed-pack div {
-    display: flex;
-    flex-direction: column;
-
-    min-width: 0;
-
-    gap: 0.1rem;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    gap:1px;
 }
-
-
-/* =========================================================
-   PACK NAME — ORANGE
-   ========================================================= */
 
 .page-leaderboard .completed-pack strong {
-    min-width: 0;
-
-    color: var(--color-primary);
-
-    font-weight: 750;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    min-width:0;
+    color:#ff8a20;
+    font-size:11px;
+    font-weight:750;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
-
-
-/* Pack subtitle */
 
 .page-leaderboard .completed-pack small {
-    color: var(--color-on-background);
-
-    opacity: 0.5;
-
-    font-size: 0.8rem;
+    color:#666c75;
+    font-size:9px;
+    line-height:1.2;
 }
-
-
-/* =========================================================
-   NO DATA
-   ========================================================= */
 
 .page-leaderboard .no-player-data {
-    padding: 1rem;
-
-    border: 1px dashed color-mix(
-        in srgb,
-        var(--color-on-background) 12%,
-        transparent
-    );
-
-    border-radius: 0.7rem;
-
-    background: color-mix(
-        in srgb,
-        var(--color-on-background) 3%,
-        var(--color-background)
-    );
-
-    opacity: 0.55;
-
-    text-align: center;
+    margin:8px 12px;
+    padding:11px;
+    background:#0d1014;
+    color:#666c75;
+    border:1px dashed #242830;
+    border-radius:6px;
+    font-size:11px;
+    text-align:center;
 }
 
+.page-leaderboard .board-container::-webkit-scrollbar,
+.page-leaderboard .player-container::-webkit-scrollbar {
+    width:5px;
+}
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
+.page-leaderboard .board-container::-webkit-scrollbar-track,
+.page-leaderboard .player-container::-webkit-scrollbar-track {
+    background:transparent;
+}
 
-@media (max-width: 900px) {
-    .page-leaderboard {
-        grid-template-columns: 1fr;
-        grid-template-rows: max-content auto auto;
+.page-leaderboard .board-container::-webkit-scrollbar-thumb,
+.page-leaderboard .player-container::-webkit-scrollbar-thumb {
+    background:#22262d;
+    border-radius:10px;
+}
 
-        column-gap: 0;
+.page-leaderboard .board-container::-webkit-scrollbar-thumb:hover,
+.page-leaderboard .player-container::-webkit-scrollbar-thumb:hover {
+    background:#353b44;
+}
+
+@media (min-width:1400px) {
+    .page-leaderboard-container {
+        padding:12px;
     }
 
-    .page-leaderboard .error-container {
-        grid-column: 1;
+    .page-leaderboard {
+        grid-template-columns:370px minmax(0,1fr);
+        gap:12px;
+    }
+
+    .page-leaderboard .board {
+        padding:8px;
+    }
+
+    .page-leaderboard .player-header {
+        padding:17px 20px 15px;
+    }
+
+    .page-leaderboard .player h1 {
+        font-size:26px;
+    }
+}
+
+@media (max-width:950px) {
+    .page-leaderboard {
+        grid-template-columns:290px minmax(0,1fr);
+        gap:8px;
+    }
+
+    .page-leaderboard .board .user button {
+        height:32px;
+        font-size:10px;
+    }
+
+    .page-leaderboard .player h1 {
+        font-size:21px;
+    }
+}
+
+@media (max-width:750px) {
+    .page-leaderboard-container {
+        height:auto;
+        padding:7px;
+    }
+
+    .page-leaderboard {
+        grid-template-columns:1fr;
+        grid-template-rows:auto auto;
+        height:auto;
+        gap:7px;
     }
 
     .page-leaderboard .board-container,
     .page-leaderboard .player-container {
-        grid-row: auto;
-
-        padding-block: 1rem;
+        grid-row:auto;
+        height:auto;
+        max-height:none;
     }
 
-    .page-leaderboard .player {
-        padding-right: 1rem;
+    .page-leaderboard .board-container {
+        max-height:380px;
+    }
+
+    .page-leaderboard .player-container {
+        overflow:visible;
     }
 }
 
-
-@media (max-width: 600px) {
-    .page-leaderboard .board-container {
-        padding-inline: 0.5rem;
+@media (max-width:450px) {
+    .page-leaderboard-container {
+        padding:5px;
     }
 
-    .page-leaderboard .player {
-        padding-right: 0.5rem;
+    .page-leaderboard {
+        gap:5px;
     }
 
-    .page-leaderboard .player .table tr td:not(:last-child) {
-        padding-right: 0.75rem;
+    .page-leaderboard .board {
+        padding:5px;
+    }
+
+    .page-leaderboard .board .rank {
+        width:31px;
+        padding-right:4px;
+        font-size:9px;
+    }
+
+    .page-leaderboard .board .total {
+        width:48px;
+        padding:0 5px;
+        font-size:9px;
     }
 
     .page-leaderboard .board .user button {
-        padding: 0.7rem 0.8rem;
+        height:31px;
+        padding:0 8px;
+        font-size:10px;
     }
 
-    .page-leaderboard .section-header > span {
-        min-width: 1.8rem;
-        height: 1.6rem;
+    .page-leaderboard .player-header {
+        padding:13px 13px 11px;
+    }
 
-        padding-inline: 0.5rem;
+    .page-leaderboard .player h1 {
+        font-size:20px;
+    }
+
+    .page-leaderboard .player .table .rank {
+        width:32px;
+    }
+
+    .page-leaderboard .player .table .score {
+        width:55px;
+    }
+
+    .page-leaderboard .player .table a {
+        font-size:11px;
+    }
+
+    .page-leaderboard .packs-section {
+        margin:8px;
     }
 }
