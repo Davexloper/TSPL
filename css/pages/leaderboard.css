@@ -1,6 +1,6 @@
 .page-leaderboard-container {
     position:relative;
-    width:100%;
+    width:100vw;
     height:100%;
     padding:12px;
     box-sizing:border-box;
@@ -391,7 +391,6 @@
 
     .page-leaderboard .player-container {
         left:364px;
-        min-width:0;
     }
 
     .page-leaderboard .player h1 {
@@ -427,7 +426,6 @@
 
     .page-leaderboard .player-container {
         left:282px;
-        min-width:0;
     }
 
     .page-leaderboard .player h1 {
@@ -458,6 +456,7 @@
 
 @media (max-width:700px) {
     .page-leaderboard-container {
+        width:100%;
         height:auto;
         min-height:100%;
         padding:7px;
