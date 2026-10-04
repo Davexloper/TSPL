@@ -7,5 +7,12 @@
     "verification": "https://www.youtube.com/watch?v=5BaD2balKjM",
     "percentToQualify": 100,
     "password": "Uncopyable",
-    "records": []
+    "records": [
+         {
+            "user": "KirtaPP143",
+            "link": "https://www.youtube.com/watch?v=he8xTgE9euo",
+            "percent": 100,
+            "hz": 240
+        }
+    ]
 }
