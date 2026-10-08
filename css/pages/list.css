@@ -16,15 +16,25 @@
     overflow:hidden;
 }
 
-.page-list *,.page-list *::before,.page-list *::after{box-sizing:border-box}
+.page-list *,.page-list *::before,.page-list *::after{
+    box-sizing:border-box
+}
 
 .page-list .list-container,
 .page-list .meta-container,
 .page-list .level{
-    background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.005) 45%),var(--panel);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.025),
+            rgba(255,255,255,.005) 45%
+        ),
+        var(--panel);
     border:1px solid var(--border);
     border-radius:9px;
-    box-shadow:0 14px 35px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.25);
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.3),
+        0 2px 8px rgba(0,0,0,.25);
 }
 
 .page-list .list-container,
@@ -48,7 +58,13 @@
     left:12%;
     right:12%;
     height:1px;
-    background:linear-gradient(90deg,transparent,rgba(255,120,0,.2),transparent);
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,120,0,.2),
+            transparent
+        );
 }
 
 .page-list .tabs,
@@ -102,7 +118,9 @@
     border-spacing:0 3px;
 }
 
-.page-list .list tr{height:31px}
+.page-list .list tr{
+    height:31px
+}
 
 .page-list .list .rank{
     width:39px;
@@ -142,7 +160,12 @@
 
 .page-list .list .level button:hover{
     color:#fff;
-    background:linear-gradient(90deg,rgba(255,120,0,.07),#171a20);
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,120,0,.07),
+            #171a20
+        );
     transform:translateX(2px);
 }
 
@@ -202,7 +225,12 @@
     bottom:-1px;
     width:42px;
     height:2px;
-    background:linear-gradient(90deg,var(--accent),var(--accent-light));
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent-light)
+        );
 }
 
 .page-list .level-container .level>p{
@@ -246,7 +274,9 @@
     font-size:9px;
 }
 
-.page-list .level-authors a{color:#b5bac2}
+.page-list .level-authors a{
+    color:#b5bac2
+}
 
 .page-list .level-container .level .stats{
     display:grid;
@@ -292,8 +322,16 @@
     padding:15px;
     overflow:auto;
     background:
-        radial-gradient(circle at 50% 0,rgba(255,120,0,.035),transparent 32%),
-        linear-gradient(180deg,#0c0f13,#090b0e);
+        radial-gradient(
+            circle at 50% 0,
+            rgba(255,120,0,.035),
+            transparent 32%
+        ),
+        linear-gradient(
+            180deg,
+            #0c0f13,
+            #090b0e
+        );
 }
 
 .page-list .meta{
@@ -374,11 +412,20 @@
     transform:translateX(2px);
 }
 
-.page-list .record-flag{
+/* Neuer Profil-Avatar für Records */
+.page-list .record-avatar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
     width:27px;
-    height:20px;
-    object-fit:cover;
-    border-radius:2px;
+    height:27px;
+    background:#ff7800;
+    color:#fff;
+    border-radius:50%;
+    font-size:12px;
+    font-weight:750;
+    text-transform:uppercase;
+    flex-shrink:0;
 }
 
 .page-list .record-info{
@@ -501,26 +548,38 @@
 
 @media(min-width:1500px){
     .page-list{
-        grid-template-columns:minmax(300px,1fr) minmax(600px,2fr) minmax(320px,1fr);
+        grid-template-columns:
+            minmax(300px,1fr)
+            minmax(600px,2fr)
+            minmax(320px,1fr);
         gap:14px;
     }
 }
 
 @media(max-width:1200px){
     .page-list{
-        grid-template-columns:minmax(240px,1fr) minmax(440px,2fr) minmax(250px,1fr);
+        grid-template-columns:
+            minmax(240px,1fr)
+            minmax(440px,2fr)
+            minmax(250px,1fr);
         gap:9px;
     }
 
-    .page-list .meta-container{padding:12px}
+    .page-list .meta-container{
+        padding:12px
+    }
 }
 
 @media(max-width:950px){
     .page-list{
-        grid-template-columns:minmax(220px,1fr) minmax(400px,2fr);
+        grid-template-columns:
+            minmax(220px,1fr)
+            minmax(400px,2fr);
     }
 
-    .page-list .meta-container{display:none}
+    .page-list .meta-container{
+        display:none
+    }
 }
 
 @media(max-width:450px){
