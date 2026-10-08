@@ -1,200 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-        />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDL</title>
+    <link rel="icon" href="/list_icon.png">
 
-        <title>EDL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@500;700&display=swap" rel="stylesheet">
 
-        <!-- Favicon -->
-        <link rel="icon" href="/list_icon.png" />
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/typography.css">
+    <link rel="stylesheet" href="/css/main.css">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/css/pages/list.css">
+    <link rel="stylesheet" href="/css/pages/leaderboard.css">
+    <link rel="stylesheet" href="/css/pages/roulette.css">
+    <link rel="stylesheet" href="/css/pages/packs.css">
 
-        <link
-            href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@500;700&display=swap"
-            rel="stylesheet"
-        />
+    <link rel="stylesheet" href="/css/components/nav.css">
+    <link rel="stylesheet" href="/css/components/btn.css">
+    <link rel="stylesheet" href="/css/components/tabs.css">
 
-        <!-- Core CSS -->
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/reset.css"
-        />
+    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
+    <script type="module" src="/js/main.js"></script>
+</head>
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/typography.css"
-        />
+<body id="app">
+    <header :class="{ dark: store.dark }">
+        <div class="logo">
+            <h2>EDL</h2>
+            <p>v1.1.1</p>
+        </div>
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/main.css"
-        />
+        <nav class="nav">
+            <router-link class="nav__tab" to="/">
+                <span class="type-label-lg">List</span>
+            </router-link>
 
-        <!-- Pages -->
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/pages/list.css"
-        />
+            <router-link class="nav__tab" to="/leaderboard">
+                <span class="type-label-lg">Leaderboard</span>
+            </router-link>
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/pages/leaderboard.css"
-        />
+            <router-link class="nav__tab" to="/packs">
+                <span class="type-label-lg">Packs</span>
+            </router-link>
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/pages/roulette.css"
-        />
+            <router-link class="nav__tab" to="/roulette">
+                <span class="type-label-lg">Roulette</span>
+            </router-link>
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/pages/packs.css"
-        />
+            <div class="nav__actions">
+                <a class="nav__icon" href="https://discord.gg/ttSBTbwjfx" target="_blank" rel="noopener noreferrer">
+                    <img src="/assets/discord.png" alt="Discord">
+                </a>
 
-        <!-- Components -->
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/components/nav.css"
-        />
+                <a class="nav__cta type-label-lg" href="https://docs.google.com/forms/d/e/1FAIpQLScjyL4cID80nkz1-dBXqW-pZ-D8bmu-6rPXj9prCz4uG-C86Q/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer">
+                    Submit Record
+                </a>
 
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/components/btn.css"
-        />
-
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/components/tabs.css"
-        />
-
-        <!-- Vue -->
-        <script
-            src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"
-        ></script>
-
-        <script
-            src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"
-        ></script>
-
-        <!-- Application -->
-        <script
-            type="module"
-            src="/js/main.js"
-        ></script>
-    </head>
-
-    <body id="app">
-
-        <!-- Navigation -->
-        <header :class="{ dark: store.dark }">
-
-            <div class="logo">
-                <h2>EDL</h2>
-                <p>v1.1.1</p>
+                <a class="nav__cta type-label-lg" href="https://docs.google.com/forms/d/e/1FAIpQLSdeUIUTGFXaA7Ot2xaF6BgkQYrSZq71q6l_puHBnYQ7CuCZsA/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer">
+                    Submit Verification
+                </a>
             </div>
+        </nav>
+    </header>
 
-            <nav class="nav">
-
-                <!-- List -->
-                <router-link
-                    class="nav__tab"
-                    to="/"
-                >
-                    <span class="type-label-lg">
-                        List
-                    </span>
-                </router-link>
-
-                <!-- Leaderboard -->
-                <router-link
-                    class="nav__tab"
-                    to="/leaderboard"
-                >
-                    <span class="type-label-lg">
-                        Leaderboard
-                    </span>
-                </router-link>
-
-                <!-- Packs -->
-                <router-link
-                    class="nav__tab"
-                    to="/packs"
-                >
-                    <span class="type-label-lg">
-                        Packs
-                    </span>
-                </router-link>
-
-                <!-- Roulette -->
-                <router-link
-                    class="nav__tab"
-                    to="/roulette"
-                >
-                    <span class="type-label-lg">
-                        Roulette
-                    </span>
-                </router-link>
-
-                <div class="nav__actions">
-
-                    <!-- Discord -->
-                    <a
-                        class="nav__icon"
-                        href="https://discord.gg/ttSBTbwjfx"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src="/assets/discord.png"
-                            alt="Discord"
-                        />
-                    </a>
-
-                    <!-- Submit Record -->
-                    <a
-                        class="nav__cta type-label-lg"
-                        href="https://docs.google.com/forms/d/e/1FAIpQLScjyL4cID80nkz1-dBXqW-pZ-D8bmu-6rPXj9prCz4uG-C86Q/viewform?usp=publish-editor"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Submit Record
-                    </a>
-
-                    <!-- Submit Verification -->
-                    <a
-                        class="nav__cta type-label-lg"
-                        href="https://docs.google.com/forms/d/e/1FAIpQLSdeUIUTGFXaA7Ot2xaF6BgkQYrSZq71q6l_puHBnYQ7CuCZsA/viewform?usp=publish-editor"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Submit Verification
-                    </a>
-
-                </div>
-            </nav>
-        </header>
-
-        <!-- Current Page -->
-        <router-view
-            :class="{ dark: store.dark }"
-        ></router-view>
-
-    </body>
+    <router-view :class="{ dark: store.dark }"></router-view>
+</body>
 </html>
