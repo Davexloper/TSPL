@@ -135,14 +135,10 @@ export default {
                             :key="record.user + record.percent"
                             class="record"
                         >
-                            <img
-                                v-if="record.flag"
-                                class="record-flag"
-                                :src="record.flag"
-                                alt=""
-                            >
 
-                            <div v-else></div>
+                            <div class="record-avatar">
+                                {{ String(record.user || "?").charAt(0).toUpperCase() }}
+                            </div>
 
                             <div class="record-info">
                                 <a
@@ -183,7 +179,7 @@ export default {
         </main>
     `,
 
-    data:()=>({
+    data:() => ({
         list:[],
         levelPacks:{},
         loading:true,
@@ -213,6 +209,7 @@ export default {
 
         video(){
             if(!this.level)return "";
+
             return embed(
                 this.level.showcase
                     ? this.level.showcase
@@ -225,7 +222,11 @@ export default {
             const q=this.recordSearch.trim().toLowerCase();
 
             return q
-                ? records.filter(r=>String(r.user||"").toLowerCase().includes(q))
+                ? records.filter(r =>
+                    String(r.user||"")
+                        .toLowerCase()
+                        .includes(q)
+                )
                 : records;
         }
     },
@@ -235,19 +236,25 @@ export default {
         this.levelPacks=await fetchLevelPacks();
 
         if(!this.list){
-            this.errors=["Failed to load list. Retry in a few minutes or notify list staff."];
+            this.errors=[
+                "Failed to load list. Retry in a few minutes or notify list staff."
+            ];
         }else{
             this.errors.push(
                 ...this.list
                     .filter(([_,err])=>err)
-                    .map(([_,err])=>`Failed to load level. (${err}.json)`)
+                    .map(([_,err]) =>
+                        `Failed to load level. (${err}.json)`
+                    )
             );
 
             const requested=this.$route?.query?.level;
 
             if(requested){
                 const index=findLevel(this.list,requested);
-                if(index!==-1)this.selected=index;
+
+                if(index!==-1)
+                    this.selected=index;
             }
         }
 
@@ -259,12 +266,15 @@ export default {
 
         selectLevel(index){
             this.selected=index;
+
             const level=this.list[index]?.[0];
 
             if(level&&this.$route){
                 this.$router.replace({
                     path:"/",
-                    query:{level:level.path||level.name}
+                    query:{
+                        level:level.path||level.name
+                    }
                 });
             }
 
@@ -273,6 +283,7 @@ export default {
 
         openPackLevel(identifier){
             const index=findLevel(this.list,identifier);
+
             if(index===-1)return;
 
             this.selectLevel(index);
@@ -280,6 +291,7 @@ export default {
 
         getPackLevelName(identifier){
             const index=findLevel(this.list,identifier);
+
             return index===-1
                 ? identifier
                 : this.list[index][0]?.name||identifier;
@@ -287,11 +299,13 @@ export default {
 
         isPackLevel(identifier){
             if(!this.level)return false;
+
             return findLevel(this.list,identifier)===this.selected;
         },
 
         listScore(rank){
             const total=this.list.length;
+
             if(total<=1)return 250;
 
             return Math.max(
