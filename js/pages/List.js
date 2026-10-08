@@ -20,19 +20,50 @@ export default {
         <main v-else class="page-list">
 
             <div class="list-container">
-                <table class="list" v-if="list">
-                    <tr v-for="([level,err],i) in list" :key="i">
+
+                <div class="level-search">
+                    <input
+                        v-model="levelSearch"
+                        type="text"
+                        placeholder="Search levels..."
+                    >
+                </div>
+
+                <table class="list" v-if="filteredLevels.length">
+                    <tr
+                        v-for="item in filteredLevels"
+                        :key="item.index"
+                    >
                         <td class="rank">
-                            <p>{{ i+1<=150 ? "#"+(i+1) : "Legacy" }}</p>
+                            <p>
+                                {{ item.index+1<=150
+                                    ? "#"+(item.index+1)
+                                    : "Legacy"
+                                }}
+                            </p>
                         </td>
 
-                        <td class="level" :class="{active:selected===i,error:!level}">
-                            <button @click="selectLevel(i)">
-                                {{ level?.name || \`Error (\${err}.json)\` }}
+                        <td
+                            class="level"
+                            :class="{
+                                active:selected===item.index,
+                                error:!item.level
+                            }"
+                        >
+                            <button @click="selectLevel(item.index)">
+                                {{ item.level?.name || `Error (${item.err}.json)` }}
                             </button>
                         </td>
                     </tr>
                 </table>
+
+                <div
+                    v-else
+                    class="level-search-empty"
+                >
+                    No levels found.
+                </div>
+
             </div>
 
             <div class="level-container">
@@ -55,6 +86,7 @@ export default {
                                     ></span>
                                     <h3>{{ pack.name }}</h3>
                                 </div>
+
                                 <span class="level-pack-progress">
                                     {{ pack.levels.length }} Levels
                                 </span>
@@ -103,6 +135,7 @@ export default {
                             <p>{{ level.password || "Free to Copy" }}</p>
                         </li>
                     </ul>
+
                 </div>
 
                 <div
@@ -176,6 +209,7 @@ export default {
 
                 </div>
             </div>
+
         </main>
     `,
 
@@ -185,6 +219,7 @@ export default {
         loading:true,
         selected:0,
         errors:[],
+        levelSearch:"",
         recordSearch:"",
         store
     }),
@@ -192,6 +227,24 @@ export default {
     computed:{
         level(){
             return this.list?.[this.selected]?.[0];
+        },
+
+        filteredLevels(){
+            const q=this.levelSearch.trim().toLowerCase();
+
+            return this.list
+                .map(([level,err],index)=>({
+                    level,
+                    err,
+                    index
+                }))
+                .filter(item=>{
+                    if(!q)return true;
+
+                    return String(item.level?.name||"")
+                        .toLowerCase()
+                        .includes(q);
+                });
         },
 
         currentPacks(){
@@ -204,7 +257,9 @@ export default {
             ];
 
             return keys.flatMap(k=>this.levelPacks[k]||[])
-                .filter((p,i,a)=>a.findIndex(x=>x.id===p.id)===i);
+                .filter((p,i,a)=>
+                    a.findIndex(x=>x.id===p.id)===i
+                );
         },
 
         video(){
@@ -222,7 +277,7 @@ export default {
             const q=this.recordSearch.trim().toLowerCase();
 
             return q
-                ? records.filter(r =>
+                ? records.filter(r=>
                     String(r.user||"")
                         .toLowerCase()
                         .includes(q)
@@ -243,7 +298,7 @@ export default {
             this.errors.push(
                 ...this.list
                     .filter(([_,err])=>err)
-                    .map(([_,err]) =>
+                    .map(([_,err])=>
                         `Failed to load level. (${err}.json)`
                     )
             );
